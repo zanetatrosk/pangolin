@@ -5,7 +5,7 @@ export function HeroSection() {
 
   return (
     <section className="relative px-4 py-20 overflow-hidden">
-      <div className="absolute inset-0 bg-linear-to-r from-purple-600/20 via-pink-600/20 to-orange-600/20 dark:from-purple-400/10 dark:via-pink-400/10 dark:to-orange-400/10" />
+      <div className="absolute inset-0 bg-linear-to-r from-purple-600/20 via-pink-600/20 to-orange-600/20 dark:from-gray-900 dark:via-gray-950 dark:to-black" />
       
       <div className="relative max-w-7xl mx-auto text-center">
         
@@ -18,7 +18,7 @@ export function HeroSection() {
         </p>
         
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
-          <Button size="lg" className="px-8 py-6 text-lg bg-linear-to-r from-purple-600 to-pink-600 text-white shadow-lg hover:shadow-xl">
+          <Button size="lg" className="px-8 py-6 text-lg bg-linear-to-r from-rose-500 to-violet-500 dark:from-rose-600 dark:to-violet-600 text-white rounded-xl shadow-lg hover:shadow-xl transition">
                 <Calendar className="mr-2 h-5 w-5" />
                 Find Events
               </Button>
@@ -26,6 +26,7 @@ export function HeroSection() {
                 <Plus className="mr-2 h-5 w-5" />
                 Host Event
               </Button>
+              
           
         </div>
         

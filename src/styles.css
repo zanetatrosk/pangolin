@@ -103,25 +103,5 @@
   }
 }
 
-@layer utilities {
-  .btn-gradient-primary {
-    background: var(--gradient-primary);
-    @apply text-white;
-  }
-  
-  .btn-gradient-primary:hover {
-    background: var(--gradient-primary-hover);
-  }
-  
-  .bg-gradient-secondary {
-    background: var(--gradient-secondary);
-  }
-  
-  .text-gradient {
-    background: var(--gradient-text);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-}
+
 

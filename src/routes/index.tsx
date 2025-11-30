@@ -8,7 +8,7 @@ export const Route = createFileRoute('/')({ component: App })
 
 function App() {
   return (
-    <div className="min-h-screen bg-linear-to-br from-purple-50 via-pink-50 to-orange-50 dark:from-purple-950 dark:via-pink-950 dark:to-orange-950">
+    <div className="min-h-screen">
       <HeroSection />
       <FeaturesSection />
       <FeaturedEventsSection />

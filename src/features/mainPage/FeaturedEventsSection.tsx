@@ -152,12 +152,12 @@ export function FeaturedEventsSection() {
               
               <CardFooter className="pt-0">
                 <div className="flex items-center justify-between w-full">
-                  <div className="text-2xl font-bold text-purple-600">{event.price}</div>
+                  <div className="text-2xl font-bold">{event.price}</div>
                   <div className="flex gap-2">
                     <Button variant="outline" size="sm">
                       <Share2 className="w-4 h-4" />
                     </Button>
-                    <Button className="bg-linear-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700">
+                    <Button>
                       Join Event
                       <ArrowRight className="w-4 h-4 ml-2" />
                     </Button>

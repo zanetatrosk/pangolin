@@ -31,13 +31,12 @@ export function Header() {
       <div className="mx-auto flex h-14 max-w-7xl items-center px-4">
         <div className="flex items-center gap-2">
           <div className="relative">
-            <span className="inline-flex size-10 items-center justify-center rounded-xl bg-linear-to-br from-purple-500 via-pink-500 to-orange-500 text-white shadow-lg">
+            <span className="inline-flex size-10 items-center justify-center rounded-xl bg-gradient-primaryshadow-lg">
               <Music3 className="size-5" />
             </span>
-            <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
           </div>
           <div>
-            <span className="font-bold text-xl bg-linear-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+            <span className="font-bold text-xl">
               Connect2Dance
             </span>
             <div className="text-xs text-gray-500 dark:text-gray-400 -mt-1">
@@ -80,7 +79,7 @@ export function Header() {
               )}
             </Button>
           )}
-          <Button variant="outline" className="hidden sm:inline-flex">
+          <Button variant="outline" className="hidden sm:inline-flex" >
             Submit Event
           </Button>
           <Button>Login</Button>

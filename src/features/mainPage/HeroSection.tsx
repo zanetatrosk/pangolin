@@ -9,7 +9,7 @@ export function HeroSection() {
       
       <div className="relative max-w-7xl mx-auto text-center">
         
-        <h1 className="text-5xl md:text-7xl font-bold bg-linear-to-r from-purple-600 via-pink-600 to-orange-600 bg-clip-text text-transparent mb-7">
+        <h1 className="text-5xl md:text-7xl font-bold mb-7 text-gray-900 dark:text-white">
           Connect Through Dance
         </h1>
         
@@ -18,11 +18,11 @@ export function HeroSection() {
         </p>
         
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
-          <Button size="lg" className="bg-linear-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-8 py-6 text-lg">
+          <Button size="lg" className="px-8 py-6 text-lg bg-linear-to-r from-purple-600 to-pink-600 text-white shadow-lg hover:shadow-xl">
                 <Calendar className="mr-2 h-5 w-5" />
                 Find Events
               </Button>
-              <Button variant="outline" size="lg" className="px-8 py-6 text-lg border-purple-300 hover:bg-purple-50 dark:border-purple-600 dark:hover:bg-purple-900/50">
+              <Button size="lg" className="px-8 py-6 text-lg">
                 <Plus className="mr-2 h-5 w-5" />
                 Host Event
               </Button>

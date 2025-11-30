@@ -27,13 +27,13 @@ export function Header() {
   }
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border/60 backdrop-blur supports-[backdrop-filter]:bg-background/70">
+    <header className="sticky top-0 z-50 w-full border-b border-border/60 backdrop-blur supports-backdrop-filter:bg-background/70">
       <div className="mx-auto flex h-14 max-w-7xl items-center px-4">
         <div className="flex items-center gap-2">
-          <span className="inline-flex size-8 items-center justify-center rounded-md bg-gradient-to-br from-violet-600 to-rose-500 text-white shadow-sm">
+          <span className="inline-flex size-8 items-center justify-center rounded-md bg-linear-to-br from-rose-500 to-violet-950 text-white shadow-sm">
             <Music3 className="size-4" />
           </span>
-          <span className="font-semibold tracking-tight">DanceWave</span>
+          <span className="font-semibold tracking-tight">Connect2Dance</span>
         </div>
 
         <div className="mx-6 hidden flex-1 md:block">

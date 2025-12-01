@@ -2,14 +2,18 @@ import { useIsMobile } from "@/hooks/useIsMobile";
 import {
   NavigationMenu,
   NavigationMenuList,
-  NavigationMenuItem,
-  NavigationMenuTrigger,
-  NavigationMenuContent,
-  NavigationMenuLink,
+  NavigationMenuItem, NavigationMenuLink
 } from "@/components/ui/navigation-menu";
 import { Button } from "@/components/ui/button";
-import { Music3, Moon, Sun } from "lucide-react";
+import { Moon, Sun } from "lucide-react";
 import { useEffect, useState } from "react";
+import { Logo } from "./Logo";
+
+const MenuItems = [
+  { href: "#events", label: "Events" },
+  { href: "#artists", label: "Dancers" },
+  { href: "#about", label: "About" },
+];
 
 export function Header() {
   const isMobile = useIsMobile();
@@ -29,36 +33,21 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/60 backdrop-blur supports-backdrop-filter:bg-background/70">
       <div className="mx-auto flex h-14 max-w-7xl items-center px-4">
-        <div className="flex items-center gap-2">
-          <div className="relative">
-            <span className="inline-flex size-10 items-center justify-center rounded-xl bg-gradient-primaryshadow-lg">
-              <Music3 className="size-5" />
-            </span>
-          </div>
-          <div>
-            <span className="font-bold text-xl">
-              Connect2Dance
-            </span>
-            <div className="text-xs text-gray-500 dark:text-gray-400 -mt-1">
-              Social Dance Events
-            </div>
-          </div>
-        </div>
-
+        <Logo />
         <div className="flex-1 md:flex ml-8 items-center">
           <div className="hidden md:block">
             <NavigationMenu>
               <NavigationMenuList className="gap-8">
-                <NavigationMenuItem>
-                  <NavigationMenuLink href="#events" className="text-lg text-gray-700 dark:text-gray-300">Events</NavigationMenuLink>
-                </NavigationMenuItem>
-                <NavigationMenuItem>
-                  <NavigationMenuLink href="#artists" className="text-lg text-gray-700 dark:text-gray-300">Dancers</NavigationMenuLink>
-                </NavigationMenuItem>
-
-                <NavigationMenuItem>
-                  <NavigationMenuLink href="#about" className="text-lg text-gray-700 dark:text-gray-300">About</NavigationMenuLink>
-                </NavigationMenuItem>
+                {MenuItems.map((item) => (
+                  <NavigationMenuItem key={item.href}>
+                    <NavigationMenuLink
+                      href={item.href}
+                      className="text-md font-medium text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white"
+                    >
+                      {item.label}
+                    </NavigationMenuLink>
+                  </NavigationMenuItem>
+                ))}
               </NavigationMenuList>
             </NavigationMenu>
           </div>
@@ -71,6 +60,7 @@ export function Header() {
               className="hidden md:inline-flex"
               onClick={toggleTheme}
               aria-label="Toggle theme"
+              size="icon-lg"
             >
               {darkMode ? (
                 <Sun className="text-muted-foreground" />

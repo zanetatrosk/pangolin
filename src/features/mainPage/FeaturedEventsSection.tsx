@@ -98,7 +98,7 @@ export function FeaturedEventsSection() {
                   className="w-full h-48 object-cover"
                 />
                 <div className="absolute top-4 left-4">
-                  <Badge className="bg-linear-to-r from-purple-600 to-pink-600 text-white">
+                  <Badge>
                     {event.difficulty}
                   </Badge>
                 </div>
@@ -154,7 +154,7 @@ export function FeaturedEventsSection() {
                 <div className="flex items-center justify-between w-full">
                   <div className="text-2xl font-bold">{event.price}</div>
                   <div className="flex gap-2">
-                    <Button variant="outline" size="sm">
+                    <Button variant="outline">
                       <Share2 className="w-4 h-4" />
                     </Button>
                     <Button>

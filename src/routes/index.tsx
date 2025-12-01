@@ -8,11 +8,11 @@ export const Route = createFileRoute('/')({ component: App })
 
 function App() {
   return (
-    <div className="min-h-screen">
+    <>
       <HeroSection />
       <FeaturesSection />
       <FeaturedEventsSection />
       <Footer />
-    </div>
+    </>
   )
 }

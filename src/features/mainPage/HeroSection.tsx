@@ -1,6 +1,41 @@
 import { Button } from "@/components/ui/button";
 import { Calendar, Users, Star, Plus } from "lucide-react";
 
+const statSections = [
+  {
+    icon: Users,
+    label: "500+ Active Dancers",
+    bgColorClass: "bg-purple-100 dark:bg-purple-900",
+    iconColorClass: "text-purple-600 dark:text-purple-400",
+  },
+  {
+    icon: Calendar,
+    label: "50+ Events Monthly",
+    bgColorClass: "bg-pink-100 dark:bg-pink-900",
+    iconColorClass: "text-pink-600 dark:text-pink-400",
+  },
+  {
+    icon: Star,
+    label: "4.9★ Average Rating",
+    bgColorClass: "bg-orange-100 dark:bg-orange-900",
+    iconColorClass: "text-orange-600 dark:text-orange-400",
+  },
+];
+
+export const StatItem: React.FC<{
+  icon: React.ComponentType<{ className?: string }>;
+  label: string;
+  bgColorClass: string;
+  iconColorClass: string;
+}> = ({ icon: Icon, label, bgColorClass, iconColorClass }) => (
+  <div className="flex items-center gap-2">
+    <div className={`w-8 h-8 ${bgColorClass} rounded-full flex items-center justify-center`}>
+      <Icon className={`w-4 h-4 ${iconColorClass}`} />
+    </div>
+    <span className="text-gray-600 dark:text-gray-400">{label}</span>
+  </div>
+);
+
 export function HeroSection() {
   return (
     <section className="px-4 py-20 bg-linear-to-r from-purple-600/20 via-pink-600/20 to-orange-600/20 dark:from-gray-900 dark:via-gray-950 dark:to-black">
@@ -19,40 +54,25 @@ export function HeroSection() {
             size="lg"
             className="px-8 py-6 text-lg bg-linear-to-r from-rose-500 to-violet-500 dark:from-rose-600 dark:to-violet-600 text-white rounded-xl shadow-lg hover:shadow-xl transition"
           >
-            <Calendar className="mr-2 h-5 w-5" />
+            <Calendar className="mr-2" />
             Find Events
           </Button>
           <Button size="lg" className="px-8 py-6 text-lg">
-            <Plus className="mr-2 h-5 w-5" />
+            <Plus className="mr-2" />
             Host Event
           </Button>
         </div>
 
-        <div className="flex flex-wrap justify-center gap-8 text-center">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-purple-100 dark:bg-purple-900 rounded-full flex items-center justify-center">
-              <Users className="w-4 h-4 text-purple-600" />
-            </div>
-            <span className="text-gray-600 dark:text-gray-400">
-              500+ Active Dancers
-            </span>
-          </div>
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-pink-100 dark:bg-pink-900 rounded-full flex items-center justify-center">
-              <Calendar className="w-4 h-4 text-pink-600" />
-            </div>
-            <span className="text-gray-600 dark:text-gray-400">
-              50+ Events Monthly
-            </span>
-          </div>
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-orange-100 dark:bg-orange-900 rounded-full flex items-center justify-center">
-              <Star className="w-4 h-4 text-orange-600" />
-            </div>
-            <span className="text-gray-600 dark:text-gray-400">
-              4.9★ Average Rating
-            </span>
-          </div>
+        <div className="flex flex-wrap justify-center items-center gap-8 text-center">
+          {statSections.map((stat) => (
+            <StatItem
+              key={stat.label}
+              icon={stat.icon}
+              label={stat.label}
+              bgColorClass={stat.bgColorClass}
+              iconColorClass={stat.iconColorClass}
+            />
+          ))}
         </div>
       </div>
     </section>

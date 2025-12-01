@@ -2,7 +2,8 @@ import { useIsMobile } from "@/hooks/useIsMobile";
 import {
   NavigationMenu,
   NavigationMenuList,
-  NavigationMenuItem, NavigationMenuLink
+  NavigationMenuItem,
+  NavigationMenuLink,
 } from "@/components/ui/navigation-menu";
 import { Button } from "@/components/ui/button";
 import { Moon, Sun } from "lucide-react";
@@ -32,47 +33,38 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/60 backdrop-blur supports-backdrop-filter:bg-background/70">
-      <div className="mx-auto flex h-14 max-w-7xl items-center px-4">
-        <Logo />
-        <div className="flex-1 md:flex ml-8 items-center">
-          <div className="hidden md:block">
-            <NavigationMenu>
-              <NavigationMenuList className="gap-8">
-                {MenuItems.map((item) => (
-                  <NavigationMenuItem key={item.href}>
-                    <NavigationMenuLink
-                      href={item.href}
-                      className="text-md font-medium text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white"
-                    >
-                      {item.label}
-                    </NavigationMenuLink>
-                  </NavigationMenuItem>
-                ))}
-              </NavigationMenuList>
-            </NavigationMenu>
-          </div>
-        </div>
+      <div className="mx-auto flex max-w-7xl items-center p-2">
+        <NavigationMenu>
+          <NavigationMenuList className="gap-8">
+            <Logo />
+            {MenuItems.map((item) => (
+              <NavigationMenuItem key={item.href}>
+                <NavigationMenuLink
+                  href={item.href}
+                  className="text-md font-medium text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white"
+                >
+                  {item.label}
+                </NavigationMenuLink>
+              </NavigationMenuItem>
+            ))}
+          </NavigationMenuList>
+        </NavigationMenu>
 
         <div className="ml-auto flex items-center gap-2">
-          {!isMobile && (
-            <Button
-              variant="ghost"
-              className="hidden md:inline-flex"
-              onClick={toggleTheme}
-              aria-label="Toggle theme"
-              size="icon-lg"
-            >
-              {darkMode ? (
-                <Sun className="text-muted-foreground" />
-              ) : (
-                <Moon className="text-muted-foreground" />
-              )}
-            </Button>
-          )}
-          <Button variant="outline" className="hidden sm:inline-flex" >
-            Submit Event
+          <Button
+            variant="ghost"
+            onClick={toggleTheme}
+            aria-label="Toggle theme"
+            size="icon-lg"
+          >
+            {darkMode ? (
+              <Sun className="text-muted-foreground" />
+            ) : (
+              <Moon className="text-muted-foreground" />
+            )}
           </Button>
-          <Button>Login</Button>
+          <Button variant="outline">Login</Button>
+          <Button>Sign up free</Button>
         </div>
       </div>
     </header>

@@ -15,7 +15,7 @@ export function FeaturesSection() {
         </div>
         
         <div className="grid md:grid-cols-3 gap-8">
-          <Card className="border-0 shadow-xl bg-white/80 dark:bg-gray-900/80 backdrop-blur">
+          <Card className="border-0 shadow-xl bg-pink-100 dark:bg-gray-900/80 backdrop-blur">
             <CardHeader className="text-center">
               <div className="w-16 h-16 bg-linear-to-br from-purple-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4">
                 <UserPlus className="w-8 h-8 text-white" />
@@ -29,7 +29,7 @@ export function FeaturesSection() {
             </CardContent>
           </Card>
           
-          <Card className="border-0 shadow-xl bg-white/80 dark:bg-gray-900/80 backdrop-blur">
+          <Card className="border-0 shadow-xl bg-pink-100 dark:bg-gray-900/80 backdrop-blur">
             <CardHeader className="text-center">
               <div className="w-16 h-16 bg-linear-to-br from-pink-500 to-pink-600 rounded-full flex items-center justify-center mx-auto mb-4">
                 <TrendingUp className="w-8 h-8 text-white" />
@@ -43,7 +43,7 @@ export function FeaturesSection() {
             </CardContent>
           </Card>
           
-          <Card className="border-0 shadow-xl bg-white/80 dark:bg-gray-900/80 backdrop-blur">
+          <Card className="border-0 shadow-xl bg-pink-100 dark:bg-gray-900/80 backdrop-blur">
             <CardHeader className="text-center">
               <div className="w-16 h-16 bg-linear-to-br from-orange-500 to-orange-600 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Star className="w-8 h-8 text-white" />

@@ -141,8 +141,8 @@ export function EventSearch() {
   return (
     <>
       {/* Main Search Bar */}
-      <Card className="mb-8 relative overflow-hidden border-purple-200 dark:border-purple-700 shadow-lg">
-        <div className="absolute inset-0" />
+      <Card className="mb-8 shadow-xl backdrop-blur-lg border border-purple-200/30 dark:border-purple-700/40 overflow-hidden">
+        <div className="absolute inset-0 bg-linear-to-r from-purple-600/3 via-pink-600/3 to-purple-600/3" />
         <CardContent className="relative p-8">
           <div className="space-y-6">
             {/* Primary Search Row - Search Term and Location */}
@@ -182,7 +182,7 @@ export function EventSearch() {
                   defaultValue={eventTypes}
                   placeholder="Select event types..."
                   maxCount={3}
-                  className="h-14 border-purple-200/50 dark:border-purple-700/50 bg-white/70 dark:bg-gray-800/70 backdrop-blur rounded-xl shadow-sm"
+                  className="h-14 border-purple-200/50 dark:border-pu rple-700/50 bg-white/70 dark:bg-gray-800/70 backdrop-blur rounded-xl shadow-sm"
                 />
               </div>
               <div className="flex-1">
@@ -198,7 +198,7 @@ export function EventSearch() {
                   defaultValue={danceStyles}
                   placeholder="Select dance styles..."
                   maxCount={3}
-                  className="h-14 border-purple-200/50 dark:border-purple-700/50 bg-white/70 dark:bg-gray-800/70 backdrop-blur rounded-xl shadow-sm"
+                  className="h-14 border-purple-200/50 dark:border-purple-700/50 bg-white/70 dark:bg-gray-800/70 backdrop-blur rounded-xl shadow-sm hover:shadow-md hover:border-purple-300/60 dark:hover:border-purple-600/60 transition-all duration-200"
                 />
               </div>
             </div>

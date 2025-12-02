@@ -9,12 +9,12 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as EventsRouteImport } from './routes/Events'
+import { Route as EventsRouteImport } from './routes/events'
 import { Route as IndexRouteImport } from './routes/index'
 
 const EventsRoute = EventsRouteImport.update({
-  id: '/Events',
-  path: '/Events',
+  id: '/events',
+  path: '/events',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -25,23 +25,23 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/Events': typeof EventsRoute
+  '/events': typeof EventsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/Events': typeof EventsRoute
+  '/events': typeof EventsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/Events': typeof EventsRoute
+  '/events': typeof EventsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/Events'
+  fullPaths: '/' | '/events'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/Events'
-  id: '__root__' | '/' | '/Events'
+  to: '/' | '/events'
+  id: '__root__' | '/' | '/events'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -51,10 +51,10 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/Events': {
-      id: '/Events'
-      path: '/Events'
-      fullPath: '/Events'
+    '/events': {
+      id: '/events'
+      path: '/events'
+      fullPath: '/events'
       preLoaderRoute: typeof EventsRouteImport
       parentRoute: typeof rootRouteImport
     }

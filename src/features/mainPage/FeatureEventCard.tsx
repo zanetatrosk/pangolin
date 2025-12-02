@@ -17,6 +17,7 @@ import {
   Users,
   Share2,
   ArrowRight,
+  Banknote,
 } from "lucide-react";
 
 interface FeatureEventCardProps {
@@ -40,7 +41,7 @@ interface FeatureEventCardProps {
 export const FeatureEventCard: React.FC<FeatureEventCardProps> = (event) => (
   <Card
     key={event.id}
-    className="border-0 shadow-xl bg-white dark:bg-gray-900 overflow-hidden hover:shadow-2xl transition-all duration-300 hover:scale-105"
+    className="border-0 shadow-xl bg-white dark:bg-gray-900 overflow-hidden hover:shadow-2xl transition-all duration-300 hover:scale-105 flex flex-col h-full"
   >
     <div className="relative">
       <img
@@ -64,59 +65,54 @@ export const FeatureEventCard: React.FC<FeatureEventCardProps> = (event) => (
       </div>
     </div>
 
-    <CardHeader>
+    <CardHeader className="shrink-0">
       <div className="flex items-start justify-between">
         <CardTitle className="text-xl">{event.title}</CardTitle>
-        <div className="flex items-center gap-1">
-          <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-          <span className="text-sm font-medium">{event.rating}</span>
-        </div>
       </div>
-      <CardDescription>{event.description}</CardDescription>
+      <CardDescription className="line-clamp-2">{event.description}</CardDescription>
     </CardHeader>
 
-    <CardContent className="space-y-3">
-      <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
-        <Calendar className="w-4 h-4" />
-        <span>{event.date}</span>
-      </div>
-      <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
-        <Clock className="w-4 h-4" />
-        <span>{event.time}</span>
-      </div>
-      <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
-        <MapPin className="w-4 h-4" />
-        <span>{event.location}</span>
-      </div>
-      <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
-        <Users className="w-4 h-4" />
-        <span>
-          {event.attendees}/{event.maxAttendees} attending
-        </span>
+    <CardContent className="space-y-3 grow">
+      <div className="space-y-2 text-sm">
+        <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400">
+          <Calendar className="w-4 h-4" />
+          <span className="truncate">{event.date} at {event.time}</span>
+        </div>
+        <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400">
+          <MapPin className="w-4 h-4" />
+          <span className="truncate">{event.location}</span>
+        </div>
+        <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400">
+          <Users className="w-4 h-4" />
+          <span>
+            {event.attendees}/{event.maxAttendees} attending
+          </span>
+        </div>
+        <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400">
+          <Banknote className="w-4 h-4" />
+          <span className="font-semibold">{event.price}</span>
+        </div>
       </div>
 
       <div className="flex flex-wrap gap-1 mt-3">
-        {event.tags.map((tag) => (
+        {event.tags.slice(0, 3).map((tag) => (
           <Badge key={tag} variant="outline" className="text-xs">
             {tag}
           </Badge>
         ))}
+        {event.tags.length > 3 && (
+          <Badge variant="outline" className="text-xs">
+            +{event.tags.length - 3}
+          </Badge>
+        )}
       </div>
     </CardContent>
 
-    <CardFooter className="pt-0">
-      <div className="flex items-center justify-between w-full">
-        <div className="text-2xl font-bold">{event.price}</div>
-        <div className="flex gap-2">
-          <Button variant="outline">
-            <Share2 className="w-4 h-4" />
-          </Button>
-          <Button>
-            Join Event
-            <ArrowRight className="w-4 h-4 ml-2" />
-          </Button>
-        </div>
-      </div>
+    <CardFooter className="pt-4 mt-auto flex-shrink-0">
+      <Button className="w-full">
+        View Event Details
+        <ArrowRight className="w-4 h-4 ml-2" />
+      </Button>
     </CardFooter>
   </Card>
 );

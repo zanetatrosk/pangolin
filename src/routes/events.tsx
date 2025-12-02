@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { EventSearch } from "@/features/eventsList/EventSearch";
+import { EventList } from "@/features/eventsList/EventList";
 
 export const Route = createFileRoute("/events")({
   component: RouteComponent,
@@ -19,9 +20,10 @@ function RouteComponent() {
               Find and join dance events in your area
             </p>
           </div>
-          
+
           {/* Search Component */}
           <EventSearch />
+          <EventList />
         </div>
       </div>
     </div>

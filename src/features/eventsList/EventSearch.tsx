@@ -241,36 +241,36 @@ export function EventSearch() {
                       </DialogDescription>
                     </DialogHeader>
 
-                    <div className="space-y-6 py-4">
-                      {/* Date & Time Section */}
-                      <div className="space-y-3">
-                        <h4 className="font-medium text-sm text-gray-900 dark:text-gray-100 flex items-center gap-2">
-                          <Calendar className="h-4 w-4" />
-                          Date & Time
-                        </h4>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                          <Select
-                            value={dateRange}
-                            onValueChange={setDateRange}
-                          >
-                            <SelectTrigger>
+                    <div className="py-4 space-y-6">
+                      {/* Row 1: Date & Time Filters */}
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="space-y-2">
+                          <label className="text-sm font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2">
+                            <Calendar className="h-4 w-4" />
+                            Date Range
+                          </label>
+                          <Select value={dateRange} onValueChange={setDateRange}>
+                            <SelectTrigger className="h-11">
                               <SelectValue placeholder="Select Date Range" />
                             </SelectTrigger>
                             <SelectContent>
                               {dateRanges.map((range) => (
-                                <SelectItem
-                                  key={range.value}
-                                  value={range.value}
-                                >
+                                <SelectItem key={range.value} value={range.value}>
                                   {range.label}
                                 </SelectItem>
                               ))}
                             </SelectContent>
                           </Select>
+                        </div>
 
+                        <div className="space-y-2">
+                          <label className="text-sm font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2">
+                            <Calendar className="h-4 w-4" />
+                            Time Slot
+                          </label>
                           <Select value={timeSlot} onValueChange={setTimeSlot}>
-                            <SelectTrigger>
-                              <SelectValue placeholder="Time Slot" />
+                            <SelectTrigger className="h-11">
+                              <SelectValue placeholder="Select Time Slot" />
                             </SelectTrigger>
                             <SelectContent>
                               {timeSlots.map((slot) => (
@@ -285,81 +285,79 @@ export function EventSearch() {
 
                       <Separator />
 
-                      {/* Price & Capacity Section */}
-                      <div className="space-y-3">
-                        <h4 className="font-medium text-sm text-gray-900 dark:text-gray-100 flex items-center gap-2">
-                          <DollarSign className="h-4 w-4" />
-                          Price & Capacity
-                        </h4>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                          <Select
-                            value={priceRange}
-                            onValueChange={setPriceRange}
-                          >
-                            <SelectTrigger>
-                              <SelectValue placeholder="Price Range" />
+                      {/* Row 2: Price & Capacity Filters */}
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="space-y-2">
+                          <label className="text-sm font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2">
+                            <DollarSign className="h-4 w-4" />
+                            Price Range
+                          </label>
+                          <Select value={priceRange} onValueChange={setPriceRange}>
+                            <SelectTrigger className="h-11">
+                              <SelectValue placeholder="Select Price Range" />
                             </SelectTrigger>
                             <SelectContent>
                               {priceRanges.map((range) => (
-                                <SelectItem
-                                  key={range.value}
-                                  value={range.value}
-                                >
+                                <SelectItem key={range.value} value={range.value}>
                                   {range.label}
                                 </SelectItem>
                               ))}
                             </SelectContent>
                           </Select>
+                        </div>
 
+                        <div className="space-y-2">
+                          <label className="text-sm font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2">
+                            <Users className="h-4 w-4" />
+                            Max Attendees
+                          </label>
                           <Input
-                            placeholder="Max Attendees"
+                            placeholder="Enter max attendees"
                             type="number"
                             value={maxAttendees}
                             onChange={(e) => setMaxAttendees(e.target.value)}
+                            className="h-11"
                           />
                         </div>
                       </div>
 
                       <Separator />
 
-                      {/* Experience Level & Rating Section */}
-                      <div className="space-y-3">
-                        <h4 className="font-medium text-sm text-gray-900 dark:text-gray-100 flex items-center gap-2">
-                          <Users className="h-4 w-4" />
-                          Experience & Quality
-                        </h4>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                          <Select
-                            value={skillLevel}
-                            onValueChange={setSkillLevel}
-                          >
-                            <SelectTrigger>
-                              <SelectValue placeholder="Skill Level" />
+                      {/* Row 3: Experience & Rating Filters */}
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="space-y-2">
+                          <label className="text-sm font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2">
+                            <Users className="h-4 w-4" />
+                            Skill Level
+                          </label>
+                          <Select value={skillLevel} onValueChange={setSkillLevel}>
+                            <SelectTrigger className="h-11">
+                              <SelectValue placeholder="Select Skill Level" />
                             </SelectTrigger>
                             <SelectContent>
                               {skillLevels.map((level) => (
-                                <SelectItem
-                                  key={level.value}
-                                  value={level.value}
-                                >
+                                <SelectItem key={level.value} value={level.value}>
                                   {level.label}
                                 </SelectItem>
                               ))}
                             </SelectContent>
                           </Select>
+                        </div>
 
-                          <Select
-                            value={minRating}
-                            onValueChange={setMinRating}
-                          >
-                            <SelectTrigger>
-                              <SelectValue placeholder="Minimum Rating" />
+                        <div className="space-y-2">
+                          <label className="text-sm font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2">
+                            <Filter className="h-4 w-4" />
+                            Minimum Rating
+                          </label>
+                          <Select value={minRating} onValueChange={setMinRating}>
+                            <SelectTrigger className="h-11">
+                              <SelectValue placeholder="Select Min Rating" />
                             </SelectTrigger>
                             <SelectContent>
-                              <SelectItem value="4.5">4.5+ Stars</SelectItem>
-                              <SelectItem value="4.0">4.0+ Stars</SelectItem>
-                              <SelectItem value="3.5">3.5+ Stars</SelectItem>
-                              <SelectItem value="3.0">3.0+ Stars</SelectItem>
+                              <SelectItem value="4.5">⭐⭐⭐⭐⭐ 4.5+ Stars</SelectItem>
+                              <SelectItem value="4.0">⭐⭐⭐⭐ 4.0+ Stars</SelectItem>
+                              <SelectItem value="3.5">⭐⭐⭐⭐ 3.5+ Stars</SelectItem>
+                              <SelectItem value="3.0">⭐⭐⭐ 3.0+ Stars</SelectItem>
                             </SelectContent>
                           </Select>
                         </div>

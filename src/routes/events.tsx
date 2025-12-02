@@ -1,6 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { EventSearch } from "@/features/eventsList/EventSearch";
-import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/events")({
   component: RouteComponent,

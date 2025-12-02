@@ -7,11 +7,10 @@ import {
 import { Button } from "@/components/ui/button";
 import { Moon, Sun } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Link } from "@tanstack/react-router";
 import { Logo } from "./Logo";
 
 const MenuItems = [
-  { href: "/Events", label: "Events" },
+  { href: "/events", label: "Events" },
   { href: "/artists", label: "Dancers" },
   { href: "/about", label: "About" },
 ];
@@ -38,13 +37,11 @@ export function Header() {
             <Logo />
             {MenuItems.map((item) => (
               <NavigationMenuItem key={item.href}>
-                <NavigationMenuLink asChild>
-                  <Link
-                    to={item.href}
-                    className="text-md font-medium text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white"
-                  >
-                    {item.label}
-                  </Link>
+                <NavigationMenuLink
+                  href={item.href}
+                  className="text-md font-medium text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white"
+                >
+                  {item.label}
                 </NavigationMenuLink>
               </NavigationMenuItem>
             ))}

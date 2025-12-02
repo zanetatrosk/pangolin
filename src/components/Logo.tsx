@@ -1,7 +1,8 @@
 import { UsersRound } from "lucide-react";
+import { Link } from "@tanstack/react-router";
 
 export const Logo = () => (
-  <div className="flex items-center cursor-pointer" onClick={() => window.location.href = '/'}>
+  <Link to="/" className="flex items-center cursor-pointer hover:opacity-80 transition-opacity">
       <span className="mr-1">
         <UsersRound className="size-5" />
       </span>
@@ -11,5 +12,5 @@ export const Logo = () => (
         Social Dance Events
       </div>
     </div>
-  </div>
+  </Link>
 );

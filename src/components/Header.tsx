@@ -2,11 +2,11 @@ import {
   NavigationMenu,
   NavigationMenuList,
   NavigationMenuItem,
-  NavigationMenuLink,
 } from "@/components/ui/navigation-menu";
 import { Button } from "@/components/ui/button";
 import { Moon, Sun } from "lucide-react";
 import { useEffect, useState } from "react";
+import { Link } from "@tanstack/react-router";
 import { Logo } from "./Logo";
 
 const MenuItems = [
@@ -36,12 +36,12 @@ export function Header() {
             <Logo />
             {MenuItems.map((item) => (
               <NavigationMenuItem key={item.href}>
-                <NavigationMenuLink
-                  href={item.href}
-                  className="text-md font-medium text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white"
+                <Link
+                  to={item.href}
+                  className="text-md font-medium text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white transition-colors"
                 >
                   {item.label}
-                </NavigationMenuLink>
+                </Link>
               </NavigationMenuItem>
             ))}
           </NavigationMenuList>

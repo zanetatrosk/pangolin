@@ -11,9 +11,9 @@ import { useEffect, useState } from "react";
 import { Logo } from "./Logo";
 
 const MenuItems = [
-  { href: "#events", label: "Events" },
-  { href: "#artists", label: "Dancers" },
-  { href: "#about", label: "About" },
+  { href: "/events", label: "Events" },
+  { href: "/artists", label: "Dancers" },
+  { href: "/about", label: "About" },
 ];
 
 export function Header() {

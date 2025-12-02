@@ -1,7 +1,7 @@
 import { UsersRound } from "lucide-react";
 
 export const Logo = () => (
-  <div className="flex items-center">
+  <div className="flex items-center cursor-pointer" onClick={() => window.location.href = '/'}>
       <span className="mr-1">
         <UsersRound className="size-5" />
       </span>

@@ -128,8 +128,6 @@ export function EventSearch() {
   };
 
   const activeFiltersCount = [
-    eventTypes.length > 0,
-    danceStyles.length > 0,
     dateRange,
     timeSlot,
     priceRange,
@@ -142,36 +140,46 @@ export function EventSearch() {
     <>
       {/* Main Search Bar */}
       <Card className="mb-8 shadow-xl backdrop-blur-lg border border-purple-200/30 dark:border-purple-700/40 overflow-hidden">
-        <div className="absolute inset-0 bg-linear-to-r from-purple-600/3 via-pink-600/3 to-purple-600/3" />
-        <CardContent className="relative p-8">
-          <div className="space-y-6">
-            {/* Primary Search Row - Search Term and Location */}
-            <div className="flex flex-col sm:flex-row gap-4">
-              <div className="relative flex-1">
-                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-purple-400 h-5 w-5" />
-                <Input
-                  placeholder="Search events, instructors, venues..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-12 h-14 border-purple-200/50 dark:border-purple-700/50 focus:border-purple-500 focus:ring-purple-500/20 bg-white/70 dark:bg-gray-800/70 backdrop-blur text-lg rounded-xl shadow-sm"
-                />
-              </div>
-              <div className="relative sm:w-72">
-                <MapPin className="absolute left-4 top-1/2 transform -translate-y-1/2 text-pink-400 h-5 w-5" />
-                <Input
-                  placeholder="Enter location..."
-                  value={location}
-                  onChange={(e) => setLocation(e.target.value)}
-                  className="pl-12 h-14 border-purple-200/50 dark:border-purple-700/50 focus:border-pink-500 focus:ring-pink-500/20 bg-white/70 dark:bg-gray-800/70 backdrop-blur text-lg rounded-xl shadow-sm"
-                />
-              </div>
+        <div className="absolute inset-0" />
+        <CardContent className="relative p-6">
+          {/* Main Search Section */}
+          <div className="space-y-5">
+            {/* Hero Search - Main Input */}
+            <div className="relative">
+              <Search className="absolute left-5 top-1/2 transform -translate-y-1/2  text-pink-500 h-6 w-6 z-10 pointer-events-none" />
+              <Input
+                placeholder="What dance event are you looking for?"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="pl-14 pr-6 h-16 border-purple-200/60 dark:border-purple-700/60 focus:border-purple-500 focus:ring-purple-500/30 bg-white/80 dark:bg-gray-800/80 backdrop-blur text-xl rounded-2xl shadow-lg relative z-0 font-medium placeholder:text-gray-400"
+              />
             </div>
 
-            {/* Second Row - Event Types and Dance Styles */}
-            <div className="flex flex-col sm:flex-row gap-4">
-              <div className="flex-1">
-                <div className="flex items-center gap-2 mb-2">
-                  <Calendar className="h-4 w-4 text-purple-600 dark:text-purple-400" />
+            {/* Quick Filters Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {/* Location Filter */}
+              <div className="space-y-2">
+                <div className="flex items-center gap-2">
+                  <MapPin className="h-4 w-4 text-pink-500" />
+                  <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                    Location
+                  </label>
+                </div>
+                <div className="relative">
+                  <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 text-pink-400 h-4 w-4 z-10 pointer-events-none" />
+                  <Input
+                    placeholder="City or venue..."
+                    value={location}
+                    onChange={(e) => setLocation(e.target.value)}
+                    className="pl-10 h-12 border-pink-200/50 dark:border-pink-700/50 focus:border-pink-500 focus:ring-pink-500/20 bg-white/70 dark:bg-gray-800/70 backdrop-blur rounded-lg shadow-sm relative z-0"
+                  />
+                </div>
+              </div>
+
+              {/* Event Types Filter */}
+              <div className="space-y-2">
+                <div className="flex items-center gap-2">
+                  <Calendar className="h-4 w-4  text-pink-500" />
                   <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
                     Event Types
                   </label>
@@ -180,14 +188,16 @@ export function EventSearch() {
                   options={eventTypeOptions}
                   onValueChange={setEventTypes}
                   defaultValue={eventTypes}
-                  placeholder="Select event types..."
-                  maxCount={3}
-                  className="h-14 border-purple-200/50 dark:border-pu rple-700/50 bg-white/70 dark:bg-gray-800/70 backdrop-blur rounded-xl shadow-sm"
+                  placeholder="Workshop, Social..."
+                  maxCount={2}
+                  className="h-12 border-purple-200/50 dark:border-purple-700/50 bg-white/70 dark:bg-gray-800/70 backdrop-blur rounded-lg shadow-sm"
                 />
               </div>
-              <div className="flex-1">
-                <div className="flex items-center gap-2 mb-2">
-                  <Music className="h-4 w-4 text-pink-600 dark:text-pink-400" />
+
+              {/* Dance Styles Filter */}
+              <div className="space-y-2">
+                <div className="flex items-center gap-2">
+                  <Music className="h-4 w-4  text-pink-500" />
                   <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
                     Dance Styles
                   </label>
@@ -196,15 +206,15 @@ export function EventSearch() {
                   options={danceStyleOptions}
                   onValueChange={setDanceStyles}
                   defaultValue={danceStyles}
-                  placeholder="Select dance styles..."
-                  maxCount={3}
-                  className="h-14 border-purple-200/50 dark:border-purple-700/50 bg-white/70 dark:bg-gray-800/70 backdrop-blur rounded-xl shadow-sm hover:shadow-md hover:border-purple-300/60 dark:hover:border-purple-600/60 transition-all duration-200"
+                  placeholder="Salsa, Bachata..."
+                  maxCount={2}
+                  className="h-12 border-violet-200/50 dark:border-violet-700/50 bg-white/70 dark:bg-gray-800/70 backdrop-blur rounded-lg shadow-sm hover:shadow-md hover:border-violet-300/60 dark:hover:border-violet-600/60 transition-all duration-200"
                 />
               </div>
             </div>
 
-            {/* Action Buttons Row */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-between items-center pt-2">
+            {/* Action Buttons */}
+            <div className="flex flex-col sm:flex-row gap-4 justify-between items-center pt-3 border-t border-purple-200/20 dark:border-purple-700/20">
               <div className="flex flex-wrap gap-3 items-center">
                 <Dialog open={advancedOpen} onOpenChange={setAdvancedOpen}>
                   <DialogTrigger asChild>
@@ -212,7 +222,7 @@ export function EventSearch() {
                       <Settings2 className="mr-2 h-4 w-4" />
                       Advanced Search
                       {activeFiltersCount > 0 && (
-                        <Badge className="ml-3 bg-purple-600 text-white text-xs px-2 py-1 rounded-full animate-pulse">
+                        <Badge className="ml-3 bg-pink-600 text-white text-xs px-2 py-1 rounded-full animate-pulse">
                           {activeFiltersCount}
                         </Badge>
                       )}
@@ -399,35 +409,9 @@ export function EventSearch() {
             {activeFiltersCount > 0 && (
               <div className="flex flex-wrap gap-3 pt-4 border-t border-purple-200/30 dark:border-purple-700/30">
                 <span className="text-sm font-medium text-gray-700 dark:text-gray-300 mr-2 flex items-center">
-                  <span className="w-2 h-2 bg-purple-500 rounded-full mr-2"></span>
-                  Active filters:
+                  <span className="w-2 h-2 bg-pink-500 rounded-full mr-2"></span>
+                  Advanced filters:
                 </span>
-                {eventTypes.length > 0 && eventTypes.map((type) => {
-                  const typeOption = eventTypeOptions.find((t) => t.value === type);
-                  return (
-                    <Badge
-                      key={type}
-                      variant="secondary"
-                      className="bg-purple-100 text-purple-800 dark:bg-purple-800/50 dark:text-purple-200 px-3 py-1.5 rounded-lg border border-purple-200 dark:border-purple-700"
-                    >
-                      <Calendar className="w-3 h-3 mr-1" />
-                      {typeOption?.label}
-                    </Badge>
-                  );
-                })}
-                {danceStyles.length > 0 && danceStyles.map((style) => {
-                  const styleOption = danceStyleOptions.find((s) => s.value === style);
-                  return (
-                    <Badge
-                      key={style}
-                      variant="secondary"
-                      className="bg-pink-100 text-pink-800 dark:bg-pink-800/50 dark:text-pink-200 px-3 py-1.5 rounded-lg border border-pink-200 dark:border-pink-700"
-                    >
-                      <Music className="w-3 h-3 mr-1" />
-                      {styleOption?.label}
-                    </Badge>
-                  );
-                })}
                 {dateRange && (
                   <Badge
                     variant="secondary"

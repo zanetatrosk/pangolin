@@ -1,0 +1,6 @@
+{
+  "scripts": {
+    "extract-i18n": "i18next-scanner --config i18next-scanner.config.js",
+    "translate": "echo 'Translation extraction complete. Check src/locales/ for translation files.'"
+  }
+}

@@ -7,15 +7,18 @@ import { Button } from "@/components/ui/button";
 import { Moon, Sun } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link } from "@tanstack/react-router";
+import { useTranslation } from "react-i18next";
 import { Logo } from "./Logo";
-
-const MenuItems = [
-  { href: "/events", label: "Events" },
-  { href: "/about", label: "About" },
-];
+import { LanguageSwitcher } from "./LanguageSwitcher";
 
 export function Header() {
+  const { t } = useTranslation();
   const [darkMode, setDarkMode] = useState<boolean>(false);
+
+  const MenuItems = [
+    { href: "/events", label: t('nav.events') },
+    { href: "/about", label: t('nav.about') },
+  ];
 
   useEffect(() => {
     const hasDark = document.documentElement.classList.contains("dark");
@@ -48,10 +51,11 @@ export function Header() {
         </NavigationMenu>
 
         <div className="ml-auto flex items-center gap-2">
+          {/* TODO to get ready <LanguageSwitcher /> */}
           <Button
             variant="ghost"
             onClick={toggleTheme}
-            aria-label="Toggle theme"
+            aria-label={t('header.toggleTheme')}
             size="icon-lg"
           >
             {darkMode ? (
@@ -60,8 +64,8 @@ export function Header() {
               <Moon className="text-muted-foreground" />
             )}
           </Button>
-          <Button variant="outline">Login</Button>
-          <Button>Sign up free</Button>
+          <Button variant="outline">{t('nav.login')}</Button>
+          <Button>{t('nav.signup')}</Button>
         </div>
       </div>
     </header>

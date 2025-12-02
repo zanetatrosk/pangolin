@@ -1,0 +1,92 @@
+{
+  "nav": {
+    "events": "Události",
+    "about": "O nás",
+    "login": "Přihlásit se",
+    "signup": "Registrovat se zdarma"
+  },
+  "header": {
+    "toggleTheme": "Přepnout motiv"
+  },
+  "home": {
+    "title": "Connect2Dance",
+    "subtitle": "Společenské taneční akce",
+    "heroTitle": "Spojte se prostřednictvím tance",
+    "heroSubtitle": "Objevte úžasné společenské taneční akce, najděte si dokonalého tanečního partnera a připojte se k živé komunitě tanečníků",
+    "featuredEvents": "Doporučené akce",
+    "featuredEventsText": "Nezmeškejte tyto úžasné nadcházející taneční akce ve vašem okolí",
+    "findEvents": "Najít akce",
+    "hostEvent": "Uspořádat akci",
+    "whyConnect2Dance": "Proč zvolit Connect2Dance?",
+    "whyConnect2DanceText": "Vše, co potřebujete k objevování, účasti a organizování neuvěřitelných tanečních akcí",
+    "viewEvents": "Zobrazit všechny akce",
+    "activeDancers": "Aktivních tanečníků",
+    "eventsHosted": "Uspořádaných akcí",
+    "reviews": "Průměrné hodnocení",
+    "feature1Title": "Chytré párování partnerů",
+    "feature1Text": "Náš inteligentní systém párování vás spojuje s kompatibilními tanečními partnery na základě úrovně dovedností, preferencí stylu a dostupnosti.",
+    "feature2Title": "Správa akcí",
+    "feature2Text": "Snadno použitelné nástroje pro vytváření, správu a propagaci vašich tanečních akcí. Integrované formuláře, platby a správa účastníků.",
+    "feature3Title": "Recenze komunity",
+    "feature3Text": "Čtěte upřímné recenze od ostatních tanečníků, hodnoťte akce a pomáhejte budovat důvěryhodnou komunitu tanečních nadšenců."
+  },
+  "about": {},
+  "events": {
+    "title": "Taneční akce",
+    "subtitle": "Najděte a připojte se k tanečním akcím ve vašem okolí",
+    "search": {
+      "placeholder": "Hledat akce...",
+      "advanced": "Pokročilé vyhledávání",
+      "filters": "Filtry",
+      "location": "Umístění",
+      "dateRange": "Časové období",
+      "danceStyle": "Taneční styl",
+      "difficulty": "Obtížnost",
+      "priceRange": "Cenové rozpětí",
+      "organizer": "Organizátor"
+    }
+  },
+  "eventCard": {
+    "by": "od",
+    "at": "v",
+    "attending": "účastní se",
+    "interested": "Máte zájem?",
+    "joinEvent": "Připojit se k akci?",
+    "leader": "Vedoucí",
+    "follower": "Následující",
+    "interest": "Zájem",
+    "interestedAs": "Mám zájem ({{role}})",
+    "joinEventBtn": "Připojit se k akci",
+    "participatingAs": "Účastním se ({{role}})",
+    "share": "Sdílet",
+    "shareOptions": {
+      "copyLink": "Kopírovat odkaz",
+      "facebook": "Sdílet na Facebooku",
+      "twitter": "Sdílet na Twitteru"
+    },
+    "viewDetails": "Zobrazit podrobnosti",
+    "difficulty": {
+      "beginner": "Začátečník",
+      "intermediate": "Pokročilý",
+      "advanced": "Expert"
+    }
+  },
+  "common": {
+    "loading": "Načítání...",
+    "error": "Něco se pokazilo",
+    "tryAgain": "Zkusit znovu",
+    "cancel": "Zrušit",
+    "save": "Uložit",
+    "edit": "Upravit",
+    "delete": "Smazat",
+    "confirm": "Potvrdit"
+  },
+  "languages": {
+    "en": "English",
+    "es": "Español",
+    "fr": "Français",
+    "de": "Deutsch",
+    "pt": "Português",
+    "cs": "Čeština"
+  }
+}

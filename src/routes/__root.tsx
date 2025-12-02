@@ -5,6 +5,7 @@ import { TanStackDevtools } from "@tanstack/react-devtools";
 import appCss from "../styles.css?url";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import "@/lib/i18n"; // Initialize i18n
 
 export const Route = createRootRoute({
   head: () => ({

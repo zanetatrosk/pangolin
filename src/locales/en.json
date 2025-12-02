@@ -1,0 +1,92 @@
+{
+    "nav": {
+        "events": "Events",
+        "about": "About",
+        "login": "Login",
+        "signup": "Sign up free"
+    },
+    "header": {
+        "toggleTheme": "Toggle theme"
+    },
+    "home": {
+        "title": "Connect2Dance",
+        "subtitle": "Social Dance Events",
+        "heroTitle": "Connect Through Dance",
+        "heroSubtitle": "Discover amazing social dance events, find your perfect dance partner, and join a vibrant community of dancers",
+        "featuredEvents": "Featured Events",
+        "featuredEventsText": "Don't miss these amazing upcoming dance events in your area",
+        "findEvents": "Find Events",
+        "hostEvent": "Host Event",
+        "whyConnect2Dance": "Why choose Connect2Dance?",
+        "whyConnect2DanceText": "Everything you need to discover, join, and organize incredible dance events",
+        "viewEvents": "View All Events",
+        "activeDancers": "Active Dancers",
+        "eventsHosted": "Events Hosted",
+        "reviews": "Average Rating",
+        "feature1Title": "Smart Partner Matching",
+        "feature1Text": "Our intelligent matching system pairs you with compatible dance partners based on skill level, style preferences, and availability.",
+        "feature2Title": "Event Management",
+        "feature2Text": "Easy-to-use tools for creating, managing, and promoting your dance events. Integrated forms, payments, and attendee management.",
+        "feature3Title": "Community Reviews",
+        "feature3Text": "Read honest reviews from fellow dancers, rate events, and help build a trusted community of dance enthusiasts."
+    },
+    "about": {},
+    "events": {
+        "title": "Dance Events",
+        "subtitle": "Find and join dance events in your area",
+        "search": {
+            "placeholder": "Search events...",
+            "advanced": "Advanced Search",
+            "filters": "Filters",
+            "location": "Location",
+            "dateRange": "Date Range",
+            "danceStyle": "Dance Style",
+            "difficulty": "Difficulty",
+            "priceRange": "Price Range",
+            "organizer": "Organizer"
+        }
+    },
+    "eventCard": {
+        "by": "by",
+        "at": "at",
+        "attending": "attending",
+        "interested": "Interested?",
+        "joinEvent": "Join Event?",
+        "leader": "Leader",
+        "follower": "Follower",
+        "interest": "Interest",
+        "interestedAs": "Interested ({{role}})",
+        "joinEventBtn": "Join Event",
+        "participatingAs": "Participating ({{role}})",
+        "share": "Share",
+        "shareOptions": {
+            "copyLink": "Copy Link",
+            "facebook": "Share on Facebook",
+            "twitter": "Share on Twitter"
+        },
+        "viewDetails": "View Details",
+        "difficulty": {
+            "beginner": "Beginner",
+            "intermediate": "Intermediate",
+            "advanced": "Advanced"
+        }
+    },
+    "common": {
+        "loading": "Loading...",
+        "error": "Something went wrong",
+        "tryAgain": "Try again",
+        "cancel": "Cancel",
+        "save": "Save",
+        "edit": "Edit",
+        "delete": "Delete",
+        "confirm": "Confirm"
+    },
+    "languages": {
+        "en": "English",
+        "es": "Español",
+        "fr": "Français",
+        "de": "Deutsch",
+        "pt": "Português",
+        "cs": "Čeština"
+    }
+}

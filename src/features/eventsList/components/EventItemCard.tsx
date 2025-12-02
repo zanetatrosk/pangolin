@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -59,6 +60,8 @@ export const EventItemCard: React.FC<EventItemCardProps> = ({
   rating,
   organizer,
 }) => {
+  const { t } = useTranslation();
+  
   // State management for user interactions
   const [isInterested, setIsInterested] = useState(false);
   const [interestedRole, setInterestedRole] = useState<'leader' | 'follower' | null>(null);
@@ -170,7 +173,7 @@ export const EventItemCard: React.FC<EventItemCardProps> = ({
                   </h3>
                   {organizer && (
                     <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                      by {organizer}
+                      {t('eventCard.by')} {organizer}
                     </p>
                   )}
                 </div>
@@ -187,7 +190,7 @@ export const EventItemCard: React.FC<EventItemCardProps> = ({
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
                 <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400">
                   <Calendar className="w-4 h-4" />
-                  <span>{date} at {time}</span>
+                  <span>{date} {t('eventCard.at')} {time}</span>
                 </div>
                 <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400">
                   <MapPin className="w-4 h-4" />
@@ -195,7 +198,7 @@ export const EventItemCard: React.FC<EventItemCardProps> = ({
                 </div>
                 <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400">
                   <Users className="w-4 h-4" />
-                  <span>{attendees}/{maxAttendees} attending</span>
+                  <span>{attendees}/{maxAttendees} {t('eventCard.attending')}</span>
                 </div>
                 <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400">
                   <Banknote className="w-4 h-4" />
@@ -226,7 +229,7 @@ export const EventItemCard: React.FC<EventItemCardProps> = ({
               <div className="flex flex-col gap-3 md:hidden">
                 {/* Interested Section - Mobile */}
                 <div className="space-y-2">
-                  <p className="text-xs font-medium text-gray-600 dark:text-gray-400">Interested?</p>
+                  <p className="text-xs font-medium text-gray-600 dark:text-gray-400">{t('eventCard.interested')}</p>
                   <div className="flex gap-2">
                     <Button
                       variant="ghost"
@@ -265,7 +268,7 @@ export const EventItemCard: React.FC<EventItemCardProps> = ({
 
                 {/* Participate Section - Mobile */}
                 <div className="space-y-2">
-                  <p className="text-xs font-medium text-gray-600 dark:text-gray-400">Join Event?</p>
+                  <p className="text-xs font-medium text-gray-600 dark:text-gray-400">{t('eventCard.joinEvent')}</p>
                   <div className="flex gap-2">
                     <Button
                       variant={isParticipating && participatingRole === 'leader' ? "default" : "outline"}
@@ -314,7 +317,7 @@ export const EventItemCard: React.FC<EventItemCardProps> = ({
                     <DropdownMenuContent align="start" className="w-48">
                       <DropdownMenuItem onClick={() => handleShare('copy')}>
                         <Copy className="w-4 h-4 mr-2" />
-                        Copy Link
+                        {t('eventCard.shareOptions.copyLink')}
                       </DropdownMenuItem>
                       <DropdownMenuItem onClick={() => handleShare('facebook')}>
                         <Facebook className="w-4 h-4 mr-2" />
@@ -328,7 +331,7 @@ export const EventItemCard: React.FC<EventItemCardProps> = ({
                   </DropdownMenu>
                   
                   <Button onClick={handleViewEvent} size="sm" className="h-9">
-                    View Details
+                    {t('eventCard.viewDetails')}
                     <ExternalLink className="w-4 h-4 ml-1" />
                   </Button>
                 </div>

@@ -2,6 +2,7 @@ import { Button } from '@/components/ui/button'
 import { ArrowRight } from 'lucide-react'
 import { SectionHeading } from './SectionHeading'
 import { FeatureEventCard } from './FeatureEventCard'
+import { useTranslation } from 'react-i18next'
 
 
 const featuredEvents = [
@@ -59,12 +60,13 @@ const featuredEvents = [
 ]
 
 export function FeaturedEventsSection() {
+  const { t } = useTranslation();
   return (
     <section className="px-4 py-16 bg-white/50 dark:bg-gray-900/50">
       <div className="max-w-7xl mx-auto">
         <SectionHeading
-          title="Featured Dance Events"
-          subtitle="Don't miss these amazing upcoming dance events in your area"
+          title={t('home.featuredEvents')}
+          subtitle={t('home.featuredEventsText')}
         />
         
         <div className="grid md:grid-cols-3 gap-8 mb-12">
@@ -75,7 +77,7 @@ export function FeaturedEventsSection() {
         
         <div className="text-center">
           <Button variant="outline" size="lg" className="px-8">
-            View All Events
+            {t('home.viewEvents')}
             <ArrowRight className="ml-2" />
           </Button>
         </div>

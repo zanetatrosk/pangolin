@@ -51,7 +51,7 @@ export function Header() {
         </NavigationMenu>
 
         <div className="ml-auto flex items-center gap-2">
-          {/* TODO to get ready <LanguageSwitcher /> */}
+          <LanguageSwitcher />
           <Button
             variant="ghost"
             onClick={toggleTheme}

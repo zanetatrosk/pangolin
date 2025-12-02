@@ -8,6 +8,7 @@ import {
   CardContent,
   CardFooter,
 } from "@/components/ui/card";
+import { Link } from "@tanstack/react-router";
 import {
   Heart,
   Star,
@@ -109,10 +110,12 @@ export const FeatureEventCard: React.FC<FeatureEventCardProps> = (event) => (
     </CardContent>
 
     <CardFooter className="pt-4 mt-auto flex-shrink-0">
+      <Link to={`/events/${event.id}`}>
       <Button className="w-full">
         View Event Details
         <ArrowRight className="w-4 h-4 ml-2" />
       </Button>
+      </Link>
     </CardFooter>
   </Card>
 );

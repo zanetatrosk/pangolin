@@ -10,22 +10,15 @@ export const Route = createFileRoute("/events/")({
 function RouteComponent() {
   const { t } = useTranslation();
   return (
-    <div className="min-h-screen bg-gray-50/30 dark:bg-gray-900/30">
-      {/* Search Section */}
-      <div className="relative px-4 py-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="mb-8">
-            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-3">
-              {t('events.title')}
-            </h1>
-            <p className="text-lg text-gray-600 dark:text-gray-400">
-              {t('events.subtitle')}
-            </p>
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      <div className="relative py-12 overflow-hidden">
+        <div className="absolute inset-0 bg-linear-to-br from-white-600/20 to-white-200/20 dark:from-gray-900 dark:via-gray-950 dark:to-black" />
+        {/* Content */}
+        <div className="relative px-4 mt-6">
+          <div className="max-w-6xl mx-auto">
+              <EventSearch />
+              <EventList />
           </div>
-
-          {/* Search Component */}
-          <EventSearch />
-          <EventList />
         </div>
       </div>
     </div>

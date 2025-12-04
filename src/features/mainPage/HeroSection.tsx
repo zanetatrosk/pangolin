@@ -29,7 +29,7 @@ export function HeroSection() {
     },
     {
       icon: Calendar,
-      label: t("home.eventsMonthly"),
+      label: t("home.eventsHosted"),
       bgColorClass: "bg-pink-100 dark:bg-pink-900",
       iconColorClass: "text-pink-600 dark:text-pink-400",
     },

@@ -109,7 +109,7 @@ export const FeatureEventCard: React.FC<FeatureEventCardProps> = (event) => (
       </div>
     </CardContent>
 
-    <CardFooter className="pt-4 mt-auto flex-shrink-0">
+    <CardFooter className="pt-4 mt-auto shrink-0">
       <Link to={`/events/${event.id}`}>
       <Button className="w-full">
         View Event Details

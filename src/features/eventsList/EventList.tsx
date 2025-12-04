@@ -103,7 +103,6 @@ const mockEvents = [
 export const EventList: FC = () => {
     return (
         <div className="space-y-4 p-4 md:p-6">
-            
             <div className="space-y-4">
                 {mockEvents.map((event) => (
                     <EventItemCard key={event.id} {...event} />

@@ -10,8 +10,8 @@ function RouteComponent() {
   const { t } = useTranslation();
 
   return (
-    <div className="min-h-screen bg-gray-50/30 dark:bg-gray-900/30">
-      <div className="relative px-4 py-8">
+    <div className="min-h-screen bg-gray-50/30 dark:bg-gray-900/30 relative overflow-hidden">
+      <div className="relative px-4 py-8 ">
         <div className="max-w-4xl mx-auto">
           <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
             <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-4">
@@ -20,7 +20,7 @@ function RouteComponent() {
             <p className="text-gray-600 dark:text-gray-400 mb-4">
               Event ID: {id}
             </p>
-            
+
             {/* Add your event details component here */}
             <div className="space-y-4">
               <div>
@@ -31,7 +31,7 @@ function RouteComponent() {
                   This is where you'll display the event details for event {id}
                 </p>
               </div>
-              
+
               <div>
                 <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100">
                   Description
@@ -40,7 +40,7 @@ function RouteComponent() {
                   Event description will go here...
                 </p>
               </div>
-              
+
               <div>
                 <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100">
                   Date & Time
@@ -49,7 +49,7 @@ function RouteComponent() {
                   Event date and time information...
                 </p>
               </div>
-              
+
               <div>
                 <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100">
                   Location

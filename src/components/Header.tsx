@@ -24,7 +24,7 @@ export function Header() {
   const isMobile = useIsMobile();
   const navItemClass = "text-md font-medium text-gray-700";
 
-  const MenuItems = [
+  const menuItems = [
     {
       href: "/events",
       label: t("nav.events"),
@@ -61,51 +61,65 @@ export function Header() {
     setDarkMode(el.classList.contains("dark"));
   };
 
+  const components = [
+    {
+      title: "Button",
+      href: "/components/button",
+      description: "Various styles of buttons for user interaction.",
+    },
+    {
+      title: "Card",
+      href: "/components/card",
+      description: "Container for displaying content and actions.",
+    },
+  ];
+
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/60 backdrop-blur supports-backdrop-filter:bg-background/70">
       {isMobile ? (
-        <MobileNavDrawer menuItems={MenuItems} />
+        <MobileNavDrawer menuItems={menuItems} />
       ) : (
         <div className="mx-auto flex max-w-7xl items-center p-2">
-          <NavigationMenu>
-              <Logo />
-            <NavigationMenuList className="gap-2 ml-4">
-              {MenuItems.map((item) => (
-                <NavigationMenuItem key={item.href}>
-                  {item.subItems ? (
-                    <NavigationMenuTrigger className={navItemClass}>
-                      {item.label}
-                    </NavigationMenuTrigger>
+          <Logo />
+          <NavigationMenu viewport={false} className="ml-6">
+            <NavigationMenuList className="flex-wrap">
+              {menuItems.map((menuItem) => (
+               <NavigationMenuItem key={menuItem.href}>
+                  {!menuItem.subItems ? (
+                    
+                      <NavigationMenuLink
+                        asChild
+                        className={
+                          navigationMenuTriggerStyle() + " " + navItemClass
+                        }
+                      >
+                        <Link to={menuItem.href}>{menuItem.label}</Link>
+                      </NavigationMenuLink>
                   ) : (
-                    <NavigationMenuLink
-                      asChild
-                      className={navigationMenuTriggerStyle() + " " + navItemClass}
-                    >
-                      <Link to={item.href}>
-                        {item.label}
-                      </Link>
-                    </NavigationMenuLink>
+                    <>
+                      <NavigationMenuTrigger className={navItemClass}>
+                        {menuItem.label}
+                      </NavigationMenuTrigger>
+                      <NavigationMenuContent>
+                        <ul className="grid w-[300px] gap-4">
+                          <li>
+                            {menuItem.subItems.map((subItem) => (
+                              <NavigationMenuLink asChild>
+                                <Link to={subItem.href}>
+                                  <div className="font-medium">
+                                    {subItem.label}
+                                  </div>
+                                  <div className="text-muted-foreground">
+                                    {subItem.description}
+                                  </div>
+                                </Link>
+                              </NavigationMenuLink>
+                            ))}
+                          </li>
+                        </ul>
+                      </NavigationMenuContent>
+                    </>
                   )}
-                  <NavigationMenuContent>
-                    {item.subItems ? (
-                      <ul className="grid w-[300px] gap-4">
-                        <li>
-                          {item.subItems.map((subItem) => (
-                            <NavigationMenuLink asChild>
-                              <Link to={subItem.href}>
-                                <div className="font-medium">
-                                  {subItem.label}
-                                </div>
-                                <div className="text-muted-foreground">
-                                  {subItem.description}
-                                </div>
-                              </Link>
-                            </NavigationMenuLink>
-                          ))}
-                        </li>
-                      </ul>
-                    ) : null}
-                  </NavigationMenuContent>
                 </NavigationMenuItem>
               ))}
             </NavigationMenuList>

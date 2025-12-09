@@ -3,7 +3,14 @@
         "events": "Events",
         "about": "About",
         "login": "Login",
-        "signup": "Sign up free"
+        "signup": "Sign up free",
+        "addEvent": "Add Event",
+        "addEventDesc": "Create and host a new dance event",
+        "myEvents": "My Events",
+        "myEventsDesc": "View and manage your hosted events",
+        "allEvents": "All Events",
+        "allEventsDesc": "Browse all upcoming dance events"
+
     },
     "header": {
         "toggleTheme": "Toggle theme"

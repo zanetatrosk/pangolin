@@ -1,7 +1,7 @@
 import { NavigationMenuLink } from "@radix-ui/react-navigation-menu";
 import { Link } from "@tanstack/react-router";
 
-function ListItem({
+export function ListItem({
   title,
   children,
   href,

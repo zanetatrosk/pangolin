@@ -69,7 +69,7 @@ export function Header() {
         <div className="mx-auto flex max-w-7xl items-center p-2">
           <NavigationMenu>
               <Logo />
-            <NavigationMenuList className="gap-2 ml-2">
+            <NavigationMenuList className="gap-2 ml-4">
               {MenuItems.map((item) => (
                 <NavigationMenuItem key={item.href}>
                   {item.subItems ? (

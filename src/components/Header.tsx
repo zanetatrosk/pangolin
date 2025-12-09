@@ -62,7 +62,7 @@ export function Header() {
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border/60 backdrop-blur supports-backdrop-filter:bg-background/70">
+    <header className="sticky top-0 z-50 w-full border-b border-border/60 bg-white">
       {isMobile ? (
         <MobileNavDrawer menuItems={menuItems} />
       ) : (
@@ -71,17 +71,16 @@ export function Header() {
           <NavigationMenu viewport={false} className="ml-6">
             <NavigationMenuList className="flex-wrap">
               {menuItems.map((menuItem) => (
-               <NavigationMenuItem key={menuItem.href}>
+                <NavigationMenuItem key={menuItem.href}>
                   {!menuItem.subItems ? (
-                    
-                      <NavigationMenuLink
-                        asChild
-                        className={
-                          navigationMenuTriggerStyle() + " " + navItemClass
-                        }
-                      >
-                        <Link to={menuItem.href}>{menuItem.label}</Link>
-                      </NavigationMenuLink>
+                    <NavigationMenuLink
+                      asChild
+                      className={
+                        navigationMenuTriggerStyle() + " " + navItemClass
+                      }
+                    >
+                      <Link to={menuItem.href}>{menuItem.label}</Link>
+                    </NavigationMenuLink>
                   ) : (
                     <>
                       <NavigationMenuTrigger className={navItemClass}>

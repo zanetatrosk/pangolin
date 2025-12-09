@@ -61,19 +61,6 @@ export function Header() {
     setDarkMode(el.classList.contains("dark"));
   };
 
-  const components = [
-    {
-      title: "Button",
-      href: "/components/button",
-      description: "Various styles of buttons for user interaction.",
-    },
-    {
-      title: "Card",
-      href: "/components/card",
-      description: "Container for displaying content and actions.",
-    },
-  ];
-
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/60 backdrop-blur supports-backdrop-filter:bg-background/70">
       {isMobile ? (

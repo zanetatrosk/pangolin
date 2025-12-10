@@ -53,7 +53,7 @@ export const EventCard: React.FC<EventItemCardProps> = (event) => {
     },
     {
       icon: Users,
-      label: `${event.attendees}/${event.maxAttendees} ${t(
+      label: `${(event.attendees ||0) /2} interested, ${event.attendees} ${t(
         "eventCard.attending"
       )}`,
     },

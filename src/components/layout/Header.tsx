@@ -1,49 +1,46 @@
 import {
   NavigationMenu,
   NavigationMenuList,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuContent,
-  NavigationMenuTrigger,
-  navigationMenuTriggerStyle,
+  NavigationMenuItem
 } from "@/components/ui/navigation-menu";
 import { Button } from "@/components/ui/button";
-import { Moon, Sun } from "lucide-react";
+import { CalendarPlus, Moon, PersonStanding, Sun, Users } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Link } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
-import { Logo } from "./Logo";
-import { LanguageSwitcher } from "./LanguageSwitcher";
+import { Logo } from "../Logo";
+import { LanguageSwitcher } from "../LanguageSwitcher";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import { MobileNavDrawer } from "./MobileNavDrawer";
-import { ListItem } from "./ListItem";
+import { DesktopMenuItem } from "./components/DesktopMenuItem";
 
 export function Header() {
   const { t } = useTranslation();
   const [darkMode, setDarkMode] = useState<boolean>(false);
   const isMobile = useIsMobile();
-  const navItemClass = "text-md font-medium text-gray-700";
 
   const menuItems = [
     {
       href: "/events",
       label: t("nav.events"),
-      subItems: [
+      children: [
         {
           href: "/events",
           label: t("nav.allEvents"),
           description: t("nav.allEventsDesc"),
+          icon: Users,
         },
         {
           href: "/events/new",
           label: t("nav.addEvent"),
           description: t("nav.addEventDesc"),
+          icon: CalendarPlus,
         },
 
         {
           href: "/events/my-events",
           label: t("nav.myEvents"),
           description: t("nav.myEventsDesc"),
+          icon: PersonStanding,
         },
       ],
     },
@@ -72,40 +69,7 @@ export function Header() {
             <NavigationMenuList className="flex-wrap">
               {menuItems.map((menuItem) => (
                 <NavigationMenuItem key={menuItem.href}>
-                  {!menuItem.subItems ? (
-                    <NavigationMenuLink
-                      asChild
-                      className={
-                        navigationMenuTriggerStyle() + " " + navItemClass
-                      }
-                    >
-                      <Link to={menuItem.href}>{menuItem.label}</Link>
-                    </NavigationMenuLink>
-                  ) : (
-                    <>
-                      <NavigationMenuTrigger className={navItemClass}>
-                        {menuItem.label}
-                      </NavigationMenuTrigger>
-                      <NavigationMenuContent>
-                        <ul className="grid w-[300px] gap-4">
-                          <li>
-                            {menuItem.subItems.map((subItem) => (
-                              <NavigationMenuLink asChild>
-                                <Link to={subItem.href}>
-                                  <div className="font-medium">
-                                    {subItem.label}
-                                  </div>
-                                  <div className="text-muted-foreground">
-                                    {subItem.description}
-                                  </div>
-                                </Link>
-                              </NavigationMenuLink>
-                            ))}
-                          </li>
-                        </ul>
-                      </NavigationMenuContent>
-                    </>
-                  )}
+                  <DesktopMenuItem {...menuItem} />
                 </NavigationMenuItem>
               ))}
             </NavigationMenuList>

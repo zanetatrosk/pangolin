@@ -3,7 +3,7 @@ import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import { TanStackDevtools } from "@tanstack/react-devtools";
 
 import appCss from "../styles.css?url";
-import { Header } from "@/components/Header";
+import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/Footer";
 import "@/lib/i18n"; // Initialize i18n
 

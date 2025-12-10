@@ -9,12 +9,27 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ProfileRouteImport } from './routes/profile'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as EventsRouteImport } from './routes/events'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as EventsIndexRouteImport } from './routes/events.index'
+import { Route as ProfileEditRouteImport } from './routes/profile.edit'
+import { Route as EventsNewRouteImport } from './routes/events.new'
+import { Route as EventsMyEventsRouteImport } from './routes/events.my-events'
 import { Route as EventsIdRouteImport } from './routes/events.$id'
 
+const ProfileRoute = ProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const EventsRoute = EventsRouteImport.update({
   id: '/events',
   path: '/events',
@@ -35,6 +50,21 @@ const EventsIndexRoute = EventsIndexRouteImport.update({
   path: '/',
   getParentRoute: () => EventsRoute,
 } as any)
+const ProfileEditRoute = ProfileEditRouteImport.update({
+  id: '/edit',
+  path: '/edit',
+  getParentRoute: () => ProfileRoute,
+} as any)
+const EventsNewRoute = EventsNewRouteImport.update({
+  id: '/new',
+  path: '/new',
+  getParentRoute: () => EventsRoute,
+} as any)
+const EventsMyEventsRoute = EventsMyEventsRouteImport.update({
+  id: '/my-events',
+  path: '/my-events',
+  getParentRoute: () => EventsRoute,
+} as any)
 const EventsIdRoute = EventsIdRouteImport.update({
   id: '/$id',
   path: '/$id',
@@ -45,13 +75,23 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/events': typeof EventsRouteWithChildren
+  '/login': typeof LoginRoute
+  '/profile': typeof ProfileRouteWithChildren
   '/events/$id': typeof EventsIdRoute
+  '/events/my-events': typeof EventsMyEventsRoute
+  '/events/new': typeof EventsNewRoute
+  '/profile/edit': typeof ProfileEditRoute
   '/events/': typeof EventsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/login': typeof LoginRoute
+  '/profile': typeof ProfileRouteWithChildren
   '/events/$id': typeof EventsIdRoute
+  '/events/my-events': typeof EventsMyEventsRoute
+  '/events/new': typeof EventsNewRoute
+  '/profile/edit': typeof ProfileEditRoute
   '/events': typeof EventsIndexRoute
 }
 export interface FileRoutesById {
@@ -59,25 +99,76 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/events': typeof EventsRouteWithChildren
+  '/login': typeof LoginRoute
+  '/profile': typeof ProfileRouteWithChildren
   '/events/$id': typeof EventsIdRoute
+  '/events/my-events': typeof EventsMyEventsRoute
+  '/events/new': typeof EventsNewRoute
+  '/profile/edit': typeof ProfileEditRoute
   '/events/': typeof EventsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/events' | '/events/$id' | '/events/'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/events'
+    | '/login'
+    | '/profile'
+    | '/events/$id'
+    | '/events/my-events'
+    | '/events/new'
+    | '/profile/edit'
+    | '/events/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/events/$id' | '/events'
-  id: '__root__' | '/' | '/about' | '/events' | '/events/$id' | '/events/'
+  to:
+    | '/'
+    | '/about'
+    | '/login'
+    | '/profile'
+    | '/events/$id'
+    | '/events/my-events'
+    | '/events/new'
+    | '/profile/edit'
+    | '/events'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/events'
+    | '/login'
+    | '/profile'
+    | '/events/$id'
+    | '/events/my-events'
+    | '/events/new'
+    | '/profile/edit'
+    | '/events/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   EventsRoute: typeof EventsRouteWithChildren
+  LoginRoute: typeof LoginRoute
+  ProfileRoute: typeof ProfileRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/profile': {
+      id: '/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/events': {
       id: '/events'
       path: '/events'
@@ -106,6 +197,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EventsIndexRouteImport
       parentRoute: typeof EventsRoute
     }
+    '/profile/edit': {
+      id: '/profile/edit'
+      path: '/edit'
+      fullPath: '/profile/edit'
+      preLoaderRoute: typeof ProfileEditRouteImport
+      parentRoute: typeof ProfileRoute
+    }
+    '/events/new': {
+      id: '/events/new'
+      path: '/new'
+      fullPath: '/events/new'
+      preLoaderRoute: typeof EventsNewRouteImport
+      parentRoute: typeof EventsRoute
+    }
+    '/events/my-events': {
+      id: '/events/my-events'
+      path: '/my-events'
+      fullPath: '/events/my-events'
+      preLoaderRoute: typeof EventsMyEventsRouteImport
+      parentRoute: typeof EventsRoute
+    }
     '/events/$id': {
       id: '/events/$id'
       path: '/$id'
@@ -118,21 +230,38 @@ declare module '@tanstack/react-router' {
 
 interface EventsRouteChildren {
   EventsIdRoute: typeof EventsIdRoute
+  EventsMyEventsRoute: typeof EventsMyEventsRoute
+  EventsNewRoute: typeof EventsNewRoute
   EventsIndexRoute: typeof EventsIndexRoute
 }
 
 const EventsRouteChildren: EventsRouteChildren = {
   EventsIdRoute: EventsIdRoute,
+  EventsMyEventsRoute: EventsMyEventsRoute,
+  EventsNewRoute: EventsNewRoute,
   EventsIndexRoute: EventsIndexRoute,
 }
 
 const EventsRouteWithChildren =
   EventsRoute._addFileChildren(EventsRouteChildren)
 
+interface ProfileRouteChildren {
+  ProfileEditRoute: typeof ProfileEditRoute
+}
+
+const ProfileRouteChildren: ProfileRouteChildren = {
+  ProfileEditRoute: ProfileEditRoute,
+}
+
+const ProfileRouteWithChildren =
+  ProfileRoute._addFileChildren(ProfileRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   EventsRoute: EventsRouteWithChildren,
+  LoginRoute: LoginRoute,
+  ProfileRoute: ProfileRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

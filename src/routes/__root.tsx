@@ -1,10 +1,12 @@
-import { HeadContent, Scripts, createRootRoute } from "@tanstack/react-router";
+import { HeadContent, Scripts, createRootRoute, Outlet, useRouterState } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import { TanStackDevtools } from "@tanstack/react-devtools";
 
-import appCss from "../styles.css?url";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/Footer";
+import { AuthProvider } from "@/auth";
+import appCss from "../styles.css?url";
+
 import "@/lib/i18n"; 
 
 export const Route = createRootRoute({
@@ -28,31 +30,37 @@ export const Route = createRootRoute({
       },
     ],
   }),
-
-  shellComponent: RootDocument,
+  shellComponent: RootComponent,
 });
 
-function RootDocument({ children }: { children: React.ReactNode }) {
+function RootComponent() {
+  const router = useRouterState();
+  const isLoginPage = router.location.pathname === '/login';
+  
   return (
     <html lang="en">
       <head>
         <HeadContent />
       </head>
       <body className="flex flex-col min-h-screen">
-        <Header />
-        <div className="grow">{children}</div>
-        <Footer />
-        <TanStackDevtools
-          config={{
-            position: "bottom-right",
-          }}
-          plugins={[
-            {
-              name: "Tanstack Router",
-              render: <TanStackRouterDevtoolsPanel />,
-            },
-          ]}
-        />
+        <AuthProvider>
+          {!isLoginPage && <Header />}
+          <div className="grow">
+            <Outlet />
+          </div>
+          {!isLoginPage && <Footer />}
+          <TanStackDevtools
+            config={{
+              position: "bottom-right",
+            }}
+            plugins={[
+              {
+                name: "Tanstack Router",
+                render: <TanStackRouterDevtoolsPanel />,
+              },
+            ]}
+          />
+        </AuthProvider>
         <Scripts />
       </body>
     </html>

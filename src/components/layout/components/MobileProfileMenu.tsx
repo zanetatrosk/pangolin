@@ -2,7 +2,6 @@ import { FC } from "react";
 import { useAuthStore } from "@/stores/authStore";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ProfileMenuItem } from "../types";
-import { useNavigate } from "@tanstack/react-router";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import { getInitials } from "../utils/getInitials";

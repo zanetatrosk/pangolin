@@ -8,7 +8,6 @@ import {
   DrawerTrigger,
   DrawerContent,
   DrawerHeader,
-  DrawerTitle,
   Drawer,
 } from "../ui/drawer";
 import { NavItem, ProfileMenuItem } from "./types";

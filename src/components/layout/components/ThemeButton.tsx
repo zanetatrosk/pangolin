@@ -23,11 +23,12 @@ export const ThemeButton: FC = () => {
       onClick={toggleTheme}
       aria-label={t("header.toggleTheme")}
       size="icon-lg"
+      className="hover:bg-accent/50 transition"
     >
       {darkMode ? (
-        <Sun className="text-muted-foreground" />
+        <Sun className="text-gray-600 dark:text-foreground" />
       ) : (
-        <Moon className="text-muted-foreground" />
+        <Moon className="text-gray-600 dark:text-foreground" />
       )}
     </Button>
   );

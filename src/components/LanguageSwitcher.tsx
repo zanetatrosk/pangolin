@@ -27,9 +27,9 @@ export function LanguageSwitcher() {
         <Button 
           variant="ghost" 
           size="sm" 
-          className="h-9 px-2 text-muted-foreground hover:text-foreground"
+          className="h-9 px-2 hover:bg-accent/50 transition"
         >
-          <Languages className="h-3 w-3 ml-1 opacity-60" />
+          <Languages className="h-3 w-3 ml-1 text-gray-600 dark:text-foreground" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-48">

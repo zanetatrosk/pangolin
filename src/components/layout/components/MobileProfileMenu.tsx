@@ -5,6 +5,8 @@ import { ProfileMenuItem } from "../types";
 import { useNavigate } from "@tanstack/react-router";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
+import { getInitials } from "../utils/getInitials";
+import { useProfileMenu } from "../hooks/useProfileMenu";
 
 interface MobileProfileMenuProps {
   profileMenuItems: ProfileMenuItem[];
@@ -16,26 +18,13 @@ export const MobileProfileMenu: FC<MobileProfileMenuProps> = ({
   onMenuItemClick,
 }) => {
   const { user } = useAuthStore();
-  const navigate = useNavigate();
+  const { handleMenuItemClick } = useProfileMenu();
 
   if (!user) return null;
 
-  const getInitials = (name: string) => {
-    return name
-      .split(" ")
-      .map((n) => n[0])
-      .join("")
-      .toUpperCase()
-      .slice(0, 2);
-  };
-
-  const handleMenuItemClick = (item: ProfileMenuItem) => {
+  const handleItemClick = (item: ProfileMenuItem) => {
     onMenuItemClick?.();
-    if (item.onClick) {
-      item.onClick();
-    } else if (item.href) {
-      navigate({ to: item.href });
-    }
+    handleMenuItemClick(item);
   };
 
   return (
@@ -59,7 +48,7 @@ export const MobileProfileMenu: FC<MobileProfileMenuProps> = ({
               key={index}
               variant={item.variant === "destructive" ? "destructive" : "ghost"}
               className="justify-start"
-              onClick={() => handleMenuItemClick(item)}
+              onClick={() => handleItemClick(item)}
             >
               {Icon && <Icon className="mr-2 h-4 w-4" />}
               <span>{item.label}</span>

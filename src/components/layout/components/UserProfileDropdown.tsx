@@ -2,15 +2,16 @@ import { FC } from "react";
 import { useAuthStore } from "@/stores/authStore";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { ProfileMenuItem } from "../types";
-import { useNavigate } from "@tanstack/react-router";
+import { getInitials } from "../utils/getInitials";
+import { useProfileMenu } from "../hooks/useProfileMenu";
 
 interface UserProfileDropdownProps {
   profileMenuItems: ProfileMenuItem[];
@@ -20,26 +21,9 @@ export const UserProfileDropdown: FC<UserProfileDropdownProps> = ({
   profileMenuItems,
 }) => {
   const { user } = useAuthStore();
-  const navigate = useNavigate();
+  const { handleMenuItemClick } = useProfileMenu();
 
   if (!user) return null;
-
-  const getInitials = (name: string) => {
-    return name
-      .split(" ")
-      .map((n) => n[0])
-      .join("")
-      .toUpperCase()
-      .slice(0, 2);
-  };
-
-  const handleMenuItemClick = (item: ProfileMenuItem) => {
-    if (item.onClick) {
-      item.onClick();
-    } else if (item.href) {
-      navigate({ to: item.href });
-    }
-  };
 
   return (
     <DropdownMenu>

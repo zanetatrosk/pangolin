@@ -16,7 +16,7 @@ export const SubMenuLink: FC<SubMenuLinkProps> = ({ item, setOpen }) => {
       key={item.href}
     >
       <div className="flex flex-row gap-2 items-start">
-      {Icon && <Icon className="size-5 shrink-0" />}
+      {Icon && <Icon className="size-5 shrink-0 mt-1" />}
       <div className="max-w-md">
         <div className="text-sm font-semibold">{item.label}</div>
         {item.description && (

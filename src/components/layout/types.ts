@@ -10,3 +10,11 @@ export interface NavLink {
   description?: string;
   icon?: React.ComponentType<React.SVGProps<SVGSVGElement>>;
 }
+
+export interface ProfileMenuItem {
+  href?: string;
+  label: string;
+  icon?: React.ComponentType<React.SVGProps<SVGSVGElement>>;
+  onClick?: () => void;
+  variant?: 'default' | 'destructive';
+}

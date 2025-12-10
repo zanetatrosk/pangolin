@@ -9,7 +9,11 @@
         "myEvents": "My Events",
         "myEventsDesc": "View and manage your hosted events",
         "allEvents": "All Events",
-        "allEventsDesc": "Browse all upcoming dance events"
+        "allEventsDesc": "Browse all upcoming dance events",
+        "profile": "Profile",
+        "editProfile": "Edit Profile",
+        "settings": "Settings",
+        "logout": "Logout"
 
     },
     "header": {

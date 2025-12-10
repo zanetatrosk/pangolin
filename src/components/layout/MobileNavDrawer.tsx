@@ -1,8 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Logo } from "../Logo";
-import { Menu, Moon, Sun } from "lucide-react";
+import { Menu } from "lucide-react";
 import * as React from "react";
-import { useTranslation } from "react-i18next";
 import { Accordion } from "@/components/ui/accordion";
 import { LanguageSwitcher } from "../LanguageSwitcher";
 import {
@@ -12,14 +11,16 @@ import {
   DrawerTitle,
   Drawer,
 } from "../ui/drawer";
-import { NavItem } from "./types";
+import { NavItem, ProfileMenuItem } from "./types";
 import { MobileMenuItem } from "./components/MobileMenuItem";
 import { ThemeButton } from "./components/ThemeButton";
 import { RegisterButtons } from "./components/RegisterButtons";
+import { useAuthStore } from "@/stores/authStore";
+import { MobileProfileMenu } from "./components/MobileProfileMenu";
 
-export function MobileNavDrawer({ menuItems }: { menuItems: NavItem[] }) {
-  const { t } = useTranslation();
+export function MobileNavDrawer({ menuItems, profileMenuItems }: { menuItems: NavItem[], profileMenuItems: ProfileMenuItem[] }) {
   const [open, setOpen] = React.useState(false);
+  const { isAuthenticated } = useAuthStore();
 
   return (
     <div className="lg:hidden mx-auto flex items-center justify-between p-2">
@@ -43,7 +44,7 @@ export function MobileNavDrawer({ menuItems }: { menuItems: NavItem[] }) {
         </div>
         <DrawerContent className="p-4">
           <DrawerHeader>
-            <DrawerTitle>Menu</DrawerTitle>
+            <Logo />
           </DrawerHeader>
 
           <div className="mt-4 flex flex-col gap-4">
@@ -53,14 +54,21 @@ export function MobileNavDrawer({ menuItems }: { menuItems: NavItem[] }) {
               className="flex w-full flex-col gap-4"
             >
               {menuItems.map((item) => (
-                <MobileMenuItem {...item} setOpen={setOpen} />
+                <MobileMenuItem key={item.href || item.label} {...item} setOpen={setOpen} />
               ))}
             </Accordion>
 
             <div className="h-px bg-border" />
-            <div className="flex flex-col gap-2">
-              <RegisterButtons beforeLogInCallback={() => setOpen(false)} />
-            </div>
+            {isAuthenticated ? (
+              <MobileProfileMenu
+                profileMenuItems={profileMenuItems}
+                onMenuItemClick={() => setOpen(false)}
+              />
+            ) : (
+              <div className="flex flex-col gap-2">
+                <RegisterButtons beforeLogInCallback={() => setOpen(false)} />
+              </div>
+            )}
           </div>
         </DrawerContent>
       </Drawer>

@@ -3,7 +3,11 @@
     "events": "Události",
     "about": "O nás",
     "login": "Přihlásit se",
-    "signup": "Registrovat se zdarma"
+    "signup": "Registrovat se zdarma",
+    "profile": "Profil",
+    "editProfile": "Upravit profil",
+    "settings": "Nastavení",
+    "logout": "Odhlásit se"
   },
   "header": {
     "toggleTheme": "Přepnout motiv"

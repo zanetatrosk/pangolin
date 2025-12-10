@@ -57,7 +57,7 @@ export function Header() {
   ];
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border/60 bg-white">
+    <header className="sticky top-0 z-50 w-full border-b border-border/60 bg-background">
       <MobileNavDrawer menuItems={menuItems} profileMenuItems={profileMenuItems} />
       <DesktopNavbar menuItems={menuItems} profileMenuItems={profileMenuItems} />
     </header>

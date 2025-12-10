@@ -3,12 +3,11 @@ import { NavItem } from "../types";
 import {
   NavigationMenuContent,
   NavigationMenuLink,
-  NavigationMenuTrigger,
-  navigationMenuTriggerStyle,
+  NavigationMenuTrigger
 } from "@/components/ui/navigation-menu";
 import { Link } from "@tanstack/react-router";
 
-const navItemClass = "text-md font-medium text-gray-700";
+const navItemClass = "text-md font-medium text-gray-700 hover:text-gray-900 dark:text-gray-200 dark:hover:text-white";
 export const DesktopMenuItem: FC<NavItem> = ({ label, href, children }) => {
 
   if (children) {
@@ -42,7 +41,7 @@ export const DesktopMenuItem: FC<NavItem> = ({ label, href, children }) => {
   return (
     <NavigationMenuLink
       asChild
-      className={navigationMenuTriggerStyle() + " " + navItemClass}
+      className={navItemClass}
     >
       <Link to={href}>{label}</Link>
     </NavigationMenuLink>

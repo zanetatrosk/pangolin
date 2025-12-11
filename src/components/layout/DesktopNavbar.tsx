@@ -10,11 +10,12 @@ import {
 import { NavItem, ProfileMenuItem } from "./types";
 import { ThemeButton } from "./components/ThemeButton";
 import { RegisterButtons } from "./components/RegisterButtons";
-import { useAuthStore } from "@/stores/authStore";
+import { useStore } from "@tanstack/react-store";
+import { authStore } from "@/stores/authStore";
 import { UserProfileDropdown } from "./components/UserProfileDropdown";
 
 export const DesktopNavbar: FC<{ menuItems: NavItem[], profileMenuItems: ProfileMenuItem[] }> = ({ menuItems, profileMenuItems }) => {
-  const { isAuthenticated } = useAuthStore();
+  const { isAuthenticated } = useStore(authStore);
   
   return (
     <div className="hidden lg:flex mx-auto max-w-7xl items-center p-2">

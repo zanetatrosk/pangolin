@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { FC } from "react";
 import { useTranslation } from "react-i18next";
-import { useAuthStore } from "@/stores/authStore";
+import { login } from "@/stores/authStore";
 
 interface RegisterButtonsProps {
   beforeLogInCallback?: () => void;
@@ -11,7 +11,6 @@ export const RegisterButtons: FC<RegisterButtonsProps> = ({
   beforeLogInCallback,
 }) => {
   const { t } = useTranslation();
-  const { login } = useAuthStore();
 
   const signUpOnClick = () => {
     beforeLogInCallback?.();

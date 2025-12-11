@@ -1,4 +1,5 @@
-import { useAuthStore } from "@/stores/authStore";
+import { useStore } from "@tanstack/react-store";
+import { authStore } from "@/stores/authStore";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -11,7 +12,7 @@ import { useState } from "react";
 import { getInitials } from "@/components/layout/utils/getInitials";
 
 export function EditProfilePage() {
-  const { user } = useAuthStore();
+  const { user } = useStore(authStore);
   const { t } = useTranslation();
 
   const [name, setName] = useState(user?.name || "");

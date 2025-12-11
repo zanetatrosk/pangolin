@@ -1,5 +1,6 @@
 import { createContext, useContext, ReactNode } from 'react';
-import { useAuthStore, User } from './stores/authStore';
+import { useStore } from '@tanstack/react-store';
+import { authStore, User, login, logout } from './stores/authStore';
 
 export interface AuthContext {
   isAuthenticated: boolean;
@@ -11,7 +12,7 @@ export interface AuthContext {
 const AuthContext = createContext<AuthContext | null>(null);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const { user, isAuthenticated, login, logout } = useAuthStore();
+  const { user, isAuthenticated } = useStore(authStore);
 
   return (
     <AuthContext.Provider value={{ isAuthenticated, user, login, logout }}>

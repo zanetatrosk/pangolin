@@ -1,5 +1,6 @@
 import { FC } from "react";
-import { useAuthStore } from "@/stores/authStore";
+import { useStore } from "@tanstack/react-store";
+import { authStore } from "@/stores/authStore";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
     DropdownMenu,
@@ -20,7 +21,7 @@ interface UserProfileDropdownProps {
 export const UserProfileDropdown: FC<UserProfileDropdownProps> = ({
   profileMenuItems,
 }) => {
-  const { user } = useAuthStore();
+  const { user } = useStore(authStore);
   const { handleMenuItemClick } = useProfileMenu();
 
   if (!user) return null;

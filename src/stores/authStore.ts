@@ -1,5 +1,4 @@
-import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { Store } from '@tanstack/react-store';
 
 export interface User {
   id: string;
@@ -8,23 +7,22 @@ export interface User {
   avatar?: string;
 }
 
-interface AuthState {
+export interface AuthState {
   user: User | null;
   isAuthenticated: boolean;
-  login: (user: User) => void;
-  logout: () => void;
 }
 
-export const useAuthStore = create<AuthState>()(
-  persist(
-    (set) => ({
-      user: null,
-      isAuthenticated: false,
-      login: (user) => set({ user, isAuthenticated: true }),
-      logout: () => set({ user: null, isAuthenticated: false }),
-    }),
-    {
-      name: 'auth-storage',
-    }
-  )
-);
+// Create the store
+export const authStore = new Store<AuthState>({
+  user: null,
+  isAuthenticated: false,
+});
+
+// Actions
+export const login = (user: User) => {
+  authStore.setState(() => ({ user, isAuthenticated: true }));
+};
+
+export const logout = () => {
+  authStore.setState(() => ({ user: null, isAuthenticated: false }));
+};

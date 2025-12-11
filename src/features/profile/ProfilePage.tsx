@@ -1,4 +1,5 @@
-import { useAuthStore } from "@/stores/authStore";
+import { useStore } from "@tanstack/react-store";
+import { authStore } from "@/stores/authStore";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -7,7 +8,7 @@ import { useTranslation } from "react-i18next";
 import { getInitials } from "@/components/layout/utils/getInitials";
 
 export function ProfilePage() {
-  const { user } = useAuthStore();
+  const { user } = useStore(authStore);
   const { t } = useTranslation();
 
   if (!user) return null;

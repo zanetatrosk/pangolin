@@ -4,7 +4,6 @@ import { TanStackDevtools } from "@tanstack/react-devtools";
 
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/Footer";
-import { AuthProvider } from "@/auth";
 import appCss from "../styles.css?url";
 
 import "@/lib/i18n"; 
@@ -43,13 +42,12 @@ function RootComponent() {
         <HeadContent />
       </head>
       <body className="flex flex-col min-h-screen">
-        <AuthProvider>
-          {!isLoginPage && <Header />}
-          <div className="grow">
-            <Outlet />
-          </div>
-          {!isLoginPage && <Footer />}
-          <TanStackDevtools
+        {!isLoginPage && <Header />}
+        <div className="grow">
+          <Outlet />
+        </div>
+        {!isLoginPage && <Footer />}
+        <TanStackDevtools
             config={{
               position: "bottom-right",
             }}
@@ -60,7 +58,6 @@ function RootComponent() {
               },
             ]}
           />
-        </AuthProvider>
         <Scripts />
       </body>
     </html>

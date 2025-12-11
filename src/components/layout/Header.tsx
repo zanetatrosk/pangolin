@@ -2,11 +2,10 @@ import { CalendarPlus, PersonStanding, Users, UserCircle, Settings, LogOut } fro
 import { useTranslation } from "react-i18next";
 import { MobileNavDrawer } from "./MobileNavDrawer";
 import { DesktopNavbar } from "./DesktopNavbar";
-import { useAuthStore } from "@/stores/authStore";
+import { logout } from "@/stores/authStore";
 
 export function Header() {
   const { t } = useTranslation();
-  const { logout } = useAuthStore();
 
   const menuItems = [
     {

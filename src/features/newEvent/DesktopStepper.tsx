@@ -4,11 +4,23 @@ import { Step } from "./MobileStepper";
 
 interface DesktopStepperProps {
   steps: Step[];
+  onSave?: () => void;
 }
-export const DesktopStepper: React.FC<DesktopStepperProps> = ({ steps }) => {
-  
-  const { Stepper } = defineStepper(...steps);
-
+const { Stepper } = defineStepper(
+    {
+      id: "basic-details",
+      title: "Event Details"
+    },
+    {
+      id: "description-details",
+      title: "Description & Details",
+    },
+    {
+      id: "media-details",
+      title: "Photos & Media",
+    }
+  );
+export const DesktopStepper: React.FC<DesktopStepperProps> = ({ steps, onSave }) => {
   return (
     <Stepper.Provider className="space-y-4">
       {({ methods }) => (
@@ -24,25 +36,32 @@ export const DesktopStepper: React.FC<DesktopStepperProps> = ({ steps }) => {
             {(() => {
               const currentStep = steps.find(step => step.id === methods.current.id);
               if (!currentStep) return null;
-              return currentStep.component({ 
-                onValidate: () => {} 
-              });
+              return currentStep.component();
             })()}
           </Stepper.Panel>
           <Stepper.Controls>
-            {!methods.isLast && (
+            {!methods.isFirst && (
               <Button
                 type="button"
                 variant="secondary"
                 onClick={methods.prev}
-                disabled={methods.isFirst}
               >
                 Previous
               </Button>
             )}
-            <Button onClick={methods.isLast ? methods.reset : methods.next}>
-              {methods.isLast ? "Reset" : "Next"}
-            </Button>
+            {!methods.isLast && (
+              <Button 
+                type="button"
+                onClick={methods.next}
+              >
+                Next
+              </Button>
+            )}
+            {methods.isLast && (
+              <Button type="submit">
+                Submit
+              </Button>
+            )}
           </Stepper.Controls>
         </>
       )}

@@ -3,16 +3,18 @@ import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useForm } from "@tanstack/react-form";
 
 export interface StepComponentProps {
-  onValidate: (isValid: boolean) => void;
+  form: ReturnType<typeof useForm>;
+  onValidate?: (isValid: boolean) => void;
   onNext?: () => void;
 }
 
 export interface Step {
   id: string;
   title: string;
-  component: (props: StepComponentProps) => React.ReactNode;
+  component: () => React.ReactNode;
   optional?: boolean;
 }
 
@@ -26,39 +28,24 @@ export const MobileStepper: React.FC<MobileStepperProps> = ({
   onComplete 
 }) => {
   const [currentStep, setCurrentStep] = useState(0);
-  const [canProceed, setCanProceed] = useState(true);
-  const [completedSteps, setCompletedSteps] = useState<Set<number>>(new Set());
 
   const progress = ((currentStep + 1) / steps.length) * 100;
   const currentStepConfig = steps[currentStep];
   const isFirstStep = currentStep === 0;
   const isLastStep = currentStep === steps.length - 1;
 
-  const handleValidationChange = (isValid: boolean) => {
-    setCanProceed(isValid || currentStepConfig.optional || false);
-  };
-
   const moveToPreviousStep = () => {
     if (currentStep > 0) {
       setCurrentStep((prev) => prev - 1);
-      setCanProceed(true); // Can always go back
     }
   };
 
   const moveToNextStep = () => {
-    if (!canProceed && !currentStepConfig.optional) {
-      return; // Don't proceed if validation failed
-    }
-
-    // Mark current step as completed
-    setCompletedSteps((prev) => new Set(prev).add(currentStep));
-
     if (isLastStep) {
       // Complete the form
       onComplete?.({});
     } else {
       setCurrentStep((prev) => prev + 1);
-      setCanProceed(false); // Reset for next step
     }
   };
 
@@ -91,10 +78,7 @@ export const MobileStepper: React.FC<MobileStepperProps> = ({
 
       {/* Step Content */}
       <div className="flex-1 overflow-y-auto">
-        {currentStepConfig.component({
-          onValidate: handleValidationChange,
-          onNext: moveToNextStep,
-        })}
+        {currentStepConfig.component()}
       </div>
 
       {/* Footer with Navigation */}
@@ -112,7 +96,6 @@ export const MobileStepper: React.FC<MobileStepperProps> = ({
           
           <Button
             onClick={moveToNextStep}
-            disabled={!canProceed && !currentStepConfig.optional}
             className="flex-1"
           >
             {isLastStep ? "Complete" : "Next"}

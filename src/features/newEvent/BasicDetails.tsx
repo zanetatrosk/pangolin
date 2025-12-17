@@ -9,8 +9,7 @@ import {
 } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Calendar, MapPin, Clock, DollarSign } from "lucide-react";
-import { useForm } from "@tanstack/react-form";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { StepComponentProps } from "./MobileStepper";
 
 export interface BasicDetailsData {
@@ -31,61 +30,17 @@ interface BasicDetailsProps extends Partial<StepComponentProps> {
 }
 
 export const BasicDetails: React.FC<BasicDetailsProps> = ({ 
-  onValidate,
   initialData,
-  onDataChange,
-  className = ""
+  className = "",
+  form
 }) => {
   const [showExactPrice, setShowExactPrice] = useState(
     initialData?.priceRange === "exact"
   );
 
-  const form = useForm({
-    defaultValues: {
-      eventName: initialData?.eventName || "",
-      location: initialData?.location || "",
-      date: initialData?.date || "",
-      time: initialData?.time || "",
-      isRecurring: initialData?.isRecurring || false,
-      endDate: initialData?.endDate || "",
-      priceRange: initialData?.priceRange || "",
-      priceExact: initialData?.priceExact || "",
-    },
-    onSubmit: async ({ value }) => {
-      onDataChange?.(value);
-    },
-  });
-
-  // Validate form and notify parent
-  useEffect(() => {
-    const subscription = form.store.subscribe(() => {
-      const state = form.store.state;
-      const values = state.values;
-      
-      // Check if all required fields are filled
-      const isValid = !!(
-        values.eventName?.trim() &&
-        values.location?.trim() &&
-        values.date &&
-        values.time &&
-        (!values.isRecurring || values.endDate)
-      );
-
-      onValidate?.(isValid);
-      onDataChange?.(values);
-    });
-
-    return () => subscription();
-  }, [form.store, onValidate, onDataChange]);
-
   return (
     <div className={`p-4 md:p-6 ${className}`}>
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          void form.handleSubmit();
-        }}
+      <div
         className="space-y-6"
       >
         {/* Basic Information */}
@@ -362,7 +317,7 @@ export const BasicDetails: React.FC<BasicDetailsProps> = ({
             )}
           </div>
         </div>
-      </form>
+      </div>
     </div>
   );
 };

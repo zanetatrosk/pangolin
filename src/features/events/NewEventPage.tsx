@@ -1,10 +1,9 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Save } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
 import { useTranslation } from "react-i18next";
 import { useState, useCallback } from "react";
 import { MobileStepper, Step } from "../newEvent/MobileStepper";
 import { BasicDetails, BasicDetailsData } from "../newEvent/BasicDetails";
+import { DesktopStepper } from "../newEvent/DesktopStepper";
 
 // Placeholder components for future steps
 const DescriptionStep = ({ onValidate }: any) => {
@@ -40,6 +39,7 @@ export function NewEventPage() {
 
   const steps: Step[] = [
     {
+      id: "basic-details",
       title: "Event Details",
       component: (props) => (
         <BasicDetails
@@ -50,11 +50,13 @@ export function NewEventPage() {
       ),
     },
     {
+      id: "description-details",
       title: "Description & Details",
       component: (props) => <DescriptionStep {...props} />,
       optional: true,
     },
     {
+      id: "media-details",
       title: "Photos & Media",
       component: MediaStep,
       optional: true,
@@ -67,32 +69,13 @@ export function NewEventPage() {
       <MobileStepper steps={steps} onComplete={handleComplete} />
 
       {/* Desktop Version */}
-      <div className="hidden md:block container mx-auto max-w-3xl p-6">
+      <div className="hidden md:block container mx-auto max-w-6xl p-6">
         <h1 className="text-3xl font-bold mb-6">{t("nav.addEvent")}</h1>
         <p className="text-muted-foreground mb-6">{t("nav.addEventDesc")}</p>
 
         <Card>
-          <CardHeader>
-            <CardTitle>Event Details</CardTitle>
-          </CardHeader>
           <CardContent className="space-y-6">
-            <BasicDetails
-              initialData={formData}
-              onDataChange={handleBasicDetailsChange}
-            />
-
-            <div className="flex justify-end gap-2 pt-4 border-t">
-              <Button type="button" variant="outline">
-                Cancel
-              </Button>
-              <Button
-                type="button"
-                onClick={() => handleComplete(formData)}
-              >
-                <Save className="h-4 w-4 mr-2" />
-                Create Event
-              </Button>
-            </div>
+            <DesktopStepper steps={steps}/>
           </CardContent>
         </Card>
       </div>

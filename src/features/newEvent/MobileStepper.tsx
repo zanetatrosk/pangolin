@@ -10,6 +10,7 @@ export interface StepComponentProps {
 }
 
 export interface Step {
+  id: string;
   title: string;
   component: (props: StepComponentProps) => React.ReactNode;
   optional?: boolean;

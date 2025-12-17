@@ -3,10 +3,10 @@ import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import { TanStackDevtools } from "@tanstack/react-devtools";
 
 import { Header } from "@/components/layout/Header";
-import { Footer } from "@/components/Footer";
 import appCss from "../styles.css?url";
 
 import "@/lib/i18n"; 
+import { Footer } from "@/components/layout/Footer";
 
 export const Route = createRootRoute({
   head: () => ({

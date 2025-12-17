@@ -1,3 +1,4 @@
+import { LoginForm } from "@/components/login-form";
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/login")({
@@ -12,11 +13,8 @@ export const Route = createFileRoute("/login")({
 function LoginPage() {
   // This is a placeholder - implement actual login UI here
   return (
-    <div className="container mx-auto max-w-md p-6">
-      <h1 className="text-3xl font-bold mb-6">Login</h1>
-      <p className="text-muted-foreground">
-        Login page - implement your authentication UI here
-      </p>
+    <div className="mx-auto max-w-md flex flex-col justify-center min-h-screen">
+      <LoginForm />
     </div>
   );
 }

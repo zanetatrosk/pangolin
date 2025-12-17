@@ -1,6 +1,6 @@
 import { FC } from "react";
-import { LanguageSwitcher } from "../LanguageSwitcher";
-import { Logo } from "../Logo";
+import { LanguageSwitcher } from "./LanguageSwitcher";
+import { Logo } from "./Logo";
 import { DesktopMenuItem } from "./components/DesktopMenuItem";
 import {
     NavigationMenu,

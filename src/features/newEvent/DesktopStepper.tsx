@@ -2,25 +2,17 @@ import { Button } from "@/components/ui/button";
 import { defineStepper } from "@/components/ui/stepper";
 import { Step } from "./MobileStepper";
 
+export interface StepBase {
+  id: string;
+  title: string;
+}
 interface DesktopStepperProps {
   steps: Step[];
-  onSave?: () => void;
+  stepper: ReturnType<typeof defineStepper<StepBase[]>>;
 }
-const { Stepper } = defineStepper(
-    {
-      id: "basic-details",
-      title: "Event Details"
-    },
-    {
-      id: "description-details",
-      title: "Description & Details",
-    },
-    {
-      id: "media-details",
-      title: "Photos & Media",
-    }
-  );
-export const DesktopStepper: React.FC<DesktopStepperProps> = ({ steps, onSave }) => {
+
+export const DesktopStepper: React.FC<DesktopStepperProps> = ({ steps, stepper }) => {
+  const Stepper = stepper.Stepper;
   return (
     <Stepper.Provider className="space-y-4">
       {({ methods }) => (

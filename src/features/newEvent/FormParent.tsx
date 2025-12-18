@@ -6,6 +6,7 @@ import { BasicDetails } from "./BasicDetails";
 import { DesktopStepper } from "./DesktopStepper";
 import { Card, CardContent } from "@/components/ui/card";
 import { t } from "i18next";
+import { EventStepper } from "./EventStepper";
 
 interface FormParentProps {
   defaultValues?: Record<string, any>;
@@ -28,7 +29,6 @@ const MediaStep = () => {
   );
 };
 
-
 export const FormParent: React.FC<FormParentProps> = ({
   defaultValues,
 }) => {
@@ -45,6 +45,7 @@ export const FormParent: React.FC<FormParentProps> = ({
     },
   });
   const isMobile = useIsMobile();
+  const [isValid, setIsValid] = React.useState(true);
   const steps: Step[] = [
     {
       id: "basic-details",
@@ -69,13 +70,13 @@ export const FormParent: React.FC<FormParentProps> = ({
       onSubmit={(e) => {
         e.preventDefault();
         e.stopPropagation();
-        // check if the form is valid before submitting
+        setIsValid(form.state.isValid);
         void form.handleSubmit();
       }}
       className="space-y-6"
     >
       {isMobile ? (
-        <MobileStepper steps={steps} onComplete={() => {}} />
+        <MobileStepper steps={steps} onComplete={form.handleSubmit} />
       ) : (
         <div className="hidden md:block container mx-auto max-w-6xl p-6">
         <h1 className="text-3xl font-bold mb-6">{t("nav.addEvent")}</h1>
@@ -83,7 +84,12 @@ export const FormParent: React.FC<FormParentProps> = ({
 
         <Card>
           <CardContent className="space-y-6">
-            <DesktopStepper steps={steps} onSave={form.handleSubmit} />
+            <DesktopStepper steps={steps} stepper={EventStepper} />
+            {!isValid &&  (
+              <p className="text-sm text-red-600">
+                Please fix the errors in the form before submitting.
+              </p>
+            )}
           </CardContent>
         </Card>
       </div>

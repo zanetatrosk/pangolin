@@ -9,9 +9,10 @@ export interface StepBase {
 interface DesktopStepperProps {
   steps: Step[];
   stepper: ReturnType<typeof defineStepper<StepBase[]>>;
+  showAlert?: boolean;
 }
 
-export const DesktopStepper: React.FC<DesktopStepperProps> = ({ steps, stepper }) => {
+export const DesktopStepper: React.FC<DesktopStepperProps> = ({ steps, stepper, showAlert }) => {
   const Stepper = stepper.Stepper;
   return (
     <Stepper.Provider className="space-y-4">
@@ -31,6 +32,11 @@ export const DesktopStepper: React.FC<DesktopStepperProps> = ({ steps, stepper }
               return currentStep.component();
             })()}
           </Stepper.Panel>
+          {showAlert && methods.isLast && (
+            <p className="text-sm text-red-600">
+              Please fix the errors in the form before submitting.
+            </p>
+          )}
           <Stepper.Controls>
             {!methods.isFirst && (
               <Button

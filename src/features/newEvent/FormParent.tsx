@@ -84,12 +84,7 @@ export const FormParent: React.FC<FormParentProps> = ({
 
         <Card>
           <CardContent className="space-y-6">
-            <DesktopStepper steps={steps} stepper={EventStepper} />
-            {!isValid &&  (
-              <p className="text-sm text-red-600">
-                Please fix the errors in the form before submitting.
-              </p>
-            )}
+            <DesktopStepper steps={steps} stepper={EventStepper} showAlert={!isValid} />
           </CardContent>
         </Card>
       </div>

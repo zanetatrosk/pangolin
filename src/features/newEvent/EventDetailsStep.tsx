@@ -1,8 +1,7 @@
-import { Users, Music, Award, CalendarDays } from "lucide-react";
+import { Users } from "lucide-react";
 import { withForm } from "@/lib/form";
-import { FormSection, FormGrid } from "@/components/form";
+import { FormSection } from "@/components/form";
 import { eventFormOpts } from "./FormOptions";
-import { ResponsiveMultiSelectFilter } from "@/features/eventsList/components/ResponsiveMultiSelectFilter";
 
 interface EventDetailsProps {
   className?: string;
@@ -52,12 +51,10 @@ export const EventDetailsStep = withForm({
               {/* Dance Styles */}
               <form.AppField name="additionalDetails.danceStyles">
                 {(field) => (
-                  <ResponsiveMultiSelectFilter
+                  <field.MultiSelectField
                     label="Dance Styles"
-                    icon={Music}
+                    placeholder="Select dance styles..."
                     options={danceStyleOptions}
-                    selectedValues={field.state.value}
-                    onValuesChange={(values) => field.handleChange(values)}
                   />
                 )}
               </form.AppField>
@@ -65,12 +62,10 @@ export const EventDetailsStep = withForm({
               {/* Skill Level */}
               <form.AppField name="additionalDetails.skillLevel">
                 {(field) => (
-                  <ResponsiveMultiSelectFilter
+                  <field.MultiSelectField
                     label="Required Skill Level"
-                    icon={Award}
+                    placeholder="Select skill levels..."
                     options={skillLevelOptions}
-                    selectedValues={field.state.value}
-                    onValuesChange={(values) => field.handleChange(values)}
                   />
                 )}
               </form.AppField>
@@ -78,12 +73,10 @@ export const EventDetailsStep = withForm({
               {/* Type of Event */}
               <form.AppField name="additionalDetails.typeOfEvent">
                 {(field) => (
-                  <ResponsiveMultiSelectFilter
+                  <field.MultiSelectField
                     label="Type of Event"
-                    icon={CalendarDays}
+                    placeholder="Select event types..."
                     options={eventTypeOptions}
-                    selectedValues={field.state.value}
-                    onValuesChange={(values) => field.handleChange(values)}
                   />
                 )}
               </form.AppField>

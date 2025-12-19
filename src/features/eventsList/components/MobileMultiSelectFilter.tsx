@@ -30,28 +30,12 @@ export function MobileMultiSelectFilter({
   onValuesChange,
 }: MobileMultiSelectFilterProps) {
   const [open, setOpen] = useState(false);
-  const [tempSelected, setTempSelected] = useState<string[]>(selectedValues);
 
   const handleToggle = (value: string) => {
-    setTempSelected((prev) =>
-      prev.includes(value)
-        ? prev.filter((v) => v !== value)
-        : [...prev, value]
-    );
-  };
-
-  const handleApply = () => {
-    onValuesChange(tempSelected);
-    setOpen(false);
-  };
-
-  const handleCancel = () => {
-    setTempSelected(selectedValues);
-    setOpen(false);
-  };
-
-  const handleClearAll = () => {
-    setTempSelected([]);
+    const newValues = selectedValues.includes(value)
+      ? selectedValues.filter((v) => v !== value)
+      : [...selectedValues, value];
+    onValuesChange(newValues);
   };
 
   return (
@@ -83,14 +67,14 @@ export function MobileMultiSelectFilter({
               {label}
             </DrawerTitle>
             <DrawerDescription>
-              Select all that apply. Tap to toggle.
+              Tap to select or deselect options.
             </DrawerDescription>
           </DrawerHeader>
 
           <div className="px-4 pb-4 max-h-[60vh] overflow-y-auto">
             <div className="grid grid-cols-1 gap-2">
               {options.map((option) => {
-                const isSelected = tempSelected.includes(option.value);
+                const isSelected = selectedValues.includes(option.value);
                 return (
                   <button
                     key={option.value}
@@ -128,23 +112,10 @@ export function MobileMultiSelectFilter({
             </div>
           </div>
 
-          <DrawerFooter className="flex flex-row gap-2">
-            <Button
-              variant="outline"
-              onClick={handleClearAll}
-              className="flex-1"
-              disabled={tempSelected.length === 0}
-            >
-              Clear All
-            </Button>
+          <DrawerFooter>
             <DrawerClose asChild>
-              <Button variant="outline" onClick={handleCancel} className="flex-1">
-                Cancel
-              </Button>
+              <Button className="w-full">Done</Button>
             </DrawerClose>
-            <Button onClick={handleApply} className="flex-1">
-              Apply ({tempSelected.length})
-            </Button>
           </DrawerFooter>
         </DrawerContent>
       </Drawer>

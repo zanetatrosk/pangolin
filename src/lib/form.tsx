@@ -4,6 +4,7 @@ import {
   FormCheckboxField,
   FormSelectField,
   FormNumberField,
+  FormMultiSelectField,
 } from "@/components/form";
 import { fieldContext, formContext } from "./form-context";
 
@@ -15,6 +16,7 @@ export const { useAppForm, withForm } = createFormHook({
     CheckboxField: FormCheckboxField,
     SelectField: FormSelectField,
     NumberField: FormNumberField,
+    MultiSelectField: FormMultiSelectField,
   },
   formComponents: {},
   fieldContext,

@@ -1,13 +1,15 @@
 import { useIsMobile } from "@/hooks/useIsMobile";
 import React from "react";
 import { MobileStepper, Step } from "./MobileStepper";
-import { BasicDetails } from "./BasicDetails";
+import { BasicDetails } from "./BasicDetailsStep";
 import { DesktopStepper } from "./DesktopStepper";
 import { Card, CardContent } from "@/components/ui/card";
 import { t } from "i18next";
 import { EventStepper } from "./EventStepper";
 import { useAppForm } from "@/lib/form";
 import { eventFormOpts } from "./FormOptions";
+import { EventDescriptionStep } from "./EventDescriptionStep";
+import { EventMediaStep } from "./EventMediaStep";
 
 // Placeholder components for future steps
 const DescriptionStep = () => {
@@ -50,13 +52,13 @@ export const FormParent: React.FC = () => {
     {
       id: "description-details",
       title: "Description & Details",
-      component: () => <DescriptionStep />,
+      component: () => <EventDescriptionStep form={form} />,
       optional: true,
     },
     {
       id: "media-details",
       title: "Photos & Media",
-      component: () => <MediaStep />,
+      component: () => <EventMediaStep form={form} />,
       optional: true,
     },
   ];

@@ -19,5 +19,11 @@ export interface EventForm {
     basicInfo: BasicDetailsData;
     additionalDetails?: AdditionalDetailsData;
     description?: string;
-    mediaUrls?: string[];
+    coverImage?: File;
+    media?: EventMediaItem[];
+}
+
+export type EventMediaItem = {
+  file: File
+  type: "image" | "video"
 }

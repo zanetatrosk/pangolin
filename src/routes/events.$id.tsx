@@ -275,22 +275,7 @@ function RouteComponent() {
           <div className="lg:col-span-1">
             <div className="sticky top-8 space-y-6">
               <Card className="shadow-xl border-primary/10 overflow-hidden">
-                <CardHeader className="bg-primary/5 pb-6">
-                  <CardTitle className="flex items-baseline gap-2">
-                    <span className="text-3xl font-bold text-primary">
-                      ${basicInfo.priceExact || basicInfo.priceRange}
-                    </span>
-                    {basicInfo.priceExact && (
-                      <span className="text-sm text-muted-foreground font-normal">
-                        / person
-                      </span>
-                    )}
-                  </CardTitle>
-                  <CardDescription>
-                    {basicInfo.priceExact ? "Fixed Price" : "Price Range"}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-6 pt-6">
+                <CardContent className="space-y-6 ">
                   <div className="space-y-4">
                     <div className="flex items-start gap-3">
                       <Calendar className="h-5 w-5 text-muted-foreground mt-0.5" />
@@ -312,6 +297,15 @@ function RouteComponent() {
                         >
                           View on Map
                         </Button>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <DollarSign className="h-5 w-5 text-muted-foreground mt-0.5" />
+                      <div>
+                        <p className="font-medium">${basicInfo.priceExact || basicInfo.priceRange}</p>
+                        <p className="text-sm text-muted-foreground">
+                          {basicInfo.priceExact ? "Fixed Price" : "Price Range"}
+                        </p>
                       </div>
                     </div>
                   </div>

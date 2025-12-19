@@ -80,17 +80,48 @@ export const EventMediaStep = withForm({
                 field.handleChange(media.filter((_, i) => i !== index));
               };
 
+              const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
+                e.preventDefault();
+                e.stopPropagation();
+                addMedia(e.dataTransfer.files);
+              };
+
+              const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+                e.preventDefault();
+                e.stopPropagation();
+              };
+
               return (
                 <div className="space-y-4">
                   <Label>Event media</Label>
 
-                  <Input
-                    type="file"
-                    accept="image/*,video/*"
-                    multiple
-                    onChange={(e) => addMedia(e.target.files)}
-                  />
+                  {/* -------- Dropzone -------- */}
+                  <div
+                    onDrop={handleDrop}
+                    onDragOver={handleDragOver}
+                    className="flex flex-col items-center justify-center gap-2 rounded-lg border-2 border-dashed border-muted-foreground/30 bg-muted/20 p-8 text-center cursor-pointer hover:bg-muted/40 transition"
+                    onClick={() =>
+                      document.getElementById("media-upload")?.click()
+                    }
+                  >
+                    <p className="text-sm font-medium">
+                      Drag & drop images or videos here
+                    </p>
+                    <p className="text-xs text-muted-foreground">
+                      or click to browse
+                    </p>
 
+                    <input
+                      id="media-upload"
+                      type="file"
+                      accept="image/*,video/*"
+                      multiple
+                      className="hidden"
+                      onChange={(e) => addMedia(e.target.files)}
+                    />
+                  </div>
+
+                  {/* -------- Media Grid -------- */}
                   {media.length > 0 && (
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                       {media.map((item, index) => {
@@ -102,7 +133,7 @@ export const EventMediaStep = withForm({
                         return (
                           <div
                             key={index}
-                            className="relative group rounded-lg border overflow-hidden h-32 w-full"
+                            className="relative group aspect-square rounded-lg border overflow-hidden"
                           >
                             {item.type === "image" ? (
                               <img
@@ -111,10 +142,8 @@ export const EventMediaStep = withForm({
                                 className="w-full h-full object-cover"
                               />
                             ) : (
-                              <div className="flex items-center justify-center w-full h-full bg-muted">
-                                <span className="text-sm font-medium truncate px-1">
-                                  🎥 {item.file.name}
-                                </span>
+                              <div className="flex items-center justify-center w-full h-full bg-muted text-sm font-medium px-2 text-center">
+                                🎥 {item.file.name}
                               </div>
                             )}
 

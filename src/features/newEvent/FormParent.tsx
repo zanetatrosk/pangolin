@@ -1,15 +1,15 @@
 import { useIsMobile } from "@/hooks/useIsMobile";
-import { useForm } from "@tanstack/react-form";
 import React from "react";
 import { MobileStepper, Step } from "./MobileStepper";
-import { BasicDetails } from "./BasicDetails";
+import { BasicDetails, BasicDetailsData } from "./BasicDetails";
 import { DesktopStepper } from "./DesktopStepper";
 import { Card, CardContent } from "@/components/ui/card";
 import { t } from "i18next";
 import { EventStepper } from "./EventStepper";
+import { useAppForm } from "@/lib/form";
 
 interface FormParentProps {
-  defaultValues?: Record<string, any>;
+  defaultValues?: BasicDetailsData;
 }
 
 // Placeholder components for future steps
@@ -32,8 +32,17 @@ const MediaStep = () => {
 export const FormParent: React.FC<FormParentProps> = ({
   defaultValues,
 }) => {
-  const form = useForm({
-    defaultValues: defaultValues || {},
+  const form = useAppForm({
+    defaultValues: {
+      eventName: defaultValues?.eventName ?? "",
+      location: defaultValues?.location ?? "",
+      date: defaultValues?.date ?? "",
+      time: defaultValues?.time ?? "",
+      isRecurring: defaultValues?.isRecurring ?? false,
+      endDate: defaultValues?.endDate ?? "",
+      priceRange: defaultValues?.priceRange ?? "",
+      priceExact: defaultValues?.priceExact ?? "",
+    },
     onSubmit: async ({ value }) => {
       console.log("Form submitted with values:", value);
       console.log("Validating form before submission...", form.getAllErrors());
@@ -55,13 +64,13 @@ export const FormParent: React.FC<FormParentProps> = ({
     {
       id: "description-details",
       title: "Description & Details",
-      component: () => <DescriptionStep form={form} />,
+      component: () => <DescriptionStep />,
       optional: true,
     },
     {
       id: "media-details",
       title: "Photos & Media",
-      component: () => <MediaStep form={form} />,
+      component: () => <MediaStep />,
       optional: true,
     },
   ];

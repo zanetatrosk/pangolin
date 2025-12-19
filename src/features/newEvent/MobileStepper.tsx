@@ -6,7 +6,6 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useForm } from "@tanstack/react-form";
 
 export interface StepComponentProps {
-  form: ReturnType<typeof useForm>;
   onValidate?: (isValid: boolean) => void;
   onNext?: () => void;
 }

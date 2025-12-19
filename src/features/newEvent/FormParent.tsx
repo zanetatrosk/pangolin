@@ -10,6 +10,7 @@ import { useAppForm } from "@/lib/form";
 import { eventFormOpts } from "./FormOptions";
 import { EventDescriptionStep } from "./EventDescriptionStep";
 import { EventMediaStep } from "./EventMediaStep";
+import { EventDetailsStep } from "./EventDetailsStep";
 
 // Placeholder components for future steps
 const DescriptionStep = () => {
@@ -61,6 +62,12 @@ export const FormParent: React.FC = () => {
       component: () => <EventMediaStep form={form} />,
       optional: true,
     },
+    {
+      id: "additional-details",
+      title: "Additional Details",
+      component: () => <EventDetailsStep form={form} />,
+      optional: false,
+    }
   ];
   return (
     <form

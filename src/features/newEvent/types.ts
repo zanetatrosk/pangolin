@@ -13,6 +13,9 @@ export interface AdditionalDetailsData {
     danceStyles: string[];
     skillLevel: string[];
     typeOfEvent: string[];
+    maxAttendees?: number;
+    allowWaitlist: boolean;
+    allowPartnerPairing: boolean;
 }
 
 export interface EventForm {

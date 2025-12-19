@@ -3,18 +3,15 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Search, MapPin, Calendar, Music } from "lucide-react";
-import { MultiSelectFilter } from "./components/MultiSelectFilter";
-import { MobileMultiSelectFilter } from "./components/MobileMultiSelectFilter";
+import { ResponsiveMultiSelectFilter } from "./components/ResponsiveMultiSelectFilter";
 import { InputIconAndTitle } from "./components/InputIconAndTitle";
 import { useTranslation } from "react-i18next";
-import { useIsMobile } from "@/hooks/useIsMobile";
 
 export function EventSearch() {
   const [searchTerm, setSearchTerm] = useState("");
   const [location, setLocation] = useState("");
   const [eventTypes, setEventTypes] = useState<string[]>([]);
   const [danceStyles, setDanceStyles] = useState<string[]>([]);
-  const isMobile = useIsMobile();
 
   const eventTypeOptions = [
     { value: "social", label: "Social Night" },
@@ -83,42 +80,22 @@ export function EventSearch() {
               </InputIconAndTitle>
 
               {/* Event Types Filter */}
-              {isMobile ? (
-                <MobileMultiSelectFilter
-                  label="Event Types"
-                  icon={Calendar}
-                  options={eventTypeOptions}
-                  selectedValues={eventTypes}
-                  onValuesChange={setEventTypes}
-                />
-              ) : (
-                <MultiSelectFilter
-                  label="Event Types"
-                  icon={Calendar}
-                  options={eventTypeOptions}
-                  selectedValues={eventTypes}
-                  onValuesChange={setEventTypes}
-                />
-              )}
+              <ResponsiveMultiSelectFilter
+                label="Event Types"
+                icon={Calendar}
+                options={eventTypeOptions}
+                selectedValues={eventTypes}
+                onValuesChange={setEventTypes}
+              />
 
               {/* Dance Styles Filter */}
-              {isMobile ? (
-                <MobileMultiSelectFilter
-                  label="Dance Styles"
-                  icon={Music}
-                  options={danceStyleOptions}
-                  selectedValues={danceStyles}
-                  onValuesChange={setDanceStyles}
-                />
-              ) : (
-                <MultiSelectFilter
-                  label="Dance Styles"
-                  icon={Music}
-                  options={danceStyleOptions}
-                  selectedValues={danceStyles}
-                  onValuesChange={setDanceStyles}
-                />
-              )}
+              <ResponsiveMultiSelectFilter
+                label="Dance Styles"
+                icon={Music}
+                options={danceStyleOptions}
+                selectedValues={danceStyles}
+                onValuesChange={setDanceStyles}
+              />
             </div>
 
             {/* Action Buttons */}

@@ -15,6 +15,10 @@ const steps: StepBase[] = [
         id: "media-details",
         title: "Photos & Media",
     },
+    {
+        id: "additional-details",
+        title: "Additional Details",
+    },
 ];
 export const EventStepper = defineStepper(
     ...steps

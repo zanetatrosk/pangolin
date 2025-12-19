@@ -1,16 +1,13 @@
 import { useIsMobile } from "@/hooks/useIsMobile";
 import React from "react";
 import { MobileStepper, Step } from "./MobileStepper";
-import { BasicDetails, BasicDetailsData } from "./BasicDetails";
+import { BasicDetails } from "./BasicDetails";
 import { DesktopStepper } from "./DesktopStepper";
 import { Card, CardContent } from "@/components/ui/card";
 import { t } from "i18next";
 import { EventStepper } from "./EventStepper";
 import { useAppForm } from "@/lib/form";
-
-interface FormParentProps {
-  defaultValues?: BasicDetailsData;
-}
+import { eventFormOpts } from "./FormOptions";
 
 // Placeholder components for future steps
 const DescriptionStep = () => {
@@ -29,20 +26,9 @@ const MediaStep = () => {
   );
 };
 
-export const FormParent: React.FC<FormParentProps> = ({
-  defaultValues,
-}) => {
+export const FormParent: React.FC = () => {
   const form = useAppForm({
-    defaultValues: {
-      eventName: defaultValues?.eventName ?? "",
-      location: defaultValues?.location ?? "",
-      date: defaultValues?.date ?? "",
-      time: defaultValues?.time ?? "",
-      isRecurring: defaultValues?.isRecurring ?? false,
-      endDate: defaultValues?.endDate ?? "",
-      priceRange: defaultValues?.priceRange ?? "",
-      priceExact: defaultValues?.priceExact ?? "",
-    },
+    ...eventFormOpts,
     onSubmit: async ({ value }) => {
       console.log("Form submitted with values:", value);
       console.log("Validating form before submission...", form.getAllErrors());

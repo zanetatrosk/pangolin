@@ -3,41 +3,17 @@ import { useState } from "react";
 import { withForm } from "@/lib/form";
 import { FormSection, FormGrid } from "@/components/form";
 import type { SelectOption } from "@/components/form";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-
-export interface BasicDetailsData {
-  eventName: string;
-  location: string;
-  date: string;
-  time: string;
-  isRecurring: boolean;
-  endDate?: string;
-  priceRange: string;
-  priceExact?: string;
-}
+import { eventFormOpts } from "./FormOptions";
 
 interface BasicDetailsProps {
   className?: string;
-  initialData?: BasicDetailsData;
 }
 
 export const BasicDetails = withForm({
-  defaultValues: {
-    eventName: "",
-    location: "",
-    date: "",
-    time: "",
-    isRecurring: false,
-    endDate: "",
-    priceRange: "",
-    priceExact: "",
-  },
+  ...eventFormOpts,
   props: {} as BasicDetailsProps,
-  render: ({ form, className, initialData }) => {
-    const [showExactPrice, setShowExactPrice] = useState(
-      initialData?.priceRange === "exact"
-    );
+  render: ({ form, className }) => {
+    const [showExactPrice, setShowExactPrice] = useState(false);
 
     const priceRangeOptions: SelectOption[] = [
       { value: "free", label: "Free" },
@@ -56,7 +32,7 @@ export const BasicDetails = withForm({
           <FormSection title="Basic Information">
             {/* Event Name */}
             <form.AppField
-              name="eventName"
+              name="basicInfo.eventName"
               validators={{
                 onChange: ({ value }) =>
                   !value || value.length < 3
@@ -75,7 +51,7 @@ export const BasicDetails = withForm({
 
             {/* Location */}
             <form.AppField
-              name="location"
+              name="basicInfo.location"
               validators={{
                 onChange: ({ value }) =>
                   !value || value.length < 3
@@ -98,7 +74,7 @@ export const BasicDetails = withForm({
           <FormSection title="Date & Time">
             <FormGrid columns={2}>
               <form.AppField
-                name="date"
+                name="basicInfo.date"
                 validators={{
                   onChange: ({ value }) =>
                     !value ? "Date is required" : undefined,
@@ -115,7 +91,7 @@ export const BasicDetails = withForm({
               </form.AppField>
 
               <form.AppField
-                name="time"
+                name="basicInfo.time"
                 validators={{
                   onChange: ({ value }) =>
                     !value ? "Time is required" : undefined,
@@ -133,17 +109,17 @@ export const BasicDetails = withForm({
             </FormGrid>
 
             {/* Recurring Event Checkbox */}
-            <form.AppField name="isRecurring">
+            <form.AppField name="basicInfo.isRecurring">
               {(field) => (
                 <field.CheckboxField label="This is a recurring event" />
               )}
             </form.AppField>
 
             {/* End Date - shown when recurring is checked */}
-            <form.AppField name="isRecurring">
+            <form.AppField name="basicInfo.isRecurring">
               {(recurringField) =>
                 recurringField.state.value && (
-                  <form.AppField name="endDate">
+                  <form.AppField name="basicInfo.endDate">
                     {(field) => (
                       <field.TextField
                         label="End Date"
@@ -167,7 +143,7 @@ export const BasicDetails = withForm({
                   : "grid-cols-1"
               }`}
             >
-              <form.AppField name="priceRange">
+              <form.AppField name="basicInfo.priceRange">
                 {(field) => (
                   <field.SelectField
                     label="Price Range"
@@ -182,7 +158,7 @@ export const BasicDetails = withForm({
 
               {/* Exact Price Input - shown when "exact" is selected */}
               {showExactPrice && (
-                <form.AppField name="priceExact">
+                <form.AppField name="basicInfo.priceExact">
                   {(field) => (
                     <field.NumberField
                       placeholder="Enter exact price"

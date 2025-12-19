@@ -12,23 +12,6 @@ import { EventDescriptionStep } from "./EventDescriptionStep";
 import { EventMediaStep } from "./EventMediaStep";
 import { EventDetailsStep } from "./EventDetailsStep";
 
-// Placeholder components for future steps
-const DescriptionStep = () => {
-  return (
-    <div className="p-4">
-      <p className="text-muted-foreground">Description step - Coming soon</p>
-    </div>
-  );
-};
-
-const MediaStep = () => {
-  return (
-    <div className="p-4">
-      <p className="text-muted-foreground">Media upload step - Coming soon</p>
-    </div>
-  );
-};
-
 export const FormParent: React.FC = () => {
   const form = useAppForm({
     ...eventFormOpts,

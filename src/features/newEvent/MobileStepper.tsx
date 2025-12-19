@@ -51,7 +51,7 @@ export const MobileStepper: React.FC<MobileStepperProps> = ({
   return (
     <div className="flex flex-col min-h-screen md:hidden bg-background">
       {/* Header with Progress */}
-      <div className="sticky top-0 z-10 bg-background">
+      <div className="top-0 bg-background">
         <div className="p-4 space-y-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">

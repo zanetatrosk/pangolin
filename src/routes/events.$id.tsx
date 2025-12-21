@@ -1,30 +1,21 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
+import { useState } from "react";
+import { AttendeeStatsCard } from "@/features/events/AttendiesCard";
+import { Button } from "@/components/ui/button";
 import {
   Calendar,
-  MapPin,
   Clock,
-  DollarSign,
-  Users,
-  Heart,
+  MapPin,
   Share2,
-  Music,
-  CheckCircle2,
-  PlayCircle,
-  Navigation,
+  Heart,
+  Check,
+  ExternalLink,
   Info,
+  Banknote,
+  Facebook,
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardFooter,
-} from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
+import { Card, CardContent } from "@/components/ui/card";
 
 export const Route = createFileRoute("/events/$id")({
   component: RouteComponent,
@@ -73,6 +64,7 @@ export interface EventDetailData {
   coverImage?: string;
   media?: EventMediaItem[];
   attendeeStats?: AttendeeStats;
+  facebookEventUrl?: string;
 }
 
 // --- Mock Data ---
@@ -98,6 +90,7 @@ const MOCK_EVENT: EventDetailData = {
     "Join us for an unforgettable night of dancing! We start with a beginner-friendly workshop at 8 PM, followed by social dancing until 2 AM. Great music, amazing atmosphere, and the best dancers in town. \n\nWhether you are a seasoned pro or just starting out, you'll find a welcoming community and plenty of partners to dance with. Don't miss out on the special performance at midnight!",
   coverImage:
     "https://www.shbarcelona.com/blog/en/wp-content/uploads/2016/04/Bachata-dance.jpg",
+  facebookEventUrl: "https://facebook.com/events/example",
   media: [
     {
       type: "image",
@@ -128,140 +121,173 @@ function RouteComponent() {
   const { t } = useTranslation();
   const event = MOCK_EVENT; // In a real app, fetch this data using the ID
 
-  const { basicInfo, additionalDetails, description, coverImage, media, attendeeStats } = event;
+  const [isGoing, setIsGoing] = useState(false);
+  const [isInterested, setIsInterested] = useState(false);
+
+  const {
+    basicInfo,
+    additionalDetails,
+    description,
+    coverImage,
+    media,
+    attendeeStats,
+    facebookEventUrl,
+  } = event;
+
+  const handleJoin = () => {
+    setIsGoing(!isGoing);
+    if (isInterested) setIsInterested(false);
+  };
+
+  const handleInterested = () => {
+    setIsInterested(!isInterested);
+    if (isGoing) setIsGoing(false);
+  };
+
+  const handleViewOnFacebook = () => {
+    window.open("https://facebook.com/events/example", "_blank");
+  };
 
   return (
-    <div className="min-h-screen bg-background pb-12">
-      {/* Hero Section */}
-      <div className="relative h-[300px] md:h-[400px] w-full overflow-hidden bg-muted">
-        {coverImage ? (
-          <img
-            src={coverImage}
-            alt={basicInfo.eventName}
-            className="h-full w-full object-cover"
-          />
-        ) : (
-          <div className="flex h-full items-center justify-center bg-gradient-to-r from-purple-500 to-pink-500">
-            <Music className="h-24 w-24 text-white/50" />
-          </div>
-        )}
-        <div className="absolute inset-0 bg-gradient-to-t from-background/90 to-transparent" />
-        <div className="absolute bottom-0 left-0 w-full p-6 md:p-10">
-          <div className="mx-auto max-w-7xl">
-            <div className="flex flex-wrap gap-2 mb-4">
-              {additionalDetails?.typeOfEvent.map((type) => (
-                <Badge key={type} variant="secondary" className="text-sm">
-                  {type}
-                </Badge>
-              ))}
-              {basicInfo.isRecurring && (
-                <Badge variant="outline" className="bg-background/50 backdrop-blur">
-                  Recurring Event
-                </Badge>
-              )}
-            </div>
-            <h1 className="text-3xl md:text-5xl font-bold mb-4">
+    <div className="min-h-screen bg-background pb-20">
+      {/* Hero / Cover Image */}
+      <div className="relative w-full md:h-96 flex flex-col md:block bg-muted">
+        <div className="relative h-64 md:h-full w-full overflow-hidden">
+          {coverImage ? (
+            <img
+              src={coverImage}
+              alt={basicInfo.eventName}
+              className="w-full h-full object-cover"
+            />
+          ) : (
+            <div className="w-full h-full bg-neutral-200 dark:bg-neutral-800" />
+          )}
+          <div className="hidden md:block absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
+        </div>
+
+        <div className="relative md:absolute md:bottom-0 md:left-0 w-full bg-background md:bg-transparent p-6 md:p-10">
+          <div className="container mx-auto max-w-6xl">
+            <h1 className="text-3xl md:text-5xl font-bold text-foreground mb-2">
               {basicInfo.eventName}
             </h1>
+            <div className="flex flex-wrap items-center gap-y-2 gap-x-6 text-foreground/90 font-medium text-sm md:text-base mt-4">
+              <div className="flex items-center gap-2">
+                <Calendar className="w-4 h-4" />
+                <span>{basicInfo.date}</span>
+              </div>
+              <div className="hidden lg:block w-1 h-1 rounded-full bg-foreground/20" />
+              <div className="flex items-center gap-2">
+                <Clock className="w-4 h-4" />
+                <span>{basicInfo.time}</span>
+              </div>
+              <div className="hidden lg:block w-1 h-1 rounded-full bg-foreground/20" />
+              <div className="flex items-center gap-2">
+                <Banknote className="w-4 h-4" />
+                <span>
+                  {basicInfo.priceExact
+                    ? `$${basicInfo.priceExact}`
+                    : basicInfo.priceRange}
+                </span>
+              </div>
+              <div className="hidden lg:block w-1 h-1 rounded-full bg-foreground/20" />
+              <a
+                href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+                  basicInfo.location
+                )}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 hover:text-primary hover:underline transition-colors cursor-pointer"
+                title="View on Google Maps"
+              >
+                <MapPin className="w-4 h-4" />
+                <span>{basicInfo.location}</span>
+                <ExternalLink className="w-3 h-3" />
+              </a>
+              <div className="hidden lg:block w-1 h-1 rounded-full bg-foreground/20" />
+
+              {facebookEventUrl && (
+                <a
+                  href={facebookEventUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full md:w-auto flex items-center gap-2 hover:text-[#1877F2] hover:underline transition-colors cursor-pointer"
+                  title="View on Facebook"
+                >
+                  <Facebook className="w-4 h-4" />
+                  <span>Facebook Event</span>
+                  <ExternalLink className="w-3 h-3" />
+                </a>
+              )}
+            </div>
           </div>
         </div>
       </div>
 
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mt-6 md:-mt-8 relative z-10">
+      <div className="container mx-auto max-w-6xl py-4 px-4 md:px-0">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Left Column: Main Content */}
-          <div className="lg:col-span-2 space-y-8">
-            {/* Description Card */}
-            <Card className="border-none shadow-lg">
-              <CardHeader>
-                <CardTitle>About this Event</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground whitespace-pre-line leading-relaxed">
-                  {description || "No description provided."}
-                </p>
-              </CardContent>
-            </Card>
+          <div className="contents lg:block lg:col-span-2 lg:space-y-8">
+            {/* Action Buttons */}
+            <div className="flex flex-wrap gap-3 order-1 lg:order-none">
+              <Button
+                size="lg"
+                className={`flex-1 md:flex-none gap-2 ${
+                  isGoing ? "bg-green-600 hover:bg-green-700" : ""
+                }`}
+                onClick={handleJoin}
+              >
+                {isGoing ? <Check className="w-4 h-4" /> : null}
+                {isGoing ? "Going" : "Join Event"}
+              </Button>
 
-            {/* Details Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <Card>
-                <CardHeader className="pb-2">
-                  <CardTitle className="text-lg flex items-center gap-2">
-                    <Music className="h-5 w-5 text-primary" /> Dance Styles
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="flex flex-wrap gap-2">
-                  {additionalDetails?.danceStyles.map((style) => (
-                    <Badge key={style} variant="outline">
-                      {style}
-                    </Badge>
-                  ))}
-                </CardContent>
-              </Card>
+              <Button
+                variant={isInterested ? "secondary" : "outline"}
+                size="lg"
+                className={`flex-1 md:flex-none gap-2 ${
+                  isInterested ? "text-primary" : ""
+                }`}
+                onClick={handleInterested}
+              >
+                <Heart
+                  className={`w-4 h-4 ${isInterested ? "fill-current" : ""}`}
+                />
+                Interested
+              </Button>
 
-              <Card>
-                <CardHeader className="pb-2">
-                  <CardTitle className="text-lg flex items-center gap-2">
-                    <Users className="h-5 w-5 text-primary" /> Skill Level
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="flex flex-wrap gap-2">
-                  {additionalDetails?.skillLevel.map((level) => (
-                    <Badge key={level} variant="outline">
-                      {level}
-                    </Badge>
-                  ))}
-                </CardContent>
-              </Card>
+              <Button variant="ghost" size="icon">
+                <Share2 className="w-5 h-5" />
+              </Button>
             </div>
 
-            {/* Features List */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-lg">Event Features</CardTitle>
-              </CardHeader>
-              <CardContent className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {additionalDetails?.allowPartnerPairing && (
-                  <div className="flex items-center gap-2 text-muted-foreground">
-                    <CheckCircle2 className="h-5 w-5 text-green-500" />
-                    <span>Partner Pairing Available</span>
-                  </div>
-                )}
-                {additionalDetails?.allowWaitlist && (
-                  <div className="flex items-center gap-2 text-muted-foreground">
-                    <CheckCircle2 className="h-5 w-5 text-green-500" />
-                    <span>Waitlist Enabled</span>
-                  </div>
-                )}
-                {additionalDetails?.maxAttendees && (
-                  <div className="flex items-center gap-2 text-muted-foreground">
-                    <Info className="h-5 w-5 text-blue-500" />
-                    <span>Max Attendees: {additionalDetails.maxAttendees}</span>
-                  </div>
-                )}
-              </CardContent>
-            </Card>
+            {/* Description */}
+            <div className="prose dark:prose-invert max-w-none order-3 lg:order-none">
+              <h2 className="text-2xl font-semibold mb-4">About Event</h2>
+              <p className="whitespace-pre-line text-muted-foreground leading-relaxed">
+                {description}
+              </p>
+            </div>
 
             {/* Media Gallery */}
             {media && media.length > 0 && (
-              <div className="space-y-4">
-                <h2 className="text-2xl font-bold">Gallery</h2>
+              <div className="order-4 lg:order-none">
+                <h2 className="text-2xl font-semibold mb-4">Gallery</h2>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                  {media.map((item, index) => (
+                  {media.map((item, idx) => (
                     <div
-                      key={index}
-                      className="group relative aspect-square overflow-hidden rounded-xl bg-muted"
+                      key={idx}
+                      className="aspect-square rounded-xl overflow-hidden bg-muted"
                     >
                       {item.type === "image" ? (
                         <img
                           src={item.url}
-                          alt={`Gallery ${index}`}
-                          className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                          alt={`Gallery ${idx}`}
+                          className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
                         />
                       ) : (
-                        <div className="flex h-full w-full items-center justify-center bg-black/10">
-                          <PlayCircle className="h-12 w-12 text-white opacity-80" />
+                        <div className="w-full h-full flex items-center justify-center bg-black/10">
+                          <span className="text-xs text-muted-foreground">
+                            Video
+                          </span>
                         </div>
                       )}
                     </div>
@@ -271,120 +297,91 @@ function RouteComponent() {
             )}
           </div>
 
-          {/* Right Column: Sticky Sidebar */}
-          <div className="lg:col-span-1">
-            <div className="sticky top-8 space-y-6">
-              <Card className="shadow-xl border-primary/10 overflow-hidden">
-                <CardContent className="space-y-6 ">
-                  <div className="space-y-4">
-                    <div className="flex items-start gap-3">
-                      <Calendar className="h-5 w-5 text-muted-foreground mt-0.5" />
-                      <div>
-                        <p className="font-medium">{basicInfo.date}</p>
-                        <p className="text-sm text-muted-foreground">
-                          {basicInfo.time}
-                          {basicInfo.endDate ? ` - ${basicInfo.endDate}` : ""}
-                        </p>
-                      </div>
-                    </div>
-                    <div className="flex items-start gap-3">
-                      <MapPin className="h-5 w-5 text-muted-foreground mt-0.5" />
-                      <div>
-                        <p className="font-medium">{basicInfo.location}</p>
-                        <Button
-                          variant="link"
-                          className="h-auto p-0 text-xs text-primary"
-                        >
-                          View on Map
-                        </Button>
-                      </div>
-                    </div>
-                    <div className="flex items-start gap-3">
-                      <DollarSign className="h-5 w-5 text-muted-foreground mt-0.5" />
-                      <div>
-                        <p className="font-medium">${basicInfo.priceExact || basicInfo.priceRange}</p>
-                        <p className="text-sm text-muted-foreground">
-                          {basicInfo.priceExact ? "Fixed Price" : "Price Range"}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
+          {/* Right Column: Sidebar Details */}
+          <div className="contents lg:block lg:space-y-6">
+            {/* Attendee Stats Card */}
+            {attendeeStats && (
+              <div className="order-2 lg:order-none">
+                <AttendeeStatsCard attendeeStats={attendeeStats} />
+              </div>
+            )}
 
-                  {attendeeStats && (
-                    <>
-                      <Separator />
-                      <div className="space-y-4">
-                        <div className="space-y-2">
-                          <div className="flex justify-between text-sm">
-                            <span className="font-medium text-muted-foreground">Going</span>
-                            <span className="font-bold">{attendeeStats.going.total}</span>
-                          </div>
-                          <div className="flex h-2 w-full overflow-hidden rounded-full bg-muted">
-                            <div
-                              className="bg-blue-500"
-                              style={{
-                                width: `${(attendeeStats.going.leaders / (attendeeStats.going.total || 1)) * 100}%`,
-                              }}
-                              title={`${attendeeStats.going.leaders} Leaders`}
-                            />
-                            <div
-                              className="bg-pink-500"
-                              style={{
-                                width: `${(attendeeStats.going.followers / (attendeeStats.going.total || 1)) * 100}%`,
-                              }}
-                              title={`${attendeeStats.going.followers} Followers`}
-                            />
-                          </div>
-                          <div className="flex justify-between text-xs text-muted-foreground">
-                            <span className="flex items-center gap-1">
-                              <div className="h-2 w-2 rounded-full bg-blue-500" /> {attendeeStats.going.leaders} Leaders
-                            </span>
-                            <span className="flex items-center gap-1">
-                              <div className="h-2 w-2 rounded-full bg-pink-500" /> {attendeeStats.going.followers} Followers
-                            </span>
-                          </div>
-                        </div>
+            {/* Details */}
+            <div className="rounded-xl bg-white p-6 shadow-sm ring-1 ring-gray-900/5 order-5 lg:order-none">
+              <h3 className="font-semibold text-lg flex items-center gap-2">
+                <Info className="w-5 h-5 text-primary" />
+                Details
+              </h3>
+              <div className="mt-4 space-y-4">
+                
 
-                        <div className="flex items-center justify-between text-sm">
-                          <span className="font-medium text-muted-foreground">Interested</span>
-                          <span className="font-bold">{attendeeStats.interested}</span>
-                        </div>
-                      </div>
-                    </>
-                  )}
-
-                  <Separator />
-
-                  <div className="grid gap-3">
-                    <Button size="lg" className="w-full font-semibold">
-                      Join Event
-                    </Button>
-                    <div className="grid grid-cols-2 gap-3">
-                      <Button variant="outline" className="w-full">
-                        <Heart className="mr-2 h-4 w-4" /> Interested
-                      </Button>
-                      <Button variant="outline" className="w-full">
-                        <Share2 className="mr-2 h-4 w-4" /> Share
-                      </Button>
-                    </div>
-                  </div>
-                </CardContent>
-                  
-              </Card>
-
-              {/* Organizer Placeholder */}
-              <Card>
-                <CardContent className="p-4 flex items-center gap-4">
-                  <div className="h-12 w-12 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold text-lg">
-                    DS
-                  </div>
+                {event.additionalDetails?.typeOfEvent && (
                   <div>
-                    <p className="text-sm font-medium">Organized by</p>
-                    <p className="font-bold">Dance Studio 101</p>
+                    <p className="text-xs font-medium uppercase text-muted-foreground">
+                      Event Type
+                    </p>
+                    <div className="mt-2 flex flex-wrap gap-2">
+                      {event.additionalDetails.typeOfEvent.map((type) => (
+                        <span
+                          key={type}
+                          className="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10"
+                        >
+                          {type}
+                        </span>
+                      ))}
+                    </div>
                   </div>
-                </CardContent>
-              </Card>
+                )}
+
+                {event.additionalDetails?.danceStyles && (
+                  <div>
+                    <p className="text-xs font-medium uppercase text-muted-foreground">
+                      Styles
+                    </p>
+                    <div className="mt-2 flex flex-wrap gap-2">
+                      {event.additionalDetails.danceStyles.map((style) => (
+                        <span
+                          key={style}
+                          className="inline-flex items-center rounded-full bg-rose-50 px-2 py-1 text-xs font-medium text-rose-700 ring-1 ring-inset ring-rose-700/10"
+                        >
+                          {style}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {event.additionalDetails?.skillLevel && (
+                  <div>
+                    <p className="text-xs font-medium uppercase text-muted-foreground">
+                      Level
+                    </p>
+                    <div className="mt-2 flex flex-wrap gap-2">
+                      {event.additionalDetails.skillLevel.map((level) => (
+                        <span
+                          key={level}
+                          className="inline-flex items-center rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10"
+                        >
+                          {level}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
+
+            <Card className="order-6 lg:order-none">
+              <CardContent className="p-4 flex items-center gap-4">
+                <div className="h-12 w-12 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold text-lg">
+                  DS
+                </div>
+                <div>
+                  <p className="text-sm font-medium">Organized by</p>
+                  <p className="font-bold">Dance Studio 101</p>
+                </div>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </div>

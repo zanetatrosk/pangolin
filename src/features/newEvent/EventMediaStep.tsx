@@ -6,11 +6,7 @@ import { eventFormOpts } from "./FormOptions";
 import { withForm } from "@/lib/form";
 import { EventMediaItem } from "./types";
 import { FormSection } from "@/components/form/FormSection";
-
-export type EventMediaValues = {
-  coverImage?: File;
-  images?: File[];
-};
+import { Media } from "../events/components/Media";
 
 export const EventMediaStep = withForm({
   ...eventFormOpts,
@@ -68,7 +64,7 @@ export const EventMediaStep = withForm({
 
                 const newItems: EventMediaItem[] = Array.from(files).map(
                   (file) => ({
-                    file,
+                    url: URL.createObjectURL(file),
                     type: file.type.startsWith("video") ? "video" : "image",
                   })
                 );
@@ -76,8 +72,8 @@ export const EventMediaStep = withForm({
                 field.handleChange([...media, ...newItems]);
               };
 
-              const removeMedia = (index: number) => {
-                field.handleChange(media.filter((_, i) => i !== index));
+              const removeMedia = (item: EventMediaItem) => {
+                field.handleChange(media.filter((m) => m.url !== item.url));
               };
 
               const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
@@ -122,45 +118,7 @@ export const EventMediaStep = withForm({
                   </div>
 
                   {/* -------- Media Grid -------- */}
-                  {media.length > 0 && (
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                      {media.map((item, index) => {
-                        const preview =
-                          item.type === "image"
-                            ? URL.createObjectURL(item.file)
-                            : null;
-
-                        return (
-                          <div
-                            key={index}
-                            className="relative group aspect-square rounded-lg border overflow-hidden"
-                          >
-                            {item.type === "image" ? (
-                              <img
-                                src={preview!}
-                                alt="Media preview"
-                                className="w-full h-full object-cover"
-                              />
-                            ) : (
-                              <div className="flex items-center justify-center w-full h-full bg-muted text-sm font-medium px-2 text-center">
-                                🎥 {item.file.name}
-                              </div>
-                            )}
-
-                            <Button
-                              type="button"
-                              size="icon"
-                              variant="destructive"
-                              className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition"
-                              onClick={() => removeMedia(index)}
-                            >
-                              <X className="h-4 w-4" />
-                            </Button>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  )}
+                  <Media mediaFiles={media} allowEdit onDelete={removeMedia} />
                 </div>
               );
             }}

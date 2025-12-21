@@ -42,7 +42,7 @@ export const HeroInformations: FC<{
   let data: HeroInfoItem[] = [
     {
       icon: <Calendar className="w-4 h-4" />,
-      text: date,
+      text: isRecurring && endDate ? `${date} until ${endDate}` : date,
     },
     {
       icon: <Clock className="w-4 h-4" />,
@@ -60,7 +60,7 @@ export const HeroInformations: FC<{
         <h1 className="text-3xl md:text-5xl font-bold text-foreground mb-2">
           {basicInfo.eventName}
         </h1>
-        <div className="flex flex-wrap items-center gap-y-2 gap-x-6 text-foreground/90 font-medium text-sm md:text-base mt-4">
+        <div className="flex flex-col md:flex-row md:flex-wrap items-start md:items-center gap-y-2 gap-x-6 text-foreground/90 font-medium text-sm md:text-base mt-4">
           {data.map((item, index) => (
             <HeroInfo key={index} icon={item.icon} text={item.text} />
           ))}
@@ -84,7 +84,7 @@ export const HeroInformations: FC<{
               href={facebookEventUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full md:w-auto flex items-center gap-2 hover:text-[#1877F2] hover:underline transition-colors cursor-pointer"
+              className="flex items-center gap-2 hover:text-[#1877F2] hover:underline transition-colors cursor-pointer"
               title="View on Facebook"
             >
               <Facebook className="w-4 h-4" />

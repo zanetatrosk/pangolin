@@ -9,6 +9,7 @@ export const MOCK_EVENT: EventDetailData = {
     isRecurring: true,
     priceRange: "15-20",
     priceExact: "15",
+    endDate: "2024-06-17",
   },
   additionalDetails: {
     danceStyles: ["Salsa", "Bachata", "Merengue"],

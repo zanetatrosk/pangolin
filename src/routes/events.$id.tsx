@@ -42,29 +42,39 @@ function RouteComponent() {
           {/* Left Column: Main Content */}
           <div className="contents lg:block lg:col-span-2 lg:space-y-8">
             {/* Action Buttons */}
-            <ActionButtons />
+            <div className="order-1">
+              <ActionButtons />
+            </div>
 
             {/* Description */}
-            <Description description={description} />
+            <div className="order-3">
+              <Description description={description} />
+            </div>
 
             {/* Media Gallery */}
-            <MediaGallery mediaFiles={media} />
+            <div className="order-4">
+              <MediaGallery mediaFiles={media} />
+            </div>
           </div>
 
           {/* Right Column: Sidebar Details */}
           <div className="contents lg:block lg:space-y-6">
             {/* Attendee Stats Card */}
             {attendeeStats && (
-              <div className="order-2 lg:order-0">
+              <div className="order-2">
                 <AttendeeStatsCard attendeeStats={attendeeStats} />
               </div>
             )}
 
             {/* Details */}
-            <Details additionalDetails={additionalDetails} />
+            <div className="order-5">
+              <Details additionalDetails={additionalDetails} />
+            </div>
 
             {/* Organizer Card */}
-            <OrganizerCard organizerName={"John Doe"} />
+            <div className="order-6">
+              <OrganizerCard organizerName={"John Doe"} />
+            </div>
           </div>
         </div>
       </div>

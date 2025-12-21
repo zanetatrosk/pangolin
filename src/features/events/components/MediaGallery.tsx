@@ -17,7 +17,7 @@ export const MediaGallery: React.FC<{
 
   return (
     <>
-      <div className="order-4 lg:order-0">
+      <div>
         <div className="flex items-center justify-between pt-4 w-full mb-4">
           <h2 className="text-2xl font-semibold">Gallery</h2>
           {handleMediaUpload && allowEdit && (

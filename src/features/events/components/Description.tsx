@@ -16,7 +16,7 @@ export const Description: React.FC<{ description?: string }> = ({
       : description;
 
   return (
-    <div className="prose dark:prose-invert max-w-none order-3 lg:order-0">
+    <div className="prose dark:prose-invert max-w-none">
       <h2 className="text-2xl font-semibold mb-4">About Event</h2>
       <p className="whitespace-pre-line text-muted-foreground leading-relaxed">
         {displayedText}

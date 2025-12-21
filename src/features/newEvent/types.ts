@@ -18,7 +18,7 @@ export interface AdditionalDetailsData {
     allowPartnerPairing: boolean;
 }
 
-export interface EventForm {
+export interface DanceEventCreation {
     basicInfo: BasicDetailsData;
     additionalDetails?: AdditionalDetailsData;
     description?: string;

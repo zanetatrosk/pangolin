@@ -1,7 +1,7 @@
 import { formOptions } from "@tanstack/react-form";
-import { EventForm } from "./types";
+import { DanceEventCreation } from "./types";
 
-const eventFormDefaults: EventForm = {
+const eventFormDefaults: DanceEventCreation = {
   basicInfo: {
     eventName: "",
     location: "",

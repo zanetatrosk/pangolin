@@ -16,37 +16,15 @@ import {
   Facebook,
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
+import { DanceEventCreation } from "@/features/newEvent/types";
+import { CoverImage } from "@/features/events/components/CoverImage";
+import { HeroInformations } from "@/features/events/components/HeroInformations";
 
 export const Route = createFileRoute("/events/$id")({
   component: RouteComponent,
 });
 
 // --- Interfaces (Adapted for Display) ---
-
-export interface BasicDetailsData {
-  eventName: string;
-  location: string;
-  date: string;
-  time: string;
-  isRecurring: boolean;
-  endDate?: string;
-  priceRange: string;
-  priceExact?: string;
-}
-
-export interface AdditionalDetailsData {
-  danceStyles: string[];
-  skillLevel: string[];
-  typeOfEvent: string[];
-  maxAttendees?: number;
-  allowWaitlist: boolean;
-  allowPartnerPairing: boolean;
-}
-
-export interface EventMediaItem {
-  url: string;
-  type: "image" | "video";
-}
 
 export interface AttendeeStats {
   going: {
@@ -57,12 +35,7 @@ export interface AttendeeStats {
   interested: number;
 }
 
-export interface EventDetailData {
-  basicInfo: BasicDetailsData;
-  additionalDetails?: AdditionalDetailsData;
-  description?: string;
-  coverImage?: string;
-  media?: EventMediaItem[];
+export interface EventDetailData extends DanceEventCreation{
   attendeeStats?: AttendeeStats;
   facebookEventUrl?: string;
 }
@@ -88,23 +61,22 @@ const MOCK_EVENT: EventDetailData = {
   },
   description:
     "Join us for an unforgettable night of dancing! We start with a beginner-friendly workshop at 8 PM, followed by social dancing until 2 AM. Great music, amazing atmosphere, and the best dancers in town. \n\nWhether you are a seasoned pro or just starting out, you'll find a welcoming community and plenty of partners to dance with. Don't miss out on the special performance at midnight!",
-  coverImage:
-    "https://www.shbarcelona.com/blog/en/wp-content/uploads/2016/04/Bachata-dance.jpg",
+  coverImage: new File([], "cover.jpg"),
   facebookEventUrl: "https://facebook.com/events/example",
   media: [
     {
       type: "image",
-      url: "https://images.unsplash.com/photo-1546215364-12f3fff5d578?q=80&w=1000&auto=format&fit=crop",
+      file: new File([], "example.jpg"),
     },
     {
       type: "image",
-      url: "https://images.unsplash.com/photo-1504609773096-104ff2c73ba4?q=80&w=1000&auto=format&fit=crop",
+      file: new File([], "example2.jpg"),
     },
     {
       type: "image",
-      url: "https://images.unsplash.com/photo-1533174072545-e8d4aa97edf9?q=80&w=1000&auto=format&fit=crop",
+      file: new File([], "example3.jpg"),
     },
-    { type: "video", url: "https://www.youtube.com/shorts/-9YFJkmlHWo" },
+    { type: "video", file: new File([], "example_video.mp4") },
   ],
   attendeeStats: {
     going: {
@@ -144,83 +116,12 @@ function RouteComponent() {
     if (isGoing) setIsGoing(false);
   };
 
-  const handleViewOnFacebook = () => {
-    window.open("https://facebook.com/events/example", "_blank");
-  };
-
   return (
     <div className="min-h-screen bg-background pb-20">
       {/* Hero / Cover Image */}
       <div className="relative w-full md:h-96 flex flex-col md:block bg-muted">
-        <div className="relative h-64 md:h-full w-full overflow-hidden">
-          {coverImage ? (
-            <img
-              src={coverImage}
-              alt={basicInfo.eventName}
-              className="w-full h-full object-cover"
-            />
-          ) : (
-            <div className="w-full h-full bg-neutral-200 dark:bg-neutral-800" />
-          )}
-          <div className="hidden md:block absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
-        </div>
-
-        <div className="relative md:absolute md:bottom-0 md:left-0 w-full bg-background md:bg-transparent p-6 md:p-10">
-          <div className="container mx-auto max-w-6xl">
-            <h1 className="text-3xl md:text-5xl font-bold text-foreground mb-2">
-              {basicInfo.eventName}
-            </h1>
-            <div className="flex flex-wrap items-center gap-y-2 gap-x-6 text-foreground/90 font-medium text-sm md:text-base mt-4">
-              <div className="flex items-center gap-2">
-                <Calendar className="w-4 h-4" />
-                <span>{basicInfo.date}</span>
-              </div>
-              <div className="hidden lg:block w-1 h-1 rounded-full bg-foreground/20" />
-              <div className="flex items-center gap-2">
-                <Clock className="w-4 h-4" />
-                <span>{basicInfo.time}</span>
-              </div>
-              <div className="hidden lg:block w-1 h-1 rounded-full bg-foreground/20" />
-              <div className="flex items-center gap-2">
-                <Banknote className="w-4 h-4" />
-                <span>
-                  {basicInfo.priceExact
-                    ? `$${basicInfo.priceExact}`
-                    : basicInfo.priceRange}
-                </span>
-              </div>
-              <div className="hidden lg:block w-1 h-1 rounded-full bg-foreground/20" />
-              <a
-                href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-                  basicInfo.location
-                )}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 hover:text-primary hover:underline transition-colors cursor-pointer"
-                title="View on Google Maps"
-              >
-                <MapPin className="w-4 h-4" />
-                <span>{basicInfo.location}</span>
-                <ExternalLink className="w-3 h-3" />
-              </a>
-              <div className="hidden lg:block w-1 h-1 rounded-full bg-foreground/20" />
-
-              {facebookEventUrl && (
-                <a
-                  href={facebookEventUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full md:w-auto flex items-center gap-2 hover:text-[#1877F2] hover:underline transition-colors cursor-pointer"
-                  title="View on Facebook"
-                >
-                  <Facebook className="w-4 h-4" />
-                  <span>Facebook Event</span>
-                  <ExternalLink className="w-3 h-3" />
-                </a>
-              )}
-            </div>
-          </div>
-        </div>
+          <CoverImage coverImage={coverImage} eventName={basicInfo.eventName} />
+          <HeroInformations basicInfo={basicInfo} facebookEventUrl={facebookEventUrl}/>
       </div>
 
       <div className="container mx-auto max-w-6xl py-4 px-4 md:px-0">
@@ -279,7 +180,7 @@ function RouteComponent() {
                     >
                       {item.type === "image" ? (
                         <img
-                          src={item.url}
+                          src={URL.createObjectURL(item.file)}
                           alt={`Gallery ${idx}`}
                           className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
                         />

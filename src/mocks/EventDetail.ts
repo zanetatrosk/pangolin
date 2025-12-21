@@ -1,4 +1,4 @@
-import { EventDetailData } from "@/routes/events.$id";
+import { EventDetailData } from "@/features/events/types";
 
 export const MOCK_EVENT: EventDetailData = {
   basicInfo: {

@@ -6,6 +6,8 @@ import {
   CardContent
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { PATHS } from "@/paths";
+import { useNavigate } from "@tanstack/react-router";
 import {
   Banknote,
   Calendar,
@@ -38,6 +40,7 @@ interface EventItemCardProps {
 export const EventCard: React.FC<EventItemCardProps> = (event) => {
   const { t } = useTranslation();
   const [isInterested, setIsInterested] = useState(false);
+  const navigate = useNavigate();
   const cardInfoWithIcon = [
     {
       icon: Calendar,
@@ -136,7 +139,7 @@ export const EventCard: React.FC<EventItemCardProps> = (event) => {
             </div>
 
             <div className="flex justify-center md:justify-end w-full md:w-auto">
-              <Button size="sm" className="w-full md:w-auto">
+              <Button size="sm" className="w-full md:w-auto" onClick={() => navigate({ to: PATHS.EVENTS.DETAIL(event.id) })}>
                 View Details
                 <ExternalLink className="w-4 h-4 ml-1" />
               </Button>

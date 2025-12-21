@@ -3,37 +3,38 @@ import { useTranslation } from "react-i18next";
 import { MobileNavDrawer } from "./MobileNavDrawer";
 import { DesktopNavbar } from "./DesktopNavbar";
 import { logout } from "@/stores/authStore";
+import { PATHS } from "@/paths";
 
 export function Header() {
   const { t } = useTranslation();
 
   const menuItems = [
     {
-      href: "/events",
+      href: PATHS.EVENTS.LIST,
       label: t("nav.events"),
       children: [
         {
-          href: "/events",
+          href: PATHS.EVENTS.LIST,
           label: t("nav.allEvents"),
           description: t("nav.allEventsDesc"),
           icon: Users,
         },
         {
-          href: "/events/new",
+          href: PATHS.EVENTS.NEW_EVENT,
           label: t("nav.addEvent"),
           description: t("nav.addEventDesc"),
           icon: CalendarPlus,
         },
 
         {
-          href: "/events/my-events",
+          href: PATHS.MY_EVENTS,
           label: t("nav.myEvents"),
           description: t("nav.myEventsDesc"),
           icon: PersonStanding,
         },
       ],
     },
-    { href: "/about", label: t("nav.about") },
+    { href: PATHS.ABOUT, label: t("nav.about") },
   ];
 
   const profileMenuItems = [

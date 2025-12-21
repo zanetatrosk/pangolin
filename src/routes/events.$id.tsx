@@ -1,7 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 import { AttendeeStatsCard } from "@/features/events/components/AttendiesCard";
-import { DanceEventCreation } from "@/features/newEvent/types";
 import { CoverImage } from "@/features/events/components/CoverImage";
 import { HeroInformations } from "@/features/events/components/HeroInformations";
 import { Details } from "@/features/events/components/Details";
@@ -14,22 +13,6 @@ import { MOCK_EVENT } from "@/mocks/EventDetail";
 export const Route = createFileRoute("/events/$id")({
   component: RouteComponent,
 });
-
-// --- Interfaces (Adapted for Display) ---
-
-export interface AttendeeStats {
-  going: {
-    total: number;
-    leaders: number;
-    followers: number;
-  };
-  interested: number;
-}
-
-export interface EventDetailData extends DanceEventCreation{
-  attendeeStats?: AttendeeStats;
-  facebookEventUrl?: string;
-}
 
 function RouteComponent() {
   const { id } = Route.useParams();
@@ -72,7 +55,7 @@ function RouteComponent() {
           <div className="contents lg:block lg:space-y-6">
             {/* Attendee Stats Card */}
             {attendeeStats && (
-              <div className="order-2 lg:order-none">
+              <div className="order-2 lg:order-0">
                 <AttendeeStatsCard attendeeStats={attendeeStats} />
               </div>
             )}

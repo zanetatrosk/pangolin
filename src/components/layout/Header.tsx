@@ -44,11 +44,6 @@ export function Header() {
       icon: UserCircle,
     },
     {
-      href: "/profile/edit",
-      label: t("nav.editProfile"),
-      icon: Settings,
-    },
-    {
       label: t("nav.logout"),
       icon: LogOut,
       onClick: logout,

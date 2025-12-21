@@ -1,15 +1,43 @@
 import { useState } from "react";
 import { useStore } from "@tanstack/react-store";
 import { authStore } from "@/stores/authStore";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardHeader } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
-import { Mail, Calendar, Edit, Save, X, Plus, Trash2, Video, Image as ImageIcon } from "lucide-react";
+import { Edit, Save, X, Grid3X3, Plus, Camera } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { getInitials } from "@/components/layout/utils/getInitials";
+import { MediaGallery } from "../events/components/MediaGallery";
+import { PROFILE } from "@/mocks/profile";
+
+const DANCE_STYLE_OPTIONS = [
+  { value: "Salsa", label: "Salsa" },
+  { value: "Bachata", label: "Bachata" },
+  { value: "Kizomba", label: "Kizomba" },
+  { value: "Zouk", label: "Zouk" },
+  { value: "West Coast Swing", label: "West Coast Swing" },
+  { value: "Tango", label: "Tango" },
+  { value: "Hip Hop", label: "Hip Hop" },
+  { value: "Ballroom", label: "Ballroom" },
+  { value: "Contemporary", label: "Contemporary" },
+];
+
+const LEVEL_OPTIONS = ["Beginner", "Improver", "Intermediate", "Advanced", "Professional"];
+
+interface ProfileData {
+  firstName: string;
+  lastName: string;
+  description: string;
+  role: string;
+  danceStyles: string[];
+  media: any[];
+  level?: string;
+  danceLevels?: Record<string, string>;
+  avatarUrl?: string;
+}
 
 export function ProfilePage() {
   const { user } = useStore(authStore);
@@ -17,87 +45,102 @@ export function ProfilePage() {
   const [isEditing, setIsEditing] = useState(false);
 
   // Mock data initialization - in a real app, this would come from the backend/store
-  const [profileData, setProfileData] = useState({
-    firstName: user?.firstName || "Maria",
-    lastName: user?.lastName || "Gonzalez",
-    description: "Passionate about Bachata Sensual and Traditional. Always looking for new dance partners to practice with!",
-    role: "Follower",
-    danceStyles: ["Bachata Sensual", "Bachata Dominicana", "Salsa On1"],
-    media: [
-      { type: "image", url: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=400&h=300&fit=crop" },
-      { type: "image", url: "https://images.unsplash.com/photo-1504609773096-104ff2c73ba4?w=400&h=300&fit=crop" }
-    ]
-  });
-
-  const [newStyle, setNewStyle] = useState("");
-
-  const upcomingEvents = [
-    { id: 1, name: "Bachata Sensual Weekender", date: "2024-06-15", location: "Dance Studio 1" },
-    { id: 2, name: "Summer Latin Festival", date: "2024-07-20", location: "City Park" },
-  ];
-
-  const pastEvents = [
-    { id: 3, name: "Spring Salsa Gala", date: "2024-03-10", location: "Grand Hotel" },
-  ];
+  const [profileData, setProfileData] = useState<ProfileData>({ ...PROFILE, level: "", danceLevels: {}, avatarUrl: user?.avatarUrl });
 
   const handleSave = () => {
     // Implement save logic here
     setIsEditing(false);
   };
 
-  const handleAddStyle = () => {
-    if (newStyle && !profileData.danceStyles.includes(newStyle)) {
-      setProfileData({ ...profileData, danceStyles: [...profileData.danceStyles, newStyle] });
-      setNewStyle("");
+  const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const type = file.type.startsWith("video/") ? "video" : "image";
+      const objectUrl = URL.createObjectURL(file);
+      const newMedia = {
+        id: Date.now(),
+        type,
+        url: objectUrl,
+      };
+      setProfileData((prev) => ({ ...prev, media: [newMedia, ...(prev.media || [])] }));
+      // Reset the input value to allow selecting the same file again
+      e.target.value = "";
     }
   };
 
-  const handleRemoveStyle = (style: string) => {
-    setProfileData({ ...profileData, danceStyles: profileData.danceStyles.filter(s => s !== style) });
+  const handleAvatarUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const objectUrl = URL.createObjectURL(file);
+      setProfileData((prev) => ({ ...prev, avatarUrl: objectUrl }));
+      e.target.value = "";
+    }
   };
 
   return (
     <div className="container mx-auto max-w-4xl p-4 md:p-6 space-y-6">
       {/* Header / Main Profile Info */}
-      <Card>
-        <CardHeader className="relative">
-          <div className="flex justify-end mb-4 md:absolute md:top-4 md:right-4 md:mb-0">
+      <Card className="overflow-hidden pt-0 border-0 ">
+        <div className="h-32 bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-pink-500/20" />
+        <CardHeader className="relative pt-0">
+          <div className="absolute top-4 right-4 md:top-6 md:right-6 z-10">
             {isEditing ? (
               <div className="flex gap-2">
                 <Button variant="outline" size="sm" onClick={() => setIsEditing(false)}>
-                  <X className="w-4 h-4 mr-2" />
-                  {t("Cancel")}
+                  <X className="w-4 h-4 md:mr-2" />
+                  <span className="hidden md:block">{t("Cancel")}</span>
                 </Button>
                 <Button size="sm" onClick={handleSave}>
-                  <Save className="w-4 h-4 mr-2" />
-                  {t("Save")}
+                  <Save className="w-4 h-4 md:mr-2" />
+                  <span className="hidden md:block">{t("Save")}</span>
                 </Button>
               </div>
             ) : (
               <Button variant="outline" size="sm" onClick={() => setIsEditing(true)}>
-                <Edit className="w-4 h-4 mr-2" />
-                {t("Edit Profile")}
+                <Edit className="w-4 h-4 md:mr-2" />
+                <span className="hidden md:block">{t("Edit Profile")}</span>
               </Button>
             )}
           </div>
-          <div className="flex flex-col md:flex-row items-center gap-6">
-            <Avatar className="w-32 h-32 border-4 border-background shadow-xl">
-              <AvatarImage src={user?.avatarUrl} alt={user?.username} />
-              <AvatarFallback className="text-2xl">
-                {getInitials(profileData.firstName, profileData.lastName)}
-              </AvatarFallback>
-            </Avatar>
-            <div className="text-center md:text-left space-y-2 flex-1 w-full">
+          <div className="flex flex-col md:flex-row items-center md:items-start gap-6 -mt-16">
+            <div className="relative group">
+              <Avatar className="w-32 h-32 border-4 border-background shadow-xl bg-background">
+                <AvatarImage src={profileData.avatarUrl || user?.avatarUrl} alt={user?.username} className="object-cover" />
+                <AvatarFallback className="text-2xl">
+                  {getInitials(profileData.firstName, profileData.lastName)}
+                </AvatarFallback>
+              </Avatar>
+              {isEditing && (
+                <label
+                  htmlFor="avatar-upload"
+                  className="absolute inset-0 flex items-center justify-center bg-black/40 rounded-full cursor-pointer opacity-0 group-hover:opacity-100 transition-opacity"
+                >
+                  <Camera className="w-8 h-8 text-white" />
+                  <input
+                    id="avatar-upload"
+                    type="file"
+                    accept="image/*"
+                    className="hidden"
+                    onChange={handleAvatarUpload}
+                  />
+                </label>
+              )}
+            </div>
+            <div className="text-center md:text-left space-y-2 flex-1 w-full md:mt-16">
               <div className="flex items-center justify-center md:justify-start gap-3">
                 <h1 className="text-3xl font-bold">{user?.username || "username"}</h1>
                 <Badge variant={profileData.role === "Leader" ? "default" : "secondary"} className="text-sm">
                   {profileData.role}
                 </Badge>
+                {profileData.level && (
+                  <Badge variant="outline" className="text-sm border-primary text-primary">{profileData.level}</Badge>
+                )}
               </div>
               
               {isEditing ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-md w-full mx-auto md:mx-0">
-                  <div className="space-y-1 text-left">
+                <div className="space-y-4 mt-4 max-w-lg mx-auto md:mx-0">
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-2 text-left">
                     <Label htmlFor="firstName">{t("First Name")}</Label>
                     <Input 
                       id="firstName" 
@@ -105,7 +148,7 @@ export function ProfilePage() {
                       onChange={(e) => setProfileData({...profileData, firstName: e.target.value})} 
                     />
                   </div>
-                  <div className="space-y-1 text-left">
+                    <div className="space-y-2 text-left">
                     <Label htmlFor="lastName">{t("Last Name")}</Label>
                     <Input 
                       id="lastName" 
@@ -113,15 +156,9 @@ export function ProfilePage() {
                       onChange={(e) => setProfileData({...profileData, lastName: e.target.value})} 
                     />
                   </div>
-                </div>
-              ) : (
-                <h2 className="text-xl text-muted-foreground">
-                  {profileData.firstName} {profileData.lastName}
-                </h2>
-              )}
+                  </div>
 
-              {isEditing ? (
-                <div className="space-y-1 mt-2 text-left">
+                  <div className="space-y-2 text-left">
                   <Label htmlFor="description">{t("Description")}</Label>
                   <textarea
                     id="description"
@@ -130,132 +167,104 @@ export function ProfilePage() {
                     onChange={(e) => setProfileData({...profileData, description: e.target.value})}
                   />
                 </div>
+
+                  <div className="space-y-2 text-left">
+                    <Label htmlFor="level">{t("General Level")}</Label>
+                    <select
+                      id="level"
+                      className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                      value={profileData.level || ""}
+                      onChange={(e) => setProfileData({...profileData, level: e.target.value})}
+                    >
+                      <option value="">{t("Not Specified")}</option>
+                      {LEVEL_OPTIONS.map((lvl) => (
+                        <option key={lvl} value={lvl}>{lvl}</option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div className="space-y-2 text-left">
+                    <Label>{t("Dance Styles")}</Label>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 p-3 border rounded-md bg-background/50 max-h-80 overflow-y-auto">
+                      {DANCE_STYLE_OPTIONS.map((option) => (
+                        <div key={option.value} className="flex flex-col space-y-2 p-2 rounded hover:bg-accent/50 transition-colors">
+                          <div className="flex items-center space-x-2">
+                          <input
+                            type="checkbox"
+                            id={`style-${option.value}`}
+                            checked={profileData.danceStyles.includes(option.value)}
+                            onChange={(e) => {
+                              if (e.target.checked) {
+                                setProfileData({ 
+                                  ...profileData, 
+                                  danceStyles: [...profileData.danceStyles, option.value],
+                                });
+                              } else {
+                                const newDanceLevels = { ...profileData.danceLevels };
+                                delete newDanceLevels[option.value];
+                                setProfileData({ 
+                                  ...profileData, 
+                                  danceStyles: profileData.danceStyles.filter(s => s !== option.value),
+                                  danceLevels: newDanceLevels
+                                });
+                              }
+                            }}
+                            className="h-4 w-4 rounded border-primary text-primary focus:ring-primary accent-primary cursor-pointer"
+                          />
+                          <Label htmlFor={`style-${option.value}`} className="text-sm font-normal cursor-pointer flex-1">
+                            {option.label}
+                          </Label>
+                          </div>
+                          {profileData.danceStyles.includes(option.value) && (
+                            <select
+                              className="h-8 w-full rounded-md border border-input bg-background px-2 text-xs shadow-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+                              value={profileData.danceLevels?.[option.value] || ""}
+                              onChange={(e) => {
+                                const newLevels = { ...profileData.danceLevels };
+                                if (e.target.value) {
+                                  newLevels[option.value] = e.target.value;
+                                } else {
+                                  delete newLevels[option.value];
+                                }
+                                setProfileData({ ...profileData, danceLevels: newLevels });
+                              }}
+                              onClick={(e) => e.stopPropagation()}
+                            >
+                              <option value="">{t("Not Specified")}</option>
+                              {LEVEL_OPTIONS.map((lvl) => (
+                                <option key={lvl} value={lvl}>{lvl}</option>
+                              ))}
+                            </select>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
               ) : (
-                <p className="text-muted-foreground max-w-lg">
-                  {profileData.description}
-                </p>
+                <>
+                  <h2 className="text-xl text-muted-foreground">
+                    {profileData.firstName} {profileData.lastName}
+                  </h2>
+                  <p className="text-muted-foreground max-w-lg">
+                    {profileData.description}
+                  </p>
+                  <div className="mt-4 flex flex-wrap gap-2 justify-center md:justify-start">
+                    {profileData.danceStyles.map((style) => (
+                      <Badge key={style} variant="secondary" className="px-3 py-1 text-sm font-normal">
+                        {style} {profileData.danceLevels?.[style] ? `• ${profileData.danceLevels[style]}` : ""}
+                      </Badge>
+                    ))}
+                  </div>
+                </>
               )}
             </div>
           </div>
         </CardHeader>
       </Card>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {/* Left Column: Dance Styles & Events */}
-        <div className="md:col-span-1 space-y-6">
-          {/* Dance Styles */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-lg">{t("Dance Styles")}</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="flex flex-wrap gap-2 mb-4">
-                {profileData.danceStyles.map((style) => (
-                  <Badge key={style} variant="outline" className="pl-2 pr-1 py-1 flex items-center gap-1">
-                    {style}
-                    {isEditing && (
-                      <X 
-                        className="w-3 h-3 cursor-pointer hover:text-destructive" 
-                        onClick={() => handleRemoveStyle(style)}
-                      />
-                    )}
-                  </Badge>
-                ))}
-              </div>
-              {isEditing && (
-                <div className="flex gap-2">
-                  <Input 
-                    placeholder={t("Add style...")} 
-                    value={newStyle}
-                    onChange={(e) => setNewStyle(e.target.value)}
-                    onKeyDown={(e) => e.key === 'Enter' && handleAddStyle()}
-                  />
-                  <Button size="icon" variant="ghost" onClick={handleAddStyle}>
-                    <Plus className="w-4 h-4" />
-                  </Button>
-                </div>
-              )}
-            </CardContent>
-          </Card>
-
-          {/* Events */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-lg">{t("Events")}</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div>
-                <h3 className="font-semibold text-sm text-muted-foreground mb-3 flex items-center gap-2">
-                  <Calendar className="w-4 h-4" /> {t("Upcoming")}
-                </h3>
-                <ul className="space-y-3">
-                  {upcomingEvents.map(event => (
-                    <li key={event.id} className="text-sm border-l-2 border-primary pl-3">
-                      <p className="font-medium">{event.name}</p>
-                      <p className="text-xs text-muted-foreground">{event.date} • {event.location}</p>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div>
-                <h3 className="font-semibold text-sm text-muted-foreground mb-3 flex items-center gap-2">
-                  <Calendar className="w-4 h-4" /> {t("Past")}
-                </h3>
-                <ul className="space-y-3">
-                  {pastEvents.map(event => (
-                    <li key={event.id} className="text-sm border-l-2 border-muted pl-3">
-                      <p className="font-medium text-muted-foreground">{event.name}</p>
-                      <p className="text-xs text-muted-foreground">{event.date}</p>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Right Column: Photos & Videos */}
-        <div className="md:col-span-2">
-          <Card className="h-full">
-            <CardHeader className="flex flex-row items-center justify-between">
-              <CardTitle>{t("Photos & Videos")}</CardTitle>
-              {isEditing && (
-                <Button size="sm" variant="outline">
-                  <Plus className="w-4 h-4 mr-2" /> {t("Add Media")}
-                </Button>
-              )}
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {profileData.media.map((item, index) => (
-                  <div key={index} className="relative group rounded-lg overflow-hidden border bg-muted aspect-video">
-                    {item.type === 'image' ? (
-                      <img src={item.url} alt="Dance media" className="w-full h-full object-cover" />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center">
-                        <Video className="w-12 h-12 text-muted-foreground" />
-                      </div>
-                    )}
-                    {isEditing && (
-                      <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                        <Button size="icon" variant="destructive" className="h-8 w-8">
-                          <Trash2 className="w-4 h-4" />
-                        </Button>
-                      </div>
-                    )}
-                  </div>
-                ))}
-                {profileData.media.length === 0 && (
-                  <div className="col-span-full flex flex-col items-center justify-center py-12 text-muted-foreground border-2 border-dashed rounded-lg">
-                    <ImageIcon className="w-12 h-12 mb-2 opacity-50" />
-                    <p>{t("No media added yet")}</p>
-                  </div>
-                )}
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-      </div>
+      {/* Gallery Section - Instagram Vibe */}
+        <MediaGallery mediaFiles={profileData.media} handleMediaUpload={handlePhotoUpload}/>
     </div>
   );
 }

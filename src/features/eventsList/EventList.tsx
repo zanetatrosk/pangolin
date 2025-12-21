@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { EventCard } from "./components/EventCard";
-import { EVENTS } from "@/mocks/Events";
+import { EVENTS } from "@/mocks/events";
 
 const mockEvents = EVENTS;
 

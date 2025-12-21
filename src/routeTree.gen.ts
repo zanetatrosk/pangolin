@@ -16,7 +16,6 @@ import { Route as EventsRouteImport } from './routes/events'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as EventsIndexRouteImport } from './routes/events.index'
-import { Route as ProfileEditRouteImport } from './routes/profile.edit'
 import { Route as EventsNewRouteImport } from './routes/events.new'
 import { Route as EventsIdRouteImport } from './routes/events.$id'
 
@@ -55,11 +54,6 @@ const EventsIndexRoute = EventsIndexRouteImport.update({
   path: '/',
   getParentRoute: () => EventsRoute,
 } as any)
-const ProfileEditRoute = ProfileEditRouteImport.update({
-  id: '/edit',
-  path: '/edit',
-  getParentRoute: () => ProfileRoute,
-} as any)
 const EventsNewRoute = EventsNewRouteImport.update({
   id: '/new',
   path: '/new',
@@ -77,10 +71,9 @@ export interface FileRoutesByFullPath {
   '/events': typeof EventsRouteWithChildren
   '/login': typeof LoginRoute
   '/my-events': typeof MyEventsRoute
-  '/profile': typeof ProfileRouteWithChildren
+  '/profile': typeof ProfileRoute
   '/events/$id': typeof EventsIdRoute
   '/events/new': typeof EventsNewRoute
-  '/profile/edit': typeof ProfileEditRoute
   '/events/': typeof EventsIndexRoute
 }
 export interface FileRoutesByTo {
@@ -88,10 +81,9 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/login': typeof LoginRoute
   '/my-events': typeof MyEventsRoute
-  '/profile': typeof ProfileRouteWithChildren
+  '/profile': typeof ProfileRoute
   '/events/$id': typeof EventsIdRoute
   '/events/new': typeof EventsNewRoute
-  '/profile/edit': typeof ProfileEditRoute
   '/events': typeof EventsIndexRoute
 }
 export interface FileRoutesById {
@@ -101,10 +93,9 @@ export interface FileRoutesById {
   '/events': typeof EventsRouteWithChildren
   '/login': typeof LoginRoute
   '/my-events': typeof MyEventsRoute
-  '/profile': typeof ProfileRouteWithChildren
+  '/profile': typeof ProfileRoute
   '/events/$id': typeof EventsIdRoute
   '/events/new': typeof EventsNewRoute
-  '/profile/edit': typeof ProfileEditRoute
   '/events/': typeof EventsIndexRoute
 }
 export interface FileRouteTypes {
@@ -118,7 +109,6 @@ export interface FileRouteTypes {
     | '/profile'
     | '/events/$id'
     | '/events/new'
-    | '/profile/edit'
     | '/events/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -129,7 +119,6 @@ export interface FileRouteTypes {
     | '/profile'
     | '/events/$id'
     | '/events/new'
-    | '/profile/edit'
     | '/events'
   id:
     | '__root__'
@@ -141,7 +130,6 @@ export interface FileRouteTypes {
     | '/profile'
     | '/events/$id'
     | '/events/new'
-    | '/profile/edit'
     | '/events/'
   fileRoutesById: FileRoutesById
 }
@@ -151,7 +139,7 @@ export interface RootRouteChildren {
   EventsRoute: typeof EventsRouteWithChildren
   LoginRoute: typeof LoginRoute
   MyEventsRoute: typeof MyEventsRoute
-  ProfileRoute: typeof ProfileRouteWithChildren
+  ProfileRoute: typeof ProfileRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -205,13 +193,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EventsIndexRouteImport
       parentRoute: typeof EventsRoute
     }
-    '/profile/edit': {
-      id: '/profile/edit'
-      path: '/edit'
-      fullPath: '/profile/edit'
-      preLoaderRoute: typeof ProfileEditRouteImport
-      parentRoute: typeof ProfileRoute
-    }
     '/events/new': {
       id: '/events/new'
       path: '/new'
@@ -244,24 +225,13 @@ const EventsRouteChildren: EventsRouteChildren = {
 const EventsRouteWithChildren =
   EventsRoute._addFileChildren(EventsRouteChildren)
 
-interface ProfileRouteChildren {
-  ProfileEditRoute: typeof ProfileEditRoute
-}
-
-const ProfileRouteChildren: ProfileRouteChildren = {
-  ProfileEditRoute: ProfileEditRoute,
-}
-
-const ProfileRouteWithChildren =
-  ProfileRoute._addFileChildren(ProfileRouteChildren)
-
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   EventsRoute: EventsRouteWithChildren,
   LoginRoute: LoginRoute,
   MyEventsRoute: MyEventsRoute,
-  ProfileRoute: ProfileRouteWithChildren,
+  ProfileRoute: ProfileRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

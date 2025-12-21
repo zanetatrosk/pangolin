@@ -27,6 +27,6 @@ export interface DanceEventCreation {
 }
 
 export type EventMediaItem = {
-  file: File
   type: "image" | "video"
+  url: string
 }

@@ -8,7 +8,7 @@ import { OrganizerCard } from "@/features/events/components/OrganizerCard";
 import { MediaGallery } from "@/features/events/components/MediaGallery";
 import { Description } from "@/features/events/components/Description";
 import { ActionButtons } from "@/features/events/components/ActionButtons";
-import { MOCK_EVENT } from "@/mocks/EventDetail";
+import { MOCK_EVENT } from "@/mocks/eventDetail";
 
 export const Route = createFileRoute("/events/$id")({
   component: RouteComponent,

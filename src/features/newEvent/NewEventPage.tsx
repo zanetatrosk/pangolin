@@ -1,4 +1,4 @@
-import { FormParent } from "../newEvent/FormParent";
+import { FormParent } from "./FormParent";
 
 
 

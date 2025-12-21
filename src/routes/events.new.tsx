@@ -1,5 +1,5 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
-import { NewEventPage } from "@/features/events/NewEventPage";
+import { NewEventPage } from "@/features/newEvent/NewEventPage";
 import { authStore } from "@/stores/authStore";
 
 export const Route = createFileRoute("/events/new")({

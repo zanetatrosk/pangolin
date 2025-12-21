@@ -20,7 +20,7 @@ export const HeroInfo: FC<{ icon: React.ReactNode; text: string; isLast?: boolea
       {icon}
       <span>{text}</span>
     </div>
-    <div className="w-1 h-1 rounded-full bg-foreground/20" />
+    <div className="hidden lg:block w-1 h-1 rounded-full bg-foreground/20" />
     </>
   );
 };
@@ -74,7 +74,7 @@ export const HeroInformations: FC<{
             title="View on Google Maps"
           >
             <MapPin className="w-4 h-4" />
-            <span>{basicInfo.location}</span>
+            <span>{location}</span>
             <ExternalLink className="w-3 h-3" />
           </a>
           <div className="hidden lg:block w-1 h-1 rounded-full bg-foreground/20" />

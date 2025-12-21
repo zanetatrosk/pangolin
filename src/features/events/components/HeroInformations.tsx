@@ -1,4 +1,5 @@
 import { BasicDetailsData } from "@/features/newEvent/types";
+import { useNavigate } from "@tanstack/react-router";
 import {
     Calendar,
     Clock,
@@ -6,14 +7,15 @@ import {
     MapPin,
     ExternalLink,
     Facebook,
+    ChevronDown,
 } from "lucide-react";
 import { FC } from "react";
 
 interface HeroInfoItem {
   icon: React.ReactNode;
-  text: string;
+  text: React.ReactNode;
 }
-export const HeroInfo: FC<{ icon: React.ReactNode; text: string; isLast?: boolean }> = ({ icon, text }) => {
+export const HeroInfo: FC<{ icon: React.ReactNode; text: React.ReactNode; isLast?: boolean }> = ({ icon, text }) => {
   return (
     <>
     <div className="flex items-center gap-2">
@@ -28,7 +30,9 @@ export const HeroInfo: FC<{ icon: React.ReactNode; text: string; isLast?: boolea
 export const HeroInformations: FC<{
   basicInfo: BasicDetailsData;
   facebookEventUrl?: string;
-}> = ({ basicInfo, facebookEventUrl }) => {
+  recurringDates?: { date: string; id: string }[];
+}> = ({ basicInfo, facebookEventUrl, recurringDates }) => {
+  const navigate = useNavigate();
   const {
     eventName,
     location,
@@ -42,7 +46,27 @@ export const HeroInformations: FC<{
   let data: HeroInfoItem[] = [
     {
       icon: <Calendar className="w-4 h-4" />,
-      text: isRecurring && endDate ? `${date} until ${endDate}` : date,
+      text:
+        recurringDates && recurringDates.length > 0 ? (
+          <div className="relative flex items-center gap-1 group cursor-pointer hover:text-primary transition-colors">
+            <span>{date}</span>
+            <ChevronDown className="w-4 h-4 opacity-50" />
+            <select
+              className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+              onChange={(e) => navigate({ to: `/events/${e.target.value}` })}
+              value=""
+            >
+              <option value="" disabled>Select other date</option>
+              {recurringDates.map((rd) => (
+                <option key={rd.id} value={rd.id}>{rd.date}</option>
+              ))}
+            </select>
+          </div>
+        ) : isRecurring && endDate ? (
+          `${date} until ${endDate}`
+        ) : (
+          date
+        ),
     },
     {
       icon: <Clock className="w-4 h-4" />,

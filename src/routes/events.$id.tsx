@@ -29,12 +29,22 @@ function RouteComponent() {
     facebookEventUrl,
   } = event;
 
+  // Mock recurring dates for a course
+  const recurringDates = basicInfo.isRecurring
+    ? [
+        { date: "2024-06-15", id: "1" },
+        { date: "2024-06-22", id: "2" },
+        { date: "2024-06-29", id: "3" },
+        { date: "2024-07-06", id: "4" },
+      ]
+    : undefined;
+
   return (
     <div className="min-h-screen bg-background pb-20">
       {/* Hero / Cover Image */}
       <div className="relative w-full md:h-96 flex flex-col md:block bg-muted">
           <CoverImage coverImage={coverImage} eventName={basicInfo.eventName} />
-          <HeroInformations basicInfo={basicInfo} facebookEventUrl={facebookEventUrl}/>
+          <HeroInformations basicInfo={basicInfo} facebookEventUrl={facebookEventUrl} recurringDates={recurringDates} />
       </div>
 
       <div className="container mx-auto max-w-6xl py-4 px-4 md:px-0">

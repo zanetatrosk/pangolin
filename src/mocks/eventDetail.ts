@@ -1,4 +1,4 @@
-import { EventDetailData } from "@/features/events/types";
+import { EventDetailData } from "@/features/eventDetail/types";
 
 export const MOCK_EVENT: EventDetailData = {
   basicInfo: {
@@ -10,6 +10,10 @@ export const MOCK_EVENT: EventDetailData = {
     priceRange: "15-20",
     priceExact: "15",
     endDate: "2024-06-17",
+    recurringDates: [{ date: "2024-06-15", id: "1" },
+        { date: "2024-06-22", id: "2" },
+        { date: "2024-06-29", id: "3" },
+        { date: "2024-07-06", id: "4" },],
   },
   additionalDetails: {
     danceStyles: ["Salsa", "Bachata", "Merengue"],

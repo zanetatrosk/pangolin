@@ -6,7 +6,7 @@ import { eventFormOpts } from "./FormOptions";
 import { withForm } from "@/lib/form";
 import { EventMediaItem } from "./types";
 import { FormSection } from "@/components/form/FormSection";
-import { Media } from "../events/components/Media";
+import { Media } from "../eventDetail/components/Media";
 
 export const EventMediaStep = withForm({
   ...eventFormOpts,

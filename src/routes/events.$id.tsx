@@ -1,14 +1,15 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
-import { AttendeeStatsCard } from "@/features/events/components/AttendiesCard";
-import { CoverImage } from "@/features/events/components/CoverImage";
-import { HeroInformations } from "@/features/events/components/HeroInformations";
-import { Details } from "@/features/events/components/Details";
-import { OrganizerCard } from "@/features/events/components/OrganizerCard";
-import { MediaGallery } from "@/features/events/components/MediaGallery";
-import { Description } from "@/features/events/components/Description";
-import { ActionButtons } from "@/features/events/components/ActionButtons";
+import { HeroInformations } from "@/features/eventDetail/components/HeroInformations";
+import { CoverImage } from "@/features/eventDetail/components/CoverImage";
+import { ActionButtons } from "@/features/eventDetail/components/ActionButtons";
+import { Description } from "@/features/eventDetail/components/Description";
+import { MediaGallery } from "@/features/eventDetail/components/MediaGallery";
+import { Details } from "@/features/eventDetail/components/Details";
+import { OrganizerCard } from "@/features/eventDetail/components/OrganizerCard";
+
 import { MOCK_EVENT } from "@/mocks/eventDetail";
+import { AttendeeStatsCard } from "@/features/eventDetail/components/AttendiesCard";
 
 export const Route = createFileRoute("/events/$id")({
   component: RouteComponent,
@@ -29,25 +30,15 @@ function RouteComponent() {
     facebookEventUrl,
   } = event;
 
-  // Mock recurring dates for a course
-  const recurringDates = basicInfo.isRecurring
-    ? [
-        { date: "2024-06-15", id: "1" },
-        { date: "2024-06-22", id: "2" },
-        { date: "2024-06-29", id: "3" },
-        { date: "2024-07-06", id: "4" },
-      ]
-    : undefined;
-
   return (
     <div className="min-h-screen bg-background pb-20">
       {/* Hero / Cover Image */}
       <div className="relative w-full md:h-96 flex flex-col md:block bg-muted">
           <CoverImage coverImage={coverImage} eventName={basicInfo.eventName} />
-          <HeroInformations basicInfo={basicInfo} facebookEventUrl={facebookEventUrl} recurringDates={recurringDates} />
+          <HeroInformations basicInfo={basicInfo} facebookEventUrl={facebookEventUrl} />
       </div>
 
-      <div className="container mx-auto max-w-6xl py-4 px-4 md:px-0">
+      <div className="container mx-auto max-w-6xl py-2 px-4 lg:px-0">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Left Column: Main Content */}
           <div className="contents lg:block lg:col-span-2 lg:space-y-8">

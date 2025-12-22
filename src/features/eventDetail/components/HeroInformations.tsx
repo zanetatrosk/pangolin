@@ -30,11 +30,10 @@ export const HeroInfo: FC<{ icon: React.ReactNode; text: React.ReactNode; isLast
 export const HeroInformations: FC<{
   basicInfo: BasicDetailsData;
   facebookEventUrl?: string;
-  recurringDates?: { date: string; id: string }[];
-}> = ({ basicInfo, facebookEventUrl, recurringDates }) => {
+}> = ({ basicInfo, facebookEventUrl }) => {
   const navigate = useNavigate();
   const {
-    eventName,
+    recurringDates,
     location,
     date,
     time,

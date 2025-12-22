@@ -10,7 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { Edit, Save, X, Grid3X3, Plus, Camera } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { getInitials } from "@/components/layout/utils/getInitials";
-import { MediaGallery } from "../events/components/MediaGallery";
+import { MediaGallery } from "../eventDetail/components/MediaGallery";
 import { PROFILE } from "@/mocks/profile";
 import { EventMediaItem } from "../newEvent/types";
 import { fileToMediaItem } from "@/utils/fileToMediaItem";

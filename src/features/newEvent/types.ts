@@ -1,3 +1,8 @@
+interface RecurringDate {
+  date: string;
+  id: string;
+}
+
 export interface BasicDetailsData {
   eventName: string;
   location: string;
@@ -7,6 +12,7 @@ export interface BasicDetailsData {
   endDate?: string;
   priceRange: string;
   priceExact?: string;
+  recurringDates?: RecurringDate[];
 }
 
 export interface AdditionalDetailsData {

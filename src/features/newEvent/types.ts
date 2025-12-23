@@ -1,6 +1,8 @@
 interface RecurringDate {
   date: string;
   id: string;
+  status?: "Scheduled" | "Cancelled" | "Past";
+  statusUser?: "Joined";
 }
 
 export interface BasicDetailsData {
@@ -28,7 +30,7 @@ export interface DanceEventCreation {
     basicInfo: BasicDetailsData;
     additionalDetails?: AdditionalDetailsData;
     description?: string;
-    coverImage?: File;
+    coverImage?: EventMediaItem;
     media?: EventMediaItem[];
 }
 

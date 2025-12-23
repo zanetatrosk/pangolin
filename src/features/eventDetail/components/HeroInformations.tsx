@@ -1,4 +1,5 @@
 import { BasicDetailsData } from "@/features/newEvent/types";
+import { PATHS } from "@/paths";
 import { useNavigate } from "@tanstack/react-router";
 import {
     Calendar,
@@ -52,7 +53,7 @@ export const HeroInformations: FC<{
             <ChevronDown className="w-4 h-4 opacity-50" />
             <select
               className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-              onChange={(e) => navigate({ to: `/events/${e.target.value}` })}
+              onChange={(e) => navigate({ to: PATHS.EVENTS.DETAIL(e.target.value) })}
               value=""
             >
               <option value="" disabled>Select other date</option>

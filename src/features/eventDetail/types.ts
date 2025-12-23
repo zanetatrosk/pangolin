@@ -10,6 +10,9 @@ export interface AttendeeStats {
 }
 
 export interface EventDetailData extends DanceEventCreation{
+  id: number;
   attendeeStats?: AttendeeStats;
   facebookEventUrl?: string;
+  status?: "Scheduled" | "Cancelled" | "Past";
+  statusUser?: "Joined" ;
 }

@@ -18,7 +18,9 @@ type AutoCompleteProps = {
   options: ComboboxOption[];
   emptyMessage: string;
   value?: ComboboxOption;
+  searchValue?: string;
   onValueChange?: (value: ComboboxOption) => void;
+  onSearchChange?: (value: string) => void;
   isLoading?: boolean;
   disabled?: boolean;
   placeholder?: string;
@@ -30,18 +32,18 @@ export const AutoComplete = ({
   emptyMessage,
   value,
   onValueChange,
+  onSearchChange,
+  searchValue,
   disabled,
   isLoading = false,
 }: AutoCompleteProps) => {
-  const inputRef = useRef<HTMLInputElement>(null);
-
   const [isOpen, setOpen] = useState(false);
   const [selected, setSelected] = useState<ComboboxOption | undefined>(value);
-  const [inputValue, setInputValue] = useState<string>(value?.label || "");
+
 
   const handleKeyDown = useCallback(
     (event: KeyboardEvent<HTMLDivElement>) => {
-      const input = inputRef.current;
+      const input = searchValue;
       if (!input) {
         return;
       }
@@ -52,18 +54,14 @@ export const AutoComplete = ({
       }
 
       // This is not a default behaviour of the <input /> field
-      if (event.key === "Enter" && input.value !== "") {
+      if (event.key === "Enter" && input !== "") {
         const optionToSelect = options.find(
-          (option) => option.label === input.value
+          (option) => option.label === input
         );
         if (optionToSelect) {
           setSelected(optionToSelect);
           onValueChange?.(optionToSelect);
         }
-      }
-
-      if (event.key === "Escape") {
-        input.blur();
       }
     },
     [isOpen, options, onValueChange]
@@ -75,16 +73,9 @@ export const AutoComplete = ({
 
   const handleSelectOption = useCallback(
     (selectedOption: ComboboxOption) => {
-      setInputValue(selectedOption.label);
-
       setSelected(selectedOption);
       onValueChange?.(selectedOption);
-
-      // This is a hack to prevent the input from being focused after the user selects an option
-      // We can call this hack: "The next tick"
-      setTimeout(() => {
-        inputRef?.current?.blur();
-      }, 0);
+      console.log("Option selected:", selectedOption);
     },
     [onValueChange]
   );
@@ -93,10 +84,9 @@ export const AutoComplete = ({
     <CommandPrimitive onKeyDown={handleKeyDown}>
       <div>
         <Input
-          ref={inputRef}
-          value={inputValue}
+          value={searchValue}
           onChange={
-            isLoading ? undefined : (e) => setInputValue(e.target.value)
+            isLoading ? undefined : (e) => onSearchChange?.(e.target.value)
           }
           onBlur={handleBlur}
           onFocus={() => setOpen(true)}

@@ -1,6 +1,8 @@
 import * as React from "react";
 import { Label } from "@/components/ui/label";
 import { AutoComplete } from "@/components/ui/autocomplete";
+import { useFieldContext } from "@/lib/form-context";
+import { on } from "events";
 
 export interface ComboboxOption {
   value: string;
@@ -9,8 +11,9 @@ export interface ComboboxOption {
 
 interface FormComboboxFieldProps {
   value?: string;
-  onChange?: (value: string) => void;
+  onChange?: (value: ComboboxOption | undefined) => void;
   onBlur?: () => void;
+  onSearchChange?: (search: string) => void;
   options: ComboboxOption[];
   placeholder?: string;
   label?: string;
@@ -18,39 +21,51 @@ interface FormComboboxFieldProps {
   error?: string;
   emptyText?: string;
   isLoading?: boolean;
+  searchValue?: string;
 }
 
 export function FormComboboxField({
   value = "",
   onChange,
   onBlur,
+  onSearchChange,
   options,
   placeholder = "Search...",
   label,
   required = false,
   error,
   emptyText = "No results found.",
+  searchValue,
   isLoading = false,
 }: FormComboboxFieldProps) {
   const selectedOption = options.find((option) => option.value === value);
+  const field = useFieldContext<string>();
+  const id = field.name;
+
+  const handleSearchChange = (search: string) => {
+    onSearchChange?.(search);
+  };
 
   return (
     <div className="space-y-2">
       {label && (
-        <Label>
+        <Label htmlFor={id} className="flex items-center gap-1">
           {label}
-          {required && <span className="text-destructive ml-1">*</span>}
+          {required && <span className="text-destructive">*</span>}
         </Label>
       )}
       <AutoComplete
-        value={selectedOption}
+        value={field.state.value ? selectedOption : undefined}
         onValueChange={(newValue) => {
-          onChange?.(newValue.value);
+          onChange?.(newValue);
         }}
+        onSearchChange={handleSearchChange}
         options={options}
         placeholder={placeholder}
         emptyMessage={emptyText}
         isLoading={isLoading}
+        searchValue={searchValue}
+
       />
       {error && <p className="text-sm text-destructive">{error}</p>}
     </div>

@@ -1,10 +1,14 @@
 import { Calendar, MapPin, Clock, DollarSign } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { withForm } from "@/lib/form";
 import { FormSection, FormGrid } from "@/components/form";
 import type { SelectOption } from "@/components/form";
 import { eventFormOpts } from "./FormOptions";
 import { PRICE_TYPE } from "../eventsList/components/EventCard";
+import { useQuery } from "@tanstack/react-query";
+import { getPlaces } from "@/services/get-places-api";
+import { Input } from "@/components/ui/input"
+import { useDebounce } from "@uidotdev/usehooks";
 
 interface BasicDetailsProps {
   className?: string;
@@ -14,7 +18,22 @@ export const BasicDetails = withForm({
   ...eventFormOpts,
   props: {} as BasicDetailsProps,
   render: ({ form, className }) => {
-    const [priceType, setPriceType] = useState<"range" | "exact" | "free" | null>(null);
+    const [priceType, setPriceType] = useState<
+      "range" | "exact" | "free" | null
+    >(null);
+    const [searchQuery, setSearchQuery] = useState<string>("");
+
+    // Debounce the search query
+    const debouncedQuery = useDebounce(searchQuery, 800);
+
+    const { data: locationOptions = [], isLoading } = useQuery({
+      queryKey:["locations", debouncedQuery],
+      queryFn: () => getPlaces(debouncedQuery),
+      enabled: debouncedQuery.length > 2,
+      staleTime: 10 * 1000, // 10 seconds
+    });
+
+    console.log("rerendered", debouncedQuery, searchQuery);
 
     const priceTypeOptions: SelectOption[] = [
       { value: PRICE_TYPE.RANGE, label: "Price Range" },
@@ -27,15 +46,6 @@ export const BasicDetails = withForm({
       { value: "EUR", label: "EUR (Euro)" },
       { value: "USD", label: "USD (US Dollar)" },
       { value: "GBP", label: "GBP (British Pound)" },
-    ];
-
-    const locationOptions: SelectOption[] = [
-      { value: "dance-studio-prague", label: "Dance Studio Prague - Václavské náměstí 1, Prague" },
-      { value: "salsa-club-brno", label: "Salsa Club Brno - Masarykova 15, Brno" },
-      { value: "bachata-lounge", label: "Bachata Lounge - Národní 25, Prague" },
-      { value: "tango-hall-ostrava", label: "Tango Hall Ostrava - Stodolní 8, Ostrava" },
-      { value: "kizomba-studio", label: "Kizomba Studio - Wenceslas Square 10, Prague" },
-      { value: "dance-arena-plzen", label: "Dance Arena - Americká 23, Plzeň" },
     ];
 
     return (
@@ -63,22 +73,17 @@ export const BasicDetails = withForm({
             </form.AppField>
 
             {/* Location */}
-            <form.AppField
-              name="basicInfo.location"
-              validators={{
-                onChange: ({ value }) =>
-                  !value || value.length < 3
-                    ? "Location is required"
-                    : undefined,
-              }}
-            >
+            <form.AppField name="basicInfo.location">
               {(field) => (
                 <field.ComboboxField
                   label="Location"
                   placeholder="Search for a venue..."
-                  emptyText="No venues found."
-                  options={locationOptions}
                   required
+                  options={locationOptions}
+                  isLoading={isLoading}
+                  value={field.state.value}
+                  onChange={(value) => {console.log("Location changed to:", value); field.handleChange(value?.label || ""); setSearchQuery(value?.label || "");}}
+                  onSearchChange={(search) => setSearchQuery(search)}
                 />
               )}
             </form.AppField>

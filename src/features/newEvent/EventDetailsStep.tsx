@@ -2,46 +2,37 @@ import { Users } from "lucide-react";
 import { withForm } from "@/lib/form";
 import { FormSection } from "@/components/form";
 import { eventFormOpts } from "./FormOptions";
+import { useQuery } from "@tanstack/react-query";
+import { getEventTypes } from "@/services/events-types-api";
+import { getSkillLevels } from "@/services/skill-levels-api";
+import { getDanceStyles } from "@/services/dance-styles-api";
 
 interface EventDetailsProps {
   className?: string;
 }
 
-const danceStyleOptions = [
-  { value: "salsa", label: "Salsa" },
-  { value: "bachata", label: "Bachata" },
-  { value: "kizomba", label: "Kizomba" },
-  { value: "tango", label: "Tango" },
-  { value: "swing", label: "Swing" },
-  { value: "ballroom", label: "Ballroom" },
-  { value: "latin", label: "Latin" },
-  { value: "contemporary", label: "Contemporary" },
-  { value: "hip-hop", label: "Hip Hop" },
-  { value: "other", label: "Other" },
-];
 
-const skillLevelOptions = [
-  { value: "beginner", label: "Beginner" },
-  { value: "intermediate", label: "Intermediate" },
-  { value: "advanced", label: "Advanced" },
-  { value: "all-levels", label: "All Levels" },
-];
 
-const eventTypeOptions = [
-  { value: "workshop", label: "Workshop" },
-  { value: "social", label: "Social Dance" },
-  { value: "competition", label: "Competition" },
-  { value: "festival", label: "Festival" },
-  { value: "class", label: "Class" },
-  { value: "performance", label: "Performance" },
-  { value: "party", label: "Party" },
-  { value: "bootcamp", label: "Bootcamp" },
-];
 
 export const EventDetailsStep = withForm({
   ...eventFormOpts,
   props: {} as EventDetailsProps,
   render: ({ form, className }) => {
+    const danceStyleOptions = useQuery({
+      queryKey: ['danceStyles'],
+      queryFn: getDanceStyles,
+    }).data || [];
+    
+    const skillLevelOptions = useQuery({
+      queryKey: ['skillLevels'],
+      queryFn: getSkillLevels,
+    }).data || [];
+    
+    const eventTypeOptions = useQuery({
+      queryKey: ['eventTypes'],
+      queryFn: getEventTypes,
+    }).data || [];
+
     return (
       <div className={`p-4 md:p-6 ${className}`}>
         <div className="space-y-6">

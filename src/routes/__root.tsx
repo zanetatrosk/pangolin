@@ -1,6 +1,13 @@
 import { HeadContent, Scripts, createRootRoute, Outlet, useRouterState } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import { TanStackDevtools } from "@tanstack/react-devtools";
+import {
+  useQuery,
+  useMutation,
+  useQueryClient,
+  QueryClient,
+  QueryClientProvider,
+} from '@tanstack/react-query'
 
 import { Header } from "@/components/layout/Header";
 import appCss from "../styles.css?url";
@@ -32,6 +39,8 @@ export const Route = createRootRoute({
   shellComponent: RootComponent,
 });
 
+const queryClient = new QueryClient()
+
 function RootComponent() {
   const router = useRouterState();
   const isLoginPage = router.location.pathname === '/login';
@@ -42,11 +51,13 @@ function RootComponent() {
         <HeadContent />
       </head>
       <body className="flex flex-col min-h-screen">
-        {!isLoginPage && <Header />}
-        <div className="grow">
-          <Outlet />
-        </div>
-        {!isLoginPage && <Footer />}
+        <QueryClientProvider client={queryClient}>
+          {!isLoginPage && <Header />}
+          <div className="grow">
+            <Outlet />
+          </div>
+          {!isLoginPage && <Footer />}
+        </QueryClientProvider>
         <TanStackDevtools
             config={{
               position: "bottom-right",

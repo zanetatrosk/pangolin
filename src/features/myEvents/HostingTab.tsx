@@ -1,7 +1,7 @@
 import { CalendarPlus, Users } from "lucide-react";
 import { NoEvents } from "./components/NoEvents";
 import { TabCard } from "./components/TabCard";
-import { MyEventCard } from "./components/MyEventCard";
+import { EventCardType, MyEventCard } from "./components/MyEventCard";
 import { MOCK_EVENTS } from "@/mocks/eventsDetailed";
 
 export const HostingTab: React.FC = () => {
@@ -9,7 +9,6 @@ export const HostingTab: React.FC = () => {
   return (
     <TabCard
       value="hosting"
-      title="Events You're Hosting"
       noItemComponent={
         <NoEvents
           title="No Hosted Events Yet"
@@ -25,7 +24,7 @@ export const HostingTab: React.FC = () => {
     >
         <div className="grid grid-cols-1 gap-6">
         {events.map((event) => (
-            <MyEventCard key={event.id} event={event} isHosted />
+            <MyEventCard key={event.id} event={event} cardType={EventCardType.HOSTING} />
         ))}
         </div>
     </TabCard>

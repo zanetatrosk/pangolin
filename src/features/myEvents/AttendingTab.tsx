@@ -1,7 +1,7 @@
 import { Calendar } from "lucide-react";
 import { TabCard } from "./components/TabCard";
 import { NoEvents } from "./components/NoEvents";
-import { MyEventCard } from "./components/MyEventCard";
+import { EventCardType, MyEventCard } from "./components/MyEventCard";
 import { MOCK_EVENTS } from "@/mocks/eventsDetailed";
 
 export const AttendingTab: React.FC = () => {
@@ -23,7 +23,7 @@ export const AttendingTab: React.FC = () => {
       {/* Render MyEventCard components here when there are events */}
       <div className="grid grid-cols-1 gap-6">
       {events.map((event) => (
-        <MyEventCard key={event.id} event={event} />
+        <MyEventCard key={event.id} event={event} cardType={EventCardType.GOING} />
       ))}
       </div>
         

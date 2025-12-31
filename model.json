@@ -1,0 +1,978 @@
+{
+  "entities": [
+    {
+      "name": "Dosahuje",
+      "parent": null,
+      "attr": [
+        {
+          "name": "id_dosahuje",
+          "primary": true,
+          "unique": false,
+          "nullable": false,
+          "type": null
+        }
+      ],
+      "transform": {
+        "x": 235.01938104629517,
+        "y": -247.24753886124915,
+        "width": 158.75,
+        "height": 93.75
+      }
+    },
+    {
+      "name": "Inzerat",
+      "parent": null,
+      "attr": [
+        {
+          "name": "id_inzerat",
+          "primary": true,
+          "unique": false,
+          "nullable": false,
+          "type": null
+        },
+        {
+          "name": "poplatek",
+          "primary": false,
+          "unique": false,
+          "nullable": false,
+          "type": null
+        }
+      ],
+      "transform": {
+        "x": -27.5,
+        "y": -385.67967348954505,
+        "width": 141,
+        "height": 81.5
+      }
+    },
+    {
+      "name": "Jezdec",
+      "parent": null,
+      "attr": [
+        {
+          "name": "staj",
+          "primary": false,
+          "unique": false,
+          "nullable": false,
+          "type": null
+        }
+      ],
+      "transform": {
+        "x": -28,
+        "y": -92.06250000000003,
+        "width": 134,
+        "height": 92.77866238691979
+      }
+    },
+    {
+      "name": "Kategorie_sportu",
+      "parent": null,
+      "attr": [
+        {
+          "name": "id_sport",
+          "primary": true,
+          "unique": false,
+          "nullable": false,
+          "type": null
+        },
+        {
+          "name": "jmeno",
+          "primary": false,
+          "unique": false,
+          "nullable": false,
+          "type": null
+        }
+      ],
+      "transform": {
+        "x": 473.3412272648785,
+        "y": -349.2838376130802,
+        "width": 157.92815378141665,
+        "height": 100.78629875183105
+      }
+    },
+    {
+      "name": "Kontakt",
+      "parent": null,
+      "attr": [
+        {
+          "name": "hodnota",
+          "primary": false,
+          "unique": false,
+          "nullable": false,
+          "type": null
+        }
+      ],
+      "transform": {
+        "x": -378,
+        "y": 93.60416412353513,
+        "width": 138,
+        "height": 102
+      }
+    },
+    {
+      "name": "Kun",
+      "parent": null,
+      "attr": [
+        {
+          "name": "id_kun",
+          "primary": true,
+          "unique": false,
+          "nullable": false,
+          "type": null
+        },
+        {
+          "name": "jmeno",
+          "primary": false,
+          "unique": false,
+          "nullable": false,
+          "type": null
+        },
+        {
+          "name": "vek",
+          "primary": false,
+          "unique": false,
+          "nullable": false,
+          "type": null
+        },
+        {
+          "name": "pohlavi",
+          "primary": false,
+          "unique": false,
+          "nullable": false,
+          "type": null
+        },
+        {
+          "name": "plemeno",
+          "primary": false,
+          "unique": false,
+          "nullable": true,
+          "type": null
+        },
+        {
+          "name": "cena",
+          "primary": false,
+          "unique": false,
+          "nullable": true,
+          "type": null
+        }
+      ],
+      "transform": {
+        "x": 240.76055668196693,
+        "y": -102.35360914859714,
+        "width": 149.5,
+        "height": 113.00000095367432
+      }
+    },
+    {
+      "name": "Majitel",
+      "parent": null,
+      "attr": [
+        {
+          "name": "staj",
+          "primary": false,
+          "unique": false,
+          "nullable": false,
+          "type": null
+        }
+      ],
+      "transform": {
+        "x": -28,
+        "y": -234.39583587646487,
+        "width": 141,
+        "height": 100
+      }
+    },
+    {
+      "name": "Osoba",
+      "parent": null,
+      "attr": [
+        {
+          "name": "id_osoba",
+          "primary": true,
+          "unique": false,
+          "nullable": false,
+          "type": null
+        },
+        {
+          "name": "jmeno",
+          "primary": false,
+          "unique": false,
+          "nullable": false,
+          "type": null
+        }
+      ],
+      "transform": {
+        "x": -322.5,
+        "y": -91.8880017366154,
+        "width": 121,
+        "height": 86
+      }
+    },
+    {
+      "name": "Typ_kontaktu",
+      "parent": null,
+      "attr": [
+        {
+          "name": "id_kontakt",
+          "primary": true,
+          "unique": false,
+          "nullable": false,
+          "type": null
+        },
+        {
+          "name": "nazev",
+          "primary": false,
+          "unique": false,
+          "nullable": false,
+          "type": null
+        }
+      ],
+      "transform": {
+        "x": -380,
+        "y": 279.60416412353516,
+        "width": 140.000009059906,
+        "height": 92.16664862632751
+      }
+    },
+    {
+      "name": "Veterinar",
+      "parent": null,
+      "attr": [
+        {
+          "name": "specializace",
+          "primary": false,
+          "unique": false,
+          "nullable": false,
+          "type": null
+        }
+      ],
+      "transform": {
+        "x": -25,
+        "y": 68.71616238691979,
+        "width": 135,
+        "height": 92.00000000000003
+      }
+    },
+    {
+      "name": "Vykonnost",
+      "parent": null,
+      "attr": [
+        {
+          "name": "id_vykonnost",
+          "primary": true,
+          "unique": false,
+          "nullable": false,
+          "type": null
+        },
+        {
+          "name": "jmeno",
+          "primary": false,
+          "unique": false,
+          "nullable": false,
+          "type": null
+        }
+      ],
+      "transform": {
+        "x": 468.5311961174011,
+        "y": -178.1993411149723,
+        "width": 166.48818492889404,
+        "height": 97.20180225372314
+      }
+    },
+    {
+      "name": "Zdravotni_stav",
+      "parent": null,
+      "attr": [
+        {
+          "name": "id_nemoc",
+          "primary": true,
+          "unique": false,
+          "nullable": false,
+          "type": null
+        },
+        {
+          "name": "nazev",
+          "primary": false,
+          "unique": false,
+          "nullable": false,
+          "type": null
+        }
+      ],
+      "transform": {
+        "x": 256,
+        "y": 116.60416412353516,
+        "width": 133,
+        "height": 90.66666412353516
+      }
+    }
+  ],
+  "relations": [
+    [
+      {
+        "entity": "Dosahuje",
+        "identifying": false,
+        "optional": false,
+        "cardinality": 0,
+        "xor": "64a39e5ac7ef2b717b7f7f4dc7ef2b71",
+        "name": null,
+        "transform": {
+          "anchor": {
+            "x": 235.01938104629517,
+            "y": -200.37253886124915,
+            "edge": 3
+          },
+          "points": [
+            {
+              "x": 167.50969052314758,
+              "y": -115.89964570817416
+            }
+          ],
+          "manual": false
+        }
+      },
+      {
+        "entity": "Jezdec",
+        "identifying": false,
+        "optional": true,
+        "cardinality": 1,
+        "xor": null,
+        "name": null,
+        "transform": {
+          "anchor": {
+            "x": 106,
+            "y": -31.426752555099178,
+            "edge": 1
+          },
+          "points": [
+            {
+              "x": 120.5,
+              "y": -41.90882998368568
+            },
+            {
+              "x": 167.50969052314758,
+              "y": -115.89964570817416
+            }
+          ],
+          "manual": true
+        }
+      }
+    ],
+    [
+      {
+        "entity": "Dosahuje",
+        "identifying": false,
+        "optional": false,
+        "cardinality": 0,
+        "xor": "64a39e5ac7ef2b717b7f7f4dc7ef2b71",
+        "name": null,
+        "transform": {
+          "anchor": {
+            "x": 314.39438104629517,
+            "y": -153.49753886124915,
+            "edge": 2
+          },
+          "points": [
+            {
+              "x": 314.95246886413105,
+              "y": -124.92557400492315
+            }
+          ],
+          "manual": false
+        }
+      },
+      {
+        "entity": "Kun",
+        "identifying": false,
+        "optional": true,
+        "cardinality": 1,
+        "xor": null,
+        "name": null,
+        "transform": {
+          "anchor": {
+            "x": 315.51055668196693,
+            "y": -102.35360914859714,
+            "edge": 0
+          },
+          "points": [
+            {
+              "x": 314.95246886413105,
+              "y": -124.92557400492315
+            }
+          ],
+          "manual": false
+        }
+      }
+    ],
+    [
+      {
+        "entity": "Dosahuje",
+        "identifying": false,
+        "optional": false,
+        "cardinality": 0,
+        "xor": null,
+        "name": null,
+        "transform": {
+          "anchor": {
+            "x": 393.76938104629517,
+            "y": -181.93503886124915,
+            "edge": 1
+          },
+          "points": [
+            {
+              "x": 431.15028858184814,
+              "y": -155.76673942467994
+            }
+          ],
+          "manual": false
+        }
+      },
+      {
+        "entity": "Vykonnost",
+        "identifying": false,
+        "optional": true,
+        "cardinality": 1,
+        "xor": null,
+        "name": null,
+        "transform": {
+          "anchor": {
+            "x": 468.5311961174011,
+            "y": -129.59843998811073,
+            "edge": 3
+          },
+          "points": [
+            {
+              "x": 431.15028858184814,
+              "y": -155.76673942467994
+            }
+          ],
+          "manual": false
+        }
+      }
+    ],
+    [
+      {
+        "entity": "Dosahuje",
+        "identifying": false,
+        "optional": false,
+        "cardinality": 0,
+        "xor": null,
+        "name": null,
+        "transform": {
+          "anchor": {
+            "x": 393.76938104629517,
+            "y": -200.37253886124915,
+            "edge": 1
+          },
+          "points": [
+            {
+              "x": 433.55530415558684,
+              "y": -249.63161354920692
+            }
+          ],
+          "manual": false
+        }
+      },
+      {
+        "entity": "Kategorie_sportu",
+        "identifying": false,
+        "optional": true,
+        "cardinality": 1,
+        "xor": null,
+        "name": null,
+        "transform": {
+          "anchor": {
+            "x": 473.3412272648785,
+            "y": -298.8906882371647,
+            "edge": 3
+          },
+          "points": [
+            {
+              "x": 433.55530415558684,
+              "y": -249.63161354920692
+            }
+          ],
+          "manual": false
+        }
+      }
+    ],
+    [
+      {
+        "entity": "Inzerat",
+        "identifying": false,
+        "optional": false,
+        "cardinality": 0,
+        "xor": null,
+        "name": null,
+        "transform": {
+          "anchor": {
+            "x": 43,
+            "y": -304.17967348954505,
+            "edge": 2
+          },
+          "points": [
+            {
+              "x": 42.53918426002974,
+              "y": -284.51754271748234
+            },
+            {
+              "x": 42.75,
+              "y": -269.28775468300495
+            }
+          ],
+          "manual": true
+        }
+      },
+      {
+        "entity": "Majitel",
+        "identifying": false,
+        "optional": true,
+        "cardinality": 1,
+        "xor": null,
+        "name": "podává",
+        "transform": {
+          "anchor": {
+            "x": 42.5,
+            "y": -234.39583587646487,
+            "edge": 0
+          },
+          "points": [
+            {
+              "x": 42.75,
+              "y": -269.28775468300495
+            }
+          ],
+          "manual": false
+        }
+      }
+    ],
+    [
+      {
+        "entity": "Jezdec",
+        "identifying": false,
+        "optional": true,
+        "cardinality": 0,
+        "xor": null,
+        "name": "jezdí",
+        "transform": {
+          "anchor": {
+            "x": 106,
+            "y": -11.742173489545053,
+            "edge": 1
+          },
+          "points": [
+            {
+              "x": 178,
+              "y": -11.742173489545053
+            }
+          ],
+          "manual": false
+        }
+      },
+      {
+        "entity": "Kun",
+        "identifying": false,
+        "optional": true,
+        "cardinality": 0,
+        "xor": null,
+        "name": null,
+        "transform": {
+          "anchor": {
+            "x": 240.76055668196693,
+            "y": -53.569581119592584,
+            "edge": 3
+          },
+          "points": [
+            {
+              "x": 178,
+              "y": -11.742173489545053
+            }
+          ],
+          "manual": false
+        }
+      }
+    ],
+    [
+      {
+        "entity": "Jezdec",
+        "identifying": true,
+        "optional": false,
+        "cardinality": 1,
+        "xor": null,
+        "name": null,
+        "transform": {
+          "anchor": {
+            "x": -28,
+            "y": -45.67316880654013,
+            "edge": 3
+          },
+          "points": [
+            {
+              "x": -114.75,
+              "y": -45.22850320981017
+            }
+          ],
+          "manual": false
+        }
+      },
+      {
+        "entity": "Osoba",
+        "identifying": false,
+        "optional": true,
+        "cardinality": 1,
+        "xor": null,
+        "name": "může být",
+        "transform": {
+          "anchor": {
+            "x": -201.5,
+            "y": -44.78383761308021,
+            "edge": 1
+          },
+          "points": [
+            {
+              "x": -142,
+              "y": -46.40883952042884
+            },
+            {
+              "x": -114.75,
+              "y": -45.22850320981017
+            }
+          ],
+          "manual": true
+        }
+      }
+    ],
+    [
+      {
+        "entity": "Kontakt",
+        "identifying": true,
+        "optional": false,
+        "cardinality": 0,
+        "xor": null,
+        "name": null,
+        "transform": {
+          "anchor": {
+            "x": -309,
+            "y": 195.60416412353516,
+            "edge": 2
+          },
+          "points": [
+            {
+              "x": -309.4999977350235,
+              "y": 237.60416412353516
+            }
+          ],
+          "manual": false
+        }
+      },
+      {
+        "entity": "Typ_kontaktu",
+        "identifying": false,
+        "optional": true,
+        "cardinality": 1,
+        "xor": null,
+        "name": null,
+        "transform": {
+          "anchor": {
+            "x": -309.999995470047,
+            "y": 279.60416412353516,
+            "edge": 0
+          },
+          "points": [
+            {
+              "x": -309.4999977350235,
+              "y": 237.60416412353516
+            }
+          ],
+          "manual": false
+        }
+      }
+    ],
+    [
+      {
+        "entity": "Kontakt",
+        "identifying": true,
+        "optional": false,
+        "cardinality": 0,
+        "xor": null,
+        "name": null,
+        "transform": {
+          "anchor": {
+            "x": -309,
+            "y": 93.60416412353513,
+            "edge": 0
+          },
+          "points": [
+            {
+              "x": -276.03125,
+              "y": 43.85808119345987
+            }
+          ],
+          "manual": false
+        }
+      },
+      {
+        "entity": "Osoba",
+        "identifying": false,
+        "optional": true,
+        "cardinality": 1,
+        "xor": null,
+        "name": "má",
+        "transform": {
+          "anchor": {
+            "x": -243.0625,
+            "y": -5.888001736615394,
+            "edge": 2
+          },
+          "points": [
+            {
+              "x": -276.03125,
+              "y": 43.85808119345987
+            }
+          ],
+          "manual": false
+        }
+      }
+    ],
+    [
+      {
+        "entity": "Kun",
+        "identifying": false,
+        "optional": false,
+        "cardinality": 0,
+        "xor": null,
+        "name": null,
+        "transform": {
+          "anchor": {
+            "x": 240.76055668196693,
+            "y": -22.603608433341407,
+            "edge": 3
+          },
+          "points": [
+            {
+              "x": 175.38027834098347,
+              "y": 46.05627697678919
+            }
+          ],
+          "manual": false
+        }
+      },
+      {
+        "entity": "Veterinar",
+        "identifying": false,
+        "optional": true,
+        "cardinality": 0,
+        "xor": null,
+        "name": "ošetřuje",
+        "transform": {
+          "anchor": {
+            "x": 110,
+            "y": 114.71616238691979,
+            "edge": 1
+          },
+          "points": [
+            {
+              "x": 175.38027834098347,
+              "y": 46.05627697678919
+            }
+          ],
+          "manual": false
+        }
+      }
+    ],
+    [
+      {
+        "entity": "Kun",
+        "identifying": false,
+        "optional": false,
+        "cardinality": 0,
+        "xor": null,
+        "name": null,
+        "transform": {
+          "anchor": {
+            "x": 240.76055668196693,
+            "y": -82.90882998368568,
+            "edge": 3
+          },
+          "points": [
+            {
+              "x": 176.88027834098347,
+              "y": -133.65233293007526
+            }
+          ],
+          "manual": false
+        }
+      },
+      {
+        "entity": "Majitel",
+        "identifying": false,
+        "optional": true,
+        "cardinality": 0,
+        "xor": null,
+        "name": "vlastní",
+        "transform": {
+          "anchor": {
+            "x": 113,
+            "y": -184.39583587646487,
+            "edge": 1
+          },
+          "points": [
+            {
+              "x": 176.88027834098347,
+              "y": -133.65233293007526
+            }
+          ],
+          "manual": false
+        }
+      }
+    ],
+    [
+      {
+        "entity": "Kun",
+        "identifying": false,
+        "optional": true,
+        "cardinality": 0,
+        "xor": null,
+        "name": "má",
+        "transform": {
+          "anchor": {
+            "x": 315.51055668196693,
+            "y": 10.646391805077172,
+            "edge": 2
+          },
+          "points": [
+            {
+              "x": 316.00527834098347,
+              "y": 63.625277964306164
+            }
+          ],
+          "manual": false
+        }
+      },
+      {
+        "entity": "Zdravotni_stav",
+        "identifying": false,
+        "optional": true,
+        "cardinality": 0,
+        "xor": null,
+        "name": null,
+        "transform": {
+          "anchor": {
+            "x": 316.5,
+            "y": 116.60416412353516,
+            "edge": 0
+          },
+          "points": [
+            {
+              "x": 316.00527834098347,
+              "y": 63.625277964306164
+            }
+          ],
+          "manual": false
+        }
+      }
+    ],
+    [
+      {
+        "entity": "Majitel",
+        "identifying": true,
+        "optional": false,
+        "cardinality": 1,
+        "xor": null,
+        "name": null,
+        "transform": {
+          "anchor": {
+            "x": -28,
+            "y": -184.39583587646487,
+            "edge": 3
+          },
+          "points": [
+            {
+              "x": -114.75,
+              "y": -126.58983674477254
+            }
+          ],
+          "manual": false
+        }
+      },
+      {
+        "entity": "Osoba",
+        "identifying": false,
+        "optional": true,
+        "cardinality": 1,
+        "xor": null,
+        "name": "může být",
+        "transform": {
+          "anchor": {
+            "x": -201.5,
+            "y": -68.78383761308021,
+            "edge": 1
+          },
+          "points": [
+            {
+              "x": -114.75,
+              "y": -126.58983674477254
+            }
+          ],
+          "manual": false
+        }
+      }
+    ],
+    [
+      {
+        "entity": "Osoba",
+        "identifying": false,
+        "optional": true,
+        "cardinality": 1,
+        "xor": null,
+        "name": "může být",
+        "transform": {
+          "anchor": {
+            "x": -201.5,
+            "y": -17.78383761308021,
+            "edge": 1
+          },
+          "points": [
+            {
+              "x": -113.25,
+              "y": 48.46616238691979
+            }
+          ],
+          "manual": false
+        }
+      },
+      {
+        "entity": "Veterinar",
+        "identifying": true,
+        "optional": false,
+        "cardinality": 1,
+        "xor": null,
+        "name": null,
+        "transform": {
+          "anchor": {
+            "x": -25,
+            "y": 114.71616238691979,
+            "edge": 3
+          },
+          "points": [
+            {
+              "x": -113.25,
+              "y": 48.46616238691979
+            }
+          ],
+          "manual": false
+        }
+      }
+    ]
+  ],
+  "notes": [
+    {
+      "text": "IO1: Kůň nemůže mít jezdce pokud je mladší 3 let\nIO2: Koně mladší 3 let nemohou dosahovat jakkékoliv výkonnosti ve sportu\nIO3: Jezdec může mít maximálně jednu výkonnost v rámci jednoho sportu\nIO4: Kůň může mít maximálně jednu výkonnost v rámci jednoho sportu",
+      "transform": {
+        "x": -318,
+        "y": 447.25782651045495,
+        "width": 495.8125,
+        "height": 100
+      }
+    }
+  ]
+}

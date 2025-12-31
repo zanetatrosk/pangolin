@@ -6,5 +6,6 @@ export { FormMultiSelectField } from "./FormMultiSelectField";
 export type { MultiSelectOption } from "./FormMultiSelectField";
 export { FormSection } from "./FormSection";
 export { FormGrid } from "./FormGrid";
+export { FormComboboxField } from "./FormComboboxField";
 
 export { FormNumberField } from "./FormNumberField";

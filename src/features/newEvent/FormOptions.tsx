@@ -1,5 +1,6 @@
 import { formOptions } from "@tanstack/react-form";
 import { DanceEventCreation } from "./types";
+import { PRICE_TYPE } from "../eventsList/components/EventCard";
 
 const eventFormDefaults: DanceEventCreation = {
   basicInfo: {
@@ -9,8 +10,13 @@ const eventFormDefaults: DanceEventCreation = {
     time: "",
     isRecurring: false,
     endDate: "",
-    priceRange: "",
-    priceExact: "",
+    price: {
+      priceType: PRICE_TYPE.FREE,
+      priceMin: undefined,
+      priceMax: undefined,
+      currency: undefined,
+      priceExact: undefined,
+    },
   },
   additionalDetails: {
     danceStyles: [],

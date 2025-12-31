@@ -6,6 +6,7 @@ import { HostingTab } from "./HostingTab";
 import { AttendingTab } from "./AttendingTab";
 import { useNavigate } from "@tanstack/react-router";
 import { PATHS } from "@/paths";
+import { InterestedTab } from "./InterestedTab";
 
 export function MyEventsPage() {
   const { t } = useTranslation();
@@ -37,15 +38,7 @@ export function MyEventsPage() {
         </TabsList>
         <HostingTab />
         <AttendingTab />
-        <TabsContent value="interested" className="mt-6">
-          <div className="flex flex-col items-center justify-center min-h-[300px] border rounded-lg border-dashed p-8 text-center animate-in fade-in-50">
-            <Heart className="h-10 w-10 text-muted-foreground mb-4" />
-            <h3 className="text-lg font-semibold">Interested Events</h3>
-            <p className="text-sm text-muted-foreground mt-2 max-w-sm">
-              Events you mark as interested will appear here.
-            </p>
-          </div>
-        </TabsContent>
+        <InterestedTab />
       </Tabs>
     </div>
   );

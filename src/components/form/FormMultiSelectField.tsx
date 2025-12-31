@@ -10,8 +10,8 @@ import {
 import { useFieldContext } from "@/lib/form-context";
 
 export interface MultiSelectOption {
-  value: string;
-  label: string;
+  id: string;
+  name: string;
 }
 
 export interface FormMultiSelectFieldProps {
@@ -51,8 +51,8 @@ export const FormMultiSelectField = ({
         <MultiSelectContent>
           <MultiSelectGroup>
             {options.map((option) => (
-              <MultiSelectItem key={option.value} value={option.value}>
-                {option.label}
+              <MultiSelectItem key={option.id} value={option.id}>
+                {option.name}
               </MultiSelectItem>
             ))}
           </MultiSelectGroup>

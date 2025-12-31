@@ -1,14 +1,22 @@
 import { FC } from "react";
 import { EventCard } from "./components/EventCard";
-import { EVENTS } from "@/mocks/events";
-
-const mockEvents = EVENTS;
+import { getAllEvents } from "@/services/events-api";
+import { useQuery } from "@tanstack/react-query";
 
 export const EventList: FC = () => {
+  const { data } = useQuery({
+    queryKey: ['events'],
+    queryFn: getAllEvents,
+  });
+
+  if(!data) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div className="space-y-4 p-4 md:p-6">
       <div className="space-y-4">
-        {mockEvents.map((event) => (
+        {data?.map((event) => (
           <EventCard key={event.id} {...event} />
         ))}
       </div>

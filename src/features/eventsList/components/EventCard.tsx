@@ -7,6 +7,7 @@ import {
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { PATHS } from "@/paths";
+import { getLabelFromPrice } from "@/utils/getLabelFromPrice";
 import { useNavigate } from "@tanstack/react-router";
 import {
   Banknote,
@@ -20,24 +21,36 @@ import {
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
-interface EventItemCardProps {
+export enum PRICE_TYPE {
+  FREE = "free",
+  RANGE = "range",
+  EXACT = "exact",
+}
+export interface Price {
+  priceType: PRICE_TYPE;
+  priceMin?: number;
+  priceMax?: number;
+  currency?: string;
+  priceExact?: number;
+}
+export interface EventItem {
   id: number;
-  title: string;
-  description?: string;
+  eventName: string;
+  location: string;
   date: string;
   time: string;
-  location: string;
+  price?: Price;
   image: string;
-  price: string;
+  description?: string;
   attendees?: number;
+  interested?: number;
   maxAttendees?: number;
   difficulty?: string;
   tags?: string[];
-  rating?: number;
   organizer?: string;
 }
 
-export const EventCard: React.FC<EventItemCardProps> = (event) => {
+export const EventCard: React.FC<EventItem> = (event) => {
   const { t } = useTranslation();
   const [isInterested, setIsInterested] = useState(false);
   const navigate = useNavigate();
@@ -52,13 +65,13 @@ export const EventCard: React.FC<EventItemCardProps> = (event) => {
     },
     {
       icon: Users,
-      label: `${(event.attendees ||0) /2} interested, ${event.attendees} ${t(
+      label: `${event.interested} interested, ${event.attendees} ${t(
         "eventCard.attending"
       )}`,
     },
     {
       icon: Banknote,
-      label: event.price,
+      label: getLabelFromPrice(event.price),
       bold: true,
     },
   ];
@@ -68,8 +81,8 @@ export const EventCard: React.FC<EventItemCardProps> = (event) => {
         {/* Event Image */}
         <div className="relative md:w-64 h-48 md:h-auto shrink-0">
           <img
-            src={event.image}
-            alt={event.title}
+            src={"http://localhost:8080/api/media/" + event.promoMedia?.id!}
+            alt={event.eventName}
             className="w-full h-full object-cover"
           />
         </div>
@@ -80,7 +93,7 @@ export const EventCard: React.FC<EventItemCardProps> = (event) => {
               <div className="flex items-start justify-between">
                 <div className="flex-1">
                   <h3 className="text-lg md:text-xl font-semibold text-gray-900 dark:text-white line-clamp-1">
-                    {event.title}
+                    {event.eventName}
                   </h3>
                   {event.organizer && (
                     <p className="text-sm text-gray-600 dark:text-gray-400">
@@ -93,14 +106,14 @@ export const EventCard: React.FC<EventItemCardProps> = (event) => {
               {/* Tags */}
               {event.tags && event.tags.length > 0 && (
                 <div className="flex flex-wrap gap-1 md:mb-4">
-                  {event.tags.slice(0, 3).map((tag) => (
+                  {event.tags.slice(0, 5).map((tag) => (
                     <Badge key={tag} variant="outline" className="text-xs">
                       {tag}
                     </Badge>
                   ))}
-                  {event.tags.length > 3 && (
+                  {event.tags.length > 5 && (
                     <Badge variant="outline" className="text-xs">
-                      +{event.tags.length - 3}
+                      +{event.tags.length - 5}
                     </Badge>
                   )}
                 </div>

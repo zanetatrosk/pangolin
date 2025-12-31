@@ -4,6 +4,7 @@ import { withForm } from "@/lib/form";
 import { FormSection, FormGrid } from "@/components/form";
 import type { SelectOption } from "@/components/form";
 import { eventFormOpts } from "./FormOptions";
+import { PRICE_TYPE } from "../eventsList/components/EventCard";
 
 interface BasicDetailsProps {
   className?: string;
@@ -13,16 +14,28 @@ export const BasicDetails = withForm({
   ...eventFormOpts,
   props: {} as BasicDetailsProps,
   render: ({ form, className }) => {
-    const [showExactPrice, setShowExactPrice] = useState(false);
+    const [priceType, setPriceType] = useState<"range" | "exact" | "free" | null>(null);
 
-    const priceRangeOptions: SelectOption[] = [
-      { value: "free", label: "Free" },
-      { value: "0-10", label: "$0 - $10" },
-      { value: "10-20", label: "$10 - $20" },
-      { value: "20-50", label: "$20 - $50" },
-      { value: "50-100", label: "$50 - $100" },
-      { value: "100+", label: "$100+" },
-      { value: "exact", label: "Exact amount" },
+    const priceTypeOptions: SelectOption[] = [
+      { value: PRICE_TYPE.RANGE, label: "Price Range" },
+      { value: PRICE_TYPE.EXACT, label: "Exact Price" },
+      { value: PRICE_TYPE.FREE, label: "Free" },
+    ];
+
+    const currencyOptions: SelectOption[] = [
+      { value: "CZK", label: "CZK (Czech Koruna)" },
+      { value: "EUR", label: "EUR (Euro)" },
+      { value: "USD", label: "USD (US Dollar)" },
+      { value: "GBP", label: "GBP (British Pound)" },
+    ];
+
+    const locationOptions: SelectOption[] = [
+      { value: "dance-studio-prague", label: "Dance Studio Prague - Václavské náměstí 1, Prague" },
+      { value: "salsa-club-brno", label: "Salsa Club Brno - Masarykova 15, Brno" },
+      { value: "bachata-lounge", label: "Bachata Lounge - Národní 25, Prague" },
+      { value: "tango-hall-ostrava", label: "Tango Hall Ostrava - Stodolní 8, Ostrava" },
+      { value: "kizomba-studio", label: "Kizomba Studio - Wenceslas Square 10, Prague" },
+      { value: "dance-arena-plzen", label: "Dance Arena - Americká 23, Plzeň" },
     ];
 
     return (
@@ -60,11 +73,12 @@ export const BasicDetails = withForm({
               }}
             >
               {(field) => (
-                <field.TextField
+                <field.ComboboxField
                   label="Location"
-                  placeholder="Venue name and address"
+                  placeholder="Search for a venue..."
+                  emptyText="No venues found."
+                  options={locationOptions}
                   required
-                  icon={MapPin}
                 />
               )}
             </form.AppField>
@@ -136,41 +150,78 @@ export const BasicDetails = withForm({
 
           {/* Pricing */}
           <FormSection title="Pricing">
-            <div
-              className={`grid ${
-                showExactPrice
-                  ? "grid-cols-1 md:grid-cols-2 gap-4"
-                  : "grid-cols-1"
-              }`}
-            >
-              <form.AppField name="basicInfo.priceRange">
+            <FormGrid columns={2}>
+              {/* Price Type Selection */}
+              <form.AppField name="basicInfo.price.priceType">
                 {(field) => (
                   <field.SelectField
-                    label="Price Range"
-                    placeholder="Select price range"
-                    options={priceRangeOptions}
+                    label="Price Type"
+                    placeholder="Select price type"
+                    options={priceTypeOptions}
                     onValueChange={(value) =>
-                      setShowExactPrice(value === "exact")
+                      setPriceType(value as "range" | "exact")
                     }
                   />
                 )}
               </form.AppField>
 
-              {/* Exact Price Input - shown when "exact" is selected */}
-              {showExactPrice && (
-                <form.AppField name="basicInfo.priceExact">
+              {/* Currency Selection */}
+              {priceType && priceType !== PRICE_TYPE.FREE && (
+                <form.AppField name="basicInfo.price.currency">
                   {(field) => (
-                    <field.NumberField
-                      placeholder="Enter exact price"
-                      min="0"
-                      step="0.01"
-                      label="Exact Price"
-                      icon={DollarSign}
+                    <field.SelectField
+                      label="Currency"
+                      placeholder="Select currency"
+                      options={currencyOptions}
                     />
                   )}
                 </form.AppField>
               )}
-            </div>
+            </FormGrid>
+
+            {/* Price Range Inputs - shown when "range" is selected */}
+            {priceType === "range" && (
+              <FormGrid columns={2}>
+                <form.AppField name="basicInfo.price.priceMin">
+                  {(field) => (
+                    <field.NumberField
+                      label="Minimum Price"
+                      placeholder="0"
+                      min="0"
+                      step="0.01"
+                      icon={DollarSign}
+                    />
+                  )}
+                </form.AppField>
+
+                <form.AppField name="basicInfo.price.priceMax">
+                  {(field) => (
+                    <field.NumberField
+                      label="Maximum Price"
+                      placeholder="100"
+                      min="0"
+                      step="0.01"
+                      icon={DollarSign}
+                    />
+                  )}
+                </form.AppField>
+              </FormGrid>
+            )}
+
+            {/* Exact Price Input - shown when "exact" is selected */}
+            {priceType === "exact" && (
+              <form.AppField name="basicInfo.price.priceExact">
+                {(field) => (
+                  <field.NumberField
+                    label="Exact Price"
+                    placeholder="Enter exact price"
+                    min="0"
+                    step="0.01"
+                    icon={DollarSign}
+                  />
+                )}
+              </form.AppField>
+            )}
           </FormSection>
         </div>
       </div>

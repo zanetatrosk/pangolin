@@ -11,18 +11,30 @@ import { eventFormOpts } from "./FormOptions";
 import { EventDescriptionStep } from "./EventDescriptionStep";
 import { EventMediaStep } from "./EventMediaStep";
 import { EventDetailsStep } from "./EventDetailsStep";
+import { useMutation } from "@tanstack/react-query";
+import { postNewEvent } from "@/services/events-api";
 
 export const FormParent: React.FC = () => {
+  const mutation = useMutation({
+    mutationFn: postNewEvent,
+    onSuccess: (data) => {
+      console.log("Event created successfully:", data);
+    },
+    onError: (error) => {
+      console.error("Error creating event:", error);
+    },
+  });
   const form = useAppForm({
     ...eventFormOpts,
     onSubmit: async ({ value }) => {
       console.log("Form submitted with values:", value);
       console.log("Validating form before submission...", form.getAllErrors());
-        const isValid = form.getAllErrors().form.errors.length === 0;
-        if (!isValid) {
-          console.log("Form has errors, cannot submit:", form.getAllErrors());
-          return;
-        }
+      const isValid = form.getAllErrors().form.errors.length === 0;
+      if (!isValid) {
+        console.log("Form has errors, cannot submit:", form.getAllErrors());
+        return;
+      }
+      mutation.mutate(value);
     },
   });
   const isMobile = useIsMobile();
@@ -50,7 +62,7 @@ export const FormParent: React.FC = () => {
       title: "Additional Details",
       component: () => <EventDetailsStep form={form} />,
       optional: false,
-    }
+    },
   ];
   return (
     <form
@@ -66,15 +78,19 @@ export const FormParent: React.FC = () => {
         <MobileStepper steps={steps} onComplete={form.handleSubmit} />
       ) : (
         <div className="hidden md:block container mx-auto max-w-6xl p-6">
-        <h1 className="text-3xl font-bold mb-6">{t("nav.addEvent")}</h1>
-        <p className="text-muted-foreground mb-6">{t("nav.addEventDesc")}</p>
+          <h1 className="text-3xl font-bold mb-6">{t("nav.addEvent")}</h1>
+          <p className="text-muted-foreground mb-6">{t("nav.addEventDesc")}</p>
 
-        <Card>
-          <CardContent className="space-y-6">
-            <DesktopStepper steps={steps} stepper={EventStepper} showAlert={!isValid} />
-          </CardContent>
-        </Card>
-      </div>
+          <Card>
+            <CardContent className="space-y-6">
+              <DesktopStepper
+                steps={steps}
+                stepper={EventStepper}
+                showAlert={!isValid}
+              />
+            </CardContent>
+          </Card>
+        </div>
       )}
     </form>
   );

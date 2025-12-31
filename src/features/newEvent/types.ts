@@ -1,3 +1,5 @@
+import { Price } from "../eventsList/components/EventCard";
+
 interface RecurringDate {
   date: string;
   id: string;
@@ -12,8 +14,7 @@ export interface BasicDetailsData {
   time: string;
   isRecurring: boolean;
   endDate?: string;
-  priceRange: string;
-  priceExact?: string;
+  price: Price;
   recurringDates?: RecurringDate[];
 }
 

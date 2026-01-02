@@ -2,7 +2,6 @@ import { Calendar, Clock, DollarSign } from "lucide-react";
 import { useState } from "react";
 import { withForm } from "@/lib/form";
 import { FormSection, FormGrid } from "@/components/form";
-import type { SelectOption } from "@/components/form";
 import { eventFormOpts } from "./FormOptions";
 import { useQuery } from "@tanstack/react-query";
 import { getPlaces } from "@/services/get-places-api";
@@ -21,7 +20,6 @@ export const BasicDetails = withForm({
 
     // Debounce the search query
     const debouncedQuery = useDebounce(searchQuery, 800);
-
     const { data: locationOptions = [], isLoading } = useQuery({
       queryKey:["locations", debouncedQuery],
       queryFn: () => getPlaces(debouncedQuery),

@@ -75,7 +75,7 @@ export const EventActions = ({ cardType }: { cardType?: EventCardType }) => {
 
 export const ReocurringEventCard: React.FC<MyEventCardProps> = ({ event, cardType }) => {
   const { basicInfo } = event;
-  const { eventName, location, recurringDates, date, time, endDate } =
+  const { eventName, address: location, recurringDates, date, time, endDate } =
     basicInfo;
 
   const isUserOrganizer = cardType === EventCardType.HOSTING;

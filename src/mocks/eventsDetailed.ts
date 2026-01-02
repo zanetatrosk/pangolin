@@ -9,7 +9,7 @@ export const MOCK_EVENTS: EventDetailData[] = [
     statusUser: "Joined",
     basicInfo: {
       eventName: "Hip Hop Dance Battle",
-        location: "Urban Dance Arena, Los Angeles, CA",
+        address: "Urban Dance Arena, Los Angeles, CA",
         date: "2024-07-10",
         time: "19:00",
         isRecurring: false,
@@ -24,16 +24,16 @@ export const MOCK_EVENTS: EventDetailData[] = [
         allowPartnerPairing: true,
     },
     description: "Get ready for an adrenaline-pumping night of hip hop dance battles! Watch top dancers from around the country compete for the title in various categories. The event features live DJ sets, special guest performances, and a vibrant urban atmosphere. Whether you're a dancer or a fan, this is an event you won't want to miss!",
-    coverImage: { type: "image", url: "https://images.unsplash.com/photo-1518609878373-06d740f60d8b?w=400&h=300&fit=crop" },
+    coverImage: { type: "image", id: "https://images.unsplash.com/photo-1518609878373-06d740f60d8b?w=400&h=300&fit=crop" },
     facebookEventUrl: "https://facebook.com/events/hiphopdancebattle",
     media: [
       {
         type: "image",
-        url: "https://images.unsplash.com/photo-1518609878373-06d740f60d8b?w=400&h=300&fit=crop",
+        id: "https://images.unsplash.com/photo-1518609878373-06d740f60d8b?w=400&h=300&fit=crop",
         },
         {
         type: "video",
-        url: "https://www.youtube.com/shorts/3oP50Vvwn7Q",
+        id: "https://www.youtube.com/shorts/3oP50Vvwn7Q",
         },
     ],
     attendeeStats: {

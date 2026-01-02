@@ -1,4 +1,3 @@
-import { Price } from "../eventsList/components/EventCard";
 
 interface RecurringDate {
   date: string;
@@ -9,12 +8,13 @@ interface RecurringDate {
 
 export interface BasicDetailsData {
   eventName: string;
-  location: string;
+  address: string;
   date: string;
   time: string;
   isRecurring: boolean;
   endDate?: string;
-  price: Price;
+  price?: number;
+  currency?: string;
   recurringDates?: RecurringDate[];
 }
 
@@ -38,4 +38,5 @@ export interface DanceEventCreation {
 export type EventMediaItem = {
   type: "image" | "video"
   url: string
+  id: string
 }

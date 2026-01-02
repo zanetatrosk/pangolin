@@ -75,9 +75,11 @@ export const AutoComplete = ({
     (selectedOption: ComboboxOption) => {
       setSelected(selectedOption);
       onValueChange?.(selectedOption);
+      onSearchChange?.(selectedOption.label);
+      setOpen(false);
       console.log("Option selected:", selectedOption);
     },
-    [onValueChange]
+    [onValueChange, onSearchChange]
   );
 
   return (

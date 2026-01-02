@@ -90,7 +90,7 @@ export function ProfilePage() {
   const handlePhotoDelete = (item: EventMediaItem) => {
     setProfileData((prev) => ({
       ...prev,
-      media: prev.media.filter((m) => m.url !== item.url),
+      media: prev.media.filter((m) => m.url !== item.id),
     }));
   };
 

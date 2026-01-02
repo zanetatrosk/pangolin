@@ -6,6 +6,7 @@ import {
   CardContent
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { EventMediaItem } from "@/features/newEvent/types";
 import { PATHS } from "@/paths";
 import { getLabelFromPrice } from "@/utils/getLabelFromPrice";
 import { useNavigate } from "@tanstack/react-router";
@@ -20,35 +21,9 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { EventItem } from "../types";
 
-export enum PRICE_TYPE {
-  FREE = "free",
-  RANGE = "range",
-  EXACT = "exact",
-}
-export interface Price {
-  priceType: PRICE_TYPE;
-  priceMin?: number;
-  priceMax?: number;
-  currency?: string;
-  priceExact?: number;
-}
-export interface EventItem {
-  id: number;
-  eventName: string;
-  location: string;
-  date: string;
-  time: string;
-  price?: Price;
-  image: string;
-  description?: string;
-  attendees?: number;
-  interested?: number;
-  maxAttendees?: number;
-  difficulty?: string;
-  tags?: string[];
-  organizer?: string;
-}
+
 
 export const EventCard: React.FC<EventItem> = (event) => {
   const { t } = useTranslation();
@@ -61,7 +36,7 @@ export const EventCard: React.FC<EventItem> = (event) => {
     },
     {
       icon: MapPin,
-      label: event.location,
+      label: event.address,
     },
     {
       icon: Users,
@@ -71,7 +46,7 @@ export const EventCard: React.FC<EventItem> = (event) => {
     },
     {
       icon: Banknote,
-      label: getLabelFromPrice(event.price),
+      label: getLabelFromPrice(event.price, event.currency),
       bold: true,
     },
   ];
@@ -81,7 +56,7 @@ export const EventCard: React.FC<EventItem> = (event) => {
         {/* Event Image */}
         <div className="relative md:w-64 h-48 md:h-auto shrink-0">
           <img
-            src={"http://localhost:8080/api/media/" + event.promoMedia?.id!}
+            src={event.promoMedia?.url}
             alt={event.eventName}
             className="w-full h-full object-cover"
           />

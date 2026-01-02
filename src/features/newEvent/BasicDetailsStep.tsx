@@ -1,13 +1,11 @@
-import { Calendar, MapPin, Clock, DollarSign } from "lucide-react";
-import { useState, useEffect } from "react";
+import { Calendar, Clock, DollarSign } from "lucide-react";
+import { useState } from "react";
 import { withForm } from "@/lib/form";
 import { FormSection, FormGrid } from "@/components/form";
 import type { SelectOption } from "@/components/form";
 import { eventFormOpts } from "./FormOptions";
-import { PRICE_TYPE } from "../eventsList/components/EventCard";
 import { useQuery } from "@tanstack/react-query";
 import { getPlaces } from "@/services/get-places-api";
-import { Input } from "@/components/ui/input"
 import { useDebounce } from "@uidotdev/usehooks";
 
 interface BasicDetailsProps {
@@ -18,9 +16,6 @@ export const BasicDetails = withForm({
   ...eventFormOpts,
   props: {} as BasicDetailsProps,
   render: ({ form, className }) => {
-    const [priceType, setPriceType] = useState<
-      "range" | "exact" | "free" | null
-    >(null);
     const [searchQuery, setSearchQuery] = useState<string>("");
 
     // Debounce the search query
@@ -34,12 +29,6 @@ export const BasicDetails = withForm({
     });
 
     console.log("rerendered", debouncedQuery, searchQuery);
-
-    const priceTypeOptions: SelectOption[] = [
-      { value: PRICE_TYPE.RANGE, label: "Price Range" },
-      { value: PRICE_TYPE.EXACT, label: "Exact Price" },
-      { value: PRICE_TYPE.FREE, label: "Free" },
-    ];
 
     const currencyOptions: SelectOption[] = [
       { value: "CZK", label: "CZK (Czech Koruna)" },
@@ -73,7 +62,7 @@ export const BasicDetails = withForm({
             </form.AppField>
 
             {/* Location */}
-            <form.AppField name="basicInfo.location">
+            <form.AppField name="basicInfo.address">
               {(field) => (
                 <field.ComboboxField
                   label="Location"
@@ -82,7 +71,12 @@ export const BasicDetails = withForm({
                   options={locationOptions}
                   isLoading={isLoading}
                   value={field.state.value}
-                  onChange={(value) => {console.log("Location changed to:", value); field.handleChange(value?.label || ""); setSearchQuery(value?.label || "");}}
+                  searchValue={searchQuery}
+                  onChange={(value) => {
+                    console.log("Location changed to:", value);
+                    field.handleChange(value?.label || "");
+                    setSearchQuery(value?.label || "");
+                  }}
                   onSearchChange={(search) => setSearchQuery(search)}
                 />
               )}
@@ -156,77 +150,30 @@ export const BasicDetails = withForm({
           {/* Pricing */}
           <FormSection title="Pricing">
             <FormGrid columns={2}>
-              {/* Price Type Selection */}
-              <form.AppField name="basicInfo.price.priceType">
-                {(field) => (
-                  <field.SelectField
-                    label="Price Type"
-                    placeholder="Select price type"
-                    options={priceTypeOptions}
-                    onValueChange={(value) =>
-                      setPriceType(value as "range" | "exact")
-                    }
-                  />
-                )}
-              </form.AppField>
-
-              {/* Currency Selection */}
-              {priceType && priceType !== PRICE_TYPE.FREE && (
-                <form.AppField name="basicInfo.price.currency">
-                  {(field) => (
-                    <field.SelectField
-                      label="Currency"
-                      placeholder="Select currency"
-                      options={currencyOptions}
-                    />
-                  )}
-                </form.AppField>
-              )}
-            </FormGrid>
-
-            {/* Price Range Inputs - shown when "range" is selected */}
-            {priceType === "range" && (
-              <FormGrid columns={2}>
-                <form.AppField name="basicInfo.price.priceMin">
-                  {(field) => (
-                    <field.NumberField
-                      label="Minimum Price"
-                      placeholder="0"
-                      min="0"
-                      step="0.01"
-                      icon={DollarSign}
-                    />
-                  )}
-                </form.AppField>
-
-                <form.AppField name="basicInfo.price.priceMax">
-                  {(field) => (
-                    <field.NumberField
-                      label="Maximum Price"
-                      placeholder="100"
-                      min="0"
-                      step="0.01"
-                      icon={DollarSign}
-                    />
-                  )}
-                </form.AppField>
-              </FormGrid>
-            )}
-
-            {/* Exact Price Input - shown when "exact" is selected */}
-            {priceType === "exact" && (
-              <form.AppField name="basicInfo.price.priceExact">
+              {/* Price Input */}
+              <form.AppField name="basicInfo.price">
                 {(field) => (
                   <field.NumberField
-                    label="Exact Price"
-                    placeholder="Enter exact price"
+                    label="Price"
+                    placeholder="Leave empty for free events"
                     min="0"
                     step="0.01"
                     icon={DollarSign}
                   />
                 )}
               </form.AppField>
-            )}
+
+              {/* Currency Selection */}
+              <form.AppField name="basicInfo.currency">
+                {(field) => (
+                  <field.SelectField
+                    label="Currency"
+                    placeholder="Select currency"
+                    options={currencyOptions}
+                  />
+                )}
+              </form.AppField>
+            </FormGrid>
           </FormSection>
         </div>
       </div>

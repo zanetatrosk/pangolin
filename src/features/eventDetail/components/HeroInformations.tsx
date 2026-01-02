@@ -35,7 +35,7 @@ export const HeroInformations: FC<{
   const navigate = useNavigate();
   const {
     recurringDates,
-    location,
+    address: location,
     date,
     time,
     isRecurring,
@@ -90,7 +90,7 @@ export const HeroInformations: FC<{
           ))}
           <a
             href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-              basicInfo.location
+              basicInfo.address
             )}`}
             target="_blank"
             rel="noopener noreferrer"

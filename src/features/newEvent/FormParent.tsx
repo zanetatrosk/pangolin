@@ -13,9 +13,10 @@ import { EventMediaStep } from "./EventMediaStep";
 import { EventDetailsStep } from "./EventDetailsStep";
 import { useMutation } from "@tanstack/react-query";
 import { postNewEvent } from "@/services/events-api";
+import { postMedia } from "@/services/media-api";
 
 export const FormParent: React.FC = () => {
-  const mutation = useMutation({
+  const eventMutation = useMutation({
     mutationFn: postNewEvent,
     onSuccess: (data) => {
       console.log("Event created successfully:", data);
@@ -24,6 +25,7 @@ export const FormParent: React.FC = () => {
       console.error("Error creating event:", error);
     },
   });
+
   const form = useAppForm({
     ...eventFormOpts,
     onSubmit: async ({ value }) => {
@@ -34,7 +36,7 @@ export const FormParent: React.FC = () => {
         console.log("Form has errors, cannot submit:", form.getAllErrors());
         return;
       }
-      mutation.mutate(value);
+      eventMutation.mutate(value);
     },
   });
   const isMobile = useIsMobile();

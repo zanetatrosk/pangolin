@@ -7,26 +7,60 @@ import { withForm } from "@/lib/form";
 import { EventMediaItem } from "./types";
 import { FormSection } from "@/components/form/FormSection";
 import { Media } from "../eventDetail/components/Media";
+import { useMutation } from "@tanstack/react-query";
+import { postMedia } from "@/services/media-api";
 
 export const EventMediaStep = withForm({
   ...eventFormOpts,
   render: ({ form }) => {
+    const coverImageMutation = useMutation({
+        mutationFn: (file: File) => postMedia(file),
+        onSuccess: (data) => {
+          console.log("Cover image uploaded successfully:", data);
+          form.setFieldValue("coverImage", {
+            id: data.id.toString(),
+            type: "image",
+            url: data.url,
+          });
+        },
+        onError: (error) => {
+          console.error("Error uploading cover image:", error);
+        },
+      });
+
+    const galleryMutation = useMutation({
+        mutationFn: async (files: File[]) => {
+          const uploadPromises = files.map((file) => postMedia(file));
+          return Promise.all(uploadPromises);
+        },
+        onSuccess: (uploadedMedia) => {
+          console.log("Gallery media uploaded successfully:", uploadedMedia);
+          const currentMedia = form.getFieldValue("media") ?? [];
+          const newItems: EventMediaItem[] = uploadedMedia.map((media) => ({
+            id: media.id.toString(),
+            type: media.type.startsWith("video") ? "video" : "image",
+            url: media.url,
+          }));
+          form.setFieldValue("media", [...currentMedia, ...newItems]);
+        },
+        onError: (error) => {
+          console.error("Error uploading gallery media:", error);
+        },
+      });
+
     return (
       <div className="p-4 md:p-6 space-y-8">
         <FormSection title="Cover Image">
           {/* ---------------- Cover Image ---------------- */}
           <form.Field name="coverImage">
             {(field) => {
-              const preview = field.state.value
-                ? URL.createObjectURL(field.state.value)
-                : null;
-
+              const preview = field.state.value?.url;
               return (
                 <div className="space-y-3">
                   <Label>Cover image</Label>
 
                   {preview && (
-                    <div className="relative w-full max-w-md">
+                    <div className="relative w-full max-w-lg">
                       <img
                         src={preview}
                         alt="Cover preview"
@@ -47,7 +81,19 @@ export const EventMediaStep = withForm({
                   <Input
                     type="file"
                     accept="image/*"
-                    onChange={(e) => field.handleChange(e.target.files?.[0])}
+                    onChange={(e) => {
+                      const file = e.target.files?.[0];
+                      if (file) {
+                        // Show preview immediately with blob URL
+                        field.handleChange({
+                          id: URL.createObjectURL(file),
+                          type: "image",
+                          url: URL.createObjectURL(file),
+                        });
+                        // Upload to server (will update field in onSuccess)
+                        coverImageMutation.mutate(file);
+                      }
+                    }}
                   />
                 </div>
               );
@@ -58,22 +104,18 @@ export const EventMediaStep = withForm({
         <FormSection title="Gallery & Videos">
           <form.Field name="media">
             {(field) => {
-              const media = field.state.value ?? [];
+              const media: EventMediaItem[] = field.state.value || [];
+              
               const addMedia = (files: FileList | null) => {
                 if (!files) return;
-
-                const newItems: EventMediaItem[] = Array.from(files).map(
-                  (file) => ({
-                    url: URL.createObjectURL(file),
-                    type: file.type.startsWith("video") ? "video" : "image",
-                  })
-                );
-
-                field.handleChange([...media, ...newItems]);
+                
+                // Upload to server (will update field in onSuccess)
+                galleryMutation.mutate(Array.from(files));
               };
 
               const removeMedia = (item: EventMediaItem) => {
-                field.handleChange(media.filter((m) => m.url !== item.url));
+                //ToDO mutate
+                field.handleChange(media.filter((m) => m.id !== item.id));
               };
 
               const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
@@ -118,7 +160,7 @@ export const EventMediaStep = withForm({
                   </div>
 
                   {/* -------- Media Grid -------- */}
-                  <Media mediaFiles={media} allowEdit onDelete={removeMedia} />
+                  <Media mediaFiles={field.state.value || []} allowEdit onDelete={removeMedia} />
                 </div>
               );
             }}

@@ -1,8 +1,6 @@
-import * as React from "react";
 import { Label } from "@/components/ui/label";
 import { AutoComplete } from "@/components/ui/autocomplete";
 import { useFieldContext } from "@/lib/form-context";
-import { on } from "events";
 
 export interface ComboboxOption {
   value: string;

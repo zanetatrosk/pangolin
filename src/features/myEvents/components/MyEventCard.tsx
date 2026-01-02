@@ -18,7 +18,7 @@ export const MyEventCard: React.FC<MyEventCardProps> = ({
  cardType,
 }) => {
   const { basicInfo } = event;
-  const { eventName, location, date, time } = basicInfo;
+  const { eventName, address: location, date, time } = basicInfo;
     const isUserOrganizer = cardType === EventCardType.HOSTING;
     const isInterested = cardType === EventCardType.INTERESTED;
   if (basicInfo.isRecurring && !isInterested) {
@@ -60,7 +60,7 @@ export const MyEventCard: React.FC<MyEventCardProps> = ({
           <DataWithIcon
             icon={Building}
             value={`${event.attendeeStats?.going?.total || 0} going, ${
-              event.attendeeStats?.interested?.total || 0
+              event.attendeeStats?.interested || 0
             } interested`}
           />
         </div>

@@ -13,21 +13,25 @@ export interface SelectOption {
   label: string;
 }
 
-export interface FormSelectFieldProps {
+export interface FormSelectFieldProps<T = SelectOption> {
   label: string;
   placeholder?: string;
   required?: boolean;
-  options: SelectOption[];
+  options: T[];
+  getValue?: (item: T) => string;
+  getLabel?: (item: T) => string;
   onValueChange?: (value: string) => void;
 }
 
-export const FormSelectField = ({
+export const FormSelectField = <T = SelectOption>({
   label,
   placeholder = "Select an option",
   required = false,
   options,
+  getValue = (item) => (item as SelectOption).value,
+  getLabel = (item) => (item as SelectOption).label,
   onValueChange,
-}: FormSelectFieldProps) => {
+}: FormSelectFieldProps<T>) => {
   const field = useFieldContext<string>();
   const errors = field.state.meta.errors || [];
   const hasError = errors.length > 0;
@@ -52,11 +56,15 @@ export const FormSelectField = ({
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>
         <SelectContent>
-          {options.map((option) => (
-            <SelectItem key={option.value} value={option.value}>
-              {option.label}
-            </SelectItem>
-          ))}
+          {options.map((option, index) => {
+            const value = getValue(option);
+            const label = getLabel(option);
+            return (
+              <SelectItem key={value || index} value={value}>
+                {label}
+              </SelectItem>
+            );
+          })}
         </SelectContent>
       </Select>
       {hasError && <p className="text-sm text-destructive">{errors[0]}</p>}

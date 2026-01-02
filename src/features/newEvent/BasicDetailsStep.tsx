@@ -7,6 +7,7 @@ import { eventFormOpts } from "./FormOptions";
 import { useQuery } from "@tanstack/react-query";
 import { getPlaces } from "@/services/get-places-api";
 import { useDebounce } from "@uidotdev/usehooks";
+import { Currency, getCurrencies } from "@/services/currencies-api";
 
 interface BasicDetailsProps {
   className?: string;
@@ -30,12 +31,10 @@ export const BasicDetails = withForm({
 
     console.log("rerendered", debouncedQuery, searchQuery);
 
-    const currencyOptions: SelectOption[] = [
-      { value: "CZK", label: "CZK (Czech Koruna)" },
-      { value: "EUR", label: "EUR (Euro)" },
-      { value: "USD", label: "USD (US Dollar)" },
-      { value: "GBP", label: "GBP (British Pound)" },
-    ];
+    const {data: currencyOptions = []} = useQuery<Currency[]>({
+      queryKey: ['currencies'],
+      queryFn: getCurrencies,
+    });
 
     return (
       <div className={`p-4 md:p-6 ${className}`}>
@@ -170,6 +169,8 @@ export const BasicDetails = withForm({
                     label="Currency"
                     placeholder="Select currency"
                     options={currencyOptions}
+                    getValue={(item) => item.code}
+                    getLabel={(item) => `${item.code} - ${item.name}`}
                   />
                 )}
               </form.AppField>

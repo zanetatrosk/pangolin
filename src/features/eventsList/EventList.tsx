@@ -4,12 +4,16 @@ import { getAllEvents } from "@/services/events-api";
 import { useQuery } from "@tanstack/react-query";
 
 export const EventList: FC = () => {
-  const { data } = useQuery({
+  const { data, error, isLoading } = useQuery({
     queryKey: ['events'],
     queryFn: getAllEvents,
   });
 
-  if(!data) {
+  if(error) {
+    return <div>Error loading events.</div>;
+  }
+
+  if(isLoading) {
     return <div>Loading...</div>;
   }
 

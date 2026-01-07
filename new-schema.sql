@@ -101,6 +101,21 @@ CREATE TABLE event_parent (
 );
 ALTER TABLE event_parent ADD CONSTRAINT pk_event_parent PRIMARY KEY (id);
 
+-- Location table
+CREATE TABLE locations (
+    id UUID NOT NULL DEFAULT gen_random_uuid(),
+    name VARCHAR(255),
+    street VARCHAR(255),
+    house_number VARCHAR(20),
+    city VARCHAR(100) NOT NULL,
+    state VARCHAR(100),
+    postal_code VARCHAR(20),
+    country VARCHAR(100) NOT NULL,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+ALTER TABLE locations ADD CONSTRAINT pk_locations PRIMARY KEY (id);
+
 -- Events table
 CREATE TABLE events (
     id UUID NOT NULL DEFAULT gen_random_uuid(),
@@ -108,7 +123,7 @@ CREATE TABLE events (
     organizer_id UUID NOT NULL,
     event_name VARCHAR(255) NOT NULL,
     description TEXT,
-    address VARCHAR(255),
+    location_id UUID,
     event_date DATE NOT NULL,
     event_time TIME NOT NULL,
     currency_code VARCHAR(3),
@@ -232,6 +247,7 @@ ALTER TABLE events ADD CONSTRAINT fk_events_organizer FOREIGN KEY (organizer_id)
 ALTER TABLE events ADD CONSTRAINT fk_events_parent FOREIGN KEY (parent_event_id) REFERENCES event_parent (id) ON DELETE SET NULL;
 ALTER TABLE events ADD CONSTRAINT fk_events_currency FOREIGN KEY (currency_code) REFERENCES currencies (code) ON DELETE SET NULL;
 ALTER TABLE events ADD CONSTRAINT fk_events_promo_media FOREIGN KEY (promo_media_id) REFERENCES media (id) ON DELETE SET NULL;
+ALTER TABLE events ADD CONSTRAINT fk_events_location FOREIGN KEY (location_id) REFERENCES locations (id) ON DELETE SET NULL;
 
 -- event_registration references
 ALTER TABLE event_registration ADD CONSTRAINT fk_event_registration_events FOREIGN KEY (event_id) REFERENCES events (id) ON DELETE CASCADE;
@@ -267,6 +283,7 @@ ALTER TABLE events_media ADD CONSTRAINT fk_events_media_media FOREIGN KEY (media
 CREATE INDEX idx_events_organizer ON events(organizer_id);
 CREATE INDEX idx_events_date ON events(event_date);
 CREATE INDEX idx_events_parent ON events(parent_event_id);
+CREATE INDEX idx_events_location ON events(location_id);
 CREATE INDEX idx_event_registration_event ON event_registration(event_id);
 CREATE INDEX idx_event_registration_user ON event_registration(user_id);
 CREATE INDEX idx_notifications_user ON notifications(user_id, is_read);
@@ -349,6 +366,10 @@ DECLARE
     v_event_parent UUID;
     v_event_child UUID;
     
+    -- Location IDs
+    v_loc_river_bar UUID;
+    v_loc_studio UUID;
+    
 BEGIN
     -- 1. Fetch Lookup IDs
     SELECT id INTO v_role_leader FROM dancer_role WHERE name = 'Leader' LIMIT 1;
@@ -373,12 +394,18 @@ BEGIN
         (v_user_bob, 'Bob', 'Builder', 'Bachata enthusiast.', v_role_leader, v_level_inter, 'Prague', 'Czech Republic'),
         (v_user_charlie, 'Charlie', 'Chaplin', 'Just starting out.', v_role_leader, NULL, 'Brno', 'Czech Republic');
 
-    -- 4. Create Individual Event (Bachata Party)
+    -- 4. Create Locations
+    INSERT INTO locations (name, street, house_number, city, country) VALUES 
+        ('River Bar', 'River St', '1', 'Prague', 'Czech Republic') RETURNING id INTO v_loc_river_bar;
+    INSERT INTO locations (name, street, house_number, city, country) VALUES 
+        ('Dance Studio 1', 'Main St', '10', 'Prague', 'Czech Republic') RETURNING id INTO v_loc_studio;
+
+    -- 5. Create Individual Event (Bachata Party)
     INSERT INTO events (
-        organizer_id, event_name, description, address,
+        organizer_id, event_name, description, location_id,
         event_date, event_time, status
     ) VALUES (
-        v_user_alice, 'Summer Bachata Night', 'Open air dancing by the river.', 'River Bar, River St 1, Prague, Czech Republic',
+        v_user_alice, 'Summer Bachata Night', 'Open air dancing by the river.', v_loc_river_bar,
         CURRENT_DATE + INTERVAL '5 days', '20:00', 'published'
     ) RETURNING id INTO v_event_party;
 
@@ -386,16 +413,16 @@ BEGIN
     INSERT INTO dance_styles_events (dance_style_id, event_id) VALUES (v_style_bachata, v_event_party);
     INSERT INTO events_event_types (event_id, event_type_id) VALUES (v_event_party, v_type_party);
 
-    -- 5. Create Recurring Parent Event (Salsa Class)
+    -- 6. Create Recurring Parent Event (Salsa Class)
     INSERT INTO event_parent (name) VALUES ('Weekly Salsa Foundations') RETURNING id INTO v_event_parent;
 
-    -- 6. Create Occurrences
+    -- 7. Create Occurrences
     FOR i IN 0..3 LOOP
         INSERT INTO events (
-            parent_event_id, organizer_id, event_name, description, address,
+            parent_event_id, organizer_id, event_name, description, location_id,
             event_date, event_time, status
         ) VALUES (
-            v_event_parent, v_user_alice, 'Weekly Salsa Foundations (Week ' || (i+1) || ')', 'Learn the basics every Tuesday.', 'Dance Studio 1, Main St 10, Prague, Czech Republic',
+            v_event_parent, v_user_alice, 'Weekly Salsa Foundations (Week ' || (i+1) || ')', 'Learn the basics every Tuesday.', v_loc_studio,
             CURRENT_DATE + INTERVAL '2 days' + (i * 7 || ' days')::INTERVAL, '18:00', 'published'
         ) RETURNING id INTO v_event_child;
 
@@ -403,7 +430,7 @@ BEGIN
         INSERT INTO events_event_types (event_id, event_type_id) VALUES (v_event_child, v_type_class);
     END LOOP;
 
-    -- 7. Add Registrations
+    -- 8. Add Registrations
     -- Bob goes to the party
     INSERT INTO event_registration (event_id, user_id, role_id, status) VALUES (v_event_party, v_user_bob, v_role_leader, 'going');
     -- Charlie is interested in the party

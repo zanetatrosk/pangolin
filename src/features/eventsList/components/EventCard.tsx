@@ -54,7 +54,7 @@ export const EventCard: React.FC<EventItem> = (event) => {
     <Card className="py-0 md:flex-row md:gap-0 rounded-l-xl overflow-hidden hover:shadow-lg transition-all duration-300 border border-violet-200/50 dark:border-violet-700/50 ">
       <CardContent className="p-0 flex flex-col md:flex-row w-full">
         {/* Event Image */}
-        <div className="relative md:w-64 h-48 md:h-auto shrink-0">
+        <div className="md:w-64 h-48 md:h-auto shrink-0 md:aspect-4/3">
           {event.promoMedia?.url ? (
             <img
               src={event.promoMedia.url}

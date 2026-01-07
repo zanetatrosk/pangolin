@@ -4,7 +4,15 @@ import { DanceEventCreation } from "./types";
 const eventFormDefaults: DanceEventCreation = {
   basicInfo: {
     eventName: "",
-    address: "",
+    location: {
+      name: "",
+      street: "",
+      city: "",
+      state: "",
+      postalCode: "",
+      houseNumber: "",
+      country: "",
+    },
     date: "",
     time: "",
     isRecurring: false,

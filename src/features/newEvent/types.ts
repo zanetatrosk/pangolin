@@ -5,10 +5,19 @@ interface RecurringDate {
   status?: "Scheduled" | "Cancelled" | "Past";
   statusUser?: "Joined";
 }
+export interface Location {
+  name: string;
+  street: string;
+  city: string;
+  state: string;
+  country: string;
+  postalCode: string;
+  houseNumber?: string;
+}
 
 export interface BasicDetailsData {
   eventName: string;
-  address: string;
+  location: Location;
   date: string;
   time: string;
   isRecurring: boolean;

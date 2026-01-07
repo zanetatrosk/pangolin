@@ -1,12 +1,10 @@
 import { Calendar, Clock, DollarSign } from "lucide-react";
-import { useState } from "react";
 import { withForm } from "@/lib/form";
 import { FormSection, FormGrid } from "@/components/form";
 import { eventFormOpts } from "./FormOptions";
 import { useQuery } from "@tanstack/react-query";
-import { getPlaces } from "@/services/get-places-api";
-import { useDebounce } from "@uidotdev/usehooks";
 import { Currency, getCurrencies } from "@/services/currencies-api";
+import { LocationSection } from "./LocationSection";
 
 interface BasicDetailsProps {
   className?: string;
@@ -16,19 +14,6 @@ export const BasicDetails = withForm({
   ...eventFormOpts,
   props: {} as BasicDetailsProps,
   render: ({ form, className }) => {
-    const [searchQuery, setSearchQuery] = useState<string>("");
-
-    // Debounce the search query
-    const debouncedQuery = useDebounce(searchQuery, 800);
-    const { data: locationOptions = [], isLoading } = useQuery({
-      queryKey:["locations", debouncedQuery],
-      queryFn: () => getPlaces(debouncedQuery),
-      enabled: debouncedQuery.length > 2,
-      staleTime: 10 * 1000, // 10 seconds
-    });
-
-    console.log("rerendered", debouncedQuery, searchQuery);
-
     const {data: currencyOptions = []} = useQuery<Currency[]>({
       queryKey: ['currencies'],
       queryFn: getCurrencies,
@@ -59,25 +44,7 @@ export const BasicDetails = withForm({
             </form.AppField>
 
             {/* Location */}
-            <form.AppField name="basicInfo.address">
-              {(field) => (
-                <field.ComboboxField
-                  label="Location"
-                  placeholder="Search for a venue..."
-                  required
-                  options={locationOptions}
-                  isLoading={isLoading}
-                  value={field.state.value}
-                  searchValue={searchQuery}
-                  onChange={(value) => {
-                    console.log("Location changed to:", value);
-                    field.handleChange(value?.label || "");
-                    setSearchQuery(value?.label || "");
-                  }}
-                  onSearchChange={(search) => setSearchQuery(search)}
-                />
-              )}
-            </form.AppField>
+            <LocationSection form={form}/>
           </FormSection>
 
           {/* Date & Time */}

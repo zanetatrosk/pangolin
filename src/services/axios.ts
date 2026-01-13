@@ -3,6 +3,6 @@ import axios from "axios";
 export const axiosInstance = axios.create({
     baseURL: "http://10.0.0.67:8080/api",
     headers: {
-        "X-User-Id": "73b40139-88f9-4d35-b6db-e1756bc9491e",
+        "X-User-Id": "32c9f9a7-f4c6-4ad2-a8b9-6099e696fb66",
     },
 });

@@ -1,4 +1,4 @@
-import { DanceEventCreation } from "../newEvent/types";
+import { BasicData, DanceEventCreation } from "../newEvent/types";
 
 export interface AttendeeStats {
   going: {
@@ -9,8 +9,21 @@ export interface AttendeeStats {
   interested: number;
 }
 
-export interface EventDetailData extends DanceEventCreation{
+export interface BasicDetailsData extends BasicData {
+  recurringDates?: RecurringDate[];
+  address: string;
+}
+
+interface RecurringDate {
+  date: string;
+  id: string;
+  status?: "Scheduled" | "Cancelled" | "Past";
+  statusUser?: "Joined";
+}
+
+export interface EventDetailData extends Omit<DanceEventCreation, "basicInfo"> {
   id: number;
+  basicInfo: BasicDetailsData;
   attendeeStats?: AttendeeStats;
   facebookEventUrl?: string;
   status?: "Scheduled" | "Cancelled" | "Past";

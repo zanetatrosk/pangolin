@@ -2,13 +2,13 @@ import { BasicDetailsData } from "@/features/newEvent/types";
 import { PATHS } from "@/paths";
 import { useNavigate } from "@tanstack/react-router";
 import {
-    Calendar,
-    Clock,
-    Banknote,
-    MapPin,
-    ExternalLink,
-    Facebook,
-    ChevronDown,
+  Calendar,
+  Clock,
+  Banknote,
+  MapPin,
+  ExternalLink,
+  Facebook,
+  ChevronDown,
 } from "lucide-react";
 import { FC } from "react";
 
@@ -16,14 +16,18 @@ interface HeroInfoItem {
   icon: React.ReactNode;
   text: React.ReactNode;
 }
-export const HeroInfo: FC<{ icon: React.ReactNode; text: React.ReactNode; isLast?: boolean }> = ({ icon, text }) => {
+export const HeroInfo: FC<{
+  icon: React.ReactNode;
+  text: React.ReactNode;
+  isLast?: boolean;
+}> = ({ icon, text }) => {
   return (
     <>
-    <div className="flex items-center gap-2">
-      {icon}
-      <span>{text}</span>
-    </div>
-    <div className="hidden lg:block w-1 h-1 rounded-full bg-foreground/20" />
+      <div className="flex items-center gap-2">
+        {icon}
+        <span>{text}</span>
+      </div>
+      <div className="hidden lg:block w-1 h-1 rounded-full bg-foreground/20" />
     </>
   );
 };
@@ -53,12 +57,18 @@ export const HeroInformations: FC<{
             <ChevronDown className="w-4 h-4 opacity-50" />
             <select
               className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-              onChange={(e) => navigate({ to: PATHS.EVENTS.DETAIL(e.target.value) })}
+              onChange={(e) =>
+                navigate({ to: PATHS.EVENTS.DETAIL(e.target.value) })
+              }
               value=""
             >
-              <option value="" disabled>Select other date</option>
+              <option value="" disabled>
+                Select other date
+              </option>
               {recurringDates.map((rd) => (
-                <option key={rd.id} value={rd.id}>{rd.date}</option>
+                <option key={rd.id} value={rd.id}>
+                  {rd.date}
+                </option>
               ))}
             </select>
           </div>
@@ -77,6 +87,8 @@ export const HeroInformations: FC<{
       text: priceExact ? `$${priceExact}` : priceRange,
     },
   ];
+
+  data = data.filter((item) => item.text !== undefined && item.text !== null);
 
   return (
     <div className="relative md:absolute md:bottom-0 md:left-0 w-full bg-background md:bg-transparent p-6 md:p-10">
@@ -101,20 +113,22 @@ export const HeroInformations: FC<{
             <span>{location}</span>
             <ExternalLink className="w-3 h-3" />
           </a>
-          <div className="hidden lg:block w-1 h-1 rounded-full bg-foreground/20" />
 
           {facebookEventUrl && (
-            <a
-              href={facebookEventUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 hover:text-[#1877F2] hover:underline transition-colors cursor-pointer"
-              title="View on Facebook"
-            >
-              <Facebook className="w-4 h-4" />
-              <span>Facebook Event</span>
-              <ExternalLink className="w-3 h-3" />
-            </a>
+            <>
+              <div className="hidden lg:block w-1 h-1 rounded-full bg-foreground/20" />
+              <a
+                href={facebookEventUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 hover:text-[#1877F2] hover:underline transition-colors cursor-pointer"
+                title="View on Facebook"
+              >
+                <Facebook className="w-4 h-4" />
+                <span>Facebook Event</span>
+                <ExternalLink className="w-3 h-3" />
+              </a>
+            </>
           )}
         </div>
       </div>

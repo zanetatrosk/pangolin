@@ -133,9 +133,6 @@ CREATE TABLE events (
     allow_partner_pairing BOOLEAN NOT NULL DEFAULT false,
     promo_media_id UUID,
     status VARCHAR(20) NOT NULL,
-    count_going_leaders INTEGER DEFAULT 0,
-    count_going_followers INTEGER DEFAULT 0,
-    count_interested INTEGER DEFAULT 0,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );

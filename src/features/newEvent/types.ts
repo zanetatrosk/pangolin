@@ -1,10 +1,3 @@
-
-interface RecurringDate {
-  date: string;
-  id: string;
-  status?: "Scheduled" | "Cancelled" | "Past";
-  statusUser?: "Joined";
-}
 export interface Location {
   name: string;
   street: string;
@@ -15,16 +8,17 @@ export interface Location {
   houseNumber?: string;
 }
 
-export interface BasicDetailsData {
+export interface BasicData {
   eventName: string;
-  location: Location;
   date: string;
   time: string;
-  isRecurring: boolean;
   endDate?: string;
   price?: number;
   currency?: string;
-  recurringDates?: RecurringDate[];
+}
+
+export interface BasicCreateDetailsData extends BasicData {
+  location: Location;
 }
 
 export interface AdditionalDetailsData {
@@ -37,7 +31,7 @@ export interface AdditionalDetailsData {
 }
 
 export interface DanceEventCreation {
-    basicInfo: BasicDetailsData;
+    basicInfo: BasicCreateDetailsData;
     additionalDetails?: AdditionalDetailsData;
     description?: string;
     coverImage?: EventMediaItem;

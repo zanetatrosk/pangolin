@@ -1,9 +1,11 @@
-export const CoverImage: React.FC<{ coverImage?: File; eventName: string }> = ({ coverImage, eventName }) => {
+import { EventMediaItem } from "@/features/newEvent/types";
+
+export const CoverImage: React.FC<{ coverImage?: EventMediaItem | null; eventName: string }> = ({ coverImage, eventName }) => {
     return (
         <div className="relative h-64 md:h-full w-full overflow-hidden">
           {coverImage ? (
             <img
-              src={"https://www.shbarcelona.com/blog/en/wp-content/uploads/2016/04/Bachata-dance.jpg" /*URL.createObjectURL(coverImage)*/}
+              src={coverImage.url}
               alt={eventName}
               className="w-full h-full object-cover"
             />

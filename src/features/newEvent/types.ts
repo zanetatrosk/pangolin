@@ -2,6 +2,7 @@ export interface Location {
   name: string;
   street: string;
   city: string;
+  county?: string;
   state: string;
   country: string;
   postalCode: string;

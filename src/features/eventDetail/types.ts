@@ -1,3 +1,4 @@
+import { Organizer } from "../eventsList/types";
 import { BasicData, DanceEventCreation } from "../newEvent/types";
 
 export interface AttendeeStats {
@@ -11,6 +12,7 @@ export interface AttendeeStats {
 
 export interface BasicDetailsData extends BasicData {
   recurringDates?: RecurringDate[];
+  organizer: Organizer;
   address: string;
 }
 

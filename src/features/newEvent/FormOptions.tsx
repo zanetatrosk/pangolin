@@ -12,6 +12,7 @@ const eventFormDefaults: DanceEventCreation = {
       postalCode: "",
       houseNumber: "",
       country: "",
+      county: "",
     },
     date: "",
     time: "",

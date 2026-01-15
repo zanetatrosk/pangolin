@@ -14,19 +14,22 @@ import { cn } from "@/lib/utils";
 import { ComboboxOption } from "../form/FormComboboxField";
 import { Input } from "./input";
 
-type AutoCompleteProps = {
-  options: ComboboxOption[];
+type AutoCompleteProps<T> = {
+  options: T[];
   emptyMessage: string;
-  value?: ComboboxOption;
+  value?: T;
   searchValue?: string;
-  onValueChange?: (value: ComboboxOption) => void;
+  onValueChange?: (value: T) => void;
   onSearchChange?: (value: string) => void;
   isLoading?: boolean;
   disabled?: boolean;
   placeholder?: string;
+  className?: string;
+  getValue?: (option: T) => string;
+  getLabel?: (option: T) => string;
 };
 
-export const AutoComplete = ({
+export const AutoComplete = <T,>({
   options,
   placeholder,
   emptyMessage,
@@ -36,9 +39,29 @@ export const AutoComplete = ({
   searchValue,
   disabled,
   isLoading = false,
-}: AutoCompleteProps) => {
+  className,
+  getValue,
+  getLabel,
+}: AutoCompleteProps<T>) => {
   const [isOpen, setOpen] = useState(false);
-  const [selected, setSelected] = useState<ComboboxOption | undefined>(value);
+  const [selected, setSelected] = useState<T | undefined>(value);
+
+  // Default getter functions for ComboboxOption compatibility
+  const getOptionValue = useCallback((option: T): string => {
+    if (getValue) return getValue(option);
+    if (typeof option === 'object' && option !== null && 'value' in option) {
+      return String((option as any).value);
+    }
+    return String(option);
+  }, [getValue]);
+
+  const getOptionLabel = useCallback((option: T): string => {
+    if (getLabel) return getLabel(option);
+    if (typeof option === 'object' && option !== null && 'label' in option) {
+      return String((option as any).label);
+    }
+    return String(option);
+  }, [getLabel]);
 
 
   const handleKeyDown = useCallback(
@@ -56,7 +79,7 @@ export const AutoComplete = ({
       // This is not a default behaviour of the <input /> field
       if (event.key === "Enter" && input !== "") {
         const optionToSelect = options.find(
-          (option) => option.label === input
+          (option) => getOptionLabel(option) === input
         );
         if (optionToSelect) {
           setSelected(optionToSelect);
@@ -64,22 +87,22 @@ export const AutoComplete = ({
         }
       }
     },
-    [isOpen, options, onValueChange]
+    [isOpen, options, onValueChange, getOptionLabel, searchValue]
   );
 
   const handleBlur = useCallback(() => {
     setOpen(false);
-  }, [selected]);
+  }, []);
 
   const handleSelectOption = useCallback(
-    (selectedOption: ComboboxOption) => {
+    (selectedOption: T) => {
       setSelected(selectedOption);
       onValueChange?.(selectedOption);
-      onSearchChange?.(selectedOption.label);
+      onSearchChange?.(getOptionLabel(selectedOption));
       setOpen(false);
       console.log("Option selected:", selectedOption);
     },
-    [onValueChange, onSearchChange]
+    [onValueChange, onSearchChange, getOptionLabel]
   );
 
   return (
@@ -94,6 +117,7 @@ export const AutoComplete = ({
           onFocus={() => setOpen(true)}
           placeholder={placeholder}
           disabled={disabled}
+          className={className}
         />
       </div>
       <div className="relative mt-1">
@@ -114,11 +138,13 @@ export const AutoComplete = ({
             {options.length > 0 && !isLoading ? (
               <CommandGroup>
                 {options.map((option) => {
-                  const isSelected = selected?.value === option.value;
+                  const optionValue = getOptionValue(option);
+                  const optionLabel = getOptionLabel(option);
+                  const isSelected = selected ? getOptionValue(selected) === optionValue : false;
                   return (
                     <CommandItem
-                      key={option.value}
-                      value={option.label}
+                      key={optionValue}
+                      value={optionValue}
                       onMouseDown={(event) => {
                         event.preventDefault();
                         event.stopPropagation();
@@ -130,7 +156,7 @@ export const AutoComplete = ({
                       )}
                     >
                       {isSelected ? <Check className="w-4" /> : null}
-                      {option.label}
+                      {optionLabel}
                     </CommandItem>
                   );
                 })}

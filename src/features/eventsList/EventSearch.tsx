@@ -1,52 +1,82 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { AutoComplete } from "@/components/ui/autocomplete";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Search, MapPin, Calendar, Music } from "lucide-react";
 import { ResponsiveMultiSelectFilter } from "./components/ResponsiveMultiSelectFilter";
 import { InputIconAndTitle } from "./components/InputIconAndTitle";
 import { useTranslation } from "react-i18next";
+import { useQuery } from "@tanstack/react-query";
+import { getEventTypes } from "@/services/events-types-api";
+import { getDanceStyles } from "@/services/dance-styles-api";
+import { getPlaces, PlaceOption } from "@/services/get-places-api";
+import { SearchProps } from "@/routes/events.index";
+import { useDebounce } from "@uidotdev/usehooks";
 
-export function EventSearch() {
+export function EventSearch({onSearch}: {onSearch: (params: SearchProps) => void}) {
   const [searchTerm, setSearchTerm] = useState("");
-  const [location, setLocation] = useState("");
+  const [location, setLocation] = useState<PlaceOption | undefined>();
+  const [locationSearchValue, setLocationSearchValue] = useState("");
   const [eventTypes, setEventTypes] = useState<string[]>([]);
   const [danceStyles, setDanceStyles] = useState<string[]>([]);
 
-  const eventTypeOptions = [
-    { value: "social", label: "Social Night" },
-    { value: "workshop", label: "Workshop" },
-    { value: "competition", label: "Competition" },
-    { value: "festival", label: "Festival" },
-    { value: "bootcamp", label: "Bootcamp" },
-    { value: "masterclass", label: "Masterclass" },
-  ];
+  const { data : eventTypeOptions } = useQuery({
+    queryKey: ["eventTypeOptions"],
+    queryFn: getEventTypes,
+    staleTime: 5 * 60 * 1000,
+  })
 
-  const danceStyleOptions = [
-    { value: "salsa", label: "Salsa" },
-    { value: "bachata", label: "Bachata" },
-    { value: "kizomba", label: "Kizomba" },
-    { value: "tango", label: "Tango" },
-    { value: "swing", label: "Swing" },
-    { value: "latin", label: "Latin Mix" },
-    { value: "ballroom", label: "Ballroom" },
-    { value: "urban-kiz", label: "Urban Kiz" },
-  ];
+  const { data : danceStyleOptions } = useQuery({
+    queryKey: ["danceStyleOptions"],
+    queryFn: getDanceStyles,
+    staleTime: 5 * 60 * 1000,
+  })
+
+  const debouncedQuery = useDebounce(locationSearchValue, 800);
+
+  const { data: locationOptions = [], isLoading: isLoadingLocations } = useQuery({
+    queryKey: ["locations", debouncedQuery],
+    queryFn: () => getPlaces(debouncedQuery, ["city", "country"]),
+    enabled: debouncedQuery.length > 2,
+    staleTime: 5 * 60 * 1000,
+  })
 
   const handleSearch = () => {
     console.log("Search initiated with:", {
       searchTerm,
-      location,
+      location: location?.label,
       eventTypes,
       danceStyles,
     });
-    // Implement search logic here
+    if( locationSearchValue !== location?.label ) {
+      setLocation(undefined);
+      onSearch({
+        eventName: searchTerm,
+        eventTypes,
+        danceStyles,
+      });
+      return;
+    }
+    onSearch({
+      eventName: searchTerm,
+      city: location?.locationData?.city || "",
+      country: location?.locationData?.country || "",
+      county: location?.locationData?.county || "",
+      state: location?.locationData?.state || "",
+      eventTypes,
+      danceStyles,
+    });
   };
   const { t } = useTranslation();
 
+  if(!eventTypeOptions || !danceStyleOptions) {
+    return null;
+  }
+
   return (
     <>
-      <Card className="mb-8 shadow-xl backdrop-blur-lg border border-purple-200/30 dark:border-0 overflow-hidden ">
+      <Card className="mb-8 shadow-xl backdrop-blur-lg border border-purple-200/30 dark:border-0 ">
         <CardHeader className="text-center">
           <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100">
             {t("events.subtitle")}
@@ -70,11 +100,16 @@ export function EventSearch() {
               <InputIconAndTitle icon={MapPin} title="Location">
                 <div className="relative">
                   <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 text-pink-400 h-4 w-4 z-10 pointer-events-none" />
-                  <Input
-                    placeholder="City or venue..."
+                  <AutoComplete
                     value={location}
-                    onChange={(e) => setLocation(e.target.value)}
-                    className="pl-10 h-12 bg-white/70 dark:bg-gray-800/70 backdrop-blur rounded-lg shadow-sm relative z-0 "
+                    onValueChange={(newValue) => setLocation(newValue)}
+                    onSearchChange={setLocationSearchValue}
+                    options={locationOptions}
+                    placeholder="Search for city..."
+                    emptyMessage="No locations found"
+                    isLoading={isLoadingLocations}
+                    searchValue={locationSearchValue}
+                    className="pl-10 h-12 bg-white/70 dark:bg-gray-800/70 backdrop-blur rounded-lg shadow-sm"
                   />
                 </div>
               </InputIconAndTitle>

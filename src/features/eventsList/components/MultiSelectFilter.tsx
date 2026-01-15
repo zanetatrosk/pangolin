@@ -1,10 +1,11 @@
 import { MultiSelect, MultiSelectTrigger, MultiSelectValue, MultiSelectContent, MultiSelectGroup, MultiSelectItem } from "@/components/ui/multi-select";
 import { InputIconAndTitle } from "./InputIconAndTitle";
+import { CodebookItem } from "@/services/types";
 
 export const MultiSelectFilter: React.FC<{
   label: string;
   icon: React.ComponentType<{ className?: string }>;
-  options: { value: string; label: string }[];
+  options: CodebookItem[];
   selectedValues: string[];
   onValuesChange: (values: string[]) => void;
 }> = ({ label, icon: Icon, options, selectedValues, onValuesChange }) => (
@@ -16,8 +17,8 @@ export const MultiSelectFilter: React.FC<{
       <MultiSelectContent>
         <MultiSelectGroup>
           {options.map((option) => (
-            <MultiSelectItem key={option.value} value={option.value}>
-              {option.label}
+            <MultiSelectItem key={option.id} value={option.id}>
+              {option.name}
             </MultiSelectItem>
           ))}
         </MultiSelectGroup>

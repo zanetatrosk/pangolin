@@ -13,11 +13,12 @@ import {
 } from "@/components/ui/drawer";
 import { Check, ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { CodebookItem } from "@/services/types";
 
 interface MobileMultiSelectFilterProps {
   label: string;
   icon: React.ComponentType<{ className?: string }>;
-  options: { value: string; label: string }[];
+  options: CodebookItem[];
   selectedValues: string[];
   onValuesChange: (values: string[]) => void;
 }
@@ -74,11 +75,11 @@ export function MobileMultiSelectFilter({
           <div className="px-4 pb-4 max-h-[60vh] overflow-y-auto">
             <div className="grid grid-cols-1 gap-2">
               {options.map((option) => {
-                const isSelected = selectedValues.includes(option.value);
+                const isSelected = selectedValues.includes(option.id);
                 return (
                   <button
-                    key={option.value}
-                    onClick={() => handleToggle(option.value)}
+                    key={option.id}
+                    onClick={() => handleToggle(option.id)}
                     className={cn(
                       "flex items-center justify-between p-4 rounded-lg border-2 transition-all",
                       isSelected
@@ -94,7 +95,7 @@ export function MobileMultiSelectFilter({
                           : "text-gray-700 dark:text-gray-300"
                       )}
                     >
-                      {option.label}
+                      {option.name}
                     </span>
                     <div
                       className={cn(
@@ -124,14 +125,14 @@ export function MobileMultiSelectFilter({
       {selectedValues.length > 0 && (
         <div className="flex flex-wrap gap-1.5">
           {selectedValues.slice(0, 3).map((value) => {
-            const option = options.find((opt) => opt.value === value);
+            const option = options.find((opt) => opt.id === value);
             return (
               <Badge
                 key={value}
                 variant="secondary"
                 className="text-xs bg-pink-100 dark:bg-pink-950/50 text-pink-700 dark:text-pink-300"
               >
-                {option?.label}
+                {option?.name}
               </Badge>
             );
           })}

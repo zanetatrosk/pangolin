@@ -1,33 +1,23 @@
 import { DataWithIcon } from "@/components/DataWithIcon";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent
-} from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { EventMediaItem } from "@/features/newEvent/types";
 import { PATHS } from "@/paths";
 import { getLabelFromPrice } from "@/utils/getLabelFromPrice";
 import { useNavigate } from "@tanstack/react-router";
 import {
   Banknote,
   Calendar,
-  ExternalLink,
-  Heart,
-  MapPin,
-  UserPlus,
-  Users,
+  ExternalLink, MapPin, Users
 } from "lucide-react";
-import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { EventItem } from "../types";
-
-
+import { EventItem, REGISTRATION_STATUS } from "../types";
+import { getOrganizerByObject } from "@/utils/getOrganizerByObject";
+import { EventItemButtons } from "./EventItemButtons";
 
 export const EventCard: React.FC<EventItem> = (event) => {
   const { t } = useTranslation();
-  const [isInterested, setIsInterested] = useState(false);
   const navigate = useNavigate();
   const cardInfoWithIcon = [
     {
@@ -62,7 +52,7 @@ export const EventCard: React.FC<EventItem> = (event) => {
               className="w-full h-full object-cover"
             />
           ) : (
-            <div className="w-full h-full bg-gradient-to-br from-violet-100 to-violet-200 dark:from-violet-900 dark:to-violet-800 flex items-center justify-center">
+            <div className="w-full h-full bg-linear-to-br from-violet-100 to-violet-200 dark:from-violet-900 dark:to-violet-800 flex items-center justify-center">
               <Calendar className="w-16 h-16 text-violet-400 dark:text-violet-600" />
             </div>
           )}
@@ -76,14 +66,11 @@ export const EventCard: React.FC<EventItem> = (event) => {
                   <h3 className="text-lg md:text-xl font-semibold text-gray-900 dark:text-white line-clamp-1">
                     {event.eventName}
                   </h3>
-                  {event.organizer && (
-                    <p className="text-sm text-gray-600 dark:text-gray-400">
-                      {t("eventCard.by")} {event.organizer}
-                    </p>
-                  )}
+                  <p className="text-sm text-gray-600 dark:text-gray-400">
+                    {t("eventCard.by")} {getOrganizerByObject(event.organizer)}
+                  </p>
                 </div>
               </div>
-
               {/* Tags */}
               {event.tags && event.tags.length > 0 && (
                 <div className="flex flex-wrap gap-1 md:mb-4">
@@ -116,24 +103,14 @@ export const EventCard: React.FC<EventItem> = (event) => {
           </div>
           <Separator />
           <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between p-3">
-            <div
-              className="grid grid-cols-2 gap-2 w-full md:flex md:w-auto md:justify-start">
-              <Button variant="ghost" size="sm" onClick={() => setIsInterested(!isInterested)} className={`${'' +
-                          isInterested
-                            ? 'text-rose-600 hover:text-rose-700'
-                            : 'text-gray-600 hover:text-rose-600'
-                        }`}>
-                <Heart className={`w-4 h-4 mr-1 ${isInterested ? 'fill-rose-600' : ''}`} />
-                {"Interest"}
-              </Button>
-              <Button variant={"outline"} size="sm">
-                <UserPlus className="w-4 h-4 mr-1" />
-                {"Join Event"}
-              </Button>
-            </div>
+            <EventItemButtons isInterestedDefault={event.isUserInterested} isJoinedDefault={event.registrationStatus === REGISTRATION_STATUS.JOINED}/>
 
             <div className="flex justify-center md:justify-end w-full md:w-auto">
-              <Button size="sm" className="w-full md:w-auto" onClick={() => navigate({ to: PATHS.EVENTS.DETAIL(event.id) })}>
+              <Button
+                size="sm"
+                className="w-full md:w-auto"
+                onClick={() => navigate({ to: PATHS.EVENTS.DETAIL(event.id) })}
+              >
                 View Details
                 <ExternalLink className="w-4 h-4 ml-1" />
               </Button>

@@ -1,11 +1,14 @@
 import { axiosInstance } from "./axios";
 import { DanceEventCreation } from "@/features/newEvent/types";
 import { EventDetailData } from "@/features/eventDetail/types";
-import { EventItem } from "@/features/eventsList/types";
+import { EventItem, Pageable } from "@/features/eventsList/types";
+import { SearchProps } from "@/routes/events.index";
+import { convertSearchParamsToQuery } from "@/features/eventsList/utils/parseSearchParams";
 
 const EVENT_URL = "/events";
-export const getAllEvents = async (): Promise<EventItem[]> => {
-    const response = await axiosInstance.get(EVENT_URL);
+export const getAllEvents = async (page: number, searchParams?: SearchProps, size: number = 10): Promise<Pageable<EventItem>>  => {
+    console.log(searchParams);
+    const response = await axiosInstance.get(`${EVENT_URL}?page=${page}&size=${size}` + convertSearchParamsToQuery(searchParams));
     return response.data;
 }
 

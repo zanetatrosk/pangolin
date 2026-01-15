@@ -22,15 +22,18 @@ export const LocationSection = withForm({
       (value) => value !== "" && value !== undefined && value !== null
     );
     const [showLocationFields, setShowLocationFields] = useState<boolean>(hasLocationData);
+    const LAYER = "house";
 
     // Debounce the search query
     const debouncedQuery = useDebounce(searchQuery, 800);
     const { data: locationOptions = [], isLoading } = useQuery({
       queryKey: ["locations", debouncedQuery],
-      queryFn: () => getPlaces(debouncedQuery),
+      queryFn: () => getPlaces(debouncedQuery, [LAYER]),
       enabled: debouncedQuery.length > 2,
       staleTime: 10 * 1000, // 10 seconds
     });
+
+    console.log("LocationSection locationOptions:", locationOptions);
 
     return (
       <div className={className}>
@@ -100,6 +103,15 @@ export const LocationSection = withForm({
                     label="City"
                     placeholder="e.g., Praha 5"
                     required
+                  />
+                )}
+              </form.AppField>
+
+              <form.AppField name="basicInfo.location.county">
+                {(field) => (
+                  <field.TextField
+                    label="County"
+                    placeholder="e.g., Prague"
                   />
                 )}
               </form.AppField>

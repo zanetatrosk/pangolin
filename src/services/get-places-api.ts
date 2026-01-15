@@ -3,13 +3,15 @@ import { Location } from "@/features/newEvent/types";
 
 const PLACES_API_URL = "https://photon.komoot.io/api/";
 const LIMIT = 5;
+const LANG = "en";
 
 export interface PlaceOption extends SelectOption {
   locationData: Location;
 }
 
-export const getPlaces = async (query: string): Promise<PlaceOption[]> => {
-    const response = await fetch(`${PLACES_API_URL}?q=${encodeURIComponent(query)}&layer=house&limit=${LIMIT}`);
+export const getPlaces = async (query: string, layers: string[]): Promise<PlaceOption[]> => {
+    const layerParam = layers.map(l => `layer=${l}`).join('&');
+    const response = await fetch(`${PLACES_API_URL}?q=${encodeURIComponent(query)}&${layerParam}&limit=${LIMIT}&lang=${LANG}`);
     if (!response.ok) {
         throw new Error("Failed to fetch places");
     }
@@ -17,8 +19,8 @@ export const getPlaces = async (query: string): Promise<PlaceOption[]> => {
     const places: PlaceOption[] = data.features.map((feature: any) => {
         const props = feature.properties;
         return {
-            value: props.name || props.street || props.city,
-            label: [props.name, props.street, props.city, props.country].filter(Boolean).join(", "),
+            value: props.osm_id.toString(),
+            label: Array.from(new Set([props.name, props.street, props.city, props.county, props.country].filter(Boolean))).join(", "),
             locationData: {
                 name: props.name || "",
                 street: props.street || "",
@@ -27,6 +29,7 @@ export const getPlaces = async (query: string): Promise<PlaceOption[]> => {
                 state: props.state || "",
                 postalCode: props.postcode || "",
                 country: props.country || "",
+                [props.osm_value]: props.name || "",
             },
         };
     });

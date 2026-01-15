@@ -7,15 +7,14 @@ export const ActionButtons: React.FC = () => {
   const [isInterested, setIsInterested] = useState(false);
   const handleJoin = () => {
     setIsGoing(!isGoing);
-    if (isInterested) setIsInterested(false);
   };
 
   const handleInterested = () => {
     setIsInterested(!isInterested);
-    if (isGoing) setIsGoing(false);
   };
+  
   return (
-    <div className="flex flex-wrap gap-3 order-1 lg:order-none">
+    <div className="flex flex-wrap gap-3 order-1 lg:order-0">
       <Button
         size="lg"
         className={`flex-1 md:flex-none gap-2 ${

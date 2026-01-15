@@ -70,7 +70,7 @@ export function EventDetail({ event }: EventDetailProps) {
 
             {/* Organizer Card */}
             <div className="order-6">
-              <OrganizerCard organizerName={"John Doe"} />
+              <OrganizerCard organizer={basicInfo.organizer} />
             </div>
           </div>
         </div>

@@ -10,9 +10,10 @@ export interface FormTextFieldProps {
   required?: boolean;
   icon?: LucideIcon;
   type?: ComponentProps<typeof Input>["type"];
+  disabled?: boolean;
   inputProps?: Omit<
     ComponentProps<typeof Input>,
-    "value" | "onChange" | "onBlur" | "name" | "type"
+    "value" | "onChange" | "onBlur" | "name" | "type" 
   >;
 }
 
@@ -20,6 +21,7 @@ export const FormTextField = ({
   label,
   placeholder,
   required = false,
+  disabled = false,
   icon: Icon,
   type = "text",
   inputProps = {},
@@ -46,6 +48,7 @@ export const FormTextField = ({
           value={field.state.value}
           onBlur={field.handleBlur}
           onChange={(e) => field.handleChange(e.target.value)}
+          disabled={disabled}
           placeholder={placeholder}
           className={`${Icon ? "pl-10" : ""} ${
             hasError ? "border-destructive" : ""

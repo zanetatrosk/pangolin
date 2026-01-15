@@ -34,10 +34,9 @@ export function EventSearch({onSearch}: {onSearch: (params: SearchProps) => void
   })
 
   const debouncedQuery = useDebounce(locationSearchValue, 800);
-
   const { data: locationOptions = [], isLoading: isLoadingLocations } = useQuery({
     queryKey: ["locations", debouncedQuery],
-    queryFn: () => getPlaces(debouncedQuery, ["city", "country"]),
+    queryFn: () => getPlaces(debouncedQuery, ["city", "country"], (props) => [props.city, props.country]),
     enabled: debouncedQuery.length > 2,
     staleTime: 5 * 60 * 1000,
   })
@@ -62,8 +61,6 @@ export function EventSearch({onSearch}: {onSearch: (params: SearchProps) => void
       eventName: searchTerm,
       city: location?.locationData?.city || "",
       country: location?.locationData?.country || "",
-      county: location?.locationData?.county || "",
-      state: location?.locationData?.state || "",
       eventTypes,
       danceStyles,
     });
@@ -105,7 +102,7 @@ export function EventSearch({onSearch}: {onSearch: (params: SearchProps) => void
                     onValueChange={(newValue) => setLocation(newValue)}
                     onSearchChange={setLocationSearchValue}
                     options={locationOptions}
-                    placeholder="Search for city..."
+                    placeholder="Search for city or country..."
                     emptyMessage="No locations found"
                     isLoading={isLoadingLocations}
                     searchValue={locationSearchValue}

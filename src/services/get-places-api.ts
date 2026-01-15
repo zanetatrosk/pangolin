@@ -9,7 +9,7 @@ export interface PlaceOption extends SelectOption {
   locationData: Location;
 }
 
-export const getPlaces = async (query: string, layers: string[]): Promise<PlaceOption[]> => {
+export const getPlaces = async (query: string, layers: string[], showLabels:(props: any) => string[]): Promise<PlaceOption[]> => {
     const layerParam = layers.map(l => `layer=${l}`).join('&');
     const response = await fetch(`${PLACES_API_URL}?q=${encodeURIComponent(query)}&${layerParam}&limit=${LIMIT}&lang=${LANG}`);
     if (!response.ok) {
@@ -20,7 +20,7 @@ export const getPlaces = async (query: string, layers: string[]): Promise<PlaceO
         const props = feature.properties;
         return {
             value: props.osm_id.toString(),
-            label: Array.from(new Set([props.name, props.street, props.city, props.county, props.country].filter(Boolean))).join(", "),
+            label: Array.from(new Set(showLabels(props).filter(Boolean))).join(", "),
             locationData: {
                 name: props.name || "",
                 street: props.street || "",

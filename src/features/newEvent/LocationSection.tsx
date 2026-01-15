@@ -15,22 +15,56 @@ export const LocationSection = withForm({
   props: {} as LocationSectionProps,
   render: ({ form, className }) => {
     const [searchQuery, setSearchQuery] = useState<string>("");
-    
+    const [city, setCity] = useState<string>("");
+    const [country, setCountry] = useState<string>("");
+
     // Check if any location field has a value to determine initial state
     const locationValues = form.getFieldValue("basicInfo.location");
-    const hasLocationData = locationValues && Object.values(locationValues).some(
-      (value) => value !== "" && value !== undefined && value !== null
-    );
-    const [showLocationFields, setShowLocationFields] = useState<boolean>(hasLocationData);
-    const LAYER = "house";
+    const hasLocationData =
+      locationValues &&
+      Object.values(locationValues).some(
+        (value) => value !== "" && value !== undefined && value !== null
+      );
+    const [showLocationFields, setShowLocationFields] =
+      useState<boolean>(hasLocationData);
 
     // Debounce the search query
     const debouncedQuery = useDebounce(searchQuery, 800);
     const { data: locationOptions = [], isLoading } = useQuery({
       queryKey: ["locations", debouncedQuery],
-      queryFn: () => getPlaces(debouncedQuery, [LAYER]),
+      queryFn: () =>
+        getPlaces(debouncedQuery, ["house"], (props) => [
+          props.name,
+          props.street,
+          props.city,
+          props.county,
+          props.country,
+        ]),
       enabled: debouncedQuery.length > 2,
       staleTime: 10 * 1000, // 10 seconds
+    });
+
+    const debouncedCityQuery = useDebounce(city, 800);
+    const { data: cities = [], isLoading: isLoadingCities } = useQuery({
+      queryKey: ["locations", debouncedCityQuery],
+      queryFn: () =>
+        getPlaces(debouncedCityQuery, ["city"], (props) => [
+          props.name,
+          props.country,
+        ]),
+      enabled: debouncedCityQuery.length > 2,
+      staleTime: 5 * 60 * 1000,
+    });
+
+    const debouncedCountryQuery = useDebounce(country, 800);
+    const { data: countries = [], isLoading: isLoadingCountries } = useQuery({
+      queryKey: ["locations", debouncedCountryQuery],
+      queryFn: () =>
+        getPlaces(debouncedCountryQuery, ["country"], (props) => [
+          props.name,
+        ]),
+      enabled: debouncedCountryQuery.length > 2,
+      staleTime: 5 * 60 * 1000,
     });
 
     console.log("LocationSection locationOptions:", locationOptions);
@@ -54,7 +88,10 @@ export const LocationSection = withForm({
                   const placeOption = value as PlaceOption;
                   if (placeOption?.locationData) {
                     // Update all location fields
-                    form.setFieldValue("basicInfo.location", placeOption.locationData);
+                    form.setFieldValue(
+                      "basicInfo.location",
+                      placeOption.locationData
+                    );
                     setShowLocationFields(true);
                   }
                   setSearchQuery(placeOption?.label || "");
@@ -99,20 +136,38 @@ export const LocationSection = withForm({
 
               <form.AppField name="basicInfo.location.city">
                 {(field) => (
-                  <field.TextField
+                  <field.ComboboxField
                     label="City"
                     placeholder="e.g., Praha 5"
+                    options={cities}
                     required
+                    isLoading={isLoadingCities}
+                    value={field.state.value}
+                    searchValue={city}
+                    onChange={(value) => {
+                      const placeOption = value as PlaceOption;
+                      if (placeOption?.locationData) {
+                        form.setFieldValue(
+                          "basicInfo.location.city",
+                          placeOption.locationData.city
+                        );
+                        if (placeOption.locationData.country) {
+                          form.setFieldValue(
+                            "basicInfo.location.country",
+                            placeOption.locationData.country
+                          );
+                        }
+                      }
+                      setCity(placeOption?.label || "");
+                    }}
+                    onSearchChange={(search) => setCity(search)}
                   />
                 )}
               </form.AppField>
 
               <form.AppField name="basicInfo.location.county">
                 {(field) => (
-                  <field.TextField
-                    label="County"
-                    placeholder="e.g., Prague"
-                  />
+                  <field.TextField label="County" placeholder="e.g., Prague" />
                 )}
               </form.AppField>
 
@@ -136,10 +191,25 @@ export const LocationSection = withForm({
 
               <form.AppField name="basicInfo.location.country">
                 {(field) => (
-                  <field.TextField
+                  <field.ComboboxField
                     label="Country"
                     placeholder="e.g., Czechia"
+                    options={countries}
+                    isLoading={isLoadingCountries}
+                    value={field.state.value}
                     required
+                    searchValue={country}
+                    onChange={(value) => {
+                      const placeOption = value as PlaceOption;
+                      if (placeOption?.locationData) {
+                        form.setFieldValue(
+                          "basicInfo.location.country",
+                          placeOption.locationData.country
+                        );
+                      }
+                      setCountry(placeOption?.label || "");
+                    }}
+                    onSearchChange={(search) => setCountry(search)}
                   />
                 )}
               </form.AppField>

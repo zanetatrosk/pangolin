@@ -22,12 +22,6 @@ export const convertSearchParamsToQuery = (searchParams?: SearchProps): string =
     if (searchParams.country) {
         query += `&country=${searchParams.country}`;
     }
-    if (searchParams.county) {
-        query += `&county=${searchParams.county}`;
-    }
-    if (searchParams.state) {
-        query += `&state=${searchParams.state}`;
-    }
     query += parseArrayParamToQuery("eventTypes", searchParams.eventTypes);
     query += parseArrayParamToQuery("danceStyles", searchParams.danceStyles);
 

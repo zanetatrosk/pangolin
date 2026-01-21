@@ -12,7 +12,7 @@ import {
   ExternalLink, MapPin, Users
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { EventItem, REGISTRATION_STATUS } from "../types";
+import { EventItem } from "../types";
 import { getOrganizerByObject } from "@/utils/getOrganizerByObject";
 import { EventItemButtons } from "./EventItemButtons";
 
@@ -40,6 +40,7 @@ export const EventCard: React.FC<EventItem> = (event) => {
       bold: true,
     },
   ];
+  
   return (
     <Card className="py-0 md:flex-row md:gap-0 rounded-l-xl overflow-hidden hover:shadow-lg transition-all duration-300 border border-violet-200/50 dark:border-violet-700/50 ">
       <CardContent className="p-0 flex flex-col md:flex-row w-full">
@@ -103,7 +104,14 @@ export const EventCard: React.FC<EventItem> = (event) => {
           </div>
           <Separator />
           <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between p-3">
-            <EventItemButtons isInterestedDefault={event.isUserInterested} isJoinedDefault={event.registrationStatus === REGISTRATION_STATUS.JOINED}/>
+            <EventItemButtons rsvpData={
+              {
+                eventId: event.id,
+                userId: "", // Replace with actual user ID
+                status: event.registrationStatus
+              }}
+              key={event.id + event.registrationStatus}
+            />
 
             <div className="flex justify-center md:justify-end w-full md:w-auto">
               <Button

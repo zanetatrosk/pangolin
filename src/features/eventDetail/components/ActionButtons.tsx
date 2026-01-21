@@ -1,16 +1,34 @@
 import { Button } from "@/components/ui/button";
+import { useDeleteRegistration } from "@/hooks/useDeleteRegistration";
+import { useUpdateRsvp } from "@/hooks/useUpdateRsvp";
 import { Check, Heart, Share2 } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { RsvpData, RsvpStatus } from "@/services/types";
 
-export const ActionButtons: React.FC = () => {
-  const [isGoing, setIsGoing] = useState(false);
-  const [isInterested, setIsInterested] = useState(false);
+export const ActionButtons: React.FC<{rsvpData: RsvpData}> = ({rsvpData}) => {
+  const [isGoing, setIsGoing] = useState(rsvpData.status === RsvpStatus.Going);
+  const [isInterested, setIsInterested] = useState(rsvpData.status === RsvpStatus.Interested);
+  const updateMutation = useUpdateRsvp();
+  const deleteMutation = useDeleteRegistration(rsvpData.eventId);
+
   const handleJoin = () => {
+    if( isGoing ) {
+      deleteMutation.mutate();
+    } else {
+      updateMutation.mutate({ ...rsvpData, status: RsvpStatus.Going });
+    }
+    setIsInterested(false);
     setIsGoing(!isGoing);
   };
 
   const handleInterested = () => {
+    if(!isInterested){
+      updateMutation.mutate({ ...rsvpData, status: RsvpStatus.Interested });
+    }else{
+      deleteMutation.mutate();
+    }
     setIsInterested(!isInterested);
+    setIsGoing(false);
   };
   
   return (

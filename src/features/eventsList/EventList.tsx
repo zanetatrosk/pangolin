@@ -16,8 +16,6 @@ export const EventList: FC<{ searchParams: SearchProps | undefined }> = ({ searc
     },
   });
 
-  console.log("EventList searchParams:", searchParams);
-
   if (error) {
     return <div>Error loading events.</div>;
   }

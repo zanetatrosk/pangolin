@@ -4,8 +4,11 @@ import { EventDetailData } from "@/features/eventDetail/types";
 import { EventItem, Pageable } from "@/features/eventsList/types";
 import { SearchProps } from "@/routes/events.index";
 import { convertSearchParamsToQuery } from "@/features/eventsList/utils/parseSearchParams";
+import { RsvpData, RsvpResponse } from "./types";
+
 
 const EVENT_URL = "/events";
+
 export const getAllEvents = async (page: number, searchParams?: SearchProps, size: number = 10): Promise<Pageable<EventItem>>  => {
     console.log(searchParams);
     const response = await axiosInstance.get(`${EVENT_URL}?page=${page}&size=${size}` + convertSearchParamsToQuery(searchParams));
@@ -21,3 +24,17 @@ export const getEventById = async (id: string): Promise<EventDetailData> => {
     const response = await axiosInstance.get(`${EVENT_URL}/${id}`);
     return response.data;
 }
+
+export const getMyRsvp = async (eventId: string): Promise<RsvpResponse> => {
+    const response = await axiosInstance.get(`${EVENT_URL}/${eventId}/my-rsvp`);
+    return response.data;
+};
+
+export const createOrUpdateRsvp = async (eventId: string, rsvpData: RsvpData): Promise<RsvpResponse> => {
+    const response = await axiosInstance.put(`${EVENT_URL}/${eventId}/my-rsvp`, rsvpData);
+    return response.data;
+};
+
+export const deleteRsvp = async (eventId: string): Promise<void> => {
+    await axiosInstance.delete(`${EVENT_URL}/${eventId}/my-rsvp`);
+};

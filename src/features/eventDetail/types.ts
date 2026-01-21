@@ -1,3 +1,4 @@
+import { RsvpStatus } from "@/services/types";
 import { Organizer } from "../eventsList/types";
 import { BasicData, DanceEventCreation } from "../newEvent/types";
 
@@ -14,20 +15,19 @@ export interface BasicDetailsData extends BasicData {
   recurringDates?: RecurringDate[];
   organizer: Organizer;
   address: string;
+  status?: "Scheduled" | "Cancelled" | "Past";
+  statusUser?: RsvpStatus ;
 }
 
 interface RecurringDate {
   date: string;
   id: string;
-  status?: "Scheduled" | "Cancelled" | "Past";
-  statusUser?: "Joined";
 }
 
 export interface EventDetailData extends Omit<DanceEventCreation, "basicInfo"> {
-  id: number;
+  id: string;
   basicInfo: BasicDetailsData;
   attendeeStats?: AttendeeStats;
   facebookEventUrl?: string;
-  status?: "Scheduled" | "Cancelled" | "Past";
-  statusUser?: "Joined" ;
+  
 }

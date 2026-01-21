@@ -40,7 +40,13 @@ export function EventDetail({ event }: EventDetailProps) {
           <div className="contents lg:block lg:col-span-2 lg:space-y-8">
             {/* Action Buttons */}
             <div className="order-1">
-              <ActionButtons />
+              <ActionButtons
+              key={event.id + event.basicInfo.statusUser}
+              rsvpData={{
+                eventId: event.id,
+                userId: "", // Replace with actual user ID
+                status: event.basicInfo.statusUser 
+              }}/>
             </div>
 
             {/* Description */}

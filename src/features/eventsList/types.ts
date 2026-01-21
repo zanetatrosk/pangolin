@@ -1,7 +1,8 @@
+import { RsvpStatus } from "@/services/types";
 import { EventMediaItem } from "../newEvent/types";
 
 export interface EventItem {
-  id: number;
+  id: string;
   eventName: string;
   address: string;
   date: string;
@@ -17,7 +18,7 @@ export interface EventItem {
   tags?: string[];
   organizer: Organizer;
   promoMedia?: EventMediaItem;
-  registrationStatus: REGISTRATION_STATUS;
+  registrationStatus?: RsvpStatus;
   isUserInterested: boolean;
 }
 
@@ -26,11 +27,6 @@ export interface Organizer {
   username: string;
   firstName?: string;
   lastName?: string;
-}
-
-export const enum REGISTRATION_STATUS {
-  NOT_REGISTERED = "not_registered",
-  JOINED = "joined",
 }
 
 export interface Pageable<T> {

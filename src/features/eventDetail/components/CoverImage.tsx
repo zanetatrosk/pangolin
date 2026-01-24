@@ -1,6 +1,10 @@
 import { EventMediaItem } from "@/features/newEvent/types";
 
-export const CoverImage: React.FC<{ coverImage?: EventMediaItem | null; eventName: string }> = ({ coverImage, eventName }) => {
+export const CoverImage: React.FC<{ 
+  coverImage?: EventMediaItem | null; 
+  eventName: string;
+  isCancelled?: boolean;
+}> = ({ coverImage, eventName, isCancelled = false }) => {
     return (
         <div className="relative h-64 md:h-full w-full overflow-hidden">
           {coverImage ? (

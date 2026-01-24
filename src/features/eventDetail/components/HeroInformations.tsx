@@ -1,5 +1,5 @@
-import { BasicDetailsData } from "@/features/newEvent/types";
 import { PATHS } from "@/paths";
+import { renderAddress } from "@/utils/renderAdress";
 import { useNavigate } from "@tanstack/react-router";
 import {
   Calendar,
@@ -11,6 +11,8 @@ import {
   ChevronDown,
 } from "lucide-react";
 import { FC } from "react";
+import { BasicDetailsData } from "../types";
+import { getLabelFromPrice } from "@/utils/getLabelFromPrice";
 
 interface HeroInfoItem {
   icon: React.ReactNode;
@@ -39,13 +41,12 @@ export const HeroInformations: FC<{
   const navigate = useNavigate();
   const {
     recurringDates,
-    address: location,
     date,
     time,
-    isRecurring,
     endDate,
-    priceRange,
-    priceExact,
+    location,
+    price,
+
   } = basicInfo;
   let data: HeroInfoItem[] = [
     {
@@ -72,7 +73,7 @@ export const HeroInformations: FC<{
               ))}
             </select>
           </div>
-        ) : isRecurring && endDate ? (
+        ) : recurringDates && endDate ? (
           `${date} until ${endDate}`
         ) : (
           date
@@ -84,7 +85,7 @@ export const HeroInformations: FC<{
     },
     {
       icon: <Banknote className="w-4 h-4" />,
-      text: priceExact ? `$${priceExact}` : priceRange,
+      text: getLabelFromPrice(price, basicInfo.currency),
     },
   ];
 
@@ -102,7 +103,7 @@ export const HeroInformations: FC<{
           ))}
           <a
             href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-              basicInfo.address
+              renderAddress(location)
             )}`}
             target="_blank"
             rel="noopener noreferrer"
@@ -110,7 +111,7 @@ export const HeroInformations: FC<{
             title="View on Google Maps"
           >
             <MapPin className="w-4 h-4" />
-            <span>{location}</span>
+            <span>{renderAddress(location)}</span>
             <ExternalLink className="w-3 h-3" />
           </a>
 

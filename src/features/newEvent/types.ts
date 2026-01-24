@@ -16,31 +16,31 @@ export interface BasicData {
   endDate?: string;
   price?: number;
   currency?: string;
-}
-
-export interface BasicCreateDetailsData extends BasicData {
   location: Location;
 }
 
-export interface AdditionalDetailsData {
-    danceStyles: string[];
-    skillLevel: string[];
-    typeOfEvent: string[];
-    maxAttendees?: number;
-    allowWaitlist: boolean;
-    allowPartnerPairing: boolean;
+export interface AdditionalDetailsDataBase {
+  maxAttendees?: number;
+  allowWaitlist: boolean;
+  allowPartnerPairing: boolean;
+}
+
+export interface AdditionalDetailsDataCreation extends AdditionalDetailsDataBase {
+  danceStyles: string[];
+  skillLevel: string[];
+  typeOfEvent: string[];
 }
 
 export interface DanceEventCreation {
-    basicInfo: BasicCreateDetailsData;
-    additionalDetails?: AdditionalDetailsData;
-    description?: string;
-    coverImage?: EventMediaItem;
-    media?: EventMediaItem[];
+  basicInfo: BasicData;
+  additionalDetails?: AdditionalDetailsDataCreation;
+  description?: string;
+  coverImage?: EventMediaItem;
+  media?: EventMediaItem[];
 }
 
 export type EventMediaItem = {
-  type: "image" | "video"
-  url: string
-  id: string
-}
+  type: "image" | "video";
+  url: string;
+  id: string;
+};

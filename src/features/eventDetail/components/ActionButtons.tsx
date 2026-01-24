@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { useDeleteRegistration } from "@/hooks/useDeleteRegistration";
 import { useUpdateRsvp } from "@/hooks/useUpdateRsvp";
 import { Check, Heart, Share2 } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { RsvpData, RsvpStatus } from "@/services/types";
 
 export const ActionButtons: React.FC<{rsvpData: RsvpData}> = ({rsvpData}) => {

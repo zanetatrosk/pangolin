@@ -1,10 +1,11 @@
 import { RsvpStatus } from "@/services/types";
-import { EventMediaItem } from "../newEvent/types";
+import { EventMediaItem, Location } from "../newEvent/types";
+import { EventStatus } from "../eventDetail/types";
 
 export interface EventItem {
   id: string;
   eventName: string;
-  address: string;
+  location: Location;
   date: string;
   time: string;
   price?: number;
@@ -20,10 +21,11 @@ export interface EventItem {
   promoMedia?: EventMediaItem;
   registrationStatus?: RsvpStatus;
   isUserInterested: boolean;
+  status: EventStatus;
 }
 
 export interface Organizer {
-  userId: number;
+  userId: string;
   username: string;
   firstName?: string;
   lastName?: string;

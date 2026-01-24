@@ -4,7 +4,7 @@ import { EventDetailData } from "@/features/eventDetail/types";
 import { EventItem, Pageable } from "@/features/eventsList/types";
 import { SearchProps } from "@/routes/events.index";
 import { convertSearchParamsToQuery } from "@/features/eventsList/utils/parseSearchParams";
-import { RsvpData, RsvpResponse } from "./types";
+import { RsvpData, RsvpResponse, EventStatusResponse } from "./types";
 
 
 const EVENT_URL = "/events";
@@ -25,6 +25,11 @@ export const getEventById = async (id: string): Promise<EventDetailData> => {
     return response.data;
 }
 
+export const updateEventById = async (id: string, eventData: DanceEventCreation): Promise<any> => {
+    const response = await axiosInstance.put(`${EVENT_URL}/${id}`, eventData);
+    return response.data;
+}
+
 export const getMyRsvp = async (eventId: string): Promise<RsvpResponse> => {
     const response = await axiosInstance.get(`${EVENT_URL}/${eventId}/my-rsvp`);
     return response.data;
@@ -37,4 +42,18 @@ export const createOrUpdateRsvp = async (eventId: string, rsvpData: RsvpData): P
 
 export const deleteRsvp = async (eventId: string): Promise<void> => {
     await axiosInstance.delete(`${EVENT_URL}/${eventId}/my-rsvp`);
+};
+
+export const publishEvent = async (eventId: string): Promise<EventStatusResponse> => {
+    const response = await axiosInstance.patch(`${EVENT_URL}/${eventId}/publish`);
+    return response.data;
+};
+
+export const cancelEvent = async (eventId: string): Promise<EventStatusResponse> => {
+    const response = await axiosInstance.patch(`${EVENT_URL}/${eventId}/cancel`);
+    return response.data;
+};
+
+export const deleteEvent = async (eventId: string): Promise<void> => {
+    await axiosInstance.delete(`${EVENT_URL}/${eventId}`);
 };

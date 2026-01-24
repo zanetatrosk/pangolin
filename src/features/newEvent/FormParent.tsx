@@ -7,24 +7,20 @@ import { Card, CardContent } from "@/components/ui/card";
 import { t } from "i18next";
 import { EventStepper } from "./EventStepper";
 import { useAppForm } from "@/lib/form";
-import { eventFormOpts } from "./FormOptions";
 import { EventDescriptionStep } from "./EventDescriptionStep";
 import { EventMediaStep } from "./EventMediaStep";
 import { EventDetailsStep } from "./EventDetailsStep";
-import { useMutation } from "@tanstack/react-query";
-import { postNewEvent } from "@/services/events-api";
-import { postMedia } from "@/services/media-api";
+import { UseMutationResult } from "@tanstack/react-query";
+import { DanceEventCreation } from "./types";
 
-export const FormParent: React.FC = () => {
-  const eventMutation = useMutation({
-    mutationFn: postNewEvent,
-    onSuccess: (data) => {
-      console.log("Event created successfully:", data);
-    },
-    onError: (error) => {
-      console.error("Error creating event:", error);
-    },
-  });
+export interface FormParentProps {
+  eventMutation:  UseMutationResult<any, Error, DanceEventCreation, unknown>;
+  eventFormOpts: {
+    defaultValues: DanceEventCreation;
+  }
+}
+
+export const FormParent: React.FC<FormParentProps> = ({ eventMutation, eventFormOpts }) => {
 
   const form = useAppForm({
     ...eventFormOpts,

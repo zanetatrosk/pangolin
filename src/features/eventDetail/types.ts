@@ -1,6 +1,6 @@
-import { RsvpStatus } from "@/services/types";
+import { CodebookItem, RsvpStatus } from "@/services/types";
 import { Organizer } from "../eventsList/types";
-import { BasicData, DanceEventCreation } from "../newEvent/types";
+import { AdditionalDetailsDataBase, BasicData, DanceEventCreation } from "../newEvent/types";
 
 export interface AttendeeStats {
   going: {
@@ -11,11 +11,16 @@ export interface AttendeeStats {
   interested: number;
 }
 
+export enum EventStatus {
+  DRAFT = "DRAFT",
+  PUBLISHED = "PUBLISHED",
+  CANCELLED = "CANCELLED",
+  PAST = "PAST",
+}
 export interface BasicDetailsData extends BasicData {
   recurringDates?: RecurringDate[];
   organizer: Organizer;
-  address: string;
-  status?: "Scheduled" | "Cancelled" | "Past";
+  status: EventStatus;
   statusUser?: RsvpStatus ;
 }
 
@@ -24,10 +29,16 @@ interface RecurringDate {
   id: string;
 }
 
-export interface EventDetailData extends Omit<DanceEventCreation, "basicInfo"> {
+export interface AdditionalDetailsData extends AdditionalDetailsDataBase {
+  danceStyles: CodebookItem[];
+  skillLevel: CodebookItem[];
+  typeOfEvent: CodebookItem[];
+}
+
+export interface EventDetailData extends Omit<DanceEventCreation, "basicInfo" | "additionalDetails"> {
   id: string;
   basicInfo: BasicDetailsData;
+  additionalDetails?: AdditionalDetailsData;
   attendeeStats?: AttendeeStats;
   facebookEventUrl?: string;
-  
 }

@@ -20,3 +20,9 @@ export interface RsvpData {
     status?: RsvpStatus;
     paid?: boolean;
 }
+
+export interface EventStatusResponse {
+    id: string;
+    status: string | null;
+    message: string;
+}

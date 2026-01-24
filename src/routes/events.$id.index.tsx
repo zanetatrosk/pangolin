@@ -1,9 +1,10 @@
-import { createFileRoute, Outlet } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
+import { EventDetail } from "@/features/eventDetail/EventDetail";
 import { EventDetailData } from "@/features/eventDetail/types";
 import { getEventById } from "@/services/events-api";
 import { useQuery } from "@tanstack/react-query";
 
-export const Route = createFileRoute("/events/$id")({
+export const Route = createFileRoute("/events/$id/")({
   component: RouteComponent,
 });
 
@@ -16,9 +17,5 @@ function RouteComponent() {
   if (!event) {
     return null;
   }
-  return (
-    <>
-      <Outlet />
-    </>
-  );
+  return <EventDetail event={event} />;
 }

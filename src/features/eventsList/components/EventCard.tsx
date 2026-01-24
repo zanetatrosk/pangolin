@@ -6,19 +6,20 @@ import { Separator } from "@/components/ui/separator";
 import { PATHS } from "@/paths";
 import { getLabelFromPrice } from "@/utils/getLabelFromPrice";
 import { useNavigate } from "@tanstack/react-router";
-import {
-  Banknote,
-  Calendar,
-  ExternalLink, MapPin, Users
-} from "lucide-react";
+import { Banknote, Calendar, ExternalLink, MapPin, Users } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { EventItem } from "../types";
 import { getOrganizerByObject } from "@/utils/getOrganizerByObject";
 import { EventItemButtons } from "./EventItemButtons";
+import { renderAddress } from "@/utils/renderAdress";
+import { EventStatus } from "@/features/eventDetail/types";
+import { isUserOrganizer } from "@/utils/isUserOrganizer";
+import { useUser } from "@/hooks/useUser";
 
 export const EventCard: React.FC<EventItem> = (event) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const { user } = useUser();
   const cardInfoWithIcon = [
     {
       icon: Calendar,
@@ -26,12 +27,12 @@ export const EventCard: React.FC<EventItem> = (event) => {
     },
     {
       icon: MapPin,
-      label: event.address,
+      label: renderAddress(event.location),
     },
     {
       icon: Users,
       label: `${event.interested} interested, ${event.attendees} ${t(
-        "eventCard.attending"
+        "eventCard.attending",
       )}`,
     },
     {
@@ -40,12 +41,21 @@ export const EventCard: React.FC<EventItem> = (event) => {
       bold: true,
     },
   ];
-  
+
+  const isCancelled = event.status === EventStatus.CANCELLED;
+
   return (
-    <Card className="py-0 md:flex-row md:gap-0 rounded-l-xl overflow-hidden hover:shadow-lg transition-all duration-300 border border-violet-200/50 dark:border-violet-700/50 ">
+    <Card className="py-0 md:flex-row md:gap-0 rounded-l-xl overflow-hidden hover:shadow-lg transition-all duration-300 border border-violet-200/50 dark:border-violet-700/50 relative">
+      {isCancelled && (
+        <div className="absolute top-4 right-4 z-10">
+          <Badge variant="destructive" className="text-sm font-bold shadow-lg">
+            CANCELLED
+          </Badge>
+        </div>
+      )}
       <CardContent className="p-0 flex flex-col md:flex-row w-full">
         {/* Event Image */}
-        <div className="md:w-64 h-48 md:h-auto shrink-0 md:aspect-4/3">
+        <div className="md:w-64 h-48 md:h-auto shrink-0 md:aspect-4/3 relative">
           {event.promoMedia?.url ? (
             <img
               src={event.promoMedia.url}
@@ -64,7 +74,9 @@ export const EventCard: React.FC<EventItem> = (event) => {
               {/* Header */}
               <div className="flex items-start justify-between">
                 <div className="flex-1">
-                  <h3 className="text-lg md:text-xl font-semibold text-gray-900 dark:text-white line-clamp-1">
+                  <h3 className={`text-lg md:text-xl font-semibold text-gray-900 dark:text-white line-clamp-1 ${
+                    isCancelled ? "line-through text-gray-500 dark:text-gray-500" : ""
+                  }`}>
                     {event.eventName}
                   </h3>
                   <p className="text-sm text-gray-600 dark:text-gray-400">
@@ -104,16 +116,19 @@ export const EventCard: React.FC<EventItem> = (event) => {
           </div>
           <Separator />
           <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between p-3">
-            <EventItemButtons rsvpData={
-              {
-                eventId: event.id,
-                userId: "", // Replace with actual user ID
-                status: event.registrationStatus
-              }}
-              key={event.id + event.registrationStatus}
-            />
+            {event.status !== EventStatus.CANCELLED &&
+              !isUserOrganizer(event.organizer.userId, user.id) && (
+                <EventItemButtons
+                  rsvpData={{
+                    eventId: event.id,
+                    userId: user.id,
+                    status: event.registrationStatus,
+                  }}
+                  key={event.id + event.registrationStatus}
+                />
+              )}
 
-            <div className="flex justify-center md:justify-end w-full md:w-auto">
+            <div className="flex justify-center md:justify-end w-full">
               <Button
                 size="sm"
                 className="w-full md:w-auto"

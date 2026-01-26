@@ -7,14 +7,13 @@ import { Edit, Save, X, Camera } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { getInitials } from "@/components/layout/utils/getInitials";
 import { MediaGallery } from "../eventDetail/components/MediaGallery";
-import { PROFILE } from "@/mocks/profile";
 import { EventMediaItem } from "../newEvent/types";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { postMedia } from "@/services/media-api";
 import { ProfileEditForm } from "./ProfileEditForm";
 import { ProfileViewMode } from "./ProfileViewMode";
 import { CodebookItem } from "@/services/types";
-import { getUserById, updateProfileById } from "@/services/user-api";
+import { updateProfileById } from "@/services/user-api";
 import { useUser } from "@/hooks/useUser";
 
 export interface ProfileData {
@@ -38,6 +37,7 @@ export function ProfilePage({
   const { t } = useTranslation();
   const [isEditing, setIsEditing] = useState(false);
   const { user } = useUser();
+  const queryClient = useQueryClient();
 
   const avatarMutation = useMutation({
     mutationFn: (file: File) => postMedia(file),
@@ -82,6 +82,7 @@ export function ProfilePage({
     mutationFn: () => updateProfileById(userId, profileData),
     onSuccess: (data) => {
       console.log("Profile updated successfully:", data);
+      queryClient.setQueryData(["profile", userId], data);
     },
     onError: (error) => {
       console.error("Error updating profile:", error);

@@ -1,4 +1,4 @@
-import { CalendarPlus, PersonStanding, Users, UserCircle, Settings, LogOut } from "lucide-react";
+import { CalendarPlus, PersonStanding, Users, UserCircle, LogOut } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { MobileNavDrawer } from "./MobileNavDrawer";
 import { DesktopNavbar } from "./DesktopNavbar";

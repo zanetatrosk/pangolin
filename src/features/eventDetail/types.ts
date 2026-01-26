@@ -24,7 +24,7 @@ export interface BasicDetailsData extends BasicData {
   statusUser?: RsvpStatus ;
 }
 
-interface RecurringDate {
+export interface RecurringDate {
   date: string;
   id: string;
 }

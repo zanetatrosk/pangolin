@@ -1,49 +1,169 @@
-import { EventDetailData } from "@/features/eventDetail/types";
-import { MOCK_EVENT } from "./eventDetail";
+import { MyEvent } from "@/features/myEvents/types";
+import { EventStatus } from "@/features/eventDetail/types";
+import { RsvpStatus } from "@/services/types";
 
-export const MOCK_EVENTS: EventDetailData[] = [
-  MOCK_EVENT,
+export const MOCK_EVENTS: MyEvent[] = [
+  // Single event (one-time event)
   {
-    id: 2,
-    status: "Scheduled",
-    statusUser: "Joined",
-    basicInfo: {
-      eventName: "Hip Hop Dance Battle",
-        address: "Urban Dance Arena, Los Angeles, CA",
-        date: "2024-07-10",
-        time: "19:00",
-        isRecurring: false,
-        priceRange: "10-30",
+    displayMode: 'SINGLE',
+    id: "2",
+    eventName: "Hip Hop Dance Battle",
+    organizer: {
+      userId: "user2",
+      username: "hiphopmaster",
+      firstName: "Jane",
+      lastName: "Smith",
     },
-    additionalDetails: {
-      danceStyles: ["Hip Hop", "Street Dance"],
-        skillLevel: ["Advanced"],
-        typeOfEvent: ["Competition", "Showcase"],
-        maxAttendees: 200,
-        allowWaitlist: false,
-        allowPartnerPairing: true,
+    status: EventStatus.PUBLISHED,
+    date: "2024-07-10",
+    time: "19:00",
+    location: {
+      name: "Urban Dance Arena",
+      street: "Main Street",
+      houseNumber: "500",
+      city: "Los Angeles",
+      state: "CA",
+      country: "USA",
+      postalCode: "90001",
     },
-    description: "Get ready for an adrenaline-pumping night of hip hop dance battles! Watch top dancers from around the country compete for the title in various categories. The event features live DJ sets, special guest performances, and a vibrant urban atmosphere. Whether you're a dancer or a fan, this is an event you won't want to miss!",
-    coverImage: { type: "image", id: "https://images.unsplash.com/photo-1518609878373-06d740f60d8b?w=400&h=300&fit=crop" },
-    facebookEventUrl: "https://facebook.com/events/hiphopdancebattle",
-    media: [
-      {
-        type: "image",
-        id: "https://images.unsplash.com/photo-1518609878373-06d740f60d8b?w=400&h=300&fit=crop",
-        },
-        {
-        type: "video",
-        id: "https://www.youtube.com/shorts/3oP50Vvwn7Q",
-        },
-    ],
+    userStatus: RsvpStatus.Going,
     attendeeStats: {
-        going: {
-            total: 80,
-            leaders: 40,
-            followers: 40,
-        },
-        interested: 150,
+      going: {
+        total: 80,
+        leaders: 40,
+        followers: 40,
+      },
+      interested: 150,
     },
-
-  }
+  },
+  // Series event (recurring event)
+  {
+    displayMode: 'SERIES',
+    id: "1",
+    eventName: "Salsa & Bachata Night Fever",
+    organizer: {
+      userId: "user1",
+      username: "dancemaster",
+      firstName: "John",
+      lastName: "Doe",
+    },
+    status: EventStatus.PUBLISHED,
+    userStatus: RsvpStatus.Going,
+    overallStartDate: "2024-06-15",
+    overallEndDate: "2024-07-06",
+    occurrences: [
+      {
+        displayMode: 'SINGLE',
+        id: "1-1",
+        eventName: "Salsa & Bachata Night Fever",
+        date: "2024-06-15",
+        time: "20:00",
+        location: {
+          name: "Dance Studio 101",
+          street: "Broadway",
+          houseNumber: "101",
+          city: "New York",
+          state: "NY",
+          country: "USA",
+          postalCode: "10001",
+        },
+        status: EventStatus.PAST,
+        userStatus: RsvpStatus.Going,
+        attendeeStats: {
+          going: { total: 75, leaders: 35, followers: 40 },
+          interested: 20,
+        },
+        organizer: {
+          userId: "user1",
+          username: "dancemaster",
+          firstName: "John",
+          lastName: "Doe",
+        },
+      },
+      {
+        displayMode: 'SINGLE',
+        id: "1-2",
+        eventName: "Salsa & Bachata Night Fever",
+        date: "2024-06-22",
+        time: "20:00",
+        location: {
+          name: "Dance Studio 101",
+          street: "Broadway",
+          houseNumber: "101",
+          city: "New York",
+          state: "NY",
+          country: "USA",
+          postalCode: "10001",
+        },
+        status: EventStatus.PUBLISHED,
+        userStatus: RsvpStatus.Going,
+        attendeeStats: {
+          going: { total: 80, leaders: 40, followers: 40 },
+          interested: 25,
+        },
+        organizer: {
+          userId: "user1",
+          username: "dancemaster",
+          firstName: "John",
+          lastName: "Doe",
+        },
+      },
+      {
+        displayMode: 'SINGLE',
+        id: "1-3",
+        eventName: "Salsa & Bachata Night Fever",
+        date: "2024-06-29",
+        time: "20:00",
+        location: {
+          name: "Dance Studio 101",
+          street: "Broadway",
+          houseNumber: "101",
+          city: "New York",
+          state: "NY",
+          country: "USA",
+          postalCode: "10001",
+        },
+        status: EventStatus.PUBLISHED,
+        userStatus: RsvpStatus.Going,
+        attendeeStats: {
+          going: { total: 85, leaders: 42, followers: 43 },
+          interested: 30,
+        },
+        organizer: {
+          userId: "user1",
+          username: "dancemaster",
+          firstName: "John",
+          lastName: "Doe",
+        },
+      },
+      {
+        displayMode: 'SINGLE',
+        id: "1-4",
+        eventName: "Salsa & Bachata Night Fever",
+        date: "2024-07-06",
+        time: "20:00",
+        location: {
+          name: "Dance Studio 101",
+          street: "Broadway",
+          houseNumber: "101",
+          city: "New York",
+          state: "NY",
+          country: "USA",
+          postalCode: "10001",
+        },
+        status: EventStatus.PUBLISHED,
+        userStatus: RsvpStatus.Going,
+        attendeeStats: {
+          going: { total: 90, leaders: 45, followers: 45 },
+          interested: 35,
+        },
+        organizer: {
+          userId: "user1",
+          username: "dancemaster",
+          firstName: "John",
+          lastName: "Doe",
+        },
+      },
+    ],
+  },
 ];

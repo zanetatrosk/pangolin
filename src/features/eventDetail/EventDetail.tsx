@@ -61,7 +61,7 @@ export function EventDetail({ event }: EventDetailProps) {
           <div className="contents lg:block lg:col-span-2 lg:space-y-8">
             {/* Action Buttons */}
             <div className="order-1">
-              {user.id === basicInfo.organizer.userId ? (
+              {user.userId === basicInfo.organizer.userId ? (
                 // Organizer view
                 <EventItemManageButtons eventId={event.id} eventStatus={basicInfo.status || ""}/>
               ) : (

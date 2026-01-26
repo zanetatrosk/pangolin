@@ -2,10 +2,12 @@ import { CalendarPlus, Users } from "lucide-react";
 import { NoEvents } from "./components/NoEvents";
 import { TabCard } from "./components/TabCard";
 import { EventCardType, MyEventCard } from "./components/MyEventCard";
-import { MOCK_EVENTS } from "@/mocks/eventsDetailed";
+import { useUserEvents } from "./hooks/useUserEvents";
+import { userEventFilter } from "@/services/users-events-api";
 
 export const HostingTab: React.FC = () => {
-  const events = MOCK_EVENTS; // Replace with actual data fetching logic
+  const { data: events = [], isLoading, error } = useUserEvents(userEventFilter.HOSTING);
+
   return (
     <TabCard
       value="hosting"

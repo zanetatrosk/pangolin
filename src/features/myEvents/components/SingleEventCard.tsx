@@ -1,0 +1,65 @@
+import { Card, CardTitle, CardContent } from "@/components/ui/card";
+import { Building, Calendar, MapPin } from "lucide-react";
+import { DataWithIcon } from "@/components/DataWithIcon";
+import { StatusBadges } from "./StatusBadges";
+import { renderAddress } from "@/utils/renderAdress";
+import { SingleEventDTO } from "@/features/myEvents/types";
+import { EventCardType } from "./MyEventCard";
+import { EventActionsMyEvent } from "./EventActionsMyEvent";
+
+export interface SingleEventCardProps {
+  event: SingleEventDTO;
+  cardType: EventCardType;
+}
+
+export const SingleEventCard: React.FC<SingleEventCardProps> = ({
+  event,
+  cardType,
+}) => {
+  const isUserOrganizer = cardType === EventCardType.HOSTING;
+  
+  const { eventName, organizer, status, userStatus, date, time, location, attendeeStats } = event;
+  const renderedLocation = renderAddress(location);
+
+  return (
+    <Card className="w-full border-0 shadow-2xl rounded-md bg-white dark:bg-zinc-900 dark:border dark:border-zinc-800 flex justify-center py-4">
+      <CardContent className="flex flex-col items-start space-y-4 px-2 pl-4 md:px-6 w-full">
+        <div className="w-full">
+          <div className="flex flex-row items-start justify-between space-y-2 lg:space-y-0">
+            <div>
+              <div className="flex flex-row items-center space-x-2">
+                <CardTitle className="text-xl font-bold">{eventName}</CardTitle>
+              </div>
+              <StatusBadges
+                status={status}
+                userStatus={cardType === EventCardType.GOING ? userStatus : undefined}
+                className="lg:hidden"
+              />
+            </div>
+            <div className="flex flex-row items-center ">
+              <StatusBadges
+                status={status}
+                userStatus={cardType === EventCardType.GOING ? userStatus : undefined}
+                className="hidden lg:block"
+              />
+
+              <EventActionsMyEvent cardType={cardType} eventId={event.id}/>
+            </div>
+          </div>
+          {!isUserOrganizer && <div className="text-sm">
+            Organized by {organizer.firstName && organizer.lastName ? `${organizer.firstName} ${organizer.lastName}` : organizer.username}
+          </div>}
+        </div>
+        <div className="flex flex-col lg:flex-row gap-2 lg:gap-10">
+          
+          <DataWithIcon icon={Calendar} value={`${date} at ${time}`} />
+          <DataWithIcon icon={MapPin} value={renderedLocation} />
+          <DataWithIcon
+            icon={Building}
+            value={`${attendeeStats?.going?.total || 0} going, ${attendeeStats?.interested || 0} interested`}
+          />
+        </div>
+      </CardContent>
+    </Card>
+  );
+};

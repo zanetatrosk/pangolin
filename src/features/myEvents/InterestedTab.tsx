@@ -1,12 +1,14 @@
-import { MOCK_EVENTS } from "@/mocks/eventsDetailed";
 import { Users, CalendarPlus, Heart } from "lucide-react";
 import { FC } from "react";
 import { EventCardType, MyEventCard } from "./components/MyEventCard";
 import { NoEvents } from "./components/NoEvents";
 import { TabCard } from "./components/TabCard";
+import { useUserEvents } from "./hooks/useUserEvents";
+import { userEventFilter } from "@/services/users-events-api";
 
 export const InterestedTab: FC = () => {
-  const events = MOCK_EVENTS; // Replace with actual data fetching logic
+  const { data: events = [], isLoading, error } = useUserEvents(userEventFilter.INTERESTED);
+
   return (
     <TabCard
       value="interested"

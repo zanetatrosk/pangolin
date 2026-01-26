@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Card, CardHeader } from "@/components/ui/card";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -28,11 +28,17 @@ export interface ProfileData {
   avatar?: EventMediaItem;
 }
 
-export function ProfilePage({userId, profileDataDefault}: {userId: string, profileDataDefault: ProfileData}) {
+export function ProfilePage({
+  userId,
+  profileDataDefault,
+}: {
+  userId: string;
+  profileDataDefault: ProfileData;
+}) {
   const { t } = useTranslation();
   const [isEditing, setIsEditing] = useState(false);
-  const { user } = useUser();  
-  
+  const { user } = useUser();
+
   const avatarMutation = useMutation({
     mutationFn: (file: File) => postMedia(file),
     onSuccess: (data) => {
@@ -50,7 +56,7 @@ export function ProfilePage({userId, profileDataDefault}: {userId: string, profi
       console.error("Error uploading avatar image:", error);
     },
   });
-  
+
   const imageMutation = useMutation({
     mutationFn: (file: File) => postMedia(file),
     onSuccess: (data) => {
@@ -81,11 +87,12 @@ export function ProfilePage({userId, profileDataDefault}: {userId: string, profi
       console.error("Error updating profile:", error);
     },
   });
-  
+
   const allowedToEdit = userId === user.userId;
 
   // Mock data initialization - in a real app, this would come from the backend/store
-  const [profileData, setProfileData] = useState<ProfileData>(profileDataDefault);
+  const [profileData, setProfileData] =
+    useState<ProfileData>(profileDataDefault);
 
   console.log("Profile data:", profileData);
   const handleSave = () => {
@@ -216,15 +223,26 @@ export function ProfilePage({userId, profileDataDefault}: {userId: string, profi
             </div>
           </div>
         </CardHeader>
+        {isEditing && (
+          <CardContent className="mt-8">
+            {/* Gallery Section - Instagram Vibe */}
+            <MediaGallery
+              mediaFiles={profileData.media}
+              handleMediaUpload={handlePhotoUpload}
+              allowEdit={isEditing}
+              onDelete={handlePhotoDelete}
+            />
+          </CardContent>
+        )}
       </Card>
-
-      {/* Gallery Section - Instagram Vibe */}
-      <MediaGallery
-        mediaFiles={profileData.media}
-        handleMediaUpload={handlePhotoUpload}
-        allowEdit={allowedToEdit}
-        onDelete={handlePhotoDelete}
-      />
+      {!isEditing && (
+        <MediaGallery
+          mediaFiles={profileData.media}
+          handleMediaUpload={handlePhotoUpload}
+          allowEdit={isEditing}
+          onDelete={handlePhotoDelete}
+        />
+      )}
     </div>
   );
 }

@@ -31,5 +31,5 @@ function RouteComponent() {
   if (!user || !data) {
     return null;
   }
-  return <ProfilePage userId={user.userId} profileDataDefault={data} />;
+  return <ProfilePage userId={user.userId} profileDataDefault={data} key={user.userId} />;
 }

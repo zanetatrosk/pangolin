@@ -13,16 +13,16 @@ export const Media: FC<{
   return (
     <>
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-        {mediaFiles.map((item, idx) => (
+        {mediaFiles.map((item) => (
           <div
-            key={idx}
+            key={item.id}
             className="aspect-square rounded-xl overflow-hidden bg-muted relative group cursor-pointer"
             onClick={() => setSelectedMedia(item)}
           >
             {item.type === "image" ? (
               <img
                 src={item.url}
-                alt={`Gallery ${idx}`}
+                alt={`Gallery ${item.id}`}
                 className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
               />
             ) : (

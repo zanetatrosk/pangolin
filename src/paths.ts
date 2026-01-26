@@ -9,4 +9,8 @@ export const PATHS = {
   },
   MY_EVENTS: "/my-events",
   ABOUT: "/about",
+  PROFILE: {
+    MINE: "/my-profile",
+    VIEW: (userId: string | number) => `/profile/${userId}`,
+  }
 } as const;

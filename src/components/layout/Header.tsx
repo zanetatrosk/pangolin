@@ -39,7 +39,7 @@ export function Header() {
 
   const profileMenuItems = [
     {
-      href: "/profile",
+      href: PATHS.PROFILE.MINE,
       label: t("nav.profile"),
       icon: UserCircle,
     },

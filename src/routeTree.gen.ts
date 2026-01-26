@@ -9,7 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as ProfileRouteImport } from './routes/profile'
+import { Route as MyProfileRouteImport } from './routes/my-profile'
 import { Route as MyEventsRouteImport } from './routes/my-events'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as EventsRouteImport } from './routes/events'
@@ -22,9 +22,9 @@ import { Route as EventsIdIndexRouteImport } from './routes/events.$id.index'
 import { Route as EventsIdStatsRouteImport } from './routes/events.$id.stats'
 import { Route as EventsIdEditRouteImport } from './routes/events.$id.edit'
 
-const ProfileRoute = ProfileRouteImport.update({
-  id: '/profile',
-  path: '/profile',
+const MyProfileRoute = MyProfileRouteImport.update({
+  id: '/my-profile',
+  path: '/my-profile',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MyEventsRoute = MyEventsRouteImport.update({
@@ -89,7 +89,7 @@ export interface FileRoutesByFullPath {
   '/events': typeof EventsRouteWithChildren
   '/login': typeof LoginRoute
   '/my-events': typeof MyEventsRoute
-  '/profile': typeof ProfileRoute
+  '/my-profile': typeof MyProfileRoute
   '/events/$id': typeof EventsIdRouteWithChildren
   '/events/new': typeof EventsNewRoute
   '/events/': typeof EventsIndexRoute
@@ -102,7 +102,7 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/login': typeof LoginRoute
   '/my-events': typeof MyEventsRoute
-  '/profile': typeof ProfileRoute
+  '/my-profile': typeof MyProfileRoute
   '/events/new': typeof EventsNewRoute
   '/events': typeof EventsIndexRoute
   '/events/$id/edit': typeof EventsIdEditRoute
@@ -116,7 +116,7 @@ export interface FileRoutesById {
   '/events': typeof EventsRouteWithChildren
   '/login': typeof LoginRoute
   '/my-events': typeof MyEventsRoute
-  '/profile': typeof ProfileRoute
+  '/my-profile': typeof MyProfileRoute
   '/events/$id': typeof EventsIdRouteWithChildren
   '/events/new': typeof EventsNewRoute
   '/events/': typeof EventsIndexRoute
@@ -132,7 +132,7 @@ export interface FileRouteTypes {
     | '/events'
     | '/login'
     | '/my-events'
-    | '/profile'
+    | '/my-profile'
     | '/events/$id'
     | '/events/new'
     | '/events/'
@@ -145,7 +145,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/login'
     | '/my-events'
-    | '/profile'
+    | '/my-profile'
     | '/events/new'
     | '/events'
     | '/events/$id/edit'
@@ -158,7 +158,7 @@ export interface FileRouteTypes {
     | '/events'
     | '/login'
     | '/my-events'
-    | '/profile'
+    | '/my-profile'
     | '/events/$id'
     | '/events/new'
     | '/events/'
@@ -173,16 +173,16 @@ export interface RootRouteChildren {
   EventsRoute: typeof EventsRouteWithChildren
   LoginRoute: typeof LoginRoute
   MyEventsRoute: typeof MyEventsRoute
-  ProfileRoute: typeof ProfileRoute
+  MyProfileRoute: typeof MyProfileRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/profile': {
-      id: '/profile'
-      path: '/profile'
-      fullPath: '/profile'
-      preLoaderRoute: typeof ProfileRouteImport
+    '/my-profile': {
+      id: '/my-profile'
+      path: '/my-profile'
+      fullPath: '/my-profile'
+      preLoaderRoute: typeof MyProfileRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/my-events': {
@@ -302,7 +302,7 @@ const rootRouteChildren: RootRouteChildren = {
   EventsRoute: EventsRouteWithChildren,
   LoginRoute: LoginRoute,
   MyEventsRoute: MyEventsRoute,
-  ProfileRoute: ProfileRoute,
+  MyProfileRoute: MyProfileRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

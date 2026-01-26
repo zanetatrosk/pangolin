@@ -13,8 +13,6 @@ export const MediaGallery: React.FC<{
 }> = ({ mediaFiles, handleMediaUpload, allowEdit, onDelete }) => {
   const { t } = useTranslation();
 
-  if (!mediaFiles || mediaFiles.length === 0) return null;
-
   return (
     <>
       <div>
@@ -41,7 +39,7 @@ export const MediaGallery: React.FC<{
           )}
         </div>
       </div>
-      <Media mediaFiles={mediaFiles} allowEdit={allowEdit} onDelete={onDelete} />
+      {mediaFiles && mediaFiles.length > 0 && <Media mediaFiles={mediaFiles} allowEdit={allowEdit} onDelete={onDelete} />}
     </>
   );
 };

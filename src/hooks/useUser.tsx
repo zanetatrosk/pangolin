@@ -1,7 +1,7 @@
 export const useUser = () => {
     // Mocked user data
     const user = {
-        userId: "ecc81ede-b7af-4a60-b707-2b466abf196b",
+        userId: "0c4dc677-c047-4e8b-b747-4f3858a7c720",
         name: "John Doe",
         email: "",
     };

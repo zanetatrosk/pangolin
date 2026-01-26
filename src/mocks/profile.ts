@@ -1,20 +1,11 @@
-export const PROFILE = {
-    username: "dance_lover",
-    firstName: "Zaneta",
-    lastName: "Kowalska",
-    description: "Passionate dancer and instructor. Love to share the joy of dance with others!",
-    location: "Warsaw, Poland",
-    role: "Follower",
-    danceStyles: ["Bachata Sensual", "Bachata Dominicana", "Salsa On1"],
-    media: [
-        {type: "image", url: "https://cdn.statically.io/img/www.danceworks.com/wp-content/uploads/image00003-3-scaled.jpeg?quality=100&f=auto"},
-        {type: "image", url: "https://ballroomdreamusa.com/wp-content/uploads/2019/04/bachata.jpg"},
-    ],
-    upcomingEvents: [
-        { id: 1, name: "Bachata Sensual Weekender", date: "2024-06-15", location: "Dance Studio 1" },
-        { id: 2, name: "Summer Latin Festival", date: "2024-07-20", location: "City Park" },
-    ],
-    pastEvents: [
-        { id: 3, name: "Spring Salsa Gala", date: "2024-03-10", location: "Grand Hotel" },
-    ],
+import { ProfileData } from "@/features/profile/ProfilePage";
+
+export const PROFILE: ProfileData = {
+    firstName: "John",
+    lastName: "Doe",
+    bio: "Dance enthusiast exploring different styles. Always eager to learn and connect with fellow dancers!",
+    role: { id: "c936b621-f6d7-49bc-bb01-b0cc26223d1d", name: "Leader" },
+    danceStyles: [{ id: "1c960b95-8249-46f8-b045-84a9a1136fb7", name: "Bachata" }],
+    media: [{ id: "d27abd89-5154-4cec-babf-e00eb985a776", type: "image", url: "http://localhost:8080/api/media/476534ca-470f-4a3d-aa38-53e1299a4a83" }],
+    level: { id: "7d28868b-b53f-4405-8d8d-1ca495e403da", name: "Beginner" },
 };

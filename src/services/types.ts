@@ -16,7 +16,7 @@ export interface RsvpResponse extends RsvpData {
 
 export interface RsvpData {
     eventId: string;
-    userId: string;
+    userId?: string;
     status?: RsvpStatus;
     paid?: boolean;
 }

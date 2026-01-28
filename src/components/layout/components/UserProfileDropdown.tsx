@@ -1,18 +1,19 @@
 import { FC } from "react";
-import { useStore } from "@tanstack/react-store";
-import { authStore } from "@/stores/authStore";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { ProfileMenuItem } from "../types";
 import { getInitials } from "../utils/getInitials";
 import { useProfileMenu } from "../hooks/useProfileMenu";
+import { useAuth } from "@/features/auth/AuthProvider";
+import { useQuery } from "@tanstack/react-query";
+import { getUserById } from "@/services/user-api";
 
 interface UserProfileDropdownProps {
   profileMenuItems: ProfileMenuItem[];
@@ -21,8 +22,13 @@ interface UserProfileDropdownProps {
 export const UserProfileDropdown: FC<UserProfileDropdownProps> = ({
   profileMenuItems,
 }) => {
-  const { user } = useStore(authStore);
+  const { user } = useAuth();
   const { handleMenuItemClick } = useProfileMenu();
+  const { data } = useQuery({
+    queryKey: ["profile", user?.id],
+    queryFn: () => getUserById(user?.id!),
+    enabled: !!user?.id,
+  })
 
   if (!user) return null;
 
@@ -31,15 +37,15 @@ export const UserProfileDropdown: FC<UserProfileDropdownProps> = ({
       <DropdownMenuTrigger asChild>
         <button className="relative h-10 w-10 rounded-full overflow-hidden ring-offset-background transition-all hover:ring-2 hover:ring-ring hover:ring-offset-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
           <Avatar>
-            <AvatarImage src={user.avatar} alt={user.name} />
-            <AvatarFallback>{getInitials(user.name)}</AvatarFallback>
+            <AvatarImage src={data?.avatar?.url} alt={data?.avatar?.url} />
+            <AvatarFallback>{getInitials(data?.firstName + " " + data?.lastName)}</AvatarFallback>
           </Avatar>
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-56">
         <DropdownMenuLabel>
           <div className="flex flex-col space-y-1">
-            <p className="text-sm font-medium leading-none">{user.name}</p>
+            <p className="text-sm font-medium leading-none">{data?.firstName + " " + data?.lastName}</p>
             <p className="text-xs leading-none text-muted-foreground">
               {user.email}
             </p>

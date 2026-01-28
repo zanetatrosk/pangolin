@@ -1,10 +1,18 @@
+import { useAuth } from "@/features/auth/AuthProvider";
+
 export const useUser = () => {
-    // Mocked user data
-    const user = {
-        userId: "0c4dc677-c047-4e8b-b747-4f3858a7c720",
-        name: "John Doe",
-        email: "",
-    };
+    const { user, loading, isAuthenticated } = useAuth();
     
-    return { user };
+    // Transform UserDto to the format expected by the app
+    const transformedUser = user ? {
+        userId: user.id,
+        name: user.email.split('@')[0], // Use email prefix as name if no profile
+        email: user.email,
+    } : null;
+    
+    return { 
+        user: transformedUser,
+        loading,
+        isAuthenticated
+    };
 }

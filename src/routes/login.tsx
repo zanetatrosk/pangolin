@@ -11,7 +11,6 @@ export const Route = createFileRoute("/login")({
 });
 
 function LoginPage() {
-  // This is a placeholder - implement actual login UI here
   return (
     <div className="mx-auto max-w-md flex flex-col justify-center min-h-screen">
       <LoginForm />

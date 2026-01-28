@@ -14,6 +14,7 @@ import appCss from "../styles.css?url";
 
 import "@/lib/i18n"; 
 import { Footer } from "@/components/layout/Footer";
+import { AuthProvider } from "@/features/auth/AuthProvider";
 
 export const Route = createRootRoute({
   head: () => ({
@@ -52,11 +53,13 @@ function RootComponent() {
       </head>
       <body className="flex flex-col min-h-screen">
         <QueryClientProvider client={queryClient}>
-          {!isLoginPage && <Header />}
-          <div className="grow">
-            <Outlet />
-          </div>
-          {!isLoginPage && <Footer />}
+          <AuthProvider>
+            {!isLoginPage && <Header />}
+            <div className="grow">
+              <Outlet />
+            </div>
+            {!isLoginPage && <Footer />}
+          </AuthProvider>
         </QueryClientProvider>
         <TanStackDevtools
             config={{

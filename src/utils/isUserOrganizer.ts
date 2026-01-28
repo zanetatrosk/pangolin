@@ -1,3 +1,3 @@
-export const isUserOrganizer = (userId: string, organizerId: string): boolean => {
+export const isUserOrganizer = (organizerId: string, userId?: string): boolean => {
     return userId === organizerId;
 }

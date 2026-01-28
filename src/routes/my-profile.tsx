@@ -9,7 +9,7 @@ export const Route = createFileRoute("/my-profile")({
   beforeLoad: async ({ location }) => {
     const { isAuthenticated } = authStore.state;
     
-    if (!isAuthenticated) {
+    if (false) {
       throw redirect({
         to: "/login",
         search: {

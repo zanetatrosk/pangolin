@@ -36,7 +36,7 @@ export function EventSearch({onSearch}: {onSearch: (params: SearchProps) => void
   const debouncedQuery = useDebounce(locationSearchValue, 800);
   const { data: locationOptions = [], isLoading: isLoadingLocations } = useQuery({
     queryKey: ["locations", debouncedQuery],
-    queryFn: () => getPlaces(debouncedQuery, ["city", "country"], (props) => [props.city, props.country]),
+    queryFn: () => getPlaces(debouncedQuery, ["city", "country"], (props) => [props.name, props.country]),
     enabled: debouncedQuery.length > 2,
     staleTime: 5 * 60 * 1000,
   })

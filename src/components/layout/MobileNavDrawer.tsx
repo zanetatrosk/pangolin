@@ -14,13 +14,12 @@ import { NavItem, ProfileMenuItem } from "./types";
 import { MobileMenuItem } from "./components/MobileMenuItem";
 import { ThemeButton } from "./components/ThemeButton";
 import { RegisterButtons } from "./components/RegisterButtons";
-import { useStore } from "@tanstack/react-store";
-import { authStore } from "@/stores/authStore";
 import { MobileProfileMenu } from "./components/MobileProfileMenu";
+import { useAuth } from "@/features/auth/AuthProvider";
 
 export function MobileNavDrawer({ menuItems, profileMenuItems }: { menuItems: NavItem[], profileMenuItems: ProfileMenuItem[] }) {
   const [open, setOpen] = React.useState(false);
-  const { isAuthenticated } = useStore(authStore);
+  const { isAuthenticated } = useAuth();
 
   return (
     <div className="lg:hidden mx-auto flex items-center justify-between p-2">

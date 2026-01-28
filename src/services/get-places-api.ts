@@ -18,6 +18,7 @@ export const getPlaces = async (query: string, layers: string[], showLabels:(pro
     const data = await response.json();
     const places: PlaceOption[] = data.features.map((feature: any) => {
         const props = feature.properties;
+        const labels = showLabels(props);
         return {
             value: props.osm_id.toString(),
             label: Array.from(new Set(showLabels(props).filter(Boolean))).join(", "),

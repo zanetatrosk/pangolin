@@ -117,11 +117,11 @@ export const EventCard: React.FC<EventItem> = (event) => {
           <Separator />
           <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between p-3">
             {event.status !== EventStatus.CANCELLED &&
-              !isUserOrganizer(event.organizer.userId, user.userId) && (
+              !isUserOrganizer(event.organizer.userId, user?.userId) && (
                 <EventItemButtons
                   rsvpData={{
                     eventId: event.id,
-                    userId: user.userId,
+                    userId: user?.userId,
                     status: event.registrationStatus,
                   }}
                   key={event.id + event.registrationStatus}

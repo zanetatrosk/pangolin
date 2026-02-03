@@ -17,29 +17,38 @@ interface ConfirmActionDialogProps {
   actionType: ActionType | null;
   onConfirm: () => void;
   isLoading: boolean;
+  dialogComponent?: React.ReactNode;
 }
 
-const DIALOG_CONTENT: Record<ActionType, {
-  title: string;
-  description: string;
-  actionText: string;
-  variant: "default" | "destructive";
-}> = {
+const DIALOG_CONTENT: Record<
+  ActionType,
+  {
+    title: string;
+    description: string;
+    actionText: string;
+    variant: "default" | "destructive";
+    size?: "sm" | "lg" | "xl"; // Add size option
+  }
+> = {
   publish: {
     title: "Publish Event",
-    description: "Are you sure you want to publish this event? Once published, it will be visible to all users.",
+    description:
+      "Configure your event settings before publishing.",
     actionText: "Publish",
     variant: "default",
+    size: "lg", // Larger dialog for publish
   },
   cancel: {
     title: "Cancel Event",
-    description: "Are you sure you want to cancel this event? This action cannot be undone and attendees will be notified.",
+    description:
+      "Are you sure you want to cancel this event? This action cannot be undone and attendees will be notified.",
     actionText: "Cancel Event",
     variant: "destructive",
   },
   delete: {
     title: "Delete Draft",
-    description: "Are you sure you want to delete this draft? This action cannot be undone.",
+    description:
+      "Are you sure you want to delete this draft? This action cannot be undone.",
     actionText: "Delete",
     variant: "destructive",
   },
@@ -51,18 +60,20 @@ export const ConfirmActionDialog: React.FC<ConfirmActionDialogProps> = ({
   actionType,
   onConfirm,
   isLoading,
+  dialogComponent,
 }) => {
   const dialogContent = actionType ? DIALOG_CONTENT[actionType] : null;
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent>
+      <DialogContent className={dialogContent?.size === "lg" ? "sm:max-w-2xl" : ""}>
         {dialogContent && (
           <>
             <DialogHeader>
               <DialogTitle>{dialogContent.title}</DialogTitle>
               <DialogDescription>{dialogContent.description}</DialogDescription>
             </DialogHeader>
+              {dialogComponent}
             <DialogFooter>
               <Button
                 variant="outline"

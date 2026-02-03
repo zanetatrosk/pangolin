@@ -67,8 +67,6 @@ export const LocationSection = withForm({
       staleTime: 5 * 60 * 1000,
     });
 
-    console.log("LocationSection locationOptions:", locationOptions);
-
     return (
       <div className={className}>
         {/* Location Search */}

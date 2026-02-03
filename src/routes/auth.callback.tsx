@@ -21,7 +21,6 @@ function AuthCallback() {
   const { setTokens } = useAuth();
   const { accessToken, refreshToken, expiresIn, error, state } = Route.useSearch();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-debugger;
   useEffect(() => {
     const handleCallback = () => {
       // Check for error from backend

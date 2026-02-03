@@ -13,6 +13,8 @@ import { publishEvent, cancelEvent, deleteEvent } from "@/services/events-api";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { ConfirmActionDialog, ActionType } from "./ConfirmActionDialog";
+import { GoogleFormIntegration } from "@/features/eventDetail/publish-actions/GoogleFormIntegration";
+import { PublishEventOptions } from "../publish-actions/PublishEventOptions";
 
 interface EventItemManageButtonsProps {
   eventId: string | number;
@@ -178,6 +180,7 @@ export const EventItemManageButtons: React.FC<EventItemManageButtonsProps> = ({
         actionType={pendingAction}
         onConfirm={handleConfirm}
         isLoading={isLoading}
+        dialogComponent={<PublishEventOptions />}
       />
     </>
   );

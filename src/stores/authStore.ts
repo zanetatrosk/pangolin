@@ -22,7 +22,6 @@ export const selectIsAuthenticated = (state: AuthState) => !!state.user && !!sta
 
 // Actions
 export const setTokens = (accessToken: string, refreshToken: string, expiresIn: number) => {
-  debugger;
   authStore.setState((state) => ({
     ...state,
     accessToken,
@@ -110,7 +109,6 @@ export const loadUser = async () => {
       setLoading(false);
       return;
     }
-    debugger
     
     const token = localStorage.getItem('accessToken');
     const expiresAt = localStorage.getItem('tokenExpiresAt');

@@ -16,7 +16,7 @@ const eventDetailDataToDanceEventCreation = (
   return {
     basicInfo: {
       eventName: event.basicInfo?.eventName || "",
-      location: {
+      location: event.basicInfo?.location || {
         name: "",
         street: "",
         city: "",
@@ -33,9 +33,11 @@ const eventDetailDataToDanceEventCreation = (
       currency: event.basicInfo?.currency || undefined,
     },
     additionalDetails: {
-      danceStyles: event.additionalDetails?.danceStyles.map(ds => ds.id) || [],
-      skillLevel: event.additionalDetails?.skillLevel.map(sl => sl.id) || [],
-      typeOfEvent: event.additionalDetails?.typeOfEvent.map(te => te.id) || [],
+      danceStyles:
+        event.additionalDetails?.danceStyles.map((ds) => ds.id) || [],
+      skillLevel: event.additionalDetails?.skillLevel.map((sl) => sl.id) || [],
+      typeOfEvent:
+        event.additionalDetails?.typeOfEvent.map((te) => te.id) || [],
       maxAttendees: event.additionalDetails?.maxAttendees || undefined,
       allowWaitlist: event.additionalDetails?.allowWaitlist || false,
       allowPartnerPairing:
@@ -59,16 +61,16 @@ function RouteComponent() {
   }
 
   const eventMutation = useMutation({
-        mutationFn: (data: DanceEventCreation) => updateEventById(id, data),
-        onSuccess: (data) => {
-          console.log("Event updated successfully:", data);
-          navigate({ to: PATHS.EVENTS.DETAIL(data.events[0]) });
-        },  
-        onError: (error) => {
-          console.error("Error updating event:", error);
-        },
-      });
-   
+    mutationFn: (data: DanceEventCreation) => updateEventById(id, data),
+    onSuccess: (data) => {
+      console.log("Event updated successfully:", data);
+      navigate({ to: PATHS.EVENTS.DETAIL(data.events[0]) });
+    },
+    onError: (error) => {
+      console.error("Error updating event:", error);
+    },
+  });
+
   const eventFormOpts = {
     defaultValues: eventDetailDataToDanceEventCreation(event),
   };

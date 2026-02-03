@@ -8,16 +8,20 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
+import { PublishEventOptions } from "../publish-actions/PublishEventOptions";
 
 export type ActionType = "publish" | "cancel" | "delete";
+
+import { PublishPayload } from "../publish-actions/PublishEventOptions";
 
 interface ConfirmActionDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   actionType: ActionType | null;
-  onConfirm: () => void;
+  onConfirm: (data?: PublishPayload) => void;
   isLoading: boolean;
-  dialogComponent?: React.ReactNode;
+  publishData?: PublishPayload;
+  onPublishDataChange?: (data: PublishPayload) => void;
 }
 
 const DIALOG_CONTENT: Record<
@@ -27,7 +31,8 @@ const DIALOG_CONTENT: Record<
     description: string;
     actionText: string;
     variant: "default" | "destructive";
-    size?: "sm" | "lg" | "xl"; // Add size option
+    size?: "sm" | "lg" | "xl"; // Add size option,
+    component?: React.ReactNode; // Optional custom component to render in the dialog
   }
 > = {
   publish: {
@@ -60,9 +65,17 @@ export const ConfirmActionDialog: React.FC<ConfirmActionDialogProps> = ({
   actionType,
   onConfirm,
   isLoading,
-  dialogComponent,
+  publishData,
+  onPublishDataChange,
 }) => {
   const dialogContent = actionType ? DIALOG_CONTENT[actionType] : null;
+  
+  const renderComponent = () => {
+    if (actionType === "publish" && publishData && onPublishDataChange) {
+      return <PublishEventOptions value={publishData} onChange={onPublishDataChange} />;
+    }
+    return dialogContent?.component;
+  };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -73,7 +86,7 @@ export const ConfirmActionDialog: React.FC<ConfirmActionDialogProps> = ({
               <DialogTitle>{dialogContent.title}</DialogTitle>
               <DialogDescription>{dialogContent.description}</DialogDescription>
             </DialogHeader>
-              {dialogComponent}
+              {renderComponent()}
             <DialogFooter>
               <Button
                 variant="outline"
@@ -84,7 +97,7 @@ export const ConfirmActionDialog: React.FC<ConfirmActionDialogProps> = ({
               </Button>
               <Button
                 variant={dialogContent.variant}
-                onClick={onConfirm}
+                onClick={() => onConfirm(publishData)}
                 disabled={isLoading}
               >
                 {isLoading ? (

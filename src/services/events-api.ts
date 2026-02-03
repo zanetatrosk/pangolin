@@ -5,6 +5,7 @@ import { EventItem, Pageable } from "@/features/eventsList/types";
 import { SearchProps } from "@/routes/events.index";
 import { convertSearchParamsToQuery } from "@/features/eventsList/utils/parseSearchParams";
 import { RsvpData, RsvpResponse, EventStatusResponse } from "./types";
+import { PublishPayload } from "@/features/eventDetail/publish-actions/PublishEventOptions";
 
 
 const EVENT_URL = "/events";
@@ -44,8 +45,8 @@ export const deleteRsvp = async (eventId: string): Promise<void> => {
     await axiosInstance.delete(`${EVENT_URL}/${eventId}/my-rsvp`);
 };
 
-export const publishEvent = async (eventId: string): Promise<EventStatusResponse> => {
-    const response = await axiosInstance.patch(`${EVENT_URL}/${eventId}/publish`);
+export const publishEvent = async (eventId: string, payload: PublishPayload): Promise<EventStatusResponse> => {
+    const response = await axiosInstance.patch(`${EVENT_URL}/${eventId}/publish`, payload);
     return response.data;
 };
 

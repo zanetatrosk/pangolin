@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useDebounce } from "@uidotdev/usehooks";
 import { getPlaces, PlaceOption } from "@/services/get-places-api";
@@ -15,8 +15,12 @@ export const LocationSection = withForm({
   props: {} as LocationSectionProps,
   render: ({ form, className }) => {
     const [searchQuery, setSearchQuery] = useState<string>("");
-    const [city, setCity] = useState<string>("");
-    const [country, setCountry] = useState<string>("");
+    const [city, setCity] = useState<string>(() => 
+      form.getFieldValue("basicInfo.location.city") || ""
+    );
+    const [country, setCountry] = useState<string>(() => 
+      form.getFieldValue("basicInfo.location.country") || ""
+    );
 
     // Check if any location field has a value to determine initial state
     const locationValues = form.getFieldValue("basicInfo.location");
@@ -156,7 +160,7 @@ export const LocationSection = withForm({
                           );
                         }
                       }
-                      setCity(placeOption?.label || "");
+                      setCity(placeOption?.locationData.city || "");
                     }}
                     onSearchChange={(search) => setCity(search)}
                   />

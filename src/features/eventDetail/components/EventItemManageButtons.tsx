@@ -13,8 +13,7 @@ import { publishEvent, cancelEvent, deleteEvent } from "@/services/events-api";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { ConfirmActionDialog, ActionType } from "./ConfirmActionDialog";
-import { GoogleFormIntegration } from "@/features/eventDetail/publish-actions/GoogleFormIntegration";
-import { PublishEventOptions } from "../publish-actions/PublishEventOptions";
+import { PublishPayload, RegistrationModeEnum } from "../publish-actions/PublishEventOptions";
 
 interface EventItemManageButtonsProps {
   eventId: string | number;
@@ -28,9 +27,13 @@ export const EventItemManageButtons: React.FC<EventItemManageButtonsProps> = ({
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const [pendingAction, setPendingAction] = useState<ActionType | null>(null);
+  const [publishData, setPublishData] = useState<PublishPayload>({
+    registrationMode: RegistrationModeEnum.OPEN,
+    requireApproval: false,
+  });
 
   const publishMutation = useMutation({
-    mutationFn: () => publishEvent(String(eventId)),
+    mutationFn: (payload: PublishPayload) => publishEvent(String(eventId), payload),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["event", String(eventId)] });
       queryClient.invalidateQueries({ queryKey: ["events"] });
@@ -89,15 +92,13 @@ export const EventItemManageButtons: React.FC<EventItemManageButtonsProps> = ({
     setPendingAction("delete");
   };
 
-  const handleConfirm = () => {
-    const actions = {
-      publish: publishMutation,
-      cancel: cancelMutation,
-      delete: deleteMutation,
-    };
-    
-    if (pendingAction) {
-      actions[pendingAction].mutate();
+  const handleConfirm = (data?: PublishPayload) => {
+    if (pendingAction === "publish" && data) {
+      publishMutation.mutate(data);
+    } else if (pendingAction === "cancel") {
+      cancelMutation.mutate();
+    } else if (pendingAction === "delete") {
+      deleteMutation.mutate();
     }
   };
 
@@ -180,7 +181,8 @@ export const EventItemManageButtons: React.FC<EventItemManageButtonsProps> = ({
         actionType={pendingAction}
         onConfirm={handleConfirm}
         isLoading={isLoading}
-        dialogComponent={<PublishEventOptions />}
+        publishData={publishData}
+        onPublishDataChange={setPublishData}
       />
     </>
   );

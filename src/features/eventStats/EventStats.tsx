@@ -3,7 +3,6 @@ import { AttendeeStats, RecurringDate } from "../eventDetail/types";
 import { AttendeeStatsDisplay } from "./AttendeeStatsDisplay";
 import { RegistrationTable } from "./RegistrationTable";
 import { RegistrationFormData } from "./types";
-import { GoogleFormIntegration } from "../eventDetail/publish-actions/GoogleFormIntegration";
 
 export interface EventStatsData {
   eventName: string;

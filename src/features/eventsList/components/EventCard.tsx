@@ -125,6 +125,8 @@ export const EventCard: React.FC<EventItem> = (event) => {
                     status: event.registrationStatus,
                   }}
                   key={event.id + event.registrationStatus}
+                  registrationMode={event.registrationType}
+                  formId={event.formId}
                 />
               )}
 

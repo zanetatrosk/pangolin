@@ -6,27 +6,42 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { getDancerRoles } from "@/services/role-api";
+import { useQuery } from "@tanstack/react-query";
 import { FC, useState } from "react";
 
-export const RoleSelect: FC = () => {
-  const [selectedRole, setSelectedRole] = useState<string>("follower");
-  const options = [
-    { value: "leader", label: "Leader" },
-    { value: "follower", label: "Follower" },
-    { value: "other", label: "Other" },
-  ];
+interface RoleSelectProps {
+  value?: string;
+  onChange?: (value: string) => void;
+}
+
+export const RoleSelect: FC<RoleSelectProps> = ({ value, onChange }) => {
+  const [internalValue, setInternalValue] = useState<string>("follower");
+  const selectedRole = value ?? internalValue;
+  const handleChange = (newValue: string) => {
+    if (onChange) {
+      onChange(newValue);
+    } else {
+      setInternalValue(newValue);
+    }
+  };
+
+  const options = useQuery({
+    queryKey: ["registrationRoles"],
+    queryFn: getDancerRoles,
+  }).data || [];
 
   return (
     <div className="flex items-center gap-4">
       <h4 className="font-medium whitespace-nowrap">Select Your Role</h4>
-        <Select value={selectedRole} onValueChange={setSelectedRole}>
+        <Select value={selectedRole} onValueChange={handleChange}>
           <SelectTrigger className="w-[180px]">
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
             {options.map((option, index) => {
-              const value = option.value;
-              const label = option.label;
+              const value = option.id;
+              const label = option.name;
               return (
                 <SelectItem key={value || index} value={value}>
                   {label}

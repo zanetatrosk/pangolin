@@ -1,6 +1,7 @@
 import { RsvpStatus } from "@/services/types";
 import { EventMediaItem, Location } from "../newEvent/types";
 import { EventStatus } from "../eventDetail/types";
+import { RegistrationModeEnum } from "../eventDetail/publish-actions/PublishEventOptions";
 
 export interface EventItem {
   id: string;
@@ -22,6 +23,8 @@ export interface EventItem {
   registrationStatus?: RsvpStatus;
   isUserInterested: boolean;
   status: EventStatus;
+  registrationType: RegistrationModeEnum;
+  formId?: string;
 }
 
 export interface Organizer {

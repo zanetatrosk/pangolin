@@ -19,6 +19,7 @@ export interface RsvpData {
     userId?: string;
     status?: RsvpStatus;
     paid?: boolean;
+    roleId?: string;
 }
 
 export interface EventStatusResponse {

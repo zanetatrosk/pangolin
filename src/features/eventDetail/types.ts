@@ -1,6 +1,11 @@
 import { CodebookItem, RsvpStatus } from "@/services/types";
 import { Organizer } from "../eventsList/types";
-import { AdditionalDetailsDataBase, BasicData, DanceEventCreation } from "../newEvent/types";
+import {
+  AdditionalDetailsDataBase,
+  BasicData,
+  DanceEventCreation,
+} from "../newEvent/types";
+import { RegistrationModeEnum } from "./publish-actions/PublishEventOptions";
 
 export interface AttendeeStats {
   going: {
@@ -21,7 +26,9 @@ export interface BasicDetailsData extends BasicData {
   recurringDates?: RecurringDate[];
   organizer: Organizer;
   status: EventStatus;
-  statusUser?: RsvpStatus ;
+  statusUser?: RsvpStatus;
+  registrationType: RegistrationModeEnum;
+  formId?: string;
 }
 
 export interface RecurringDate {
@@ -35,7 +42,10 @@ export interface AdditionalDetailsData extends AdditionalDetailsDataBase {
   typeOfEvent: CodebookItem[];
 }
 
-export interface EventDetailData extends Omit<DanceEventCreation, "basicInfo" | "additionalDetails"> {
+export interface EventDetailData extends Omit<
+  DanceEventCreation,
+  "basicInfo" | "additionalDetails"
+> {
   id: string;
   basicInfo: BasicDetailsData;
   additionalDetails?: AdditionalDetailsData;

@@ -72,6 +72,8 @@ export function EventDetail({ event }: EventDetailProps) {
                     userId: "", // Replace with actual user ID
                     status: event.basicInfo.statusUser,
                   }}
+                  registrationMode={event.basicInfo.registrationType}
+                  formId={event.basicInfo.formId}
                 />)
               }
             </div>

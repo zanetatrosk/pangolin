@@ -1,13 +1,12 @@
 import { FC } from "react";
 import { AttendeeStats, RecurringDate } from "../eventDetail/types";
-import { AttendeeStatsDisplay } from "./AttendeeStatsDisplay";
 import { RegistrationTable } from "./RegistrationTable";
 import { RegistrationFormData } from "./types";
 
 export interface EventStatsData {
   eventName: string;
   date: string;
-  recurringDate: RecurringDate[];
+  recurringDates: RecurringDate[];
   attendeeStats: AttendeeStats;
   registrationData: RegistrationFormData;
 }
@@ -19,10 +18,7 @@ export const EventStats: FC<{ stats: EventStatsData }> = ({ stats }) => {
         <div>
           <h1 className="text-3xl font-bold">{stats.eventName}</h1>
           <p className="text-muted-foreground mt-1">{new Date(stats.date).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</p>
-        </div>
-        <AttendeeStatsDisplay stats={stats.attendeeStats} />
-        
-        
+        </div>        
         
         <div className="space-y-4">
           <h2 className="text-2xl font-semibold">Registrations</h2>

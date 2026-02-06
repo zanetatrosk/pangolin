@@ -16,6 +16,7 @@ import { Route as EventsRouteImport } from './routes/events'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as EventsIndexRouteImport } from './routes/events.index'
+import { Route as ProfileUserIdRouteImport } from './routes/profile.$userId'
 import { Route as EventsNewRouteImport } from './routes/events.new'
 import { Route as EventsIdRouteImport } from './routes/events.$id'
 import { Route as AuthIncrementalCallbackRouteImport } from './routes/auth.incremental-callback'
@@ -58,6 +59,11 @@ const EventsIndexRoute = EventsIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => EventsRoute,
+} as any)
+const ProfileUserIdRoute = ProfileUserIdRouteImport.update({
+  id: '/profile/$userId',
+  path: '/profile/$userId',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const EventsNewRoute = EventsNewRouteImport.update({
   id: '/new',
@@ -106,6 +112,7 @@ export interface FileRoutesByFullPath {
   '/auth/incremental-callback': typeof AuthIncrementalCallbackRoute
   '/events/$id': typeof EventsIdRouteWithChildren
   '/events/new': typeof EventsNewRoute
+  '/profile/$userId': typeof ProfileUserIdRoute
   '/events/': typeof EventsIndexRoute
   '/events/$id/edit': typeof EventsIdEditRoute
   '/events/$id/stats': typeof EventsIdStatsRoute
@@ -120,6 +127,7 @@ export interface FileRoutesByTo {
   '/auth/callback': typeof AuthCallbackRoute
   '/auth/incremental-callback': typeof AuthIncrementalCallbackRoute
   '/events/new': typeof EventsNewRoute
+  '/profile/$userId': typeof ProfileUserIdRoute
   '/events': typeof EventsIndexRoute
   '/events/$id/edit': typeof EventsIdEditRoute
   '/events/$id/stats': typeof EventsIdStatsRoute
@@ -137,6 +145,7 @@ export interface FileRoutesById {
   '/auth/incremental-callback': typeof AuthIncrementalCallbackRoute
   '/events/$id': typeof EventsIdRouteWithChildren
   '/events/new': typeof EventsNewRoute
+  '/profile/$userId': typeof ProfileUserIdRoute
   '/events/': typeof EventsIndexRoute
   '/events/$id/edit': typeof EventsIdEditRoute
   '/events/$id/stats': typeof EventsIdStatsRoute
@@ -155,6 +164,7 @@ export interface FileRouteTypes {
     | '/auth/incremental-callback'
     | '/events/$id'
     | '/events/new'
+    | '/profile/$userId'
     | '/events/'
     | '/events/$id/edit'
     | '/events/$id/stats'
@@ -169,6 +179,7 @@ export interface FileRouteTypes {
     | '/auth/callback'
     | '/auth/incremental-callback'
     | '/events/new'
+    | '/profile/$userId'
     | '/events'
     | '/events/$id/edit'
     | '/events/$id/stats'
@@ -185,6 +196,7 @@ export interface FileRouteTypes {
     | '/auth/incremental-callback'
     | '/events/$id'
     | '/events/new'
+    | '/profile/$userId'
     | '/events/'
     | '/events/$id/edit'
     | '/events/$id/stats'
@@ -200,6 +212,7 @@ export interface RootRouteChildren {
   MyProfileRoute: typeof MyProfileRoute
   AuthCallbackRoute: typeof AuthCallbackRoute
   AuthIncrementalCallbackRoute: typeof AuthIncrementalCallbackRoute
+  ProfileUserIdRoute: typeof ProfileUserIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -252,6 +265,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/events/'
       preLoaderRoute: typeof EventsIndexRouteImport
       parentRoute: typeof EventsRoute
+    }
+    '/profile/$userId': {
+      id: '/profile/$userId'
+      path: '/profile/$userId'
+      fullPath: '/profile/$userId'
+      preLoaderRoute: typeof ProfileUserIdRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/events/new': {
       id: '/events/new'
@@ -345,6 +365,7 @@ const rootRouteChildren: RootRouteChildren = {
   MyProfileRoute: MyProfileRoute,
   AuthCallbackRoute: AuthCallbackRoute,
   AuthIncrementalCallbackRoute: AuthIncrementalCallbackRoute,
+  ProfileUserIdRoute: ProfileUserIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

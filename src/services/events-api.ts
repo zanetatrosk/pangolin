@@ -6,6 +6,7 @@ import { SearchProps } from "@/routes/events.index";
 import { convertSearchParamsToQuery } from "@/features/eventsList/utils/parseSearchParams";
 import { RsvpData, RsvpResponse, EventStatusResponse } from "./types";
 import { PublishPayload } from "@/features/eventDetail/publish-actions/PublishEventOptions";
+import { EventStatsData } from "@/features/eventStats/EventStats";
 
 
 const EVENT_URL = "/events";
@@ -58,3 +59,8 @@ export const cancelEvent = async (eventId: string): Promise<EventStatusResponse>
 export const deleteEvent = async (eventId: string): Promise<void> => {
     await axiosInstance.delete(`${EVENT_URL}/${eventId}`);
 };
+
+export const getEventStats = async (eventId: string): Promise<EventStatsData> => {
+    const response = await axiosInstance.get(`${EVENT_URL}/${eventId}/stats`);
+    return response.data;
+}

@@ -1,22 +1,19 @@
 export enum FormQuestionType {
   TEXT = "TEXT",
-  SELECT = "SELECT",
-  RADIO = "RADIO",
-  CHECKBOX = "CHECKBOX",
-  EMAIL = "EMAIL",
+  SET = "SET"
 }
 
-export interface FormQuestion {
+export interface Header {
   id: string;
   question: string;
   type: FormQuestionType;
-  answerSet?: string[]; // For SELECT, RADIO, CHECKBOX
+  answerSet?: string[]; // For SET type questions
   required?: boolean;
 }
 
 export interface RegistrationAnswer {
-  questionId: string;
-  answer: string | string[]; // Array for CHECKBOX
+  id: string;
+  value: string | string[]; // Array for multi-select SET questions
 }
 
 export interface RegistrationWithAnswers {
@@ -25,11 +22,11 @@ export interface RegistrationWithAnswers {
     userId?: string;
     email: string;
   };
-  answers: RegistrationAnswer[];
+  data: RegistrationAnswer[];
   createdAt: string;
 }
 
 export interface RegistrationFormData {
-  form: FormQuestion[];
+  headers: Header[];
   registrations: RegistrationWithAnswers[];
 }

@@ -4,7 +4,7 @@ import { FormQuestionType } from "@/features/eventStats/types";
 export const mockEventStats: EventStatsData = {
     eventName: "Summer Salsa Night",
     date: "2026-02-15T19:00:00Z",
-    recurringDate: [],
+    recurringDates: [],
     attendeeStats: {
         going: {
             total: 42,
@@ -14,18 +14,18 @@ export const mockEventStats: EventStatsData = {
         interested: 15,
     },
     registrationData: {
-        form: [
+        headers: [
             {
                 id: "1",
                 question: "Dance Role",
-                type: FormQuestionType.SELECT,
+                type: FormQuestionType.SET,
                 answerSet: ["Leader", "Follower", "Both"],
                 required: true,
             },
             {
                 id: "2",
                 question: "Experience Level",
-                type: FormQuestionType.RADIO,
+                type: FormQuestionType.SET,
                 answerSet: ["Beginner", "Intermediate", "Advanced"],
                 required: true,
             },
@@ -44,7 +44,7 @@ export const mockEventStats: EventStatsData = {
             {
                 id: "5",
                 question: "T-Shirt Size",
-                type: FormQuestionType.SELECT,
+                type: FormQuestionType.SET,
                 answerSet: ["XS", "S", "M", "L", "XL", "XXL"],
                 required: false,
             },
@@ -56,12 +56,12 @@ export const mockEventStats: EventStatsData = {
                     userId: "u1",
                     email: "anna.smith@example.com",
                 },
-                answers: [
-                    { questionId: "1", answer: "Follower" },
-                    { questionId: "2", answer: "Intermediate" },
-                    { questionId: "3", answer: "Anna Smith" },
-                    { questionId: "4", answer: "Vegetarian" },
-                    { questionId: "5", answer: "M" },
+                data: [
+                    { id: "1", value: "Follower" },
+                    { id: "2", value: "Intermediate" },
+                    { id: "3", value: "Anna Smith" },
+                    { id: "4", value: "Vegetarian" },
+                    { id: "5", value: "M" },
                 ],
                 createdAt: "2026-01-15T10:30:00Z",
             },
@@ -71,12 +71,12 @@ export const mockEventStats: EventStatsData = {
                     userId: "u2",
                     email: "john.doe@example.com",
                 },
-                answers: [
-                    { questionId: "1", answer: "Leader" },
-                    { questionId: "2", answer: "Advanced" },
-                    { questionId: "3", answer: "John Doe" },
-                    { questionId: "4", answer: "" },
-                    { questionId: "5", answer: "L" },
+                data: [
+                    { id: "1", value: "Leader" },
+                    { id: "2", value: "Advanced" },
+                    { id: "3", value: "John Doe" },
+                    { id: "4", value: "" },
+                    { id: "5", value: "L" },
                 ],
                 createdAt: "2026-01-16T14:20:00Z",
             },
@@ -86,12 +86,12 @@ export const mockEventStats: EventStatsData = {
                     userId: "u3",
                     email: "maria.garcia@example.com",
                 },
-                answers: [
-                    { questionId: "1", answer: "Both" },
-                    { questionId: "2", answer: "Intermediate" },
-                    { questionId: "3", answer: "Maria Garcia" },
-                    { questionId: "4", answer: "Gluten-free" },
-                    { questionId: "5", answer: "S" },
+                data: [
+                    { id: "1", value: "Both" },
+                    { id: "2", value: "Intermediate" },
+                    { id: "3", value: "Maria Garcia" },
+                    { id: "4", value: "Gluten-free" },
+                    { id: "5", value: "S" },
                 ],
                 createdAt: "2026-01-17T09:45:00Z",
             },
@@ -101,12 +101,12 @@ export const mockEventStats: EventStatsData = {
                     userId: "u4",
                     email: "david.jones@example.com",
                 },
-                answers: [
-                    { questionId: "1", answer: "Leader" },
-                    { questionId: "2", answer: "Beginner" },
-                    { questionId: "3", answer: "David Jones" },
-                    { questionId: "4", answer: "" },
-                    { questionId: "5", answer: "XL" },
+                data: [
+                    { id: "1", value: "Leader" },
+                    { id: "2", value: "Beginner" },
+                    { id: "3", value: "David Jones" },
+                    { id: "4", value: "" },
+                    { id: "5", value: "XL" },
                 ],
                 createdAt: "2026-01-18T16:00:00Z",
             },
@@ -116,12 +116,12 @@ export const mockEventStats: EventStatsData = {
                     userId: "u5",
                     email: "sarah.wilson@example.com",
                 },
-                answers: [
-                    { questionId: "1", answer: "Follower" },
-                    { questionId: "2", answer: "Advanced" },
-                    { questionId: "3", answer: "Sarah Wilson" },
-                    { questionId: "4", answer: "Vegan" },
-                    { questionId: "5", answer: "M" },
+                data: [
+                    { id: "1", value: "Follower" },
+                    { id: "2", value: "Advanced" },
+                    { id: "3", value: "Sarah Wilson" },
+                    { id: "4", value: "Vegan" },
+                    { id: "5", value: "M" },
                 ],
                 createdAt: "2026-01-19T11:30:00Z",
             },

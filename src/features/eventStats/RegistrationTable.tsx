@@ -1,4 +1,5 @@
 import { FC, useMemo, useState } from "react";
+import { useNavigate } from "@tanstack/react-router";
 import {
   useReactTable,
   getCoreRowModel,
@@ -26,18 +27,17 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
-import { X } from "lucide-react";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Trash2, Download, Mail } from "lucide-react";
 import {
-  FormQuestion,
-  FormQuestionType,
-  RegistrationWithAnswers,
-  RegistrationFormData,
+  Header,
+  FormQuestionType, RegistrationFormData
 } from "./types";
+import { PATHS } from "@/paths";
 
 interface TableRowData {
   id: string;
-  email: string;
-  createdAt: string;
+  userId?: string;
   [key: string]: any; // Dynamic answer fields
 }
 
@@ -46,23 +46,24 @@ const columnHelper = createColumnHelper<TableRowData>();
 export const RegistrationTable: FC<{ data: RegistrationFormData }> = ({
   data,
 }) => {
+  const navigate = useNavigate();
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [sorting, setSorting] = useState<SortingState>([]);
+  const [rowSelection, setRowSelection] = useState({});
 
   // Transform registrations into table-friendly format
   const tableData: TableRowData[] = useMemo(() => {
     return data.registrations.map((reg) => {
       const row: TableRowData = {
         id: reg.id,
-        email: reg.user.email,
-        createdAt: reg.createdAt,
+        userId: reg.user.userId,
       };
 
       // Add answers as dynamic fields
-      reg.answers.forEach((answer) => {
-        row[`q_${answer.questionId}`] = Array.isArray(answer.answer)
-          ? answer.answer.join(", ")
-          : answer.answer;
+      reg.data.forEach((answer) => {
+        row[`q_${answer.id}`] = Array.isArray(answer.value)
+          ? answer.value.join(", ")
+          : answer.value;
       });
 
       return row;
@@ -72,15 +73,35 @@ export const RegistrationTable: FC<{ data: RegistrationFormData }> = ({
   // Create columns dynamically based on form questions
   const columns = useMemo(() => {
     const cols = [
-      columnHelper.accessor("email", {
-        header: "Email",
-        cell: (info) => info.getValue(),
-        filterFn: "includesString",
+      // Checkbox column
+      columnHelper.display({
+        id: "select",
+        header: ({ table }) => (
+          <Checkbox
+            checked={
+              table.getIsAllPageRowsSelected() ||
+              (table.getIsSomePageRowsSelected() && "indeterminate")
+            }
+            onCheckedChange={(value) =>
+              table.toggleAllPageRowsSelected(!!value)
+            }
+            aria-label="Select all"
+          />
+        ),
+        cell: ({ row }) => (
+          <Checkbox
+            checked={row.getIsSelected()}
+            onCheckedChange={(value) => row.toggleSelected(!!value)}
+            aria-label="Select row"
+          />
+        ),
+        enableSorting: false,
+        enableHiding: false,
       }),
     ];
 
     // Add dynamic columns for each form question
-    data.form.forEach((question) => {
+    data.headers.forEach((question) => {
       cols.push(
         columnHelper.accessor(`q_${question.id}`, {
           header: question.question,
@@ -89,25 +110,12 @@ export const RegistrationTable: FC<{ data: RegistrationFormData }> = ({
           meta: {
             question,
           },
-        })
+        }),
       );
     });
 
-    cols.push(
-      columnHelper.accessor("createdAt", {
-        header: "Registered",
-        cell: (info) =>
-          new Date(info.getValue()).toLocaleDateString("en-US", {
-            month: "short",
-            day: "numeric",
-            year: "numeric",
-          }),
-        filterFn: "includesString",
-      })
-    );
-
     return cols;
-  }, [data.form]);
+  }, [data.headers]);
 
   const table = useReactTable({
     data: tableData,
@@ -117,25 +125,97 @@ export const RegistrationTable: FC<{ data: RegistrationFormData }> = ({
     getSortedRowModel: getSortedRowModel(),
     onColumnFiltersChange: setColumnFilters,
     onSortingChange: setSorting,
+    onRowSelectionChange: setRowSelection,
     state: {
       columnFilters,
       sorting,
+      rowSelection,
     },
   });
 
+  const selectedRows = table.getSelectedRowModel().rows;
+  const selectedCount = selectedRows.length;
+
+  const handleDeleteSelected = () => {
+    const selectedIds = selectedRows.map((row) => row.original.id);
+    console.log("Delete registrations:", selectedIds);
+    // Implement delete logic here
+  };
+
+  const handleExportSelected = () => {
+    const selectedIds = selectedRows.map((row) => row.original.id);
+    console.log("Export registrations:", selectedIds);
+    // Implement export logic here
+  };
+
+  const handleEmailSelected = () => {
+    const selectedIds = selectedRows.map((row) => row.original.id);
+    console.log("Email registrations:", selectedIds);
+    // Implement email logic here
+  };
+
+  const handleRowClick = (row: TableRowData, event: React.MouseEvent) => {
+    // Don't navigate if clicking on checkbox or if no userId
+    if (!row.userId) return;
+    
+    const target = event.target as HTMLElement;
+    // Prevent navigation when clicking on checkbox
+    if (target.closest('[role="checkbox"]')) return;
+    
+    navigate({ to: PATHS.PROFILE.VIEW(row.userId) });
+  };
+
   return (
     <div className="space-y-4">
+      {selectedCount > 0 && (
+        <div className="flex items-center justify-between rounded-md border bg-muted/50 p-3">
+          <div className="flex items-center gap-2">
+            <span className="text-sm font-medium">
+              {selectedCount} {selectedCount === 1 ? "row" : "rows"} selected
+            </span>
+          </div>
+          <div className="flex items-center gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleEmailSelected}
+              className="gap-2"
+            >
+              <Mail className="h-4 w-4" />
+              Email
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleExportSelected}
+              className="gap-2"
+            >
+              <Download className="h-4 w-4" />
+              Export
+            </Button>
+            <Button
+              variant="destructive"
+              size="sm"
+              onClick={handleDeleteSelected}
+              className="gap-2"
+            >
+              <Trash2 className="h-4 w-4" />
+              Delete
+            </Button>
+          </div>
+        </div>
+      )}
       <div className="rounded-md border">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
-                  const question = header.column.columnDef.meta?.question as
-                    | FormQuestion
+                  const question = header.column.meta?.question as
+                    | Header
                     | undefined;
                   const currentFilter = columnFilters.find(
-                    (f) => f.id === header.column.id
+                    (f) => f.id === header.column.id,
                   );
 
                   return (
@@ -144,14 +224,13 @@ export const RegistrationTable: FC<{ data: RegistrationFormData }> = ({
                         <div className="font-medium">
                           {flexRender(
                             header.column.columnDef.header,
-                            header.getContext()
+                            header.getContext(),
                           )}
                         </div>
-                        
+
                         {/* Render appropriate filter based on question type */}
-                        {question?.type === FormQuestionType.SELECT ||
-                        question?.type === FormQuestionType.RADIO ? (
-                          <div className="flex items-center gap-1">
+                        {question?.type === FormQuestionType.SET ? (
+                          <div className="flex items-center gap-1 mb-2">
                             <Select
                               value={(currentFilter?.value as string) || "all"}
                               onValueChange={(value) => {
@@ -183,18 +262,19 @@ export const RegistrationTable: FC<{ data: RegistrationFormData }> = ({
                                   header.column.setFilterValue(undefined)
                                 }
                               >
-                                <X className="h-3 w-3" />
+                                <Trash2 className="h-3 w-3" />
                               </Button>
                             )}
                           </div>
-                        ) : header.column.id !== "createdAt" ? (
+                        ) : header.column.id !== "createdAt" &&
+                          header.column.id !== "select" ? (
                           <Input
                             placeholder="Filter..."
                             value={(currentFilter?.value as string) || ""}
                             onChange={(e) =>
                               header.column.setFilterValue(e.target.value)
                             }
-                            className="h-8 text-xs"
+                            className="h-8 text-xs mb-2"
                           />
                         ) : null}
                       </div>
@@ -206,18 +286,25 @@ export const RegistrationTable: FC<{ data: RegistrationFormData }> = ({
           </TableHeader>
           <TableBody>
             {table.getRowModel().rows.length ? (
-              table.getRowModel().rows.map((row) => (
-                <TableRow key={row.id}>
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              ))
+              table.getRowModel().rows.map((row) => {
+                const hasUserId = !!row.original.userId;
+                return (
+                  <TableRow 
+                    key={row.id}
+                    className={hasUserId ? "cursor-pointer hover:bg-muted/50 transition-colors" : ""}
+                    onClick={(e) => hasUserId && handleRowClick(row.original, e)}
+                  >
+                    {row.getVisibleCells().map((cell) => (
+                      <TableCell key={cell.id}>
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext(),
+                        )}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                );
+              })
             ) : (
               <TableRow>
                 <TableCell

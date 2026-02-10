@@ -64,3 +64,7 @@ export const getEventStats = async (eventId: string): Promise<EventStatsData> =>
     const response = await axiosInstance.get(`${EVENT_URL}/${eventId}/stats`);
     return response.data;
 }
+
+export const syncRegisterations = async (eventId: string): Promise<void> => {
+    await axiosInstance.post(`${EVENT_URL}/${eventId}/sync-registrations`);
+}

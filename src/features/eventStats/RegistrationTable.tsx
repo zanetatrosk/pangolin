@@ -34,6 +34,7 @@ import {
   FormQuestionType, RegistrationFormData
 } from "./types";
 import { PATHS } from "@/paths";
+import { RsvpStatus } from "@/services/types";
 
 interface TableRowData {
   id: string;
@@ -43,6 +44,14 @@ interface TableRowData {
 
 const columnHelper = createColumnHelper<TableRowData>();
 
+const createHeaders = (data: RegistrationFormData) => {
+  return [ ...data.headers, {
+      id: "status",
+      question: "Status",
+      type: FormQuestionType.SET,
+      answerSet: Object.values(RsvpStatus),
+    } ];
+}
 export const RegistrationTable: FC<{ data: RegistrationFormData }> = ({
   data,
 }) => {
@@ -57,6 +66,7 @@ export const RegistrationTable: FC<{ data: RegistrationFormData }> = ({
       const row: TableRowData = {
         id: reg.id,
         userId: reg.user.userId,
+        q_status: reg.status, // Use q_ prefix for consistency
       };
 
       // Add answers as dynamic fields
@@ -98,22 +108,16 @@ export const RegistrationTable: FC<{ data: RegistrationFormData }> = ({
         enableSorting: false,
         enableHiding: false,
       }),
-    ];
-
-    // Add dynamic columns for each form question
-    data.headers.forEach((question) => {
-      cols.push(
-        columnHelper.accessor(`q_${question.id}`, {
-          header: question.question,
+      ...createHeaders(data).map((header) =>
+        columnHelper.accessor((row) => row[`q_${header.id}`], {
+          id: `q_${header.id}`,
+          header: header.question,
           cell: (info) => info.getValue() || "-",
-          filterFn: "includesString",
-          meta: {
-            question,
-          },
-        }),
-      );
-    });
-
+          meta: header,
+        })
+      ), 
+    ];
+  
     return cols;
   }, [data.headers]);
 
@@ -211,9 +215,7 @@ export const RegistrationTable: FC<{ data: RegistrationFormData }> = ({
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
-                  const question = header.column.meta?.question as
-                    | Header
-                    | undefined;
+                  const question = header.column.columnDef.meta as Header | undefined;
                   const currentFilter = columnFilters.find(
                     (f) => f.id === header.column.id,
                   );

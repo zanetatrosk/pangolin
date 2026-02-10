@@ -4,9 +4,11 @@ export interface CodebookItem {
 }
 
 export enum RsvpStatus {
-    Interested = "interested",
-    Going = "going",
-    Waitlisted = "waitlisted",
+    Interested = "INTERESTED",
+    Going = "GOING",
+    Waitlisted = "WAITLISTED",
+    NotGoing = "NOT_GOING",
+    Pending = "PENDING"
 }
 
 export interface RsvpResponse extends RsvpData {

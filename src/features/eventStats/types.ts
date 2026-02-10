@@ -1,3 +1,5 @@
+import { RsvpStatus } from "@/services/types";
+
 export enum FormQuestionType {
   TEXT = "TEXT",
   SET = "SET"
@@ -24,6 +26,7 @@ export interface RegistrationWithAnswers {
   };
   data: RegistrationAnswer[];
   createdAt: string;
+  status: RsvpStatus;
 }
 
 export interface RegistrationFormData {

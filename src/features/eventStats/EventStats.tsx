@@ -4,6 +4,7 @@ import { RegistrationTable } from "./RegistrationTable";
 import { RegistrationFormData } from "./types";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
+import { EventDateDisplay } from "../eventDetail/components/EventDateDisplay";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { syncRegisterations } from "@/services/events-api";
 
@@ -11,6 +12,7 @@ export interface EventStatsData {
   eventId: string;
   eventName: string;
   date: string;
+  parentEventId?: string;
   recurringDates: RecurringDate[];
   attendeeStats: AttendeeStats;
   registrationData: RegistrationFormData;
@@ -34,7 +36,15 @@ export const EventStats: FC<{ stats: EventStatsData }> = ({ stats }) => {
       <div className="space-y-6">
         <div>
           <h1 className="text-3xl font-bold">{stats.eventName}</h1>
-          <p className="text-muted-foreground mt-1">{new Date(stats.date).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</p>
+          <p className="text-muted-foreground mt-1">
+            <EventDateDisplay
+              date={stats.date}
+              recurringDates={stats.recurringDates}
+              showAllDatesOption={stats.recurringDates.length > 0}
+              routePattern="stats"
+              mainEventId={stats.parentEventId}
+            />
+          </p>
         </div>        
         
         <div className="space-y-4">
@@ -57,7 +67,7 @@ export const EventStats: FC<{ stats: EventStatsData }> = ({ stats }) => {
             )}
           </Button>
           </div>
-          <RegistrationTable data={stats.registrationData} />
+          <RegistrationTable data={stats.registrationData} eventId={stats.eventId} />
         </div>
       </div>
     </div>

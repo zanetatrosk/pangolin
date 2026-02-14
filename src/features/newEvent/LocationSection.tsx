@@ -95,6 +95,9 @@ export const LocationSection = withForm({
                       placeOption.locationData
                     );
                     setShowLocationFields(true);
+                    // Update local state to display in city/country inputs
+                    setCity(placeOption.locationData.city || "");
+                    setCountry(placeOption.locationData.country || "");
                   }
                   setSearchQuery(placeOption?.label || "");
                 }}
@@ -160,7 +163,7 @@ export const LocationSection = withForm({
                           );
                         }
                       }
-                      setCity(placeOption?.locationData.city || "");
+                      setCity(placeOption?.label || "");
                     }}
                     onSearchChange={(search) => setCity(search)}
                   />

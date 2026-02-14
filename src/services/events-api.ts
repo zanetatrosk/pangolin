@@ -4,7 +4,7 @@ import { EventDetailData } from "@/features/eventDetail/types";
 import { EventItem, Pageable } from "@/features/eventsList/types";
 import { SearchProps } from "@/routes/events.index";
 import { convertSearchParamsToQuery } from "@/features/eventsList/utils/parseSearchParams";
-import { RsvpData, RsvpResponse, EventStatusResponse } from "./types";
+import { RsvpData, RsvpResponse, EventStatusResponse, OrganizerRegistrationActionRequest, EventRegistration } from "./types";
 import { PublishPayload } from "@/features/eventDetail/publish-actions/PublishEventOptions";
 import { EventStatsData } from "@/features/eventStats/EventStats";
 
@@ -68,3 +68,16 @@ export const getEventStats = async (eventId: string): Promise<EventStatsData> =>
 export const syncRegisterations = async (eventId: string): Promise<void> => {
     await axiosInstance.post(`${EVENT_URL}/${eventId}/sync-registrations`);
 }
+
+export const updateRegistrationStatus = async (
+    eventId: string,
+    registrationId: string,
+    request: OrganizerRegistrationActionRequest
+): Promise<EventRegistration> => {
+    const response = await axiosInstance.patch(
+        `${EVENT_URL}/${eventId}/registrations/${registrationId}`,
+        request
+    );
+    return response.data;
+};
+

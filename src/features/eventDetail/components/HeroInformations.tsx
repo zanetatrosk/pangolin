@@ -8,11 +8,11 @@ import {
   MapPin,
   ExternalLink,
   Facebook,
-  ChevronDown,
 } from "lucide-react";
 import { FC } from "react";
 import { BasicDetailsData } from "../types";
 import { getLabelFromPrice } from "@/utils/getLabelFromPrice";
+import { EventDateDisplay } from "./EventDateDisplay";
 
 interface HeroInfoItem {
   icon: React.ReactNode;
@@ -51,33 +51,13 @@ export const HeroInformations: FC<{
   let data: HeroInfoItem[] = [
     {
       icon: <Calendar className="w-4 h-4" />,
-      text:
-        recurringDates && recurringDates.length > 0 ? (
-          <div className="relative flex items-center gap-1 group cursor-pointer hover:text-primary transition-colors">
-            <span>{date}</span>
-            <ChevronDown className="w-4 h-4 opacity-50" />
-            <select
-              className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-              onChange={(e) =>
-                navigate({ to: PATHS.EVENTS.DETAIL(e.target.value) })
-              }
-              value=""
-            >
-              <option value="" disabled>
-                Select other date
-              </option>
-              {recurringDates.map((rd) => (
-                <option key={rd.id} value={rd.id}>
-                  {rd.date}
-                </option>
-              ))}
-            </select>
-          </div>
-        ) : recurringDates && endDate ? (
-          `${date} until ${endDate}`
-        ) : (
-          date
-        ),
+      text: (
+        <EventDateDisplay
+          date={date}
+          endDate={endDate}
+          recurringDates={recurringDates}
+        />
+      ),
     },
     {
       icon: <Clock className="w-4 h-4" />,

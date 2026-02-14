@@ -5,6 +5,12 @@ export enum FormQuestionType {
   SET = "SET"
 }
 
+export enum OrganizerAction {
+  COPY_EMAIL = "COPY_EMAIL",
+  APPROVE = "APPROVE",
+  REJECT = "REJECT",
+}
+
 export interface Header {
   id: string;
   question: string;

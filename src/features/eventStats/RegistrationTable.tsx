@@ -28,13 +28,14 @@ import {
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Trash2, Download, Mail } from "lucide-react";
+import { Trash2 } from "lucide-react";
 import {
   Header,
   FormQuestionType, RegistrationFormData
 } from "./types";
 import { PATHS } from "@/paths";
 import { RsvpStatus } from "@/services/types";
+import { SelectionActionBar } from "./SelectionActionBar";
 
 interface TableRowData {
   id: string;
@@ -52,8 +53,9 @@ const createHeaders = (data: RegistrationFormData) => {
       answerSet: Object.values(RsvpStatus),
     } ];
 }
-export const RegistrationTable: FC<{ data: RegistrationFormData }> = ({
+export const RegistrationTable: FC<{ data: RegistrationFormData; eventId: string }> = ({
   data,
+  eventId,
 }) => {
   const navigate = useNavigate();
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -137,27 +139,6 @@ export const RegistrationTable: FC<{ data: RegistrationFormData }> = ({
     },
   });
 
-  const selectedRows = table.getSelectedRowModel().rows;
-  const selectedCount = selectedRows.length;
-
-  const handleDeleteSelected = () => {
-    const selectedIds = selectedRows.map((row) => row.original.id);
-    console.log("Delete registrations:", selectedIds);
-    // Implement delete logic here
-  };
-
-  const handleExportSelected = () => {
-    const selectedIds = selectedRows.map((row) => row.original.id);
-    console.log("Export registrations:", selectedIds);
-    // Implement export logic here
-  };
-
-  const handleEmailSelected = () => {
-    const selectedIds = selectedRows.map((row) => row.original.id);
-    console.log("Email registrations:", selectedIds);
-    // Implement email logic here
-  };
-
   const handleRowClick = (row: TableRowData, event: React.MouseEvent) => {
     // Don't navigate if clicking on checkbox or if no userId
     if (!row.userId) return;
@@ -171,44 +152,10 @@ export const RegistrationTable: FC<{ data: RegistrationFormData }> = ({
 
   return (
     <div className="space-y-4">
-      {selectedCount > 0 && (
-        <div className="flex items-center justify-between rounded-md border bg-muted/50 p-3">
-          <div className="flex items-center gap-2">
-            <span className="text-sm font-medium">
-              {selectedCount} {selectedCount === 1 ? "row" : "rows"} selected
-            </span>
-          </div>
-          <div className="flex items-center gap-2">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={handleEmailSelected}
-              className="gap-2"
-            >
-              <Mail className="h-4 w-4" />
-              Email
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={handleExportSelected}
-              className="gap-2"
-            >
-              <Download className="h-4 w-4" />
-              Export
-            </Button>
-            <Button
-              variant="destructive"
-              size="sm"
-              onClick={handleDeleteSelected}
-              className="gap-2"
-            >
-              <Trash2 className="h-4 w-4" />
-              Delete
-            </Button>
-          </div>
-        </div>
-      )}
+      <SelectionActionBar
+        selectedRows={table.getSelectedRowModel().rows.map(row => row.original)}
+        eventId={eventId}
+      />
       <div className="rounded-md border">
         <Table>
           <TableHeader>

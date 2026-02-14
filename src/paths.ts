@@ -7,6 +7,9 @@ export const PATHS = {
     EDIT_EVENT: (id: string | number) => `/events/${id}/edit`,
     STATS: (id: string | number) => `/events/${id}/stats`,
   },
+  STATS: {
+    MAIN_EVENT: (id: string | number) => `/stats/main-event/${id}`,
+  },
   MY_EVENTS: "/my-events",
   ABOUT: "/about",
   PROFILE: {

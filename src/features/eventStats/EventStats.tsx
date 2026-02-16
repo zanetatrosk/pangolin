@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { AttendeeStats, RecurringDate } from "../eventDetail/types";
+import { RecurringDate } from "../eventDetail/types";
 import { RegistrationTable } from "./RegistrationTable";
 import { RegistrationFormData } from "./types";
 import { Button } from "@/components/ui/button";
@@ -12,9 +12,7 @@ export interface EventStatsData {
   eventId: string;
   eventName: string;
   date: string;
-  parentEventId?: string;
   recurringDates: RecurringDate[];
-  attendeeStats: AttendeeStats;
   registrationData: RegistrationFormData;
 }
 
@@ -42,7 +40,6 @@ export const EventStats: FC<{ stats: EventStatsData }> = ({ stats }) => {
               recurringDates={stats.recurringDates}
               showAllDatesOption={stats.recurringDates.length > 0}
               routePattern="stats"
-              mainEventId={stats.parentEventId}
             />
           </p>
         </div>        

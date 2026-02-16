@@ -16,7 +16,6 @@ interface EventDateDisplayProps {
   recurringDates?: RecurringDate[];
   showAllDatesOption?: boolean;
   routePattern?: RoutePattern;
-  mainEventId?: string;
 }
 
 export const EventDateDisplay: FC<EventDateDisplayProps> = ({
@@ -25,7 +24,6 @@ export const EventDateDisplay: FC<EventDateDisplayProps> = ({
   recurringDates,
   showAllDatesOption = false,
   routePattern = "detail",
-  mainEventId,
 }) => {
   const navigate = useNavigate();
 
@@ -39,23 +37,8 @@ export const EventDateDisplay: FC<EventDateDisplayProps> = ({
     }
   };
 
-  const getMainEventRoutePath = (): string => {
-    if (!mainEventId) return "#";
-    switch (routePattern) {
-      case "stats":
-        return PATHS.STATS.MAIN_EVENT(mainEventId);
-      case "detail":
-      default:
-        return PATHS.EVENTS.DETAIL(mainEventId);
-    }
-  };
-
-  const handleDateChange = (eventId: string) => {
-    if (eventId === "all-dates" && mainEventId) {
-      navigate({ to: getMainEventRoutePath() });
-    } else {
+  const handleDateChange = (eventId: string) => {    
       navigate({ to: getRoutePath(eventId) });
-    }
   };
 
   if (recurringDates && recurringDates.length > 0) {
@@ -71,9 +54,6 @@ export const EventDateDisplay: FC<EventDateDisplayProps> = ({
           <option value="" disabled>
             Select date
           </option>
-          {showAllDatesOption && mainEventId && (
-            <option value="all-dates">All Dates</option>
-          )}
           {recurringDates.map((rd) => (
             <option key={rd.id} value={rd.id}>
               {rd.date}

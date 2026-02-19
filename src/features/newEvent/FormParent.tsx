@@ -17,10 +17,11 @@ export interface FormParentProps {
   eventMutation:  UseMutationResult<any, Error, DanceEventCreation, unknown>;
   eventFormOpts: {
     defaultValues: DanceEventCreation;
-  }
+  };
+  isEditing?: boolean;
 }
 
-export const FormParent: React.FC<FormParentProps> = ({ eventMutation, eventFormOpts }) => {
+export const FormParent: React.FC<FormParentProps> = ({ eventMutation, eventFormOpts, isEditing = false }) => {
 
   const form = useAppForm({
     ...eventFormOpts,
@@ -41,7 +42,7 @@ export const FormParent: React.FC<FormParentProps> = ({ eventMutation, eventForm
     {
       id: "basic-details",
       title: "Event Details",
-      component: () => <BasicDetails form={form} />,
+      component: () => <BasicDetails form={form} isEditing={isEditing} />,
     },
     {
       id: "description-details",

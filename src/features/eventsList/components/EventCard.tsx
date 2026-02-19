@@ -15,6 +15,7 @@ import { renderAddress } from "@/utils/renderAdress";
 import { EventStatus } from "@/features/eventDetail/types";
 import { isUserOrganizer } from "@/utils/isUserOrganizer";
 import { useUser } from "@/hooks/useUser";
+import { getLabelByDates } from "@/utils/getLabelByDates";
 
 export const EventCard: React.FC<EventItem> = (event) => {
   const { t } = useTranslation();
@@ -23,7 +24,7 @@ export const EventCard: React.FC<EventItem> = (event) => {
   const cardInfoWithIcon = [
     {
       icon: Calendar,
-      label: `${event.date} ${t("eventCard.at")} ${event.time}`,
+      label: getLabelByDates(event.date, event.endDate),
     },
     {
       icon: MapPin,

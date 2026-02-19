@@ -17,6 +17,8 @@ export interface BasicData {
   price?: number;
   currency?: string;
   location: Location;
+  isRecurring: boolean;
+  recurrenceType?: RecurrenceType;
 }
 
 export interface AdditionalDetailsDataBase {
@@ -44,3 +46,9 @@ export type EventMediaItem = {
   url: string;
   id: string;
 };
+
+export enum RecurrenceType {
+  Daily = "DAILY",
+  Weekly = "WEEKLY",
+  Monthly = "MONTHLY",
+}

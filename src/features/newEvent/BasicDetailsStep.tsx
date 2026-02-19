@@ -5,15 +5,17 @@ import { eventFormOpts } from "./FormOptions";
 import { useQuery } from "@tanstack/react-query";
 import { Currency, getCurrencies } from "@/services/currencies-api";
 import { LocationSection } from "./LocationSection";
+import { getOccurrenceOptions } from "./utils/getOccuranceOptions";
 
 interface BasicDetailsProps {
   className?: string;
+  isEditing?: boolean;
 }
 
 export const BasicDetails = withForm({
   ...eventFormOpts,
   props: {} as BasicDetailsProps,
-  render: ({ form, className }) => {
+  render: ({ form, className, isEditing }) => {
     const {data: currencyOptions = []} = useQuery<Currency[]>({
       queryKey: ['currencies'],
       queryFn: getCurrencies,
@@ -59,7 +61,7 @@ export const BasicDetails = withForm({
               >
                 {(field) => (
                   <field.TextField
-                    label="Date"
+                    label="Start Date"
                     type="date"
                     required
                     icon={Calendar}
@@ -67,42 +69,62 @@ export const BasicDetails = withForm({
                 )}
               </form.AppField>
 
-              <form.AppField
-                name="basicInfo.time"
-                validators={{
-                  onChange: ({ value }) =>
-                    !value ? "Time is required" : undefined,
-                }}
-              >
+              <form.AppField name="basicInfo.endDate">
                 {(field) => (
                   <field.TextField
-                    label="Time"
-                    type="time"
-                    required
-                    icon={Clock}
+                    label="End Date"
+                    type="date"
+                    icon={Calendar}
                   />
                 )}
               </form.AppField>
             </FormGrid>
 
-            {/* Recurring Event Checkbox */}
-            <form.AppField name="basicInfo.isRecurring">
+            <form.AppField
+              name="basicInfo.time"
+              validators={{
+                onChange: ({ value }) =>
+                  !value ? "Time is required" : undefined,
+              }}
+            >
               {(field) => (
-                <field.CheckboxField label="This is a recurring event" />
+                <field.TextField
+                  label="Time"
+                  type="time"
+                  required
+                  icon={Clock}
+                />
               )}
             </form.AppField>
 
-            {/* End Date - shown when recurring is checked */}
+            {/* Recurring Event Checkbox */}
+            {!isEditing && <form.AppField name="basicInfo.isRecurring">
+              {(field) => (
+                <field.CheckboxField 
+                  label="This is a recurring event" 
+                />
+              )}
+            </form.AppField>}
+
+            {/* Occurrence Type - shown when recurring is checked */}
             <form.AppField name="basicInfo.isRecurring">
               {(recurringField) =>
-                recurringField.state.value && (
-                  <form.AppField name="basicInfo.endDate">
+                recurringField.state.value && !isEditing && (
+                  <form.AppField
+                    name="basicInfo.recurrenceType"
+                    validators={{
+                      onChange: ({ value }) =>
+                        !value ? "Occurrence type is required for recurring events" : undefined,
+                    }}
+                  >
                     {(field) => (
-                      <field.TextField
-                        label="End Date"
-                        type="date"
+                      <field.SelectField
+                        label="Occurrence Type"
+                        placeholder="Select frequency"
                         required
-                        icon={Calendar}
+                        options={getOccurrenceOptions()}
+                        getValue={(item) => item.value}
+                        getLabel={(item) => item.label}
                       />
                     )}
                   </form.AppField>

@@ -19,8 +19,6 @@ export function NewEventPage() {
   });
 
   return (
-    <>
-      <FormParent eventFormOpts={eventFormOpts} eventMutation={eventMutation} />
-    </>
+      <FormParent eventFormOpts={eventFormOpts} eventMutation={eventMutation} isEditing={false} />
   );
 }

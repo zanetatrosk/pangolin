@@ -31,6 +31,7 @@ const eventDetailDataToDanceEventCreation = (
       endDate: event.basicInfo?.endDate || "",
       price: event.basicInfo?.price || undefined,
       currency: event.basicInfo?.currency || undefined,
+      isRecurring: false,
     },
     additionalDetails: {
       danceStyles:
@@ -77,7 +78,7 @@ function RouteComponent() {
 
   return (
     <>
-      <FormParent eventFormOpts={eventFormOpts} eventMutation={eventMutation} />
+      <FormParent eventFormOpts={eventFormOpts} eventMutation={eventMutation} isEditing={true} />
     </>
   );
 }

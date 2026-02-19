@@ -8,6 +8,7 @@ export interface EventItem {
   eventName: string;
   location: Location;
   date: string;
+  endDate?: string;
   time: string;
   price?: number;
   currency?: string;

@@ -1,4 +1,5 @@
 import { PATHS } from "@/paths";
+import { getLabelByDates } from "@/utils/getLabelByDates";
 import { useNavigate } from "@tanstack/react-router";
 import { ChevronDown } from "lucide-react";
 import { FC } from "react";
@@ -14,7 +15,6 @@ interface EventDateDisplayProps {
   date: string;
   endDate?: string;
   recurringDates?: RecurringDate[];
-  showAllDatesOption?: boolean;
   routePattern?: RoutePattern;
 }
 
@@ -22,7 +22,6 @@ export const EventDateDisplay: FC<EventDateDisplayProps> = ({
   date,
   endDate,
   recurringDates,
-  showAllDatesOption = false,
   routePattern = "detail",
 }) => {
   const navigate = useNavigate();
@@ -64,9 +63,5 @@ export const EventDateDisplay: FC<EventDateDisplayProps> = ({
     );
   }
 
-  if (recurringDates && endDate) {
-    return <>{`${date} until ${endDate}`}</>;
-  }
-
-  return <>{date}</>;
+  return getLabelByDates(date, endDate);
 };

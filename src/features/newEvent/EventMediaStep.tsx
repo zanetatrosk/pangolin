@@ -16,10 +16,10 @@ export const EventMediaStep = withForm({
     const coverImageMutation = useMutation({
         mutationFn: (file: File) => postMedia(file),
         onSuccess: (data) => {
-          console.log("Cover image uploaded successfully:", data);
+          console.log("Cover media uploaded successfully:", data);
           form.setFieldValue("coverImage", {
             id: data.id.toString(),
-            type: "image",
+            type: data.type.startsWith("video") ? "video" : "image",
             url: data.url,
           });
         },
@@ -57,15 +57,23 @@ export const EventMediaStep = withForm({
               const preview = field.state.value?.url;
               return (
                 <div className="space-y-3">
-                  <Label>Cover image</Label>
+                  <Label>Cover image or video</Label>
 
                   {preview && (
                     <div className="relative w-full max-w-lg">
-                      <img
-                        src={preview}
-                        alt="Cover preview"
-                        className="rounded-lg border object-cover"
-                      />
+                      {field.state.value?.type === "video" ? (
+                        <video
+                          src={preview}
+                          className="rounded-lg border object-cover w-full"
+                          controls
+                        />
+                      ) : (
+                        <img
+                          src={preview}
+                          alt="Cover preview"
+                          className="rounded-lg border object-cover"
+                        />
+                      )}
                       <Button
                         size="icon"
                         variant="destructive"
@@ -80,15 +88,17 @@ export const EventMediaStep = withForm({
 
                   <Input
                     type="file"
-                    accept="image/*"
+                    accept="image/*,video/*"
                     onChange={(e) => {
                       const file = e.target.files?.[0];
                       if (file) {
+                        const fileType = file.type.startsWith("video") ? "video" : "image";
+                        const blobUrl = URL.createObjectURL(file);
                         // Show preview immediately with blob URL
                         field.handleChange({
-                          id: URL.createObjectURL(file),
-                          type: "image",
-                          url: URL.createObjectURL(file),
+                          id: blobUrl,
+                          type: fileType,
+                          url: blobUrl,
                         });
                         // Upload to server (will update field in onSuccess)
                         coverImageMutation.mutate(file);

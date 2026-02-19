@@ -17,6 +17,8 @@ const eventFormDefaults: DanceEventCreation = {
     date: "",
     time: "",
     endDate: "",
+    isRecurring: false,
+    recurrenceType: undefined,
     price: undefined,
     currency: undefined,
   },

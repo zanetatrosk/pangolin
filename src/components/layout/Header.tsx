@@ -10,7 +10,7 @@ import { PATHS } from "@/paths";
 export function Header() {
   const { t } = useTranslation();
   const routerState = useRouterState();
-  const withoutContent = routerState.matches.some((match) => match.pathname === "/login");
+  const withoutContent = routerState.matches.some((match) => match.pathname === PATHS.LOGIN);
 
   const menuItems = [
     {

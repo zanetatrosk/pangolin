@@ -27,7 +27,6 @@ export function MobileNavDrawer({ menuItems, profileMenuItems }: { menuItems: Na
       <Drawer open={open} onOpenChange={setOpen} direction="right">
         <div className="flex items-center justify-end gap-2">
           <>
-            <LanguageSwitcher />
             <ThemeButton />
           </>
           <DrawerTrigger asChild>

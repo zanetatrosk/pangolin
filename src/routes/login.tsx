@@ -12,7 +12,7 @@ export const Route = createFileRoute("/login")({
 
 function LoginPage() {
   return (
-    <div className="mx-auto max-w-md flex min-h-screen mt-12">
+    <div className="mx-auto max-w-md flex min-h-screen mt-12 p-6">
       <LoginForm />
     </div>
   );

@@ -15,5 +15,6 @@ export const PATHS = {
   PROFILE: {
     MINE: "/my-profile",
     VIEW: (userId: string | number) => `/profile/${userId}`,
-  }
+  },
+  LOGIN: "/login",
 } as const;

@@ -30,7 +30,6 @@ export const DesktopNavbar: FC<{ menuItems: NavItem[], profileMenuItems: Profile
       </NavigationMenu>
 
       <div className="ml-auto flex items-center gap-2">
-        <LanguageSwitcher />
         <ThemeButton />
         {isAuthenticated ? (
           <UserProfileDropdown profileMenuItems={profileMenuItems} />

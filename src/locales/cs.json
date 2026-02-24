@@ -2,8 +2,7 @@
   "nav": {
     "events": "Události",
     "about": "O nás",
-    "login": "Přihlásit se",
-    "signup": "Registrovat se zdarma",
+    "signup": "Zaregistrovat/Přihlásit se",
     "profile": "Profil",
     "editProfile": "Upravit profil",
     "settings": "Nastavení",

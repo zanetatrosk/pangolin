@@ -2,8 +2,7 @@
     "nav": {
         "events": "Events",
         "about": "About",
-        "login": "Login",
-        "signup": "Sign up free",
+        "signup": "Login/Sign Up",
         "addEvent": "Add Event",
         "addEventDesc": "Create and host a new dance event",
         "myEvents": "My Events",

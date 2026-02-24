@@ -42,10 +42,7 @@ export const Route = createRootRoute({
 
 const queryClient = new QueryClient()
 
-function RootComponent() {
-  const router = useRouterState();
-  const isLoginPage = router.location.pathname === '/login';
-  
+function RootComponent() {  
   return (
     <html lang="en">
       <head>
@@ -54,11 +51,11 @@ function RootComponent() {
       <body className="flex flex-col min-h-screen">
         <QueryClientProvider client={queryClient}>
           <AuthProvider>
-            {!isLoginPage && <Header />}
+            <Header />
             <div className="grow">
               <Outlet />
             </div>
-            {!isLoginPage && <Footer />}
+            <Footer />
           </AuthProvider>
         </QueryClientProvider>
         <TanStackDevtools

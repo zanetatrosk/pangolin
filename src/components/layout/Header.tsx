@@ -1,12 +1,16 @@
 import { CalendarPlus, PersonStanding, Users, UserCircle, LogOut } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { useRouterState } from "@tanstack/react-router";
 import { MobileNavDrawer } from "./MobileNavDrawer";
 import { DesktopNavbar } from "./DesktopNavbar";
+import { NavigationWrapper } from "./NavigationWrapper";
 import { logout } from "@/stores/authStore";
 import { PATHS } from "@/paths";
 
 export function Header() {
   const { t } = useTranslation();
+  const routerState = useRouterState();
+  const withoutContent = routerState.matches.some((match) => match.pathname === "/login");
 
   const menuItems = [
     {
@@ -52,9 +56,9 @@ export function Header() {
   ];
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border/60 bg-background">
+    <NavigationWrapper withoutContent={withoutContent}>
       <MobileNavDrawer menuItems={menuItems} profileMenuItems={profileMenuItems} />
       <DesktopNavbar menuItems={menuItems} profileMenuItems={profileMenuItems} />
-    </header>
+    </NavigationWrapper>
   );
 }

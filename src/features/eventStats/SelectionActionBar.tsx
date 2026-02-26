@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { Button } from "@/components/ui/button";
-import { RsvpStatus } from "@/services/types";
+import { RsvpStatus, RegistrationAction } from "@/services/types";
 import { useUpdateRegistrationStatus } from "@/hooks/useUpdateRegistrationStatus";
 import { OrganizerAction } from "./types";
 
@@ -71,13 +71,18 @@ export const SelectionActionBar: FC<SelectionActionBarProps> = ({
   };
 
   const handleBulkAction = async (action: OrganizerAction) => {
+    // Map OrganizerAction to RegistrationAction
+    const registrationAction = action === OrganizerAction.APPROVE 
+      ? RegistrationAction.APPROVE 
+      : RegistrationAction.REJECT;
+    
     try {
       await Promise.all(
         selectedRows.map((row) =>
           updateRegistration.mutateAsync({
             eventId,
             registrationId: row.id,
-            request: { action },
+            request: { action: registrationAction },
           })
         )
       );

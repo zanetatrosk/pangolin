@@ -21,7 +21,10 @@ export interface EventItem {
   tags?: string[];
   organizer: Organizer;
   promoMedia?: EventMediaItem;
-  registrationStatus?: RsvpStatus;
+  registrationStatus?: {
+    id: string;
+    status: RsvpStatus;
+  };
   isUserInterested: boolean;
   status: EventStatus;
   registrationType: RegistrationModeEnum;

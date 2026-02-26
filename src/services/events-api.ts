@@ -4,7 +4,7 @@ import { EventDetailData } from "@/features/eventDetail/types";
 import { EventItem, Pageable } from "@/features/eventsList/types";
 import { SearchProps } from "@/routes/events.index";
 import { convertSearchParamsToQuery } from "@/features/eventsList/utils/parseSearchParams";
-import { RsvpData, RsvpResponse, EventStatusResponse, OrganizerRegistrationActionRequest, EventRegistration } from "./types";
+import { EventStatusResponse } from "./types";
 import { PublishPayload } from "@/features/eventDetail/publish-actions/PublishEventOptions";
 import { EventStatsData } from "@/features/eventStats/EventStats";
 
@@ -32,20 +32,6 @@ export const updateEventById = async (id: string, eventData: DanceEventCreation)
     return response.data;
 }
 
-export const getMyRsvp = async (eventId: string): Promise<RsvpResponse> => {
-    const response = await axiosInstance.get(`${EVENT_URL}/${eventId}/my-rsvp`);
-    return response.data;
-};
-
-export const createOrUpdateRsvp = async (eventId: string, rsvpData: RsvpData): Promise<RsvpResponse> => {
-    const response = await axiosInstance.put(`${EVENT_URL}/${eventId}/my-rsvp`, rsvpData);
-    return response.data;
-};
-
-export const deleteRsvp = async (eventId: string): Promise<void> => {
-    await axiosInstance.delete(`${EVENT_URL}/${eventId}/my-rsvp`);
-};
-
 export const publishEvent = async (eventId: string, payload: PublishPayload): Promise<EventStatusResponse> => {
     const response = await axiosInstance.patch(`${EVENT_URL}/${eventId}/publish`, payload);
     return response.data;
@@ -64,20 +50,4 @@ export const getEventStats = async (eventId: string): Promise<EventStatsData> =>
     const response = await axiosInstance.get(`${EVENT_URL}/${eventId}/stats`);
     return response.data;
 }
-
-export const syncRegisterations = async (eventId: string): Promise<void> => {
-    await axiosInstance.post(`${EVENT_URL}/${eventId}/sync-registrations`);
-}
-
-export const updateRegistrationStatus = async (
-    eventId: string,
-    registrationId: string,
-    request: OrganizerRegistrationActionRequest
-): Promise<EventRegistration> => {
-    const response = await axiosInstance.patch(
-        `${EVENT_URL}/${eventId}/registrations/${registrationId}`,
-        request
-    );
-    return response.data;
-};
 

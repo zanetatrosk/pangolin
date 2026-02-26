@@ -1,11 +1,11 @@
-import { updateRegistrationStatus } from "@/services/events-api";
-import { OrganizerRegistrationActionRequest } from "@/services/types";
+import { updateRegistrationStatus } from "@/services/registrations-api";
+import { RegistrationActionRequest } from "@/services/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 interface UpdateRegistrationStatusParams {
     eventId: string;
     registrationId: string;
-    request: OrganizerRegistrationActionRequest;
+    request: RegistrationActionRequest;
 }
 
 export const useUpdateRegistrationStatus = () => {

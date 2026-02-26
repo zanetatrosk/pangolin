@@ -66,11 +66,12 @@ export function EventDetail({ event }: EventDetailProps) {
                 <EventItemManageButtons eventId={event.id} eventStatus={basicInfo.status || ""}/>
               ) : (
                 <ActionButtons
-                  key={event.id + event.basicInfo.statusUser}
+                  key={event.id + event.basicInfo.registrationStatus?.status}
                   rsvpData={{
+                    id: event.basicInfo.registrationStatus?.id,
                     eventId: event.id,
                     userId: "", // Replace with actual user ID
-                    status: event.basicInfo.statusUser,
+                    status: event.basicInfo.registrationStatus?.status,
                   }}
                   registrationMode={event.basicInfo.registrationType}
                   formId={event.basicInfo.formId}

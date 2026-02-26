@@ -26,7 +26,10 @@ export interface BasicDetailsData extends BasicData {
   recurringDates?: RecurringDate[];
   organizer: Organizer;
   status: EventStatus;
-  statusUser?: RsvpStatus;
+  registrationStatus?: {
+    id: string;
+    status: RsvpStatus;
+  };
   registrationType: RegistrationModeEnum;
   formId?: string;
 }

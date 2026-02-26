@@ -11,24 +11,18 @@ export const MOCK_EVENT: EventDetailData = {
     currency: "USD",
     endDate: "2024-06-17",
     recurringDates: [
-      { date: "2024-06-15", id: "1", status: "Past", statusUser: "Joined" },
+      { date: "2024-06-15", id: "1" },
       {
         date: "2024-06-22",
         id: "2",
-        status: "Scheduled",
-        statusUser: "Joined",
       },
       {
         date: "2024-06-29",
         id: "3",
-        status: "Scheduled",
-        statusUser: "Joined",
       },
       {
         date: "2024-07-06",
         id: "4",
-        status: "Scheduled",
-        statusUser: "Joined",
       },
     ],
   },

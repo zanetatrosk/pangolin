@@ -121,11 +121,12 @@ export const EventCard: React.FC<EventItem> = (event) => {
               !isUserOrganizer(event.organizer.userId, user?.userId) && (
                 <EventItemButtons
                   rsvpData={{
+                    id: event.registrationStatus?.id,
                     eventId: event.id,
                     userId: user?.userId,
-                    status: event.registrationStatus,
+                    status: event.registrationStatus?.status,
                   }}
-                  key={event.id + event.registrationStatus}
+                  key={event.id + event.registrationStatus?.status}
                   registrationMode={event.registrationType}
                   formId={event.formId}
                 />

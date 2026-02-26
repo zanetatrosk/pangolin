@@ -1,9 +1,9 @@
-import { deleteRsvp } from "@/services/events-api";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { deleteRegistration } from "@/services/registrations-api";
+import { useMutation } from "@tanstack/react-query";
 
-export const useDeleteRegistration = (eventId: string) => {
+export const useDeleteRegistration = (eventId: string, registrationId: string) => {
     const mutation = useMutation({
-        mutationFn: () => deleteRsvp(eventId),
+        mutationFn: () => deleteRegistration(eventId, registrationId),
     });
 
     return mutation;

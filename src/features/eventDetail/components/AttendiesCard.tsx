@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Users, X } from "lucide-react";
 import { useState } from "react";
-import { AttendeeStats } from "./anotherSeeevents";
+import { AttendeeStats } from "../types";
 
 export function AttendeeStatsCard({ attendeeStats }: { attendeeStats: AttendeeStats }) {
   const [showAttendeeList, setShowAttendeeList] = useState(false);

@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
 import { EventDateDisplay } from "../eventDetail/components/EventDateDisplay";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { syncRegisterations } from "@/services/events-api";
+import { syncRegistrations } from "@/services/registrations-api";
 
 export interface EventStatsData {
   eventId: string;
@@ -20,7 +20,7 @@ export const EventStats: FC<{ stats: EventStatsData }> = ({ stats }) => {
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn: (eventId: string) => syncRegisterations(eventId),
+    mutationFn: (eventId: string) => syncRegistrations(eventId),
     onSuccess: () => {
       console.log("Registrations synced successfully");
       queryClient.invalidateQueries({ queryKey: ["event-stats", stats.eventId] });

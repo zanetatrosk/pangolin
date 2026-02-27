@@ -70,7 +70,7 @@ export const MOCK_EVENTS: MyEvent[] = [
         status: EventStatus.PAST,
         userStatus: RsvpStatus.Going,
         attendeeStats: {
-          going: { total: 75, leaders: 35, followers: 40 },
+          going: { total: 75, leaders: 35, followers: 40, both: 8 },
           interested: 20,
         },
         organizer: {
@@ -98,7 +98,7 @@ export const MOCK_EVENTS: MyEvent[] = [
         status: EventStatus.PUBLISHED,
         userStatus: RsvpStatus.Going,
         attendeeStats: {
-          going: { total: 80, leaders: 40, followers: 40 },
+          going: { total: 80, leaders: 40, followers: 40, both: 10 },
           interested: 25,
         },
         organizer: {
@@ -126,7 +126,7 @@ export const MOCK_EVENTS: MyEvent[] = [
         status: EventStatus.PUBLISHED,
         userStatus: RsvpStatus.Going,
         attendeeStats: {
-          going: { total: 85, leaders: 42, followers: 43 },
+          going: { total: 85, leaders: 42, followers: 43, both: 6 },
           interested: 30,
         },
         organizer: {
@@ -154,7 +154,7 @@ export const MOCK_EVENTS: MyEvent[] = [
         status: EventStatus.PUBLISHED,
         userStatus: RsvpStatus.Going,
         attendeeStats: {
-          going: { total: 90, leaders: 45, followers: 45 },
+          going: { total: 90, leaders: 45, followers: 45, both: 12 },
           interested: 35,
         },
         organizer: {

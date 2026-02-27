@@ -1,9 +1,10 @@
-import { Plus } from "lucide-react";
+import { Plus, ImageOff } from "lucide-react";
 import { EventMediaItem } from "@/features/newEvent/types";
 import { Button } from "@/components/ui/button";
 import { useTranslation } from "react-i18next";
 import { Input } from "@/components/ui/input";
 import { Media } from "./Media";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 export const MediaGallery: React.FC<{
   mediaFiles?: EventMediaItem[];
@@ -39,7 +40,16 @@ export const MediaGallery: React.FC<{
           )}
         </div>
       </div>
-      {mediaFiles && mediaFiles.length > 0 && <Media mediaFiles={mediaFiles} allowEdit={allowEdit} onDelete={onDelete} />}
+      {mediaFiles && mediaFiles.length > 0 ? (
+        <Media mediaFiles={mediaFiles} allowEdit={allowEdit} onDelete={onDelete} />
+      ) : (
+        <Alert className="bg-blue-50 border-blue-200 text-blue-800">
+          <ImageOff className="h-4 w-4 text-blue-600" />
+          <AlertDescription>
+            There are no media presented
+          </AlertDescription>
+        </Alert>
+      )}
     </>
   );
 };

@@ -95,7 +95,12 @@ export function EventDetail({ event }: EventDetailProps) {
             {/* Attendee Stats Card */}
             {attendeeStats && (
               <div className="order-2">
-                <AttendeeStatsCard attendeeStats={attendeeStats} />
+                <AttendeeStatsCard 
+                  eventId={event.id}
+                  attendeeStats={attendeeStats}
+                  registrationMode={basicInfo.registrationType}
+                  maxCapacity={additionalDetails?.maxAttendees}
+                />
               </div>
             )}
 

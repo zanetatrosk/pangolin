@@ -65,6 +65,7 @@ export const MOCK_EVENT: EventDetailData = {
       total: 45,
       leaders: 20,
       followers: 25,
+      both: 3,
     },
     interested: 120,
   },

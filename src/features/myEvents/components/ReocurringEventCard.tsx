@@ -1,6 +1,6 @@
 import { SeriesEventDTO } from "@/features/myEvents/types";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-
+import { Button } from "@/components/ui/button";
 import {
   Table,
   TableBody,
@@ -9,16 +9,17 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Calendar, MapPin } from "lucide-react";
+import { Calendar, MapPin, Eye } from "lucide-react";
 import React from "react";
 import { StatusBadges } from "./StatusBadges";
 import { EventCardType } from "./MyEventCard";
 import { renderAddress } from "@/utils/renderAdress";
-import { EventActionsMyEvent } from "./EventActionsMyEvent";
-
+import { useNavigate } from "@tanstack/react-router";
+import { PATHS } from "@/paths";
 
 
 export const ReocurringEventCard: React.FC<{event: SeriesEventDTO, cardType: EventCardType}> = ({ event, cardType }) => {
+  const navigate = useNavigate();
   // This component only handles series events
   if (event.displayMode !== 'SERIES') {
     return null;
@@ -40,7 +41,6 @@ export const ReocurringEventCard: React.FC<{event: SeriesEventDTO, cardType: Eve
           </div>
           
         </div>
-        <EventActionsMyEvent cardType={cardType} eventId={event.id}/>
       </CardHeader>
       <CardContent>
         <div className="space-y-3">
@@ -83,7 +83,14 @@ export const ReocurringEventCard: React.FC<{event: SeriesEventDTO, cardType: Eve
                       />
                     </TableCell>
                     <TableCell>
-                      <EventActionsMyEvent cardType={cardType} eventId={occurrence.id}/>
+                      <Button 
+                        variant="secondary" 
+                        size="sm"
+                        onClick={() => navigate({ to: PATHS.EVENTS.DETAIL(occurrence.id) })}
+                      >
+                        View
+                        <Eye className="h-4 w-4 ml-2" />
+                      </Button>
                     </TableCell>
                   </TableRow>
                 ))}

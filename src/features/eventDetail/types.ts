@@ -12,6 +12,7 @@ export interface AttendeeStats {
     total: number;
     leaders: number;
     followers: number;
+    both: number; // Users doing role rotation (both leader and follower)
   };
   interested: number;
 }

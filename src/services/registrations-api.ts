@@ -1,5 +1,7 @@
+import { RegistrationModeEnum } from "@/features/eventDetail/publish-actions/PublishEventOptions";
 import { axiosInstance } from "./axios";
 import { EventRegistration, RegistrationActionRequest, RegisterEventRequest } from "./types";
+import { Attendee, preprocessAttendees } from "@/features/eventDetail/utils/attendeeUtils";
 
 const EVENTS_URL = "/events";
 
@@ -57,4 +59,15 @@ export const updateRegistrationStatus = async (
         request
     );
     return response.data;
+};
+
+/**
+ * Get all approved registrations for an event
+ * GET /api/events/{eventId}/registrations
+ */
+export const getEventRegistrations = async (eventId: string, registrationMode: RegistrationModeEnum): Promise<Attendee[]> => {
+    const response = await axiosInstance.get(
+        `${EVENTS_URL}/${eventId}/registrations`
+    );
+    return preprocessAttendees(response.data, registrationMode);
 };

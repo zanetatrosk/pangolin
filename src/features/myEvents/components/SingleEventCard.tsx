@@ -1,11 +1,13 @@
 import { Card, CardTitle, CardContent } from "@/components/ui/card";
-import { Building, Calendar, MapPin } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Building, Calendar, MapPin, Eye } from "lucide-react";
 import { DataWithIcon } from "@/components/DataWithIcon";
 import { StatusBadges } from "./StatusBadges";
 import { renderAddress } from "@/utils/renderAdress";
 import { SingleEventDTO } from "@/features/myEvents/types";
 import { EventCardType } from "./MyEventCard";
-import { EventActionsMyEvent } from "./EventActionsMyEvent";
+import { useNavigate } from "@tanstack/react-router";
+import { PATHS } from "@/paths";
 
 export interface SingleEventCardProps {
   event: SingleEventDTO;
@@ -16,6 +18,7 @@ export const SingleEventCard: React.FC<SingleEventCardProps> = ({
   event,
   cardType,
 }) => {
+  const navigate = useNavigate();
   const isUserOrganizer = cardType === EventCardType.HOSTING;
   
   const { eventName, organizer, status, userStatus, date, time, location, attendeeStats } = event;
@@ -43,7 +46,15 @@ export const SingleEventCard: React.FC<SingleEventCardProps> = ({
                 className="hidden lg:block"
               />
 
-              <EventActionsMyEvent cardType={cardType} eventId={event.id}/>
+              <Button 
+                variant="secondary" 
+                size="sm"
+                onClick={() => navigate({ to: PATHS.EVENTS.DETAIL(event.id) })}
+                className="ml-2"
+              >
+                View Details
+                <Eye className="h-4 w-4 ml-2" />
+              </Button>
             </div>
           </div>
           {!isUserOrganizer && <div className="text-sm">

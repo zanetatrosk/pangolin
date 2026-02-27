@@ -11,9 +11,6 @@ interface EventDetailsProps {
   className?: string;
 }
 
-
-
-
 export const EventDetailsStep = withForm({
   ...eventFormOpts,
   props: {} as EventDetailsProps,
@@ -89,28 +86,6 @@ export const EventDetailsStep = withForm({
                   />
                 )}
               </form.AppField>
-
-              <div className="space-y-3">
-                {/* Allow Waitlist */}
-                <form.AppField name="additionalDetails.allowWaitlist">
-                  {(field) => (
-                    <field.CheckboxField
-                      label="Allow waitlist when event is full"
-                      description="Attendees can join a waitlist if the event reaches maximum capacity"
-                    />
-                  )}
-                </form.AppField>
-
-                {/* Allow Partner Pairing */}
-                <form.AppField name="additionalDetails.allowPartnerPairing">
-                  {(field) => (
-                    <field.CheckboxField
-                      label="Enable partner pairing system"
-                      description="Help attendees find dance partners for the event"
-                    />
-                  )}
-                </form.AppField>
-              </div>
             </div>
           </FormSection>
         </div>

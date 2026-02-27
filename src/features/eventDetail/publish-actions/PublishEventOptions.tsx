@@ -1,7 +1,6 @@
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { GoogleFormIntegration } from "@/features/eventDetail/publish-actions/GoogleFormIntegration";
-import { useState } from "react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
 
@@ -97,19 +96,6 @@ export const PublishEventOptions: React.FC<PublishEventOptionsProps> = ({
               />
               <FieldLabel>
                 Organizer needs to approve registrations
-              </FieldLabel>
-            </Field>
-          </FieldGroup>
-          <FieldGroup>
-            <Field orientation="horizontal">
-              <Checkbox
-                checked={value.allowWaitlist}
-                onCheckedChange={(checked) =>
-                  onChange({ ...value, allowWaitlist: !!checked })
-                }
-              />
-              <FieldLabel>
-                Allowed waitlist for fully booked events
               </FieldLabel>
             </Field>
           </FieldGroup>

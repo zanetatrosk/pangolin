@@ -13,7 +13,7 @@ export const getBadgeByStatus = (status: EventStatus | RsvpStatus | string) => {
       return "bg-blue-100 text-blue-800";
     case EventStatus.DRAFT:
       return "bg-yellow-100 text-yellow-800";
-    case RsvpStatus.Going:
+    case RsvpStatus.Registered:
       return "bg-purple-100 text-purple-800";
     case RsvpStatus.Interested:
       return "bg-orange-100 text-orange-800";
@@ -34,7 +34,7 @@ const getStatusLabel = (status: EventStatus | RsvpStatus | string) => {
       return "Past";
     case EventStatus.DRAFT:
       return "Draft";
-    case RsvpStatus.Going:
+    case RsvpStatus.Registered:
       return "Going";
     case RsvpStatus.Interested:
       return "Interested";

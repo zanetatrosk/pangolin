@@ -8,6 +8,8 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
 import { RoleSelect } from "../publish-actions/RoleSelect";
 import { RegistrationModeEnum } from "../publish-actions/PublishEventOptions";
 import { ExternalLink } from "lucide-react";
@@ -17,7 +19,7 @@ interface RegistrationDialogProps {
   onOpenChange: (open: boolean) => void;
   registrationMode: RegistrationModeEnum;
   formId?: string;
-  onConfirm?: (role?: string) => void;
+  onConfirm?: (role?: string, isAnonymous?: boolean) => void;
 }
 
 export const RegistrationDialog: FC<RegistrationDialogProps> = ({
@@ -28,12 +30,13 @@ export const RegistrationDialog: FC<RegistrationDialogProps> = ({
   onConfirm,
 }) => {
   const [selectedRole, setSelectedRole] = useState<string>("follower");
+  const [isAnonymous, setIsAnonymous] = useState<boolean>(false);
 
   const handleConfirm = () => {
     if (registrationMode === RegistrationModeEnum.COUPLE) {
-      onConfirm?.(selectedRole);
+      onConfirm?.(selectedRole, isAnonymous);
     } else {
-      onConfirm?.();
+      onConfirm?.(undefined, isAnonymous);
     }
     onOpenChange(false);
   };
@@ -46,6 +49,19 @@ export const RegistrationDialog: FC<RegistrationDialogProps> = ({
             <DialogDescription>
               Are you sure you want to register for this event?
             </DialogDescription>
+            <div className="flex items-center space-x-2 py-4">
+              <Checkbox
+                id="anonymous-open"
+                checked={isAnonymous}
+                onCheckedChange={(checked) => setIsAnonymous(checked === true)}
+              />
+              <Label
+                htmlFor="anonymous-open"
+                className="text-sm font-normal cursor-pointer"
+              >
+                Make my registration anonymous to other users
+              </Label>
+            </div>
           </>
         );
 
@@ -57,6 +73,19 @@ export const RegistrationDialog: FC<RegistrationDialogProps> = ({
             </DialogDescription>
             <div className="py-4">
               <RoleSelect value={selectedRole} onChange={setSelectedRole} />
+            </div>
+            <div className="flex items-center space-x-2 pb-4">
+              <Checkbox
+                id="anonymous-couple"
+                checked={isAnonymous}
+                onCheckedChange={(checked) => setIsAnonymous(checked === true)}
+              />
+              <Label
+                htmlFor="anonymous-couple"
+                className="text-sm font-normal cursor-pointer"
+              >
+                Make my registration anonymous to other users
+              </Label>
             </div>
           </>
         );

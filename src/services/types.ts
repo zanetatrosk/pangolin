@@ -7,9 +7,8 @@ export interface CodebookItem {
 
 export enum RsvpStatus {
     Interested = "INTERESTED",
-    Going = "GOING",
+    Registered = "REGISTERED",
     Waitlisted = "WAITLISTED",
-    NotGoing = "NOT_GOING",
     Pending = "PENDING",
     Rejected = "REJECTED",
     Cancelled = "CANCELLED",
@@ -47,6 +46,7 @@ export interface RegisterEventRequest {
     status: RsvpStatus;
     roleId?: string;
     email?: string;
+    isAnonymous?: boolean;
 }
 
 /**

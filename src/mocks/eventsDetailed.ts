@@ -26,7 +26,7 @@ export const MOCK_EVENTS: MyEvent[] = [
       country: "USA",
       postalCode: "90001",
     },
-    userStatus: RsvpStatus.Going,
+    userStatus: RsvpStatus.Registered,
     attendeeStats: {
       going: {
         total: 80,
@@ -48,7 +48,7 @@ export const MOCK_EVENTS: MyEvent[] = [
       lastName: "Doe",
     },
     status: EventStatus.PUBLISHED,
-    userStatus: RsvpStatus.Going,
+    userStatus: RsvpStatus.Registered,
     overallStartDate: "2024-06-15",
     overallEndDate: "2024-07-06",
     occurrences: [
@@ -68,7 +68,7 @@ export const MOCK_EVENTS: MyEvent[] = [
           postalCode: "10001",
         },
         status: EventStatus.PAST,
-        userStatus: RsvpStatus.Going,
+        userStatus: RsvpStatus.Registered,
         attendeeStats: {
           going: { total: 75, leaders: 35, followers: 40, both: 8 },
           interested: 20,
@@ -96,7 +96,7 @@ export const MOCK_EVENTS: MyEvent[] = [
           postalCode: "10001",
         },
         status: EventStatus.PUBLISHED,
-        userStatus: RsvpStatus.Going,
+        userStatus: RsvpStatus.Registered,
         attendeeStats: {
           going: { total: 80, leaders: 40, followers: 40, both: 10 },
           interested: 25,
@@ -124,7 +124,7 @@ export const MOCK_EVENTS: MyEvent[] = [
           postalCode: "10001",
         },
         status: EventStatus.PUBLISHED,
-        userStatus: RsvpStatus.Going,
+        userStatus: RsvpStatus.Registered,
         attendeeStats: {
           going: { total: 85, leaders: 42, followers: 43, both: 6 },
           interested: 30,
@@ -152,7 +152,7 @@ export const MOCK_EVENTS: MyEvent[] = [
           postalCode: "10001",
         },
         status: EventStatus.PUBLISHED,
-        userStatus: RsvpStatus.Going,
+        userStatus: RsvpStatus.Registered,
         attendeeStats: {
           going: { total: 90, leaders: 45, followers: 45, both: 12 },
           interested: 35,

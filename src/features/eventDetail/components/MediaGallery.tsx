@@ -43,7 +43,7 @@ export const MediaGallery: React.FC<{
       {mediaFiles && mediaFiles.length > 0 ? (
         <Media mediaFiles={mediaFiles} allowEdit={allowEdit} onDelete={onDelete} />
       ) : (
-        <Alert className="bg-blue-50 border-blue-200 text-blue-800">
+        <Alert className="bg-blue-50 border-blue-200 text-blue-800 dark:bg-blue-900/50 dark:border-blue-700 dark:text-blue-300">
           <ImageOff className="h-4 w-4 text-blue-600" />
           <AlertDescription>
             There are no media presented

@@ -12,6 +12,7 @@ import { ProfileData } from "./ProfilePage";
 import { useQuery } from "@tanstack/react-query";
 import { getDanceStyles } from "@/services/dance-styles-api";
 import { getSkillLevels } from "@/services/skill-levels-api";
+import { getDancerRoles } from "@/services/role-api";
 
 interface ProfileEditFormProps {
   profileData: ProfileData;
@@ -37,6 +38,11 @@ export function ProfileEditForm({
   const { data: levelOptions = [] } = useQuery({
     queryKey: ["skillLevels"],
     queryFn: getSkillLevels,
+  });
+
+  const { data: roleOptions = [] } = useQuery({
+    queryKey: ["dancerRoles"],
+    queryFn: getDancerRoles,
   });
 
   return (
@@ -87,6 +93,29 @@ export function ProfileEditForm({
             {levelOptions.map((lvl) => (
               <SelectItem key={lvl.id} value={lvl.id}>
                 {lvl.name}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
+
+      <div className="space-y-2 text-left">
+        <Label htmlFor="role">{t("Main Role")}</Label>
+        <Select
+          value={profileData.role?.id || undefined}
+          onValueChange={(value) =>
+            updateProfileData({
+              role: roleOptions.find((r) => r.id === value),
+            })
+          }
+        >
+          <SelectTrigger id="role" className="w-full">
+            <SelectValue placeholder={t("Not Specified")} />
+          </SelectTrigger>
+          <SelectContent>
+            {roleOptions.map((r) => (
+              <SelectItem key={r.id} value={r.id}>
+                {r.name}
               </SelectItem>
             ))}
           </SelectContent>

@@ -22,7 +22,7 @@ export const ActionButtons: React.FC<{
   const deleteMutation = useDeleteRegistration(rsvpData.eventId, rsvpData.id || "");
   const cancelMutation = useCancelRegistration();
 
-  const isGoing = currentStatus === RsvpStatus.Going;
+  const isGoing = currentStatus === RsvpStatus.Registered;
   const isInterested = currentStatus === RsvpStatus.Interested;
   const isPending = currentStatus === RsvpStatus.Pending;
   const isRejected = currentStatus === RsvpStatus.Rejected;
@@ -51,12 +51,13 @@ export const ActionButtons: React.FC<{
     }
   };
 
-  const handleConfirmRegistration = (role?: string) => {
+  const handleConfirmRegistration = (role?: string, isAnonymous?: boolean) => {
     updateMutation.mutate(
       { 
         eventId: rsvpData.eventId, 
-        status: RsvpStatus.Going, 
-        roleId: role 
+        status: RsvpStatus.Registered, 
+        roleId: role,
+        isAnonymous: isAnonymous
       },
       {
         onSuccess: () => {

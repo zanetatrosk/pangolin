@@ -89,7 +89,7 @@ export function ProfilePage({
     },
   });
 
-  const allowedToEdit = userId === user.userId;
+  const allowedToEdit = userId === user?.userId;
 
   // Mock data initialization - in a real app, this would come from the backend/store
   const [profileData, setProfileData] =
@@ -193,7 +193,7 @@ export function ProfilePage({
             </div>
             <div className="text-center md:text-left space-y-2 flex-1 w-full md:mt-16">
               <div className="flex items-center justify-center md:justify-start gap-3">
-                <Badge
+                {profileData.role && <Badge
                   variant={
                     profileData.role?.name === "Leader"
                       ? "default"
@@ -202,7 +202,7 @@ export function ProfilePage({
                   className="text-sm"
                 >
                   {profileData.role?.name}
-                </Badge>
+                </Badge>}
                 {profileData.level && (
                   <Badge
                     variant="outline"

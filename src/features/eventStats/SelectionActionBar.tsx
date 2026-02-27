@@ -34,7 +34,7 @@ const generateStatusOptions = () => {
       label: "Cancel registration",
       type: "destructive" as const,
       value: "rejected",
-      statuses: [RsvpStatus.Pending, RsvpStatus.Going, RsvpStatus.Waitlisted],
+      statuses: [RsvpStatus.Pending, RsvpStatus.Registered, RsvpStatus.Waitlisted],
     },
     
   ];

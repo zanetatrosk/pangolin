@@ -16,8 +16,8 @@ export const BasicDetails = withForm({
   ...eventFormOpts,
   props: {} as BasicDetailsProps,
   render: ({ form, className, isEditing }) => {
-    const {data: currencyOptions = []} = useQuery<Currency[]>({
-      queryKey: ['currencies'],
+    const { data: currencyOptions = [] } = useQuery<Currency[]>({
+      queryKey: ["currencies"],
       queryFn: getCurrencies,
     });
 
@@ -46,7 +46,7 @@ export const BasicDetails = withForm({
             </form.AppField>
 
             {/* Location */}
-            <LocationSection form={form}/>
+            <LocationSection form={form} />
           </FormSection>
 
           {/* Date & Time */}
@@ -69,52 +69,57 @@ export const BasicDetails = withForm({
                 )}
               </form.AppField>
 
-              <form.AppField name="basicInfo.endDate">
+              {!isEditing && (
+                <form.AppField name="basicInfo.endDate">
+                  {(field) => (
+                    <field.TextField
+                      label="End Date"
+                      type="date"
+                      icon={Calendar}
+                    />
+                  )}
+                </form.AppField>
+              )}
+
+              <form.AppField
+                name="basicInfo.time"
+                validators={{
+                  onChange: ({ value }) =>
+                    !value ? "Time is required" : undefined,
+                }}
+              >
                 {(field) => (
                   <field.TextField
-                    label="End Date"
-                    type="date"
-                    icon={Calendar}
+                    label="Time"
+                    type="time"
+                    required
+                    icon={Clock}
                   />
                 )}
               </form.AppField>
             </FormGrid>
 
-            <form.AppField
-              name="basicInfo.time"
-              validators={{
-                onChange: ({ value }) =>
-                  !value ? "Time is required" : undefined,
-              }}
-            >
-              {(field) => (
-                <field.TextField
-                  label="Time"
-                  type="time"
-                  required
-                  icon={Clock}
-                />
-              )}
-            </form.AppField>
-
             {/* Recurring Event Checkbox */}
-            {!isEditing && <form.AppField name="basicInfo.isRecurring">
-              {(field) => (
-                <field.CheckboxField 
-                  label="This is a recurring event" 
-                />
-              )}
-            </form.AppField>}
+            {!isEditing && (
+              <form.AppField name="basicInfo.isRecurring">
+                {(field) => (
+                  <field.CheckboxField label="This is a recurring event" />
+                )}
+              </form.AppField>
+            )}
 
             {/* Occurrence Type - shown when recurring is checked */}
             <form.AppField name="basicInfo.isRecurring">
               {(recurringField) =>
-                recurringField.state.value && !isEditing && (
+                recurringField.state.value &&
+                !isEditing && (
                   <form.AppField
                     name="basicInfo.recurrenceType"
                     validators={{
                       onChange: ({ value }) =>
-                        !value ? "Occurrence type is required for recurring events" : undefined,
+                        !value
+                          ? "Occurrence type is required for recurring events"
+                          : undefined,
                     }}
                   >
                     {(field) => (

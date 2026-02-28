@@ -44,8 +44,11 @@ axiosInstance.interceptors.response.use(
 
                 // Try to refresh the token
                 const response = await axios.post(
-                    "http://localhost:8080/api/auth/refresh",
-                    { refreshToken }
+                    "http://localhost:8080/api/auth/token",
+                    { 
+                        grantType: "refresh_token",
+                        refreshToken 
+                    }
                 );
 
                 const { accessToken, refreshToken: newRefreshToken, expiresIn } = response.data;

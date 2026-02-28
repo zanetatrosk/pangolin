@@ -25,7 +25,6 @@ import envConfig from '../../env.json';
 
 export const GOOGLE_CLIENT_ID = envConfig.GOOGLE_CLIENT_ID;
 export const GOOGLE_REDIRECT_URI = envConfig.GOOGLE_REDIRECT_URI;
-export const GOOGLE_INCREMENTAL_REDIRECT_URI = envConfig.GOOGLE_INCREMENTAL_REDIRECT_URI;
 
 /**
  * Base scopes required for initial login

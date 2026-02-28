@@ -1,13 +1,18 @@
 /**
- * OAuth callback route for redirect-based flow
+ * Unified OAuth callback route for redirect-based flow
  * 
+ * Handles both initial login and incremental authorization.
  * Google redirects back here with an authorization code that needs to be exchanged for tokens.
+ * The backend automatically detects whether this is login or incremental auth based on JWT token presence.
  */
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useAuth } from "@/features/auth/AuthProvider";
 import { useEffect, useState } from "react";
-import { loginWithGoogle } from "@/services/auth-api";
+import { exchangeToken } from "@/services/auth-api";
 import { GOOGLE_REDIRECT_URI } from "@/lib/google-auth";
+import { Loader2, AlertCircle, CheckCircle2 } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 export const Route = createFileRoute("/auth/callback")({
   component: AuthCallback,
@@ -24,18 +29,29 @@ function AuthCallback() {
   const navigate = useNavigate();
   const { setTokens } = useAuth();
   const { code, error, state } = Route.useSearch();
+  const [status, setStatus] = useState<'loading' | 'success' | 'error'>('loading');
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  
+  // Check if this is incremental auth from state parameter
+  const isIncrementalAuth = state?.includes('type=incremental') || false;
+  // Extract the actual redirect state (remove type parameter if present)
+  const redirectState = state?.replace('type=incremental', '').replace(/^&/, '') || "";
   
   useEffect(() => {
     const handleCallback = async () => {
       // Check for error from Google
       if (error) {
         console.error("Authentication failed:", error);
+        setStatus('error');
         setErrorMessage(error);
         
-        // Redirect to login after showing error
+        // Redirect to appropriate page after showing error
         setTimeout(() => {
-          navigate({ to: "/login", search: { redirect: "/" } });
+          if (isIncrementalAuth) {
+            navigate({ to: "/", replace: true });
+          } else {
+            navigate({ to: "/login", search: { redirect: "/" } });
+          }
         }, 3000);
         return;
       }
@@ -43,37 +59,104 @@ function AuthCallback() {
       // Check if we have the authorization code
       if (!code) {
         console.error("Missing authorization code");
+        setStatus('error');
         setErrorMessage("Authentication failed. Missing authorization code.");
         
         setTimeout(() => {
-          navigate({ to: "/login", search: { redirect: "/" } });
+          if (isIncrementalAuth) {
+            navigate({ to: "/", replace: true });
+          } else {
+            navigate({ to: "/login", search: { redirect: "/" } });
+          }
         }, 3000);
         return;
       }
 
       try {
-        // Exchange code for tokens
-        const response = await loginWithGoogle(code, GOOGLE_REDIRECT_URI);
+        // Exchange code for tokens using unified endpoint
+        // Backend automatically detects login vs incremental auth based on JWT presence
+        const response = await exchangeToken({
+          grantType: "authorization_code",
+          code,
+          redirectUri: GOOGLE_REDIRECT_URI,
+        });
         
         // Store tokens in context and localStorage
         setTokens(response.accessToken, response.refreshToken, response.expiresIn);
         
-        // Redirect to the original page or events
-        const redirectTo = state || "/events";
-        navigate({ to: redirectTo });
+        setStatus('success');
+        
+        // Redirect based on auth type
+        setTimeout(() => {
+          if (isIncrementalAuth) {
+            // For incremental auth, go back to home
+            navigate({ to: "/", replace: true });
+          } else {
+            // For login, redirect to the original page or events
+            const redirectTo = redirectState || "/events";
+            navigate({ to: redirectTo });
+          }
+        }, isIncrementalAuth ? 2000 : 500);
       } catch (err) {
         console.error("Failed to authenticate:", err);
-        setErrorMessage("Authentication failed. Please try again.");
+        setStatus('error');
+        setErrorMessage(
+          isIncrementalAuth 
+            ? "Failed to update permissions. Please try again."
+            : "Authentication failed. Please try again."
+        );
         
         setTimeout(() => {
-          navigate({ to: "/login", search: { redirect: "/" } });
+          if (isIncrementalAuth) {
+            navigate({ to: "/", replace: true });
+          } else {
+            navigate({ to: "/login", search: { redirect: "/" } });
+          }
         }, 3000);
       }
     };
 
     handleCallback();
-  }, [code, error, state, navigate, setTokens]);
+  }, [code, error, state, navigate, setTokens, isIncrementalAuth, redirectState]);
 
+  // Show different UI based on auth type
+  if (isIncrementalAuth) {
+    return (
+      <div className="min-h-screen flex items-center justify-center p-4">
+        <Card className="w-full max-w-md">
+          <CardHeader>
+            <CardTitle>Updating Permissions</CardTitle>
+          </CardHeader>
+          <CardContent>
+            {status === 'loading' && (
+              <div className="flex items-center gap-3">
+                <Loader2 className="h-5 w-5 animate-spin" />
+                <p>Processing your authorization...</p>
+              </div>
+            )}
+
+            {status === 'success' && (
+              <Alert>
+                <CheckCircle2 className="h-4 w-4" />
+                <AlertDescription>
+                  Permissions updated successfully! Redirecting...
+                </AlertDescription>
+              </Alert>
+            )}
+
+            {status === 'error' && (
+              <Alert variant="destructive">
+                <AlertCircle className="h-4 w-4" />
+                <AlertDescription>{errorMessage}</AlertDescription>
+              </Alert>
+            )}
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
+  // Default login UI
   if (errorMessage) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen">

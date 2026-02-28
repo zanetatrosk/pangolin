@@ -8,9 +8,7 @@ import { Loader2, AlertCircle, CheckCircle2 } from 'lucide-react';
 import {
   checkFormsAccess
 } from '@/services/google-forms-api';
-import { getAvailableScopes } from '@/services/auth-api';
-import { buildGoogleOAuthUrl } from '@/lib/google-auth';
-import envConfig from '../../../../env.json';
+import { buildGoogleOAuthUrl, GOOGLE_REDIRECT_URI, FORMS_SCOPES } from '@/lib/google-auth';
 
 interface GoogleFormIntegrationProps {
   value?: string;
@@ -23,20 +21,14 @@ export const GoogleFormIntegration: FC<GoogleFormIntegrationProps> = ({ value, o
     queryFn: checkFormsAccess,
   });
 
-  // Get available scopes
-  const { data: availableScopes } = useQuery({
-    queryKey: ['available-scopes'],
-    queryFn: getAvailableScopes,
-  });
-
   const handleGrantAccess = () => {
-    const scope = availableScopes?.forms.join(' ') || 
-      'https://www.googleapis.com/auth/forms.body.readonly https://www.googleapis.com/auth/forms.responses.readonly';
+    const scope = FORMS_SCOPES.join(' ');
     
     const url = buildGoogleOAuthUrl({
-      redirectUri: `${envConfig.FE_BASE_URL}/auth/incremental-callback`,
+      redirectUri: GOOGLE_REDIRECT_URI,
       scope,
       includeGrantedScopes: true,
+      state: 'type=incremental', // Pass type parameter to indicate this is incremental auth
     });
     
     window.location.href = url;

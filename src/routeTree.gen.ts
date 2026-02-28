@@ -22,7 +22,6 @@ import { Route as EventsNewRouteImport } from './routes/events.new'
 import { Route as EventsIdRouteImport } from './routes/events.$id'
 import { Route as AuthCallbackRouteImport } from './routes/auth.callback'
 import { Route as EventsIdIndexRouteImport } from './routes/events.$id.index'
-import { Route as StatsMainEventIdRouteImport } from './routes/stats.main-event.$id'
 import { Route as EventsIdStatsRouteImport } from './routes/events.$id.stats'
 import { Route as EventsIdEditRouteImport } from './routes/events.$id.edit'
 
@@ -91,11 +90,6 @@ const EventsIdIndexRoute = EventsIdIndexRouteImport.update({
   path: '/',
   getParentRoute: () => EventsIdRoute,
 } as any)
-const StatsMainEventIdRoute = StatsMainEventIdRouteImport.update({
-  id: '/stats/main-event/$id',
-  path: '/stats/main-event/$id',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const EventsIdStatsRoute = EventsIdStatsRouteImport.update({
   id: '/stats',
   path: '/stats',
@@ -122,7 +116,6 @@ export interface FileRoutesByFullPath {
   '/events/': typeof EventsIndexRoute
   '/events/$id/edit': typeof EventsIdEditRoute
   '/events/$id/stats': typeof EventsIdStatsRoute
-  '/stats/main-event/$id': typeof StatsMainEventIdRoute
   '/events/$id/': typeof EventsIdIndexRoute
 }
 export interface FileRoutesByTo {
@@ -138,7 +131,6 @@ export interface FileRoutesByTo {
   '/events': typeof EventsIndexRoute
   '/events/$id/edit': typeof EventsIdEditRoute
   '/events/$id/stats': typeof EventsIdStatsRoute
-  '/stats/main-event/$id': typeof StatsMainEventIdRoute
   '/events/$id': typeof EventsIdIndexRoute
 }
 export interface FileRoutesById {
@@ -157,7 +149,6 @@ export interface FileRoutesById {
   '/events/': typeof EventsIndexRoute
   '/events/$id/edit': typeof EventsIdEditRoute
   '/events/$id/stats': typeof EventsIdStatsRoute
-  '/stats/main-event/$id': typeof StatsMainEventIdRoute
   '/events/$id/': typeof EventsIdIndexRoute
 }
 export interface FileRouteTypes {
@@ -177,7 +168,6 @@ export interface FileRouteTypes {
     | '/events/'
     | '/events/$id/edit'
     | '/events/$id/stats'
-    | '/stats/main-event/$id'
     | '/events/$id/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -193,7 +183,6 @@ export interface FileRouteTypes {
     | '/events'
     | '/events/$id/edit'
     | '/events/$id/stats'
-    | '/stats/main-event/$id'
     | '/events/$id'
   id:
     | '__root__'
@@ -211,7 +200,6 @@ export interface FileRouteTypes {
     | '/events/'
     | '/events/$id/edit'
     | '/events/$id/stats'
-    | '/stats/main-event/$id'
     | '/events/$id/'
   fileRoutesById: FileRoutesById
 }
@@ -225,7 +213,6 @@ export interface RootRouteChildren {
   MyProfileRoute: typeof MyProfileRoute
   AuthCallbackRoute: typeof AuthCallbackRoute
   ProfileUserIdRoute: typeof ProfileUserIdRoute
-  StatsMainEventIdRoute: typeof StatsMainEventIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -321,13 +308,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EventsIdIndexRouteImport
       parentRoute: typeof EventsIdRoute
     }
-    '/stats/main-event/$id': {
-      id: '/stats/main-event/$id'
-      path: '/stats/main-event/$id'
-      fullPath: '/stats/main-event/$id'
-      preLoaderRoute: typeof StatsMainEventIdRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/events/$id/stats': {
       id: '/events/$id/stats'
       path: '/stats'
@@ -386,7 +366,6 @@ const rootRouteChildren: RootRouteChildren = {
   MyProfileRoute: MyProfileRoute,
   AuthCallbackRoute: AuthCallbackRoute,
   ProfileUserIdRoute: ProfileUserIdRoute,
-  StatsMainEventIdRoute: StatsMainEventIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

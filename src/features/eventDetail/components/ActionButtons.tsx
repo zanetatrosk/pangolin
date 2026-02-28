@@ -2,6 +2,9 @@ import { Button } from "@/components/ui/button";
 import { useDeleteRegistration } from "@/hooks/useDeleteRegistration";
 import { useUpdateRsvp } from "@/hooks/useUpdateRsvp";
 import { useCancelRegistration } from "@/hooks/useCancelRegistration";
+import { useUser } from "@/hooks/useUser";
+import { useNavigate, useRouter } from "@tanstack/react-router";
+import { PATHS } from "@/paths";
 import { Check, Heart, Clock, UserPlus } from "lucide-react";
 import { useState } from "react";
 import { RsvpData, RsvpStatus } from "@/services/types";
@@ -30,6 +33,9 @@ export const ActionButtons: React.FC<{
   const updateMutation = useUpdateRsvp();
   const deleteMutation = useDeleteRegistration(rsvpData.eventId, rsvpData.id || "");
   const cancelMutation = useCancelRegistration();
+  const { isAuthenticated } = useUser();
+  const navigate = useNavigate();
+  const router = useRouter();
 
   const isGoing = currentStatus === RsvpStatus.Registered;
   const isInterested = currentStatus === RsvpStatus.Interested;
@@ -38,6 +44,20 @@ export const ActionButtons: React.FC<{
   const isGoogleForm = registrationMode === RegistrationModeEnum.GOOGLE_FORM;
   const canInteract = !isRejected;
   const canCancel = !isGoogleForm; // Cannot cancel Google Form registrations
+
+  const redirectToLogin = () => {
+    navigate({ 
+      to: PATHS.LOGIN, 
+      search: { redirect: router.state.location.pathname } 
+    });
+  };
+
+  const handleNotAuthenticated = () => {
+    if (!isAuthenticated) {
+      redirectToLogin();
+      return;
+    }
+  };
 
   const handleCancel = () => {
     if (rsvpData.id) {
@@ -53,6 +73,8 @@ export const ActionButtons: React.FC<{
   };
 
   const handleJoin = () => {
+    handleNotAuthenticated();
+
     if ((isGoing || isPending) && canCancel) {
       setCancelDialogOpen(true);
     } else if (!isGoing && !isPending) {
@@ -78,6 +100,8 @@ export const ActionButtons: React.FC<{
   };
 
   const handleInterested = () => {
+    handleNotAuthenticated();
+
     if (!isInterested) {
       updateMutation.mutate(
         { 

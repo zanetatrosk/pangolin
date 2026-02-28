@@ -4,9 +4,22 @@ import { DanceEventCreation } from "@/features/newEvent/types";
 import { PATHS } from "@/paths";
 import { getEventById, updateEventById } from "@/services/events-api";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, redirect, useNavigate } from "@tanstack/react-router";
+import { authStore, selectIsAuthenticated } from "@/stores/authStore";
 
 export const Route = createFileRoute("/events/$id/edit")({
+  beforeLoad: async ({ location }) => {
+    const isAuthenticated = selectIsAuthenticated(authStore.state);
+    
+    if (!isAuthenticated) {
+      throw redirect({
+        to: "/login",
+        search: {
+          redirect: location.href,
+        },
+      });
+    }
+  },
   component: RouteComponent,
 });
 

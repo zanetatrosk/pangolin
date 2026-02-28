@@ -1,15 +1,15 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
 import { ProfilePage } from "@/features/profile/ProfilePage";
-import { authStore } from "@/stores/authStore";
+import { authStore, selectIsAuthenticated } from "@/stores/authStore";
 import { useUser } from "@/hooks/useUser";
 import { getUserById } from "@/services/user-api";
 import { useQuery } from "@tanstack/react-query";
 
 export const Route = createFileRoute("/my-profile")({
   beforeLoad: async ({ location }) => {
-    const { isAuthenticated } = authStore.state;
+    const isAuthenticated = selectIsAuthenticated(authStore.state);
     
-    if (false) {
+    if (!isAuthenticated) {
       throw redirect({
         to: "/login",
         search: {

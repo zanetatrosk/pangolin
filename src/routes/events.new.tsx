@@ -1,12 +1,12 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
 import { NewEventPage } from "@/features/newEvent/NewEventPage";
-import { authStore } from "@/stores/authStore";
-import { useAuth } from "@/features/auth/AuthProvider";
+import { authStore, selectIsAuthenticated } from "@/stores/authStore";
 
 export const Route = createFileRoute("/events/new")({
   beforeLoad: async ({ location }) => {
+    const isAuthenticated = selectIsAuthenticated(authStore.state);
     
-    if (false) {
+    if (!isAuthenticated) {
       throw redirect({
         to: "/login",
         search: {

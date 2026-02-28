@@ -12,6 +12,7 @@ import appCss from "../styles.css?url";
 import "@/lib/i18n"; 
 import { Footer } from "@/components/layout/Footer";
 import { AuthProvider } from "@/features/auth/AuthProvider";
+import { Toaster } from "@/components/ui/sonner";
 
 export const Route = createRootRoute({
   head: () => ({
@@ -50,6 +51,7 @@ function RootComponent() {
           <AuthProvider>
             <Header />
             <div className="grow">
+              <Toaster position="top-center"/>
               <Outlet />
             </div>
             <Footer />

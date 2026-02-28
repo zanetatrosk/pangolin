@@ -7,6 +7,7 @@ import { Spinner } from "@/components/ui/spinner";
 import { EventDateDisplay } from "../eventDetail/components/EventDateDisplay";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { syncRegistrations } from "@/services/registrations-api";
+import { RegistrationModeEnum } from "../eventDetail/publish-actions/PublishEventOptions";
 
 export interface EventStatsData {
   eventId: string;
@@ -14,6 +15,7 @@ export interface EventStatsData {
   date: string;
   recurringDates: RecurringDate[];
   registrationData: RegistrationFormData;
+  registrationMode: RegistrationModeEnum;
 }
 
 export const EventStats: FC<{ stats: EventStatsData }> = ({ stats }) => {
@@ -38,7 +40,6 @@ export const EventStats: FC<{ stats: EventStatsData }> = ({ stats }) => {
             <EventDateDisplay
               date={stats.date}
               recurringDates={stats.recurringDates}
-              showAllDatesOption={stats.recurringDates.length > 0}
               routePattern="stats"
             />
           </p>
@@ -47,7 +48,7 @@ export const EventStats: FC<{ stats: EventStatsData }> = ({ stats }) => {
         <div className="space-y-4">
           <div className="flex justify-between pt-4">
           <h2 className="text-2xl font-semibold">Registrations</h2>
-          <Button
+          {stats.registrationMode === RegistrationModeEnum.GOOGLE_FORM && <Button
             className="w-full sm:w-auto"
             variant="default"
             type="button"
@@ -62,7 +63,7 @@ export const EventStats: FC<{ stats: EventStatsData }> = ({ stats }) => {
             ) : (
               "Sync Data"
             )}
-          </Button>
+          </Button>}
           </div>
           <RegistrationTable data={stats.registrationData} eventId={stats.eventId} />
         </div>

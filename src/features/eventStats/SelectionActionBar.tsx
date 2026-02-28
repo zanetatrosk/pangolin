@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { RsvpStatus, RegistrationAction } from "@/services/types";
 import { useUpdateRegistrationStatus } from "@/hooks/useUpdateRegistrationStatus";
 import { OrganizerAction } from "./types";
+import { toast } from "sonner";
 
 interface SelectedRow {
   id: string;
@@ -59,14 +60,14 @@ export const SelectionActionBar: FC<SelectionActionBarProps> = ({
     if (emails.length > 0) {
       navigator.clipboard.writeText(emails.join(", ")).then(
         () => {
-          alert("Email addresses copied to clipboard!");
+          toast.success("Email addresses copied to clipboard!");
         },
         (err) => {
-          alert("Failed to copy email addresses: " + err);
+          toast.error("Failed to copy email addresses: " + err);
         },
       );
     } else {
-      alert("No email addresses found for the selected rows.");
+      toast.info("No email addresses found for the selected rows.");
     }
   };
 
@@ -87,9 +88,9 @@ export const SelectionActionBar: FC<SelectionActionBarProps> = ({
         )
       );
       
-      alert(`Successfully updated ${selectedRows.length} registration(s)`);
+      toast.success(`Successfully updated ${selectedRows.length} registration(s)`);
     } catch (error) {
-      alert("Failed to update registrations");
+      toast.error("Failed to update registrations");
     }
   };
 

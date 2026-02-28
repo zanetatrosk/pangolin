@@ -28,10 +28,11 @@ export const ActionButtons: React.FC<{
   buttonSize = "lg"
 }) => {
   const [currentStatus, setCurrentStatus] = useState(rsvpData.status);
+  const [registrationId, setRegistrationId] = useState(rsvpData.id);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [cancelDialogOpen, setCancelDialogOpen] = useState(false);
   const updateMutation = useUpdateRsvp();
-  const deleteMutation = useDeleteRegistration(rsvpData.eventId, rsvpData.id || "");
+  const deleteMutation = useDeleteRegistration(rsvpData.eventId);
   const cancelMutation = useCancelRegistration();
   const { isAuthenticated } = useUser();
   const navigate = useNavigate();
@@ -60,12 +61,13 @@ export const ActionButtons: React.FC<{
   };
 
   const handleCancel = () => {
-    if (rsvpData.id) {
+    if (registrationId) {
       cancelMutation.mutate(
-        { eventId: rsvpData.eventId, registrationId: rsvpData.id },
+        { eventId: rsvpData.eventId, registrationId },
         {
           onSuccess: () => {
             setCurrentStatus(RsvpStatus.Cancelled);
+            setRegistrationId(undefined);
           }
         }
       );
@@ -94,6 +96,7 @@ export const ActionButtons: React.FC<{
         onSuccess: (data) => {
           // Use the actual status from the response instead of hardcoding
           setCurrentStatus(data.status || RsvpStatus.Pending);
+          setRegistrationId(data.id);
         }
       }
     );
@@ -109,15 +112,17 @@ export const ActionButtons: React.FC<{
           status: RsvpStatus.Interested 
         },
         {
-          onSuccess: () => {
+          onSuccess: (data) => {
             setCurrentStatus(RsvpStatus.Interested);
+            setRegistrationId(data.id);
           }
         }
       );
-    } else if (rsvpData.id) {
-      deleteMutation.mutate(undefined, {
+    } else if (registrationId) {
+      deleteMutation.mutate(registrationId, {
         onSuccess: () => {
           setCurrentStatus(undefined);
+          setRegistrationId(undefined);
         }
       });
     }

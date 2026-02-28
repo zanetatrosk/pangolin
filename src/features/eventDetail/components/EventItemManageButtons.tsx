@@ -14,6 +14,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { ConfirmActionDialog, ActionType } from "./ConfirmActionDialog";
 import { PublishPayload, RegistrationModeEnum } from "../publish-actions/PublishEventOptions";
+import { toast } from "sonner";
 
 interface EventItemManageButtonsProps {
   eventId: string | number;
@@ -41,7 +42,7 @@ export const EventItemManageButtons: React.FC<EventItemManageButtonsProps> = ({
     },
     onError: (error: any) => {
       console.error("Failed to publish event:", error);
-      alert(error.response?.data?.message || "Failed to publish event");
+      toast.error(error.response?.data?.message || "Failed to publish event");
     },
   });
 
@@ -54,7 +55,7 @@ export const EventItemManageButtons: React.FC<EventItemManageButtonsProps> = ({
     },
     onError: (error: any) => {
       console.error("Failed to cancel event:", error);
-      alert(error.response?.data?.message || "Failed to cancel event");
+      toast.error(error.response?.data?.message || "Failed to cancel event");
     },
   });
 
@@ -66,7 +67,7 @@ export const EventItemManageButtons: React.FC<EventItemManageButtonsProps> = ({
     },
     onError: (error: any) => {
       console.error("Failed to delete event:", error);
-      alert(error.response?.data?.message || "Failed to delete event");
+      toast.error(error.response?.data?.message || "Failed to delete event");
     },
   });
 

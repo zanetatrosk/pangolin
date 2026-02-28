@@ -1,6 +1,6 @@
 import { HeroInformations } from "./components/HeroInformations";
 import { CoverImage } from "./components/CoverImage";
-import { ActionButtons } from "./components/ActionButtons";
+import { DetailButtons } from "./components/DetailButtons";
 import { Description } from "./components/Description";
 import { MediaGallery } from "./components/MediaGallery";
 import { Details } from "./components/Details";
@@ -61,11 +61,11 @@ export function EventDetail({ event }: EventDetailProps) {
           <div className="contents lg:block lg:col-span-2 lg:space-y-8">
             {/* Action Buttons */}
             <div className="order-1">
-              {user.userId === basicInfo.organizer.userId ? (
+              {user?.userId === basicInfo.organizer.userId ? (
                 // Organizer view
                 <EventItemManageButtons eventId={event.id} eventStatus={basicInfo.status || ""}/>
               ) : (
-                <ActionButtons
+                <DetailButtons
                   key={event.id + event.basicInfo.registrationStatus?.status}
                   rsvpData={{
                     id: event.basicInfo.registrationStatus?.id,
@@ -75,8 +75,8 @@ export function EventDetail({ event }: EventDetailProps) {
                   }}
                   registrationMode={event.basicInfo.registrationType}
                   formId={event.basicInfo.formId}
-                />)
-              }
+                />
+              )}
             </div>
 
             {/* Description */}

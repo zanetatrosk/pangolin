@@ -1,18 +1,15 @@
 import { axiosInstance } from "./axios";
 
-export interface GoogleAuthUrlResponse {
-  authUrl: string;
-}
-
 export interface AuthenticationRequest {
   code: string;
-  redirectUri: string;
+  redirectUri?: string;
 }
 
 export interface AuthenticationResponse {
   accessToken: string;
   refreshToken: string;
   expiresIn: number;
+  user: UserDto;
 }
 
 export interface RefreshTokenRequest {
@@ -27,25 +24,22 @@ export interface UserDto {
   grantedScopes: string[];
 }
 
+export interface AvailableScopesResponse {
+  base: string[];
+  forms: string[];
+}
+
 const AUTH_URL = "/auth";
 
 /**
- * Get Google OAuth2 authorization URL for initial sign-in
+ * Login with Google using authorization code
+ * Send the authorization code received from Google Identity Services
  */
-export const getGoogleAuthUrl = async (): Promise<GoogleAuthUrlResponse> => {
-  const response = await axiosInstance.get(`${AUTH_URL}/google/login`);
-  return response.data;
-};
-
-/**
- * Handle Google OAuth2 callback
- * Send the authorization code received from Google
- */
-export const authenticateWithGoogle = async (
+export const loginWithGoogle = async (
   code: string,
-  redirectUri: string
+  redirectUri: string = 'postmessage'
 ): Promise<AuthenticationResponse> => {
-  const response = await axiosInstance.post(`${AUTH_URL}/google/callback`, {
+  const response = await axiosInstance.post(`${AUTH_URL}/google/login`, {
     code,
     redirectUri,
   });
@@ -73,29 +67,23 @@ export const getCurrentUser = async (): Promise<UserDto> => {
 };
 
 /**
- * Get authorization URL for incremental authorization (e.g., for Google Forms access)
+ * Get available scopes for Google services
  */
-export const getIncrementalAuthUrl = async (
-  scopes: string
-): Promise<GoogleAuthUrlResponse> => {
-  const response = await axiosInstance.get(
-    `${AUTH_URL}/google/incremental-auth-url`,
-    {
-      params: { scopes },
-    }
-  );
+export const getAvailableScopes = async (): Promise<AvailableScopesResponse> => {
+  const response = await axiosInstance.get(`${AUTH_URL}/google/available-scopes`);
   return response.data;
 };
 
 /**
- * Handle incremental authorization callback
+ * Handle incremental authorization
+ * Send the authorization code for additional scopes
  */
-export const handleIncrementalAuth = async (
+export const incrementalAuth = async (
   code: string,
-  redirectUri: string
+  redirectUri: string = 'postmessage'
 ): Promise<{ message: string }> => {
   const response = await axiosInstance.post(
-    `${AUTH_URL}/google/incremental-callback`,
+    `${AUTH_URL}/google/incremental-auth`,
     {
       code,
       redirectUri,
@@ -106,8 +94,11 @@ export const handleIncrementalAuth = async (
 
 /**
  * Logout endpoint
+ * @param revokeGoogle - Whether to revoke Google tokens
  */
-export const logout = async (): Promise<{ message: string }> => {
-  const response = await axiosInstance.post(`${AUTH_URL}/logout`);
+export const logoutApi = async (revokeGoogle: boolean = true): Promise<{ message: string }> => {
+  const response = await axiosInstance.post(
+    `${AUTH_URL}/logout?revokeGoogle=${revokeGoogle}`
+  );
   return response.data;
 };

@@ -1,15 +1,19 @@
+/**
+ * OAuth callback route for redirect-based flow
+ * 
+ * Google redirects back here with an authorization code that needs to be exchanged for tokens.
+ */
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useAuth } from "@/features/auth/AuthProvider";
 import { useEffect, useState } from "react";
-import { PATHS } from "@/paths";
+import { loginWithGoogle } from "@/services/auth-api";
+import { GOOGLE_REDIRECT_URI } from "@/lib/google-auth";
 
 export const Route = createFileRoute("/auth/callback")({
   component: AuthCallback,
   validateSearch: (search: Record<string, unknown>) => {
     return {
-      accessToken: (search.accessToken as string) || "",
-      refreshToken: (search.refreshToken as string) || "",
-      expiresIn: (search.expiresIn as string) || "",
+      code: (search.code as string) || "",
       error: (search.error as string) || "",
       state: (search.state as string) || "",
     };
@@ -19,52 +23,56 @@ export const Route = createFileRoute("/auth/callback")({
 function AuthCallback() {
   const navigate = useNavigate();
   const { setTokens } = useAuth();
-  const { accessToken, refreshToken, expiresIn, error, state } = Route.useSearch();
+  const { code, error, state } = Route.useSearch();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  
   useEffect(() => {
-    const handleCallback = () => {
-      // Check for error from backend
+    const handleCallback = async () => {
+      // Check for error from Google
       if (error) {
         console.error("Authentication failed:", error);
         setErrorMessage(error);
         
         // Redirect to login after showing error
         setTimeout(() => {
-          navigate({ to: "/login",  search: { redirect: PATHS.EVENTS.LIST} });
+          navigate({ to: "/login", search: { redirect: "/" } });
         }, 3000);
         return;
       }
 
-      // Check if we have all required tokens
-      if (!accessToken || !refreshToken || !expiresIn) {
-        console.error("Missing tokens in callback");
-        setErrorMessage("Authentication failed. Missing tokens.");
+      // Check if we have the authorization code
+      if (!code) {
+        console.error("Missing authorization code");
+        setErrorMessage("Authentication failed. Missing authorization code.");
         
         setTimeout(() => {
-          navigate({ to: "/login" });
+          navigate({ to: "/login", search: { redirect: "/" } });
         }, 3000);
         return;
       }
 
       try {
-        // Store tokens in context and localStorage
-        setTokens(accessToken, refreshToken, parseInt(expiresIn));
+        // Exchange code for tokens
+        const response = await loginWithGoogle(code, GOOGLE_REDIRECT_URI);
         
-        // Redirect to the original page or home
-        const redirectTo = state || "/";
+        // Store tokens in context and localStorage
+        setTokens(response.accessToken, response.refreshToken, response.expiresIn);
+        
+        // Redirect to the original page or events
+        const redirectTo = state || "/events";
         navigate({ to: redirectTo });
       } catch (err) {
-        console.error("Failed to store tokens:", err);
+        console.error("Failed to authenticate:", err);
         setErrorMessage("Authentication failed. Please try again.");
         
         setTimeout(() => {
-          navigate({ to: "/login" });
+          navigate({ to: "/login", search: { redirect: "/" } });
         }, 3000);
       }
     };
 
     handleCallback();
-  }, [accessToken, refreshToken, expiresIn, error, state, navigate, setTokens]);
+  }, [code, error, state, navigate, setTokens]);
 
   if (errorMessage) {
     return (

@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -8,7 +8,9 @@ import { Loader2, AlertCircle, CheckCircle2 } from 'lucide-react';
 import {
   checkFormsAccess
 } from '@/services/google-forms-api';
-import { getIncrementalAuthUrl } from '@/services/auth-api';
+import { getAvailableScopes } from '@/services/auth-api';
+import { buildGoogleOAuthUrl } from '@/lib/google-auth';
+import envConfig from '../../../../env.json';
 
 interface GoogleFormIntegrationProps {
   value?: string;
@@ -21,15 +23,23 @@ export const GoogleFormIntegration: FC<GoogleFormIntegrationProps> = ({ value, o
     queryFn: checkFormsAccess,
   });
 
-  const handleGrantAccess = async () => {
-    try {
-      // Get the incremental auth URL for Google Forms scopes
-      const response = await getIncrementalAuthUrl('forms');
-      // Redirect user to Google's consent screen
-      window.location.href = response.authUrl;
-    } catch (error) {
-      console.error('Failed to get incremental auth URL:', error);
-    }
+  // Get available scopes
+  const { data: availableScopes } = useQuery({
+    queryKey: ['available-scopes'],
+    queryFn: getAvailableScopes,
+  });
+
+  const handleGrantAccess = () => {
+    const scope = availableScopes?.forms.join(' ') || 
+      'https://www.googleapis.com/auth/forms.body.readonly https://www.googleapis.com/auth/forms.responses.readonly';
+    
+    const url = buildGoogleOAuthUrl({
+      redirectUri: `${envConfig.FE_BASE_URL}/auth/incremental-callback`,
+      scope,
+      includeGrantedScopes: true,
+    });
+    
+    window.location.href = url;
   };
 
   if (isCheckingAccess) {
@@ -59,7 +69,10 @@ export const GoogleFormIntegration: FC<GoogleFormIntegrationProps> = ({ value, o
               <AlertCircle className="h-4 w-4" />
               <AlertDescription className="flex items-center justify-between">
                 <span>You need to grant access to Google Forms to use this feature.</span>
-                <Button onClick={handleGrantAccess} size="sm">
+                <Button 
+                  onClick={handleGrantAccess} 
+                  size="sm"
+                >
                   Grant Access
                 </Button>
               </AlertDescription>

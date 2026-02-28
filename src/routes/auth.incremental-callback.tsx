@@ -1,9 +1,16 @@
+/**
+ * Incremental Authorization Callback Route
+ * 
+ * Handles the OAuth callback for incremental authorization (e.g., Google Forms access).
+ * After successful authorization, redirects back to the home page.
+ */
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { useEffect, useState } from 'react';
-import { handleIncrementalAuth } from '@/services/auth-api';
+import { incrementalAuth } from '@/services/auth-api';
 import { Loader2, AlertCircle, CheckCircle2 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
+import { GOOGLE_INCREMENTAL_REDIRECT_URI } from '@/lib/google-auth';
 
 export const Route = createFileRoute('/auth/incremental-callback')({
   component: IncrementalAuthCallback,
@@ -34,11 +41,8 @@ function IncrementalAuthCallback() {
           return;
         }
 
-        // Send the code to the backend
-        await handleIncrementalAuth(
-          code,
-          `${window.location.origin}/auth/incremental-callback`
-        );
+        // Send the code to the backend with the correct redirect URI
+        await incrementalAuth(code, GOOGLE_INCREMENTAL_REDIRECT_URI);
 
         setStatus('success');
 

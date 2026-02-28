@@ -1,5 +1,5 @@
 import { Store } from '@tanstack/react-store';
-import { UserDto, getCurrentUser, refreshAccessToken } from '@/services/auth-api';
+import { UserDto, getCurrentUser, refreshAccessToken, logoutApi } from '@/services/auth-api';
 import { axiosInstance } from '@/services/axios';
 
 export interface AuthState {
@@ -52,8 +52,16 @@ export const clearTokens = () => {
   }
 };
 
-export const logout = () => {
-  clearTokens();
+export const logout = async (revokeGoogle: boolean = true) => {
+  try {
+    // Call backend logout endpoint to revoke tokens
+    await logoutApi(revokeGoogle);
+  } catch (error) {
+    console.error('Logout API error:', error);
+  } finally {
+    // Always clear local tokens
+    clearTokens();
+  }
 };
 
 export const setUser = (user: UserDto | null) => {

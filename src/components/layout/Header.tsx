@@ -50,7 +50,7 @@ export function Header() {
     {
       label: t("nav.logout"),
       icon: LogOut,
-      onClick: () => navigate({ to: "/logout" }),
+      onClick: () => navigate({ to: PATHS.LOGOUT }),
       variant: "destructive" as const,
     },
   ];

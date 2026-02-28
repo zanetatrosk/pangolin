@@ -1,4 +1,5 @@
 import axios from "axios";
+import { PATHS } from "@/paths";
 
 export const axiosInstance = axios.create({
     baseURL: "http://localhost:8080/api",
@@ -38,7 +39,7 @@ axiosInstance.interceptors.response.use(
                 const refreshToken = localStorage.getItem("refreshToken");
                 if (!refreshToken) {
                     // No refresh token, redirect to login
-                    window.location.href = "/login";
+                    window.location.href = PATHS.LOGIN;
                     return Promise.reject(error);
                 }
 
@@ -67,7 +68,7 @@ axiosInstance.interceptors.response.use(
                 localStorage.removeItem("accessToken");
                 localStorage.removeItem("refreshToken");
                 localStorage.removeItem("tokenExpiresAt");
-                window.location.href = "/login";
+                window.location.href = PATHS.LOGIN;
                 return Promise.reject(refreshError);
             }
         }

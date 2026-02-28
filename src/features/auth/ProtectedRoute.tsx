@@ -1,6 +1,7 @@
 import { FC, ReactNode, useEffect } from "react";
 import { useAuth } from "./AuthProvider";
 import { useNavigate, useRouter } from "@tanstack/react-router";
+import { PATHS } from "@/paths";
 
 interface ProtectedRouteProps {
   children: ReactNode;
@@ -19,7 +20,7 @@ export const ProtectedRoute: FC<ProtectedRouteProps> = ({ children }) => {
     if (!loading && !isAuthenticated) {
       // Redirect to login with return URL
       navigate({ 
-        to: "/login", 
+        to: PATHS.LOGIN, 
         search: { redirect: router.state.location.pathname } 
       });
     }

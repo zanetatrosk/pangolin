@@ -13,7 +13,7 @@ export const Route = createFileRoute("/events/$id/edit")({
     
     if (!isAuthenticated) {
       throw redirect({
-        to: "/login",
+        to: PATHS.LOGIN,
         search: {
           redirect: location.href,
         },

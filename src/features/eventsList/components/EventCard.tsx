@@ -3,6 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { EventImage } from "@/components/EventImage";
 import { PATHS } from "@/paths";
 import { getLabelFromPrice } from "@/utils/getLabelFromPrice";
 import { useNavigate } from "@tanstack/react-router";
@@ -57,17 +58,11 @@ export const EventCard: React.FC<EventItem> = (event) => {
       <CardContent className="p-0 flex flex-col md:flex-row w-full">
         {/* Event Image */}
         <div className="md:w-64 h-48 md:h-auto shrink-0 md:aspect-4/3 relative">
-          {event.promoMedia?.url ? (
-            <img
-              src={event.promoMedia.url}
-              alt={event.eventName}
-              className="w-full h-full object-cover"
-            />
-          ) : (
-            <div className="w-full h-full bg-linear-to-br from-violet-100 to-violet-200 dark:from-violet-900 dark:to-violet-800 flex items-center justify-center">
-              <Calendar className="w-16 h-16 text-violet-400 dark:text-violet-600" />
-            </div>
-          )}
+          <EventImage
+            src={event.promoMedia?.url}
+            alt={event.eventName}
+            className="w-full h-full object-cover"
+          />
         </div>
         <div className="sm:min-w-54 grow">
           <div className="flex-1 p-4 md:p-6 md:pt-2 flex flex-col justify-between">

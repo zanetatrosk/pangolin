@@ -4,6 +4,7 @@ import { getEventStats } from "@/services/events-api";
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute, redirect } from "@tanstack/react-router";
 import { authStore, selectIsAuthenticated } from "@/stores/authStore";
+import { PATHS } from "@/paths";
 
 export const Route = createFileRoute("/events/$id/stats")({
   beforeLoad: async ({ location }) => {
@@ -11,7 +12,7 @@ export const Route = createFileRoute("/events/$id/stats")({
     
     if (!isAuthenticated) {
       throw redirect({
-        to: "/login",
+        to: PATHS.LOGIN,
         search: {
           redirect: location.href,
         },

@@ -1,6 +1,10 @@
 import { Button } from "@/components/ui/button";
-import { Calendar, Users, Star, Plus } from "lucide-react";
+import { Calendar, Users, UserCheck, Plus } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { useQuery } from "@tanstack/react-query";
+import { getAppSummary } from "@/services/app-api";
+import { useNavigate } from "@tanstack/react-router";
+import { PATHS } from "@/paths";
 
 export const StatItem: React.FC<{
   icon: React.ComponentType<{ className?: string }>;
@@ -20,22 +24,28 @@ export const StatItem: React.FC<{
 
 export function HeroSection() {
   const { t } = useTranslation();
+  const navigate = useNavigate();
+  const { data: appSummary } = useQuery({
+    queryKey: ["app-summary"],
+    queryFn: getAppSummary,
+  });
+
   const statSections = [
     {
       icon: Users,
-      label: t("home.activeDancers"),
+      label: t("home.activeDancers", { count: appSummary?.totalDancers || 0 }),
       bgColorClass: "bg-purple-100 dark:bg-purple-900",
       iconColorClass: "text-purple-600 dark:text-purple-400",
     },
     {
       icon: Calendar,
-      label: t("home.eventsHosted"),
+      label: t("home.eventsHosted", { count: appSummary?.totalEvents || 0 }),
       bgColorClass: "bg-pink-100 dark:bg-pink-900",
       iconColorClass: "text-pink-600 dark:text-pink-400",
     },
     {
-      icon: Star,
-      label: t("home.averageRating"),
+      icon: UserCheck,
+      label: t("home.totalRegistrations", { count: appSummary?.totalRegistrations || 0 }),
       bgColorClass: "bg-orange-100 dark:bg-orange-900",
       iconColorClass: "text-orange-600 dark:text-orange-400",
     },
@@ -55,11 +65,16 @@ export function HeroSection() {
           <Button
             size="lg"
             className="px-8 py-6 text-lg bg-linear-to-r from-rose-500 to-violet-500 dark:from-rose-600 dark:to-violet-600 text-white rounded-xl shadow-lg hover:shadow-xl transition"
+            onClick={() => navigate({ to: PATHS.EVENTS.LIST })}
           >
             <Calendar className="mr-2" />
             {t("home.findEvents")}
           </Button>
-          <Button size="lg" className="px-8 py-6 text-lg">
+          <Button 
+            size="lg" 
+            className="px-8 py-6 text-lg"
+            onClick={() => navigate({ to: PATHS.EVENTS.NEW_EVENT })}
+          >
             <Plus className="mr-2" />
             {t("home.hostEvent")}
           </Button>

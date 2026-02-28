@@ -6,6 +6,7 @@ import { GOOGLE_REDIRECT_URI } from "@/lib/google-auth";
 import { Loader2, AlertCircle, CheckCircle2 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { PATHS } from "@/paths";
 
 export const Route = createFileRoute("/auth/callback")({
   component: AuthCallback,
@@ -41,9 +42,9 @@ function AuthCallback() {
         // Redirect to appropriate page after showing error
         setTimeout(() => {
           if (isIncrementalAuth) {
-            navigate({ to: "/", replace: true });
+            navigate({ to: PATHS.HOME, replace: true });
           } else {
-            navigate({ to: "/login", search: { redirect: "/" } });
+            navigate({ to: PATHS.LOGIN, search: { redirect: PATHS.HOME } });
           }
         }, 3000);
         return;
@@ -57,9 +58,9 @@ function AuthCallback() {
         
         setTimeout(() => {
           if (isIncrementalAuth) {
-            navigate({ to: "/", replace: true });
+            navigate({ to: PATHS.HOME, replace: true });
           } else {
-            navigate({ to: "/login", search: { redirect: "/" } });
+            navigate({ to: PATHS.LOGIN, search: { redirect: PATHS.HOME } });
           }
         }, 3000);
         return;
@@ -83,10 +84,10 @@ function AuthCallback() {
         setTimeout(() => {
           if (isIncrementalAuth) {
             // For incremental auth, go back to home
-            navigate({ to: "/", replace: true });
+            navigate({ to: PATHS.HOME, replace: true });
           } else {
             // For login, redirect to the original page or events
-            const redirectTo = redirectState || "/events";
+            const redirectTo = redirectState || PATHS.EVENTS.LIST;
             navigate({ to: redirectTo });
           }
         }, isIncrementalAuth ? 2000 : 500);
@@ -101,9 +102,9 @@ function AuthCallback() {
         
         setTimeout(() => {
           if (isIncrementalAuth) {
-            navigate({ to: "/", replace: true });
+            navigate({ to: PATHS.HOME, replace: true });
           } else {
-            navigate({ to: "/login", search: { redirect: "/" } });
+            navigate({ to: PATHS.LOGIN, search: { redirect: PATHS.HOME } });
           }
         }, 3000);
       }

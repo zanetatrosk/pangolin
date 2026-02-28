@@ -1,12 +1,11 @@
-import { createFileRoute, redirect } from "@tanstack/react-router";
-import { ProfilePage } from "@/features/profile/ProfilePage";
-import { authStore, selectIsAuthenticated } from "@/stores/authStore";
-import { useUser } from "@/hooks/useUser";
-import { getUserById } from "@/services/user-api";
+import { EventStats } from "@/features/eventStats/EventStats";
+import { getEventStats } from "@/services/events-api";
 import { useQuery } from "@tanstack/react-query";
+import { createFileRoute, redirect } from "@tanstack/react-router";
+import { authStore, selectIsAuthenticated } from "@/stores/authStore";
 import { PATHS } from "@/paths";
 
-export const Route = createFileRoute("/my-profile")({
+export const Route = createFileRoute("/stats/main-event/$id")({
   beforeLoad: async ({ location }) => {
     const isAuthenticated = selectIsAuthenticated(authStore.state);
     
@@ -23,14 +22,17 @@ export const Route = createFileRoute("/my-profile")({
 });
 
 function RouteComponent() {
-  const { user } = useUser();
-  const { data } = useQuery({
-    queryKey: ["profile", user.userId],
-    queryFn: () => getUserById(user.userId),
-  })
+  const { id } = Route.useParams();
   
-  if (!user || !data) {
-    return null;
+  const { data } = useQuery({
+    queryKey: ["event-stats", id],
+    queryFn: () => getEventStats(id),
+    enabled: !!id,
+  });
+  
+  if (!data) {
+    return <div>Loading...</div>;
   }
-  return <ProfilePage userId={user.userId} profileDataDefault={data} key={user.userId} />;
+
+  return <EventStats stats={data} />;
 }

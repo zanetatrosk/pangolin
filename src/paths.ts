@@ -17,4 +17,5 @@ export const PATHS = {
     VIEW: (userId: string | number) => `/profile/${userId}`,
   },
   LOGIN: "/login",
+  LOGOUT: "/logout",
 } as const;

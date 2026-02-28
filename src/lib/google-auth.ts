@@ -1,26 +1,3 @@
-/**
- * Google OAuth2 Authentication Utilities
- * 
- * This application uses Google's Authorization Code flow with redirect-based authentication.
- * 
- * Key Features:
- * - Login with Google using redirect flow
- * - Incremental authorization for additional scopes (e.g., Google Forms)
- * - Token refresh handled automatically by axios interceptor
- * - Backend handles token exchange and verification
- * 
- * Usage:
- * 
- * 1. Login:
- *    User clicks login button, is redirected to Google, then back to /auth/callback
- * 
- * 2. Incremental Authorization:
- *    User is redirected to Google for additional scopes, then back to /auth/incremental-callback
- * 
- * 3. Logout:
- *    Call `logout()` from authStore, which revokes Google tokens on the backend
- */
-
 import envConfig from '../../env.json';
 
 export const GOOGLE_CLIENT_ID = envConfig.GOOGLE_CLIENT_ID;

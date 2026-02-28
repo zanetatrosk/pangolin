@@ -1,10 +1,3 @@
-/**
- * Unified OAuth callback route for redirect-based flow
- * 
- * Handles both initial login and incremental authorization.
- * Google redirects back here with an authorization code that needs to be exchanged for tokens.
- * The backend automatically detects whether this is login or incremental auth based on JWT token presence.
- */
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useAuth } from "@/features/auth/AuthProvider";
 import { useEffect, useState } from "react";

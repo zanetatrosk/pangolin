@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as MyProfileRouteImport } from './routes/my-profile'
 import { Route as MyEventsRouteImport } from './routes/my-events'
+import { Route as LogoutRouteImport } from './routes/logout'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as EventsRouteImport } from './routes/events'
 import { Route as AboutRouteImport } from './routes/about'
@@ -33,6 +34,11 @@ const MyProfileRoute = MyProfileRouteImport.update({
 const MyEventsRoute = MyEventsRouteImport.update({
   id: '/my-events',
   path: '/my-events',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LogoutRoute = LogoutRouteImport.update({
+  id: '/logout',
+  path: '/logout',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LoginRoute = LoginRouteImport.update({
@@ -106,6 +112,7 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/events': typeof EventsRouteWithChildren
   '/login': typeof LoginRoute
+  '/logout': typeof LogoutRoute
   '/my-events': typeof MyEventsRoute
   '/my-profile': typeof MyProfileRoute
   '/auth/callback': typeof AuthCallbackRoute
@@ -122,6 +129,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/login': typeof LoginRoute
+  '/logout': typeof LogoutRoute
   '/my-events': typeof MyEventsRoute
   '/my-profile': typeof MyProfileRoute
   '/auth/callback': typeof AuthCallbackRoute
@@ -139,6 +147,7 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/events': typeof EventsRouteWithChildren
   '/login': typeof LoginRoute
+  '/logout': typeof LogoutRoute
   '/my-events': typeof MyEventsRoute
   '/my-profile': typeof MyProfileRoute
   '/auth/callback': typeof AuthCallbackRoute
@@ -158,6 +167,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/events'
     | '/login'
+    | '/logout'
     | '/my-events'
     | '/my-profile'
     | '/auth/callback'
@@ -174,6 +184,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/login'
+    | '/logout'
     | '/my-events'
     | '/my-profile'
     | '/auth/callback'
@@ -190,6 +201,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/events'
     | '/login'
+    | '/logout'
     | '/my-events'
     | '/my-profile'
     | '/auth/callback'
@@ -208,6 +220,7 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   EventsRoute: typeof EventsRouteWithChildren
   LoginRoute: typeof LoginRoute
+  LogoutRoute: typeof LogoutRoute
   MyEventsRoute: typeof MyEventsRoute
   MyProfileRoute: typeof MyProfileRoute
   AuthCallbackRoute: typeof AuthCallbackRoute
@@ -229,6 +242,13 @@ declare module '@tanstack/react-router' {
       path: '/my-events'
       fullPath: '/my-events'
       preLoaderRoute: typeof MyEventsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/logout': {
+      id: '/logout'
+      path: '/logout'
+      fullPath: '/logout'
+      preLoaderRoute: typeof LogoutRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/login': {
@@ -361,6 +381,7 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   EventsRoute: EventsRouteWithChildren,
   LoginRoute: LoginRoute,
+  LogoutRoute: LogoutRoute,
   MyEventsRoute: MyEventsRoute,
   MyProfileRoute: MyProfileRoute,
   AuthCallbackRoute: AuthCallbackRoute,

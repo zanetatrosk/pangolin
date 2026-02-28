@@ -86,14 +86,3 @@ export const getCurrentUser = async (): Promise<UserDto> => {
   const response = await axiosInstance.get(`${AUTH_URL}/me`);
   return response.data;
 };
-
-/**
- * Logout endpoint
- * @param revokeGoogle - Whether to revoke Google tokens
- */
-export const logoutApi = async (revokeGoogle: boolean = true): Promise<{ message: string }> => {
-  const response = await axiosInstance.post(
-    `${AUTH_URL}/logout?revokeGoogle=${revokeGoogle}`
-  );
-  return response.data;
-};

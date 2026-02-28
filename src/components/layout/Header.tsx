@@ -1,15 +1,15 @@
 import { CalendarPlus, PersonStanding, Users, UserCircle, LogOut } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { useRouterState } from "@tanstack/react-router";
+import { useRouterState, useNavigate } from "@tanstack/react-router";
 import { MobileNavDrawer } from "./MobileNavDrawer";
 import { DesktopNavbar } from "./DesktopNavbar";
 import { NavigationWrapper } from "./NavigationWrapper";
-import { logout } from "@/stores/authStore";
 import { PATHS } from "@/paths";
 
 export function Header() {
   const { t } = useTranslation();
   const routerState = useRouterState();
+  const navigate = useNavigate();
   const withoutContent = routerState.matches.some((match) => match.pathname === PATHS.LOGIN);
 
   const menuItems = [
@@ -50,7 +50,7 @@ export function Header() {
     {
       label: t("nav.logout"),
       icon: LogOut,
-      onClick: logout,
+      onClick: () => navigate({ to: "/logout" }),
       variant: "destructive" as const,
     },
   ];

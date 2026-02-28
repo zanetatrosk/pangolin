@@ -1,6 +1,6 @@
 import { FC, ReactNode, useEffect } from "react";
 import { useStore } from "@tanstack/react-store";
-import { authStore, loadUser, refreshAuth, setTokens, logout, selectIsAuthenticated } from "@/stores/authStore";
+import { authStore, loadUser, refreshAuth, setTokens, selectIsAuthenticated } from "@/stores/authStore";
 
 export const useAuth = () => {
   const user = useStore(authStore, (state) => state.user);
@@ -13,7 +13,6 @@ export const useAuth = () => {
     loading,
     isAuthenticated,
     setTokens,
-    logout,
     refreshAuth,
   };
 };

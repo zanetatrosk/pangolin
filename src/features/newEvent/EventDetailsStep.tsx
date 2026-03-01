@@ -70,6 +70,16 @@ export const EventDetailsStep = withForm({
                   />
                 )}
               </form.AppField>
+
+              {/* Facebook Event URL */}
+              <form.AppField name="additionalDetails.facebookEventUrl">
+                {(field) => (
+                  <field.TextField
+                    label={t("newEvent.details.facebookEventUrl")}
+                    placeholder={t("newEvent.details.facebookEventUrlPlaceholder")}
+                  />
+                )}
+              </form.AppField>
             </div>
           </FormSection>
 

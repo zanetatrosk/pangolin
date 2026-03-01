@@ -19,6 +19,7 @@ export interface BasicData {
   location: Location;
   isRecurring: boolean;
   recurrenceType?: RecurrenceType;
+  recurrenceEndDate?: string | null;
 }
 
 export interface AdditionalDetailsDataBase {
@@ -31,6 +32,7 @@ export interface AdditionalDetailsDataCreation extends AdditionalDetailsDataBase
   danceStyles: string[];
   skillLevel: string[];
   typeOfEvent: string[];
+  facebookEventUrl?: string;
 }
 
 export interface DanceEventCreation {

@@ -71,17 +71,22 @@ export const BasicDetails = withForm({
                 )}
               </form.AppField>
 
-              {!isEditing && (
-                <form.AppField name="basicInfo.endDate">
-                  {(field) => (
-                    <field.TextField
-                      label={t("newEvent.basicInfo.endDate")}
-                      type="date"
-                      icon={Calendar}
-                    />
-                  )}
-                </form.AppField>
-              )}
+              {/* Regular End Date - hide when recurring or editing */}
+              <form.AppField name="basicInfo.isRecurring">
+                {(recurringField) =>
+                  !recurringField.state.value && !isEditing && (
+                    <form.AppField name="basicInfo.endDate">
+                      {(field) => (
+                        <field.TextField
+                          label={t("newEvent.basicInfo.endDate")}
+                          type="date"
+                          icon={Calendar}
+                        />
+                      )}
+                    </form.AppField>
+                  )
+                }
+              </form.AppField>
 
               <form.AppField
                 name="basicInfo.time"
@@ -110,31 +115,53 @@ export const BasicDetails = withForm({
               </form.AppField>
             )}
 
-            {/* Occurrence Type - shown when recurring is checked */}
+            {/* Recurrence options - shown when recurring is checked */}
             <form.AppField name="basicInfo.isRecurring">
               {(recurringField) =>
                 recurringField.state.value &&
                 !isEditing && (
-                  <form.AppField
-                    name="basicInfo.recurrenceType"
-                    validators={{
-                      onChange: ({ value }) =>
-                        !value
-                          ? t("newEvent.basicInfo.recurrenceTypeError")
-                          : undefined,
-                    }}
-                  >
-                    {(field) => (
-                      <field.SelectField
-                        label={t("newEvent.basicInfo.recurrenceType")}
-                        placeholder={t("newEvent.basicInfo.recurrenceTypePlaceholder")}
-                        required
-                        options={getOccurrenceOptions()}
-                        getValue={(item) => item.value}
-                        getLabel={(item) => item.label}
-                      />
-                    )}
-                  </form.AppField>
+                  <FormGrid columns={2}>
+                    <form.AppField
+                      name="basicInfo.recurrenceType"
+                      validators={{
+                        onChange: ({ value }) =>
+                          !value
+                            ? t("newEvent.basicInfo.recurrenceTypeError")
+                            : undefined,
+                      }}
+                    >
+                      {(field) => (
+                        <field.SelectField
+                          label={t("newEvent.basicInfo.recurrenceType")}
+                          placeholder={t("newEvent.basicInfo.recurrenceTypePlaceholder")}
+                          required
+                          options={getOccurrenceOptions()}
+                          getValue={(item) => item.value}
+                          getLabel={(item) => item.label}
+                        />
+                      )}
+                    </form.AppField>
+
+                    {/* Recurrence End Date */}
+                    <form.AppField
+                      name="basicInfo.recurrenceEndDate"
+                      validators={{
+                        onChange: ({ value }) =>
+                          !value
+                            ? t("newEvent.basicInfo.recurrenceEndDateRequired")
+                            : undefined,
+                      }}
+                    >
+                      {(field) => (
+                        <field.TextField
+                          label={t("newEvent.basicInfo.recurrenceEndDate")}
+                          type="date"
+                          required
+                          icon={Calendar}
+                        />
+                      )}
+                    </form.AppField>
+                  </FormGrid>
                 )
               }
             </form.AppField>

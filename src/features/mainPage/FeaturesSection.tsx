@@ -1,14 +1,6 @@
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { UserPlus, TrendingUp, Star } from "lucide-react";
+import { UserCircle, CalendarPlus, ClipboardCheck } from "lucide-react";
 import { SectionHeading } from "./SectionHeading";
 import { FeatureCard } from "./FeatureCard";
-import { t } from "i18next";
 import { useTranslation } from "react-i18next";
 
 export function FeaturesSection() {
@@ -17,19 +9,19 @@ export function FeaturesSection() {
     {
       title: t("home.feature1Title"),
       description: t("home.feature1Text"),
-      icon: UserPlus,
+      icon: UserCircle,
       bgColorClass: "from-purple-500 to-purple-600",
     },
     {
       title: t("home.feature2Title"),
       description: t("home.feature2Text"),
-      icon: TrendingUp,
+      icon: CalendarPlus,
       bgColorClass: "from-pink-500 to-pink-600",
     },
     {
       title: t("home.feature3Title"),
       description: t("home.feature3Text"),
-      icon: Star,
+      icon: ClipboardCheck,
       bgColorClass: "from-orange-500 to-orange-600",
     },
   ];

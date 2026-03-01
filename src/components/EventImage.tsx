@@ -11,8 +11,7 @@ export const EventImage: React.FC<EventImageProps> = ({
   alt, 
   className = "w-full h-full object-cover" 
 }) => {
-  const defaultPlaceholder = "https://images.unsplash.com/photo-1547036967-23d11aacaee0?w=400";
-  
+
   if (!src) {
     return (
       <div className={`bg-linear-to-br from-violet-100 to-violet-200 dark:from-violet-900 dark:to-violet-800 flex items-center justify-center ${className}`}>
@@ -26,9 +25,6 @@ export const EventImage: React.FC<EventImageProps> = ({
       src={src}
       alt={alt}
       className={className}
-      onError={(e) => {
-        e.currentTarget.src = defaultPlaceholder;
-      }}
     />
   );
 };

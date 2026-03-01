@@ -6,7 +6,7 @@
         "addEvent": "Add Event",
         "addEventDesc": "Create and host a new dance event",
         "myEvents": "My Events",
-        "myEventsDesc": "View and manage your hosted events",
+        "myEventsDesc": "View and manage your events",
         "allEvents": "All Events",
         "allEventsDesc": "Browse all upcoming dance events",
         "profile": "Profile",
@@ -22,7 +22,7 @@
         "title": "Connect2Dance",
         "subtitle": "Social Dance Events",
         "heroTitle": "Connect Through Dance",
-        "heroSubtitle": "Discover amazing social dance events, find your perfect dance partner, and join a vibrant community of dancers",
+        "heroSubtitle": "Create events, manage registrations, and track your dance journey - all in one place.",
         "featuredEvents": "Featured Events",
         "featuredEventsText": "Don't miss these amazing upcoming dance events in your area",
         "findEvents": "Find Events",
@@ -33,12 +33,17 @@
         "activeDancers": "{{count}} Active Dancers",
         "eventsHosted": "{{count}} Events Hosted",
         "totalRegistrations": "{{count}} Total Registrations",
-        "feature1Title": "Smart Partner Matching",
-        "feature1Text": "Our intelligent matching system pairs you with compatible dance partners based on skill level, style preferences, and availability.",
-        "feature2Title": "Event Management",
-        "feature2Text": "Easy-to-use tools for creating, managing, and promoting your dance events. Integrated forms, payments, and attendee management.",
-        "feature3Title": "Community Reviews",
-        "feature3Text": "Read honest reviews from fellow dancers, rate events, and help build a trusted community of dance enthusiasts."
+        "feature1Title": "Your Dancer Profile",
+        "feature1Text": "Create your complete dancer profile with videos, skill level, and dance styles. Track all events you're hosting, attending, or interested in - your dance journey in one place.",
+        "feature2Title": "Create Events Easily",
+        "feature2Text": "Launch your dance event in minutes with our intuitive step-by-step creator. Add descriptions, upload media, set locations, and choose your preferred registration method.",
+        "feature3Title": "Smart Registration System",
+        "feature3Text": "Manage registrations with built-in forms or Google Forms integration. Approve attendees, track who's coming, and sync participant data automatically every hour or on-demand.",
+        "eventCard": {
+            "at": "at",
+            "attending": "attending",
+            "viewDetails": "View Event Details"
+        }
     },
     "about": {},
     "events": {

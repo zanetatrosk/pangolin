@@ -18,6 +18,7 @@ import {
   ArrowRight,
   Banknote,
 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 interface FeatureEventCardProps {
   id: number;
@@ -34,7 +35,10 @@ interface FeatureEventCardProps {
   tags: string[];
 }
 
-export const FeatureEventCard: React.FC<FeatureEventCardProps> = (event) => (
+export const FeatureEventCard: React.FC<FeatureEventCardProps> = (event) => {
+  const { t } = useTranslation();
+  
+  return (
   <Card
     key={event.id}
     className="border-0 shadow-xl bg-white dark:bg-gray-900 overflow-hidden hover:shadow-2xl transition-all duration-300 hover:scale-105 flex flex-col h-full"
@@ -58,7 +62,7 @@ export const FeatureEventCard: React.FC<FeatureEventCardProps> = (event) => (
       <div className="space-y-2 text-sm">
         <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400">
           <Calendar className="w-4 h-4" />
-          <span className="truncate">{event.date} at {event.time}</span>
+          <span className="truncate">{event.date} {t("home.eventCard.at")} {event.time}</span>
         </div>
         <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400">
           <MapPin className="w-4 h-4" />
@@ -67,7 +71,7 @@ export const FeatureEventCard: React.FC<FeatureEventCardProps> = (event) => (
         <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400">
           <Users className="w-4 h-4" />
           <span>
-            {event.attendees}{event.maxAttendees ? `/${event.maxAttendees}` : ''} attending
+            {event.attendees}{event.maxAttendees ? `/${event.maxAttendees}` : ''} {t("home.eventCard.attending")}
           </span>
         </div>
         <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400">
@@ -93,10 +97,11 @@ export const FeatureEventCard: React.FC<FeatureEventCardProps> = (event) => (
     <CardFooter className="pt-4 mt-auto shrink-0">
       <Link to={PATHS.EVENTS.DETAIL(event.id)}>
       <Button className="w-full">
-        View Event Details
+        {t("home.eventCard.viewDetails")}
         <ArrowRight className="w-4 h-4 ml-2" />
       </Button>
       </Link>
     </CardFooter>
   </Card>
-);
+  );
+};

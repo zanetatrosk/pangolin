@@ -8,6 +8,7 @@ import { EventDateDisplay } from "../eventDetail/components/EventDateDisplay";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { syncRegistrations } from "@/services/registrations-api";
 import { RegistrationModeEnum } from "../eventDetail/publish-actions/PublishEventOptions";
+import { useTranslation } from "react-i18next";
 
 export interface EventStatsData {
   eventId: string;
@@ -19,6 +20,7 @@ export interface EventStatsData {
 }
 
 export const EventStats: FC<{ stats: EventStatsData }> = ({ stats }) => {
+  const { t } = useTranslation();
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
@@ -47,7 +49,7 @@ export const EventStats: FC<{ stats: EventStatsData }> = ({ stats }) => {
         
         <div className="space-y-4">
           <div className="flex justify-between pt-4">
-          <h2 className="text-2xl font-semibold">Registrations</h2>
+          <h2 className="text-2xl font-semibold">{t("eventStats.registrations")}</h2>
           {stats.registrationMode === RegistrationModeEnum.GOOGLE_FORM && <Button
             className="w-full sm:w-auto"
             variant="default"
@@ -58,10 +60,10 @@ export const EventStats: FC<{ stats: EventStatsData }> = ({ stats }) => {
             {mutation.isPending ? (
               <span className="flex items-center justify-center">
                 <Spinner className="mr-2 h-5 w-5" />
-                Syncing...
+                {t("eventStats.syncing")}
               </span>
             ) : (
-              "Sync Data"
+              t("eventStats.syncData")
             )}
           </Button>}
           </div>

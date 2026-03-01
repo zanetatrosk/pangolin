@@ -4,8 +4,10 @@ import { getOrganizerByObject } from "@/utils/getOrganizerByObject";
 import { useNavigate } from "@tanstack/react-router";
 import { PATHS } from "@/paths";
 import { getInitials } from "@/components/layout/utils/getInitials";
+import { useTranslation } from "react-i18next";
 
 export const OrganizerCard: React.FC<{organizer: Organizer}> = ({ organizer }) => {
+    const { t } = useTranslation();
     const navigate = useNavigate();
 
     const handleClick = () => {
@@ -22,7 +24,7 @@ export const OrganizerCard: React.FC<{organizer: Organizer}> = ({ organizer }) =
                   {getInitials(organizer.firstName + " " + organizer.lastName)}
                 </div>
                 <div>
-                  <p className="text-sm font-medium">Organized by</p>
+                  <p className="text-sm font-medium">{t("eventDetail.organizer.organizedBy")}</p>
                   <p className="font-bold">{getOrganizerByObject(organizer)}</p>
                 </div>
               </CardContent>

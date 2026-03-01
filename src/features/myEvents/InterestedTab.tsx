@@ -5,8 +5,10 @@ import { NoEvents } from "./components/NoEvents";
 import { TabCard } from "./components/TabCard";
 import { useUserEvents } from "./hooks/useUserEvents";
 import { userEventFilter } from "@/services/users-events-api";
+import { useTranslation } from "react-i18next";
 
 export const InterestedTab: FC = () => {
+  const { t } = useTranslation();
   const { data: events = [], isLoading, error } = useUserEvents(userEventFilter.INTERESTED);
 
   return (
@@ -14,9 +16,9 @@ export const InterestedTab: FC = () => {
       value="interested"
       noItemComponent={
         <NoEvents
-          title="No Interested Events Yet"
-          description="Events you mark as interested will appear here. Explore and find events that excite you!"
-          buttonText="Browse Events"
+          title={t("myEvents.noEvents.interested.title")}
+          description={t("myEvents.noEvents.interested.description")}
+          buttonText={t("myEvents.noEvents.interested.buttonText")}
           icon={
             <Heart className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
           }

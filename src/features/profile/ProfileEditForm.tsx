@@ -49,7 +49,7 @@ export function ProfileEditForm({
     <div className="space-y-4 mt-4 max-w-lg mx-auto md:mx-0">
       <div className="grid grid-cols-2 gap-4">
         <div className="space-y-2 text-left">
-          <Label htmlFor="firstName">{t("First Name")}</Label>
+          <Label htmlFor="firstName">{t("profile.firstName")}</Label>
           <Input
             id="firstName"
             value={profileData.firstName}
@@ -57,7 +57,7 @@ export function ProfileEditForm({
           />
         </div>
         <div className="space-y-2 text-left">
-          <Label htmlFor="lastName">{t("Last Name")}</Label>
+          <Label htmlFor="lastName">{t("profile.lastName")}</Label>
           <Input
             id="lastName"
             value={profileData.lastName}
@@ -67,7 +67,7 @@ export function ProfileEditForm({
       </div>
 
       <div className="space-y-2 text-left">
-        <Label htmlFor="description">{t("Description")}</Label>
+        <Label htmlFor="description">{t("profile.description")}</Label>
         <textarea
           id="description"
           className="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
@@ -77,7 +77,7 @@ export function ProfileEditForm({
       </div>
 
       <div className="space-y-2 text-left">
-        <Label htmlFor="level">{t("General Level")}</Label>
+        <Label htmlFor="level">{t("profile.generalLevel")}</Label>
         <Select
           value={profileData.level?.id || undefined}
           onValueChange={(value) =>
@@ -87,7 +87,7 @@ export function ProfileEditForm({
           }
         >
           <SelectTrigger id="level" className="w-full">
-            <SelectValue placeholder={t("Not Specified")} />
+            <SelectValue placeholder={t("profile.notSpecified")} />
           </SelectTrigger>
           <SelectContent>
             {levelOptions.map((lvl) => (
@@ -100,7 +100,7 @@ export function ProfileEditForm({
       </div>
 
       <div className="space-y-2 text-left">
-        <Label htmlFor="role">{t("Main Role")}</Label>
+        <Label htmlFor="role">{t("profile.mainRole")}</Label>
         <Select
           value={profileData.role?.id || undefined}
           onValueChange={(value) =>
@@ -110,7 +110,7 @@ export function ProfileEditForm({
           }
         >
           <SelectTrigger id="role" className="w-full">
-            <SelectValue placeholder={t("Not Specified")} />
+            <SelectValue placeholder={t("profile.notSpecified")} />
           </SelectTrigger>
           <SelectContent>
             {roleOptions.map((r) => (
@@ -123,7 +123,7 @@ export function ProfileEditForm({
       </div>
 
       <div className="space-y-2 text-left">
-        <Label>{t("Dance Styles")}</Label>
+        <Label>{t("profile.danceStyles")}</Label>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 p-3 border rounded-md bg-background/50 max-h-80 overflow-y-auto">
           {danceStyles.map((option) => (
             <div

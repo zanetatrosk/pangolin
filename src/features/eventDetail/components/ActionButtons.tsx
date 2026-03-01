@@ -11,6 +11,7 @@ import { RsvpData, RsvpStatus } from "@/services/types";
 import { RegistrationDialog } from "./RegistrationDialog";
 import { CancelRegistrationDialog } from "./CancelRegistrationDialog";
 import { RegistrationModeEnum } from "../publish-actions/PublishEventOptions";
+import { useTranslation } from "react-i18next";
 
 export const ActionButtons: React.FC<{
   rsvpData: RsvpData;
@@ -27,6 +28,7 @@ export const ActionButtons: React.FC<{
   joinClassName = "",
   buttonSize = "lg"
 }) => {
+  const { t } = useTranslation();
   const [currentStatus, setCurrentStatus] = useState(rsvpData.status);
   const [registrationId, setRegistrationId] = useState(rsvpData.id);
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -138,7 +140,7 @@ export const ActionButtons: React.FC<{
         disabled={!canInteract || isPending || isGoing}
       >
         <Heart className={`w-4 h-4 ${isInterested ? "fill-current" : ""}`} />
-        Interested
+        {t("eventDetail.actionButtons.interested")}
       </Button>
 
       <Button
@@ -154,7 +156,7 @@ export const ActionButtons: React.FC<{
         {isGoing && <Check className="w-4 h-4" />}
         {isPending && <Clock className="w-4 h-4" />}
         {!isGoing && !isPending && <UserPlus className="w-4 h-4" />}
-        {isGoing ? "Going" : isPending ? "Pending Approval" : "Join Event"}
+        {isGoing ? t("eventDetail.actionButtons.going") : isPending ? t("eventDetail.actionButtons.pendingApproval") : t("eventDetail.actionButtons.joinEvent")}
       </Button>
       
       <RegistrationDialog

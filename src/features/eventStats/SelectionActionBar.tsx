@@ -4,6 +4,7 @@ import { RsvpStatus, RegistrationAction } from "@/services/types";
 import { useUpdateRegistrationStatus } from "@/hooks/useUpdateRegistrationStatus";
 import { OrganizerAction } from "./types";
 import { toast } from "sonner";
+import { useTranslation } from "react-i18next";
 
 interface SelectedRow {
   id: string;
@@ -17,22 +18,22 @@ interface SelectionActionBarProps {
   eventId: string;
 }
 
-const generateStatusOptions = () => {
+const generateStatusOptions = (t: (key: string) => string) => {
   return [
     {
-      label: "copy email address/s",
+      label: t("eventStats.actions.copyEmails"),
       type: "outline" as const,
       value: "copy_email",
       statuses: [],
     },
     {
-      label: "Accept registration",
+      label: t("eventStats.actions.acceptRegistration"),
       type: "outline" as const,
       value: "accepted",
       statuses: [RsvpStatus.Pending],
     },
     {
-      label: "Cancel registration",
+      label: t("eventStats.actions.cancelRegistration"),
       type: "destructive" as const,
       value: "rejected",
       statuses: [RsvpStatus.Pending, RsvpStatus.Registered, RsvpStatus.Waitlisted],
@@ -44,6 +45,7 @@ export const SelectionActionBar: FC<SelectionActionBarProps> = ({
   selectedRows,
   eventId,
 }) => {
+  const { t } = useTranslation();
   const updateRegistration = useUpdateRegistrationStatus();
   
   if (selectedRows.length === 0) return null;
@@ -60,14 +62,14 @@ export const SelectionActionBar: FC<SelectionActionBarProps> = ({
     if (emails.length > 0) {
       navigator.clipboard.writeText(emails.join(", ")).then(
         () => {
-          toast.success("Email addresses copied to clipboard!");
+          toast.success(t("eventStats.messages.emailsCopied", { count: emails.length }));
         },
         (err) => {
-          toast.error("Failed to copy email addresses: " + err);
+          toast.error(t("eventStats.messages.emailsCopyFailed") + ": " + err);
         },
       );
     } else {
-      toast.info("No email addresses found for the selected rows.");
+      toast.info(t("eventStats.messages.noEmails"));
     }
   };
 
@@ -88,9 +90,9 @@ export const SelectionActionBar: FC<SelectionActionBarProps> = ({
         )
       );
       
-      toast.success(`Successfully updated ${selectedRows.length} registration(s)`);
+      toast.success(t("eventStats.messages.updateSuccess"));
     } catch (error) {
-      toast.error("Failed to update registrations");
+      toast.error(t("eventStats.messages.updateFailed"));
     }
   };
 
@@ -114,11 +116,11 @@ export const SelectionActionBar: FC<SelectionActionBarProps> = ({
     <div className="flex items-center justify-between rounded-md border bg-muted/50 p-3">
       <div className="flex items-center gap-2">
         <span className="text-sm font-medium">
-          {selectedRows.length} {selectedRows.length === 1 ? "row" : "rows"} selected
+          {selectedRows.length === 1 ? t("eventStats.actions.rowSelected", { count: selectedRows.length }) : t("eventStats.actions.rowsSelected", { count: selectedRows.length })}
         </span>
       </div>
       <div className="flex items-center gap-2">
-        {generateStatusOptions().map((option) => (
+        {generateStatusOptions(t).map((option) => (
           <Button
             key={option.value}
             variant={option.type}

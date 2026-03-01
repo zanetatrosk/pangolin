@@ -5,6 +5,7 @@ import { useNavigate } from "@tanstack/react-router";
 import { RegistrationModeEnum } from "../publish-actions/PublishEventOptions";
 import { PATHS } from "@/paths";
 import { useEventRegistrations } from "@/hooks/useEventRegistrations";
+import { useTranslation } from "react-i18next";
 
 interface AttendeeListModalProps {
   isOpen: boolean;
@@ -25,6 +26,7 @@ export function AttendeeListModal({
   followersCount = 0,
   bothCount = 0,
 }: AttendeeListModalProps) {
+  const { t } = useTranslation();
   const isCoupleMode = registrationMode === RegistrationModeEnum.COUPLE;
   
   // In couple mode, default to first non-empty category, otherwise show all
@@ -62,7 +64,7 @@ export function AttendeeListModal({
     <div className="fixed inset-0 z-50 flex items-end md:items-center justify-center bg-black/50 backdrop-blur-sm p-0 md:p-4 animate-in fade-in duration-200">
       <div className="bg-background w-full max-w-md md:rounded-xl rounded-t-xl shadow-2xl flex flex-col max-h-[85vh] animate-in slide-in-from-bottom-10 duration-300">
         <div className="p-4 border-b flex items-center justify-between">
-          <h3 className="font-semibold text-lg">Guest List</h3>
+          <h3 className="font-semibold text-lg">{t("eventDetail.attendeeList.guestList")}</h3>
           <Button variant="ghost" size="icon" onClick={onClose}>
             <X className="w-5 h-5" />
           </Button>
@@ -81,7 +83,7 @@ export function AttendeeListModal({
                     : "text-muted-foreground hover:bg-white/50"
                 }`}
               >
-                Leaders ({leadersCount})
+                {t("eventDetail.attendeeList.leaders")} ({leadersCount})
               </button>
             )}
             {followersCount > 0 && (
@@ -93,7 +95,7 @@ export function AttendeeListModal({
                     : "text-muted-foreground hover:bg-white/50"
                 }`}
               >
-                Followers ({followersCount})
+                {t("eventDetail.attendeeList.followers")} ({followersCount})
               </button>
             )}
             {bothCount > 0 && (
@@ -105,7 +107,7 @@ export function AttendeeListModal({
                     : "text-muted-foreground hover:bg-white/50"
                 }`}
               >
-                Both ({bothCount})
+                {t("eventDetail.attendeeList.both")} ({bothCount})
               </button>
             )}
           </div>
@@ -114,12 +116,12 @@ export function AttendeeListModal({
         <div className="overflow-y-auto p-4 space-y-3 flex-1">
           {isLoading && (
             <div className="text-center text-sm text-muted-foreground py-8">
-              Loading attendees...
+              {t("eventDetail.attendeeList.loadingAttendees")}
             </div>
           )}
           {isError && (
             <div className="text-center text-sm text-destructive py-8">
-              Failed to load attendees. Please try again.
+              {t("eventDetail.attendeeList.loadFailed")}
             </div>
           )}
           {!isLoading && !isError && filteredAttendees.map((attendee) => (
@@ -162,19 +164,19 @@ export function AttendeeListModal({
           ))}
           {!isLoading && !isError && filteredAttendees.length === 0 && (
             <div className="text-center text-sm text-muted-foreground py-8">
-              No attendees found
+              {t("eventDetail.attendeeList.noAttendees")}
             </div>
           )}
           {!isLoading && !isError && filteredAttendees.length > 0 && (
             <div className="text-center text-xs text-muted-foreground pt-4">
-              Showing {filteredAttendees.length} {filteredAttendees.length === 1 ? 'person' : 'people'}
+              {t("eventDetail.attendeeList.showing")} {filteredAttendees.length} {filteredAttendees.length === 1 ? t("eventDetail.attendeeList.person") : t("eventDetail.attendeeList.people")}
             </div>
           )}
         </div>
 
         <div className="p-4 border-t md:hidden">
           <Button className="w-full" onClick={onClose}>
-            Close
+            {t("eventDetail.attendeeList.close")}
           </Button>
         </div>
       </div>

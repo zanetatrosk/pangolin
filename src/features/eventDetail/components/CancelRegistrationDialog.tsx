@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { AlertTriangle } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 interface CancelRegistrationDialogProps {
   open: boolean;
@@ -22,6 +23,7 @@ export function CancelRegistrationDialog({
   onConfirm,
   isPending = false,
 }: CancelRegistrationDialogProps) {
+  const { t } = useTranslation();
   const handleConfirm = () => {
     onConfirm();
     onOpenChange(false);
@@ -33,12 +35,12 @@ export function CancelRegistrationDialog({
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <AlertTriangle className="h-5 w-5 text-yellow-600" />
-            Cancel Registration
+            {t("eventDetail.cancelDialog.title")}
           </DialogTitle>
           <DialogDescription>
             {isPending
-              ? "Are you sure you want to cancel your pending registration? Your spot will be removed from the waitlist."
-              : "Are you sure you want to cancel your registration? You will lose your spot at this event."}
+              ? t("eventDetail.cancelDialog.messagePending")
+              : t("eventDetail.cancelDialog.messageRegistered")}
           </DialogDescription>
         </DialogHeader>
         <DialogFooter className="flex-col sm:flex-row gap-2">
@@ -47,14 +49,14 @@ export function CancelRegistrationDialog({
             onClick={() => onOpenChange(false)}
             className="w-full sm:w-auto"
           >
-            Keep Registration
+            {t("eventDetail.cancelDialog.keepRegistration")}
           </Button>
           <Button
             variant="destructive"
             onClick={handleConfirm}
             className="w-full sm:w-auto"
           >
-            Yes, Cancel Registration
+            {t("eventDetail.cancelDialog.confirmCancel")}
           </Button>
         </DialogFooter>
       </DialogContent>

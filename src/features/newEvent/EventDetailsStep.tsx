@@ -6,6 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getEventTypes } from "@/services/events-types-api";
 import { getSkillLevels } from "@/services/skill-levels-api";
 import { getDanceStyles } from "@/services/dance-styles-api";
+import { useTranslation } from "react-i18next";
 
 interface EventDetailsProps {
   className?: string;
@@ -15,6 +16,7 @@ export const EventDetailsStep = withForm({
   ...eventFormOpts,
   props: {} as EventDetailsProps,
   render: ({ form, className }) => {
+    const { t } = useTranslation();
     const danceStyleOptions = useQuery({
       queryKey: ['danceStyles'],
       queryFn: getDanceStyles,
@@ -34,14 +36,14 @@ export const EventDetailsStep = withForm({
       <div className={`p-4 md:p-6 ${className}`}>
         <div className="space-y-6">
           {/* Dance Information */}
-          <FormSection title="Dance Information">
+          <FormSection title={t("newEvent.details.danceInfo")}>
             <div className="space-y-4">
               {/* Dance Styles */}
               <form.AppField name="additionalDetails.danceStyles">
                 {(field) => (
                   <field.MultiSelectField
-                    label="Dance Styles"
-                    placeholder="Select dance styles..."
+                    label={t("newEvent.details.danceStyles")}
+                    placeholder={t("newEvent.details.danceStylesPlaceholder")}
                     options={danceStyleOptions}
                   />
                 )}
@@ -51,8 +53,8 @@ export const EventDetailsStep = withForm({
               <form.AppField name="additionalDetails.skillLevel">
                 {(field) => (
                   <field.MultiSelectField
-                    label="Required Skill Level"
-                    placeholder="Select skill levels..."
+                    label={t("newEvent.details.skillLevel")}
+                    placeholder={t("newEvent.details.skillLevelPlaceholder")}
                     options={skillLevelOptions}
                   />
                 )}
@@ -62,8 +64,8 @@ export const EventDetailsStep = withForm({
               <form.AppField name="additionalDetails.typeOfEvent">
                 {(field) => (
                   <field.MultiSelectField
-                    label="Type of Event"
-                    placeholder="Select event types..."
+                    label={t("newEvent.details.eventType")}
+                    placeholder={t("newEvent.details.eventTypePlaceholder")}
                     options={eventTypeOptions}
                   />
                 )}
@@ -72,14 +74,14 @@ export const EventDetailsStep = withForm({
           </FormSection>
 
           {/* Attendee Management */}
-          <FormSection title="Attendee Management">
+          <FormSection title={t("newEvent.details.attendeeManagement")}>
             <div className="space-y-4">
               {/* Max Attendees */}
               <form.AppField name="additionalDetails.maxAttendees">
                 {(field) => (
                   <field.NumberField
-                    label="Maximum Number of Attendees"
-                    placeholder="Leave empty for unlimited"
+                    label={t("newEvent.details.maxAttendees")}
+                    placeholder={t("newEvent.details.maxAttendeesPlaceholder")}
                     min="1"
                     step="1"
                     icon={Users}

@@ -142,11 +142,11 @@ export function ProfilePage({
                     onClick={() => setIsEditing(false)}
                   >
                     <X className="w-4 h-4 md:mr-2" />
-                    <span className="hidden md:block">{t("Cancel")}</span>
+                    <span className="hidden md:block">{t("common.cancel")}</span>
                   </Button>
                   <Button size="sm" onClick={handleSave}>
                     <Save className="w-4 h-4 md:mr-2" />
-                    <span className="hidden md:block">{t("Save")}</span>
+                    <span className="hidden md:block">{t("common.save")}</span>
                   </Button>
                 </div>
               ) : (
@@ -156,7 +156,7 @@ export function ProfilePage({
                   onClick={() => setIsEditing(true)}
                 >
                   <Edit className="w-4 h-4 md:mr-2" />
-                  <span className="hidden md:block">{t("Edit Profile")}</span>
+                  <span className="hidden md:block">{t("profile.editProfile")}</span>
                 </Button>
               )}
             </div>
@@ -166,7 +166,7 @@ export function ProfilePage({
               <Avatar className="w-32 h-32 border-4 border-background shadow-xl bg-background">
                 <AvatarImage
                   src={profileData.avatar?.url}
-                  alt={"Avatar"}
+                  alt={t("profile.avatar")}
                   className="object-cover"
                 />
                 <AvatarFallback className="text-2xl">

@@ -1,8 +1,10 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export const Description: React.FC<{ description?: string }> = ({
   description,
 }) => {
+  const { t } = useTranslation();
   const [isExpanded, setIsExpanded] = useState(false);
 
   if (!description) return null;
@@ -17,7 +19,7 @@ export const Description: React.FC<{ description?: string }> = ({
 
   return (
     <div className="prose dark:prose-invert max-w-none">
-      <h2 className="text-2xl font-semibold mb-4">About Event</h2>
+      <h2 className="text-2xl font-semibold mb-4">{t("eventDetail.description.aboutEvent")}</h2>
       <p className="whitespace-pre-line text-muted-foreground leading-relaxed">
         {displayedText}
       </p>
@@ -26,7 +28,7 @@ export const Description: React.FC<{ description?: string }> = ({
           onClick={() => setIsExpanded(!isExpanded)}
           className="text-primary font-semibold hover:underline mt-2 cursor-pointer"
         >
-          {isExpanded ? "Show Less" : "Show More"}
+          {isExpanded ? t("eventDetail.description.showLess") : t("eventDetail.description.showMore")}
         </button>
       )}
     </div>

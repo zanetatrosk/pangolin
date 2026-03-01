@@ -2,6 +2,7 @@ import { Badge } from "@/components/ui/badge";
 import { FC } from "react";
 import { EventStatus } from "@/features/eventDetail/types";
 import { RsvpStatus } from "@/services/types";
+import { useTranslation } from "react-i18next";
 
 export const getBadgeByStatus = (status: EventStatus | RsvpStatus | string) => {
   switch (status) {
@@ -24,32 +25,33 @@ export const getBadgeByStatus = (status: EventStatus | RsvpStatus | string) => {
   }
 }
 
-const getStatusLabel = (status: EventStatus | RsvpStatus | string) => {
+const getStatusLabel = (status: EventStatus | RsvpStatus | string, t: (key: string) => string) => {
   switch (status) {
     case EventStatus.PUBLISHED:
-      return "Published";
+      return t("myEvents.status.published");
     case EventStatus.CANCELLED:
-      return "Cancelled";
+      return t("myEvents.status.cancelled");
     case EventStatus.PAST:
-      return "Past";
+      return t("myEvents.status.past");
     case EventStatus.DRAFT:
-      return "Draft";
+      return t("myEvents.status.draft");
     case RsvpStatus.Registered:
-      return "Going";
+      return t("myEvents.status.going");
     case RsvpStatus.Interested:
-      return "Interested";
+      return t("myEvents.status.interested");
     case RsvpStatus.Waitlisted:
-      return "Waitlisted";
+      return t("myEvents.status.waitlisted");
     default:
       return status;
   }
 }
 
 export const StatusBadges: FC<{status?: EventStatus, userStatus?: RsvpStatus, className?: string}> = ({status, userStatus, className}) => {
+  const { t } = useTranslation();
   return (
     <span className={className}>
-    {status && <Badge className={getBadgeByStatus(status)}>{getStatusLabel(status)}</Badge>}
-     {userStatus && <Badge className={getBadgeByStatus(userStatus) + " ml-2"}>{getStatusLabel(userStatus)}</Badge>}
+    {status && <Badge className={getBadgeByStatus(status)}>{getStatusLabel(status, t)}</Badge>}
+     {userStatus && <Badge className={getBadgeByStatus(userStatus) + " ml-2"}>{getStatusLabel(userStatus, t)}</Badge>}
     </span>
   )  
 };

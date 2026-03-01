@@ -5,6 +5,7 @@ import { useState } from "react";
 import { AttendeeStats } from "../types";
 import { RegistrationModeEnum } from "../publish-actions/PublishEventOptions";
 import { AttendeeListModal } from "./AttendeeListModal";
+import { useTranslation } from "react-i18next";
 
 interface AttendeeStatsCardProps {
   eventId: string;
@@ -19,6 +20,7 @@ export function AttendeeStatsCard({
   registrationMode,
   maxCapacity 
 }: AttendeeStatsCardProps) {
+  const { t } = useTranslation();
   const [showAttendeeList, setShowAttendeeList] = useState(false);
 
   const isCoupleMode = registrationMode === RegistrationModeEnum.COUPLE;
@@ -29,11 +31,11 @@ export function AttendeeStatsCard({
       <Card className="overflow-hidden border-primary/20 shadow-md pt-0">
         <CardHeader className="bg-primary/5 pb-4 pt-6">
           <CardTitle className="flex items-center justify-between text-lg">
-            <span>Who's Coming</span>
+            <span>{t("eventDetail.attendees.whoComing")}</span>
             <Users className="w-5 h-5 text-primary" />
           </CardTitle>
           <CardDescription>
-            {totalGoing} {totalGoing === 1 ? 'person' : 'people'} going • {attendeeStats.interested} interested
+            {totalGoing} {totalGoing === 1 ? t("eventDetail.attendees.person") : t("eventDetail.attendees.people")} {t("eventDetail.attendees.going")} • {attendeeStats.interested} {t("eventDetail.attendees.interested")}
           </CardDescription>
         </CardHeader>
         <CardContent className="pt-6">
@@ -43,23 +45,23 @@ export function AttendeeStatsCard({
               <div className="space-y-2">
                 <div className="space-y-1">
                   <div className="flex items-center justify-between text-sm font-medium">
-                    <span className="text-blue-600">Leaders</span>
+                    <span className="text-blue-600">{t("eventDetail.attendees.leaders")}</span>
                     <span className="text-blue-600">{attendeeStats.going.leaders}</span>
                   </div>
                   <div className="flex items-center justify-between text-sm font-medium">
-                    <span className="text-pink-600">Followers</span>
+                    <span className="text-pink-600">{t("eventDetail.attendees.followers")}</span>
                     <span className="text-pink-600">{attendeeStats.going.followers}</span>
                   </div>
                   {attendeeStats.going.both > 0 && (
                     <div className="flex items-center justify-between text-sm font-medium">
-                      <span className="text-purple-600">Both</span>
+                      <span className="text-purple-600">{t("eventDetail.attendees.both")}</span>
                       <span className="text-purple-600">{attendeeStats.going.both}</span>
                     </div>
                   )}
                 </div>
                 {maxCapacity && (
                   <div className="text-xs text-muted-foreground text-right">
-                    {totalGoing} / {maxCapacity} capacity
+                    {totalGoing} / {maxCapacity} {t("eventDetail.attendees.capacity")}
                   </div>
                 )}
                 <div className="h-3 w-full bg-muted rounded-full overflow-hidden flex">
@@ -83,7 +85,7 @@ export function AttendeeStatsCard({
             {!isCoupleMode && maxCapacity && (
               <div className="space-y-2">
                 <div className="flex justify-between text-sm font-medium">
-                  <span>Capacity</span>
+                  <span>{t("eventDetail.attendees.capacityLabel")}</span>
                   <span className={totalGoing >= maxCapacity ? "text-red-600" : "text-primary"}>
                     {totalGoing} / {maxCapacity}
                   </span>
@@ -102,7 +104,7 @@ export function AttendeeStatsCard({
               className="w-full"
               onClick={() => setShowAttendeeList(true)}
             >
-              See who is coming
+              {t("eventDetail.attendees.seeWhoComing")}
             </Button>
           </div>
         </CardContent>

@@ -17,7 +17,7 @@ export function MyEventsPage() {
         <h1 className="text-2xl md:text-3xl font-bold">{t("nav.myEvents")}</h1>
         <Button onClick={() => navigate({to: PATHS.EVENTS.NEW_EVENT})} className="w-full md:w-auto">
           <CalendarPlus className="h-4 w-4 mr-2" />
-          Create New Event
+          {t("myEvents.createNewEvent")}
         </Button>
       </div>
 
@@ -25,15 +25,15 @@ export function MyEventsPage() {
         <TabsList className="grid w-full md:max-w-md grid-cols-3 h-auto">
           <TabsTrigger value="hosting" className="text-xs md:text-sm py-2 md:py-1.5">
             <Users className="h-3 w-3 md:h-4 md:w-4 mr-1 md:mr-2" />
-            Hosting
+            {t("myEvents.tabs.hosting")}
           </TabsTrigger>
           <TabsTrigger value="attending" className="text-xs md:text-sm py-2 md:py-1.5">
             <Calendar className="h-3 w-3 md:h-4 md:w-4 mr-1 md:mr-2" />
-            Attending
+            {t("myEvents.tabs.attending")}
           </TabsTrigger>
           <TabsTrigger value="interested" className="text-xs md:text-sm py-2 md:py-1.5">
             <Heart className="h-3 w-3 md:h-4 md:w-4 mr-1 md:mr-2" />
-            Interested
+            {t("myEvents.tabs.interested")}
           </TabsTrigger>
         </TabsList>
         <HostingTab />

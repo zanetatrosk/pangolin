@@ -8,6 +8,7 @@ import { SingleEventDTO } from "@/features/myEvents/types";
 import { EventCardType } from "./MyEventCard";
 import { useNavigate } from "@tanstack/react-router";
 import { PATHS } from "@/paths";
+import { useTranslation } from "react-i18next";
 
 export interface SingleEventCardProps {
   event: SingleEventDTO;
@@ -18,6 +19,7 @@ export const SingleEventCard: React.FC<SingleEventCardProps> = ({
   event,
   cardType,
 }) => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const isUserOrganizer = cardType === EventCardType.HOSTING;
   
@@ -52,22 +54,22 @@ export const SingleEventCard: React.FC<SingleEventCardProps> = ({
                 onClick={() => navigate({ to: PATHS.EVENTS.DETAIL(event.id) })}
                 className="ml-2"
               >
-                View Details
+                {t("myEvents.card.viewDetails")}
                 <Eye className="h-4 w-4 ml-2" />
               </Button>
             </div>
           </div>
           {!isUserOrganizer && <div className="text-sm">
-            Organized by {organizer.firstName && organizer.lastName ? `${organizer.firstName} ${organizer.lastName}` : organizer.username}
+            {t("myEvents.card.organizedBy")} {organizer.firstName && organizer.lastName ? `${organizer.firstName} ${organizer.lastName}` : organizer.username}
           </div>}
         </div>
         <div className="flex flex-col lg:flex-row gap-2 lg:gap-10">
           
-          <DataWithIcon icon={Calendar} value={`${date} at ${time}`} />
+          <DataWithIcon icon={Calendar} value={`${date} ${t("myEvents.card.at")} ${time}`} />
           <DataWithIcon icon={MapPin} value={renderedLocation} />
           <DataWithIcon
             icon={Building}
-            value={`${attendeeStats?.going?.total || 0} going, ${attendeeStats?.interested || 0} interested`}
+            value={`${attendeeStats?.going?.total || 0} ${t("myEvents.card.going")}, ${attendeeStats?.interested || 0} ${t("myEvents.card.interested")}`}
           />
         </div>
       </CardContent>

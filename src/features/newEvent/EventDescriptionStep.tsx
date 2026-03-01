@@ -4,6 +4,7 @@ import { Label } from "@/components/ui/label";
 import { withForm } from "@/lib/form";
 import { eventFormOpts } from "./FormOptions";
 import { FormSection } from "@/components/form/FormSection";
+import { useTranslation } from "react-i18next";
 
 export type EventDescriptionValues = {
   description: string;
@@ -13,18 +14,19 @@ export type EventDescriptionValues = {
 export const EventDescriptionStep = withForm({
   ...eventFormOpts,
   render: ({ form }) => {
+    const { t } = useTranslation();
     return (
       <div className={"p-4 md:p-6"}>
-        <FormSection title="Description">
+        <FormSection title={t("newEvent.description.title")}>
           <div className="space-y-6">
             <form.Field
               name="description"
               children={(field) => (
                 <div className="space-y-2">
-                  <Label htmlFor={field.name}>Event description</Label>
+                  <Label htmlFor={field.name}>{t("newEvent.description.label")}</Label>
                   <Textarea
                     id={field.name}
-                    placeholder="Describe the event, vibe, schedule, instructors..."
+                    placeholder={t("newEvent.description.placeholder")}
                     value={field.state.value}
                     onChange={(e) => field.handleChange(e.target.value)}
                     rows={6}

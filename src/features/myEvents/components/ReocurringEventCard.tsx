@@ -16,9 +16,11 @@ import { EventCardType } from "./MyEventCard";
 import { renderAddress } from "@/utils/renderAdress";
 import { useNavigate } from "@tanstack/react-router";
 import { PATHS } from "@/paths";
+import { useTranslation } from "react-i18next";
 
 
 export const ReocurringEventCard: React.FC<{event: SeriesEventDTO, cardType: EventCardType}> = ({ event, cardType }) => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   // This component only handles series events
   if (event.displayMode !== 'SERIES') {
@@ -34,10 +36,10 @@ export const ReocurringEventCard: React.FC<{event: SeriesEventDTO, cardType: Eve
         <div className="space-y-1 pl-4 md:pl-0">
           <CardTitle className="text-xl font-bold">{eventName}</CardTitle>
           {!isUserOrganizer && <div className="text-sm">
-            Organized by {organizer.firstName && organizer.lastName ? `${organizer.firstName} ${organizer.lastName}` : organizer.username}
+            {t("myEvents.card.organizedBy")} {organizer.firstName && organizer.lastName ? `${organizer.firstName} ${organizer.lastName}` : organizer.username}
           </div>}
           <div className="text-sm text-muted-foreground">
-            {overallStartDate && overallEndDate && `${overallStartDate} until ${overallEndDate}`}
+            {overallStartDate && overallEndDate && `${overallStartDate} ${t("myEvents.card.until")} ${overallEndDate}`}
           </div>
           
         </div>
@@ -45,16 +47,16 @@ export const ReocurringEventCard: React.FC<{event: SeriesEventDTO, cardType: Eve
       <CardContent>
         <div className="space-y-3">
           <div className="text-sm font-semibold text-foreground/80">
-            Upcoming Dates
+            {t("myEvents.recurring.upcomingDates")}
           </div>
           <div className="rounded-md border">
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Date and Time</TableHead>
-                  <TableHead>Location</TableHead>
-                  <TableHead>Attendees</TableHead>
-                  <TableHead>Status</TableHead>
+                  <TableHead>{t("myEvents.recurring.dateAndTime")}</TableHead>
+                  <TableHead>{t("myEvents.recurring.location")}</TableHead>
+                  <TableHead>{t("myEvents.recurring.attendees")}</TableHead>
+                  <TableHead>{t("myEvents.recurring.status")}</TableHead>
                   <TableHead className="w-[50px]"></TableHead>
                 </TableRow>
               </TableHeader>
@@ -64,7 +66,7 @@ export const ReocurringEventCard: React.FC<{event: SeriesEventDTO, cardType: Eve
                     <TableCell className="font-medium">
                       <div className="flex items-center">
                         <Calendar className="mr-2 h-4 w-4 text-primary/70" />
-                        {occurrence.date} at {occurrence.time}
+                        {occurrence.date} {t("myEvents.card.at")} {occurrence.time}
                       </div>
                     </TableCell>
                     <TableCell>
@@ -88,7 +90,7 @@ export const ReocurringEventCard: React.FC<{event: SeriesEventDTO, cardType: Eve
                         size="sm"
                         onClick={() => navigate({ to: PATHS.EVENTS.DETAIL(occurrence.id) })}
                       >
-                        View
+                        {t("myEvents.card.view")}
                         <Eye className="h-4 w-4 ml-2" />
                       </Button>
                     </TableCell>

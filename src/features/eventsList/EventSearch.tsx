@@ -84,7 +84,7 @@ export function EventSearch({onSearch}: {onSearch: (params: SearchProps) => void
             <div className="relative">
               <Search className="absolute left-5 top-1/2 transform -translate-y-1/2  text-pink-500 z-10 pointer-events-none" />
               <Input
-                placeholder="What dance event are you looking for?"
+                placeholder={t("eventsList.search.placeholder")}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="pl-14 py-6 bg-white/80 dark:bg-gray-800/80 backdrop-blur lg:text-xl rounded-xl shadow-lg relative z-0  placeholder:text-gray-400"
@@ -94,7 +94,7 @@ export function EventSearch({onSearch}: {onSearch: (params: SearchProps) => void
             {/* Quick Filters Grid */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-4">
               {/* Location Filter */}
-              <InputIconAndTitle icon={MapPin} title="Location">
+              <InputIconAndTitle icon={MapPin} title={t("eventsList.search.location")}>
                 <div className="relative">
                   <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 text-pink-400 h-4 w-4 z-10 pointer-events-none" />
                   <AutoComplete
@@ -102,8 +102,8 @@ export function EventSearch({onSearch}: {onSearch: (params: SearchProps) => void
                     onValueChange={(newValue) => setLocation(newValue)}
                     onSearchChange={setLocationSearchValue}
                     options={locationOptions}
-                    placeholder="Search for city or country..."
-                    emptyMessage="No locations found"
+                    placeholder={t("eventsList.search.locationPlaceholder")}
+                    emptyMessage={t("eventsList.search.noLocations")}
                     isLoading={isLoadingLocations}
                     searchValue={locationSearchValue}
                     className="pl-10 h-12 bg-white/70 dark:bg-gray-800/70 backdrop-blur rounded-lg shadow-sm"
@@ -113,7 +113,7 @@ export function EventSearch({onSearch}: {onSearch: (params: SearchProps) => void
 
               {/* Event Types Filter */}
               <ResponsiveMultiSelectFilter
-                label="Event Types"
+                label={t("eventsList.search.eventTypes")}
                 icon={Calendar}
                 options={eventTypeOptions}
                 selectedValues={eventTypes}
@@ -122,7 +122,7 @@ export function EventSearch({onSearch}: {onSearch: (params: SearchProps) => void
 
               {/* Dance Styles Filter */}
               <ResponsiveMultiSelectFilter
-                label="Dance Styles"
+                label={t("eventsList.search.danceStyles")}
                 icon={Music}
                 options={danceStyleOptions}
                 selectedValues={danceStyles}
@@ -138,7 +138,7 @@ export function EventSearch({onSearch}: {onSearch: (params: SearchProps) => void
                 className="px-10 py-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
               >
                 <Search className="mr-3" />
-                <span className="font-semibold">Search Events</span>
+                <span className="font-semibold">{t("eventsList.search.searchButton")}</span>
               </Button>
             </div>
           </div>

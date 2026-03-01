@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useForm } from "@tanstack/react-form";
+import { useTranslation } from "react-i18next";
 
 export interface StepComponentProps {
   onValidate?: (isValid: boolean) => void;
@@ -26,6 +27,7 @@ export const MobileStepper: React.FC<MobileStepperProps> = ({
   steps, 
   onComplete 
 }) => {
+  const { t } = useTranslation();
   const [currentStep, setCurrentStep] = useState(0);
 
   const progress = ((currentStep + 1) / steps.length) * 100;
@@ -56,11 +58,11 @@ export const MobileStepper: React.FC<MobileStepperProps> = ({
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <span className="text-sm font-semibold text-muted-foreground">
-                Step {currentStep + 1} of {steps.length}
+                {t("newEvent.stepper.stepProgress", { current: currentStep + 1, total: steps.length })}
               </span>
               {currentStepConfig.optional && (
                 <Badge variant="outline" className="text-xs">
-                  Optional
+                  {t("newEvent.stepper.optional")}
                 </Badge>
               )}
             </div>
@@ -90,14 +92,14 @@ export const MobileStepper: React.FC<MobileStepperProps> = ({
             className="flex-1"
           >
             <ChevronLeft className="h-4 w-4 mr-1" />
-            Back
+            {t("newEvent.stepper.back")}
           </Button>
           
           <Button
             onClick={moveToNextStep}
             className="flex-1"
           >
-            {isLastStep ? "Complete" : "Next"}
+            {isLastStep ? t("newEvent.stepper.complete") : t("newEvent.stepper.next")}
             {!isLastStep && <ChevronRight className="h-4 w-4 ml-1" />}
           </Button>
         </div>

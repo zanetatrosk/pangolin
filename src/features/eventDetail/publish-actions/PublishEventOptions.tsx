@@ -3,6 +3,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { GoogleFormIntegration } from "@/features/eventDetail/publish-actions/GoogleFormIntegration";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
+import { useTranslation } from "react-i18next";
 
 export enum RegistrationModeEnum {
   OPEN = "OPEN",
@@ -17,27 +18,6 @@ export interface PublishPayload {
   allowWaitlist?: boolean;
 }
 
-const publishedEventOptions = [
-  {
-    value: RegistrationModeEnum.OPEN,
-    label: "Open Registration",
-    description: "Anyone can register regarding of role",
-    component: null,
-  },
-  {
-    value: RegistrationModeEnum.COUPLE,
-    label: "Couple Registration",
-    description: "Registrations require question for role",
-    component: null,
-  },
-  {
-    value: RegistrationModeEnum.GOOGLE_FORM,
-    label: "Google Form Integration",
-    description:
-      "Registration is done through Google Forms and users are connected through email",
-  },
-];
-
 interface PublishEventOptionsProps {
   value: PublishPayload;
   onChange: (value: PublishPayload) => void;
@@ -47,6 +27,27 @@ export const PublishEventOptions: React.FC<PublishEventOptionsProps> = ({
   value,
   onChange,
 }) => {
+  const { t } = useTranslation();
+  
+  const publishedEventOptions = [
+    {
+      value: RegistrationModeEnum.OPEN,
+      label: t("eventDetail.publishOptions.openRegistration"),
+      description: t("eventDetail.publishOptions.openRegistrationDesc"),
+      component: null,
+    },
+    {
+      value: RegistrationModeEnum.COUPLE,
+      label: t("eventDetail.publishOptions.coupleRegistration"),
+      description: t("eventDetail.publishOptions.coupleRegistrationDesc"),
+      component: null,
+    },
+    {
+      value: RegistrationModeEnum.GOOGLE_FORM,
+      label: t("eventDetail.publishOptions.googleForm"),
+      description: t("eventDetail.publishOptions.googleFormDesc"),
+    },
+  ];
   const onRegistrationModeChange = (mode: RegistrationModeEnum) => {
     onChange({ ...value, registrationMode: mode });
   };
@@ -55,7 +56,7 @@ export const PublishEventOptions: React.FC<PublishEventOptionsProps> = ({
   return (
     <div className="space-y-4 py-4">
       <div>
-        <h4 className="font-medium mb-3">Registration Mode</h4>
+        <h4 className="font-medium mb-3">{t("eventDetail.publishOptions.registrationMode")}</h4>
         <RadioGroup
           value={value.registrationMode}
           onValueChange={onRegistrationModeChange}
@@ -85,7 +86,7 @@ export const PublishEventOptions: React.FC<PublishEventOptionsProps> = ({
           }
         </div>
         <div className="space-y-4">
-          <h4 className="font-medium mb-3">Additional features</h4>
+          <h4 className="font-medium mb-3">{t("eventDetail.publishOptions.additionalFeatures")}</h4>
           <FieldGroup>
             <Field orientation="horizontal">
               <Checkbox
@@ -95,7 +96,7 @@ export const PublishEventOptions: React.FC<PublishEventOptionsProps> = ({
                 }
               />
               <FieldLabel>
-                Organizer needs to approve registrations
+                {t("eventDetail.publishOptions.requireApproval")}
               </FieldLabel>
             </Field>
           </FieldGroup>

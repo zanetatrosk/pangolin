@@ -9,6 +9,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 import { PublishEventOptions } from "../publish-actions/PublishEventOptions";
+import { useTranslation } from "react-i18next";
 
 export type ActionType = "publish" | "cancel" | "delete";
 
@@ -24,41 +25,6 @@ interface ConfirmActionDialogProps {
   onPublishDataChange?: (data: PublishPayload) => void;
 }
 
-const DIALOG_CONTENT: Record<
-  ActionType,
-  {
-    title: string;
-    description: string;
-    actionText: string;
-    variant: "default" | "destructive";
-    size?: "sm" | "lg" | "xl"; // Add size option,
-    component?: React.ReactNode; // Optional custom component to render in the dialog
-  }
-> = {
-  publish: {
-    title: "Publish Event",
-    description:
-      "Configure your event settings before publishing.",
-    actionText: "Publish",
-    variant: "default",
-    size: "lg", // Larger dialog for publish
-  },
-  cancel: {
-    title: "Cancel Event",
-    description:
-      "Are you sure you want to cancel this event? This action cannot be undone and attendees will be notified.",
-    actionText: "Cancel Event",
-    variant: "destructive",
-  },
-  delete: {
-    title: "Delete Draft",
-    description:
-      "Are you sure you want to delete this draft? This action cannot be undone.",
-    actionText: "Delete",
-    variant: "destructive",
-  },
-};
-
 export const ConfirmActionDialog: React.FC<ConfirmActionDialogProps> = ({
   open,
   onOpenChange,
@@ -68,13 +34,48 @@ export const ConfirmActionDialog: React.FC<ConfirmActionDialogProps> = ({
   publishData,
   onPublishDataChange,
 }) => {
-  const dialogContent = actionType ? DIALOG_CONTENT[actionType] : null;
+  const { t } = useTranslation();
+  
+  const getDialogContent = () => {
+    if (!actionType) return null;
+    
+    const baseKey = `eventDetail.confirmActionDialog`;
+    
+    switch (actionType) {
+      case "publish":
+        return {
+          title: t(`${baseKey}.publishTitle`),
+          description: t(`${baseKey}.publishDescription`),
+          actionText: t(`${baseKey}.publishAction`),
+          variant: "default" as const,
+          size: "lg" as const,
+        };
+      case "cancel":
+        return {
+          title: t(`${baseKey}.cancelTitle`),
+          description: t(`${baseKey}.cancelDescription`),
+          actionText: t(`${baseKey}.cancelAction`),
+          variant: "destructive" as const,
+        };
+      case "delete":
+        return {
+          title: t(`${baseKey}.deleteTitle`),
+          description: t(`${baseKey}.deleteDescription`),
+          actionText: t(`${baseKey}.deleteAction`),
+          variant: "destructive" as const,
+        };
+      default:
+        return null;
+    }
+  };
+
+  const dialogContent = getDialogContent();
   
   const renderComponent = () => {
     if (actionType === "publish" && publishData && onPublishDataChange) {
       return <PublishEventOptions value={publishData} onChange={onPublishDataChange} />;
     }
-    return dialogContent?.component;
+    return null;
   };
 
   return (
@@ -93,7 +94,7 @@ export const ConfirmActionDialog: React.FC<ConfirmActionDialogProps> = ({
                 onClick={() => onOpenChange(false)}
                 disabled={isLoading}
               >
-                Cancel
+                {t("eventDetail.confirmActionDialog.cancel")}
               </Button>
               <Button
                 variant={dialogContent.variant}
@@ -103,7 +104,7 @@ export const ConfirmActionDialog: React.FC<ConfirmActionDialogProps> = ({
                 {isLoading ? (
                   <>
                     <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                    Processing...
+                    {t("common.loading")}
                   </>
                 ) : (
                   dialogContent.actionText

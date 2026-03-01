@@ -4,12 +4,14 @@ import { XCircle, Share2 } from "lucide-react";
 import { RsvpData, RsvpStatus } from "@/services/types";
 import { RegistrationModeEnum } from "../publish-actions/PublishEventOptions";
 import { ActionButtons } from "./ActionButtons";
+import { useTranslation } from "react-i18next";
 
 export const DetailButtons: React.FC<{
   rsvpData: RsvpData;
   registrationMode: RegistrationModeEnum;
   formId?: string;
 }> = ({ rsvpData, registrationMode, formId }) => {
+  const { t } = useTranslation();
   const isRejected = rsvpData.status === RsvpStatus.Rejected;
   const isGoogleForm = registrationMode === RegistrationModeEnum.GOOGLE_FORM;
   const isRegistered = rsvpData.status === RsvpStatus.Registered;
@@ -21,7 +23,7 @@ export const DetailButtons: React.FC<{
         <Alert variant="destructive" className="mb-4">
           <XCircle className="h-4 w-4" />
           <AlertDescription>
-            Your registration was rejected by the organizer. You cannot register for this event.
+            {t("eventDetail.alerts.registrationRejected")}
           </AlertDescription>
         </Alert>
       )}
@@ -29,7 +31,7 @@ export const DetailButtons: React.FC<{
       {isGoogleForm && (isRegistered || isPending) && (
         <Alert className="mb-4">
           <AlertDescription>
-            This registration was done through Google Forms. To cancel, please contact the event organizer directly.
+            {t("eventDetail.alerts.googleFormRegistration")}
           </AlertDescription>
         </Alert>
       )}

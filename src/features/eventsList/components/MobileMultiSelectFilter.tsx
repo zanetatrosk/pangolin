@@ -14,6 +14,7 @@ import {
 import { Check, ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { CodebookItem } from "@/services/types";
+import { useTranslation } from "react-i18next";
 
 interface MobileMultiSelectFilterProps {
   label: string;
@@ -30,6 +31,7 @@ export function MobileMultiSelectFilter({
   selectedValues,
   onValuesChange,
 }: MobileMultiSelectFilterProps) {
+  const { t } = useTranslation();
   const [open, setOpen] = useState(false);
 
   const handleToggle = (value: string) => {
@@ -54,8 +56,8 @@ export function MobileMultiSelectFilter({
           >
             <span className="text-left truncate text-gray-600 dark:text-gray-300">
               {selectedValues.length === 0
-                ? "Select options..."
-                : `${selectedValues.length} selected`}
+                ? t("eventsList.filter.selectOptions")
+                : `${selectedValues.length} ${t("eventsList.filter.selected")}`}
             </span>
             <ChevronDown className="h-4 w-4 opacity-50" />
           </Button>
@@ -68,7 +70,7 @@ export function MobileMultiSelectFilter({
               {label}
             </DrawerTitle>
             <DrawerDescription>
-              Tap to select or deselect options.
+              {t("eventsList.filter.tapToSelect")}
             </DrawerDescription>
           </DrawerHeader>
 
@@ -115,7 +117,7 @@ export function MobileMultiSelectFilter({
 
           <DrawerFooter>
             <DrawerClose asChild>
-              <Button className="w-full">Done</Button>
+              <Button className="w-full">{t("eventsList.filter.done")}</Button>
             </DrawerClose>
           </DrawerFooter>
         </DrawerContent>
@@ -141,7 +143,7 @@ export function MobileMultiSelectFilter({
               variant="secondary"
               className="text-xs bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400"
             >
-              +{selectedValues.length - 3} more
+              +{selectedValues.length - 3} {t("eventsList.filter.more")}
             </Badge>
           )}
         </div>

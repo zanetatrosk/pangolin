@@ -9,10 +9,12 @@ import { FormSection } from "@/components/form/FormSection";
 import { Media } from "../eventDetail/components/Media";
 import { useMutation } from "@tanstack/react-query";
 import { postMedia } from "@/services/media-api";
+import { useTranslation } from "react-i18next";
 
 export const EventMediaStep = withForm({
   ...eventFormOpts,
   render: ({ form }) => {
+    const { t } = useTranslation();
     const coverImageMutation = useMutation({
         mutationFn: (file: File) => postMedia(file),
         onSuccess: (data) => {
@@ -50,14 +52,14 @@ export const EventMediaStep = withForm({
 
     return (
       <div className="p-4 md:p-6 space-y-8">
-        <FormSection title="Cover Image">
+        <FormSection title={t("newEvent.media.coverImage")}>
           {/* ---------------- Cover Image ---------------- */}
           <form.Field name="coverImage">
             {(field) => {
               const preview = field.state.value?.url;
               return (
                 <div className="space-y-3">
-                  <Label>Cover image or video</Label>
+                  <Label>{t("newEvent.media.coverImageLabel")}</Label>
 
                   {preview && (
                     <div className="relative w-full max-w-lg">
@@ -70,7 +72,7 @@ export const EventMediaStep = withForm({
                       ) : (
                         <img
                           src={preview}
-                          alt="Cover preview"
+                          alt={t("newEvent.media.coverPreview")}
                           className="rounded-lg border object-cover"
                         />
                       )}
@@ -111,7 +113,7 @@ export const EventMediaStep = withForm({
           </form.Field>
         </FormSection>
         {/* ---------------- Gallery Images ---------------- */}
-        <FormSection title="Gallery & Videos">
+        <FormSection title={t("newEvent.media.gallery")}>
           <form.Field name="media">
             {(field) => {
               const media: EventMediaItem[] = field.state.value || [];
@@ -141,7 +143,7 @@ export const EventMediaStep = withForm({
 
               return (
                 <div className="space-y-4">
-                  <Label>Event media</Label>
+                  <Label>{t("newEvent.media.galleryLabel")}</Label>
 
                   {/* -------- Dropzone -------- */}
                   <div
@@ -153,10 +155,10 @@ export const EventMediaStep = withForm({
                     }
                   >
                     <p className="text-sm font-medium">
-                      Drag & drop images or videos here
+                      {t("newEvent.media.dropzoneText")}
                     </p>
                     <p className="text-xs text-muted-foreground">
-                      or click to browse
+                      {t("newEvent.media.dropzoneBrowse")}
                     </p>
 
                     <input

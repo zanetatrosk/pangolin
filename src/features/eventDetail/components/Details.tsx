@@ -1,14 +1,16 @@
 import { Info } from "lucide-react";
 import { AdditionalDetailsData } from "../types";
+import { useTranslation } from "react-i18next";
 
 export const Details: React.FC<{
   additionalDetails?: AdditionalDetailsData;
 }> = ({ additionalDetails }) => {
+    const { t } = useTranslation();
     return (
         <div className="rounded-xl bg-white dark:bg-card p-6 shadow-sm ring-1 ring-gray-900/5 dark:ring-white/10">
               <h3 className="font-semibold text-lg flex items-center gap-2">
                 <Info className="w-5 h-5 text-primary" />
-                Details
+                {t("eventDetail.details.title")}
               </h3>
               <div className="mt-4 space-y-4">
                 
@@ -16,7 +18,7 @@ export const Details: React.FC<{
                 {additionalDetails?.typeOfEvent && (
                   <div>
                     <p className="text-xs font-medium uppercase text-muted-foreground">
-                      Event Type
+                      {t("eventDetail.details.eventType")}
                     </p>
                     <div className="mt-2 flex flex-wrap gap-2">
                       {additionalDetails.typeOfEvent.map((type) => (
@@ -34,7 +36,7 @@ export const Details: React.FC<{
                 {additionalDetails?.danceStyles && (
                   <div>
                     <p className="text-xs font-medium uppercase text-muted-foreground">
-                      Styles
+                      {t("eventDetail.details.styles")}
                     </p>
                     <div className="mt-2 flex flex-wrap gap-2">
                       {additionalDetails.danceStyles.map((style) => (
@@ -52,7 +54,7 @@ export const Details: React.FC<{
                 {additionalDetails?.skillLevel && (
                   <div>
                     <p className="text-xs font-medium uppercase text-muted-foreground">
-                      Level
+                      {t("eventDetail.details.level")}
                     </p>
                     <div className="mt-2 flex flex-wrap gap-2">
                       {additionalDetails.skillLevel.map((level) => (

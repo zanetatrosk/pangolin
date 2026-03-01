@@ -12,6 +12,7 @@ import { EventMediaStep } from "./EventMediaStep";
 import { EventDetailsStep } from "./EventDetailsStep";
 import { UseMutationResult } from "@tanstack/react-query";
 import { DanceEventCreation } from "./types";
+import { useTranslation } from "react-i18next";
 
 export interface FormParentProps {
   eventMutation:  UseMutationResult<any, Error, DanceEventCreation, unknown>;
@@ -22,7 +23,7 @@ export interface FormParentProps {
 }
 
 export const FormParent: React.FC<FormParentProps> = ({ eventMutation, eventFormOpts, isEditing = false }) => {
-
+  const { t } = useTranslation();
   const form = useAppForm({
     ...eventFormOpts,
     onSubmit: async ({ value }) => {
@@ -41,24 +42,24 @@ export const FormParent: React.FC<FormParentProps> = ({ eventMutation, eventForm
   const steps: Step[] = [
     {
       id: "basic-details",
-      title: "Event Details",
+      title: t("newEvent.steps.basicDetails"),
       component: () => <BasicDetails form={form} isEditing={isEditing} />,
     },
     {
       id: "description-details",
-      title: "Description & Details",
+      title: t("newEvent.steps.description"),
       component: () => <EventDescriptionStep form={form} />,
       optional: true,
     },
     {
       id: "media-details",
-      title: "Photos & Media",
+      title: t("newEvent.steps.media"),
       component: () => <EventMediaStep form={form} />,
       optional: true,
     },
     {
       id: "additional-details",
-      title: "Additional Details",
+      title: t("newEvent.steps.additionalDetails"),
       component: () => <EventDetailsStep form={form} />,
       optional: false,
     },

@@ -5,6 +5,7 @@ import { getPlaces, PlaceOption } from "@/services/get-places-api";
 import { FormGrid } from "@/components/form";
 import { withForm } from "@/lib/form";
 import { eventFormOpts } from "./FormOptions";
+import { useTranslation } from "react-i18next";
 
 interface LocationSectionProps {
   className?: string;
@@ -14,6 +15,7 @@ export const LocationSection = withForm({
   ...eventFormOpts,
   props: {} as LocationSectionProps,
   render: ({ form, className }) => {
+    const { t } = useTranslation();
     const [searchQuery, setSearchQuery] = useState<string>("");
     const [city, setCity] = useState<string>(() => 
       form.getFieldValue("basicInfo.location.city") || ""
@@ -76,12 +78,12 @@ export const LocationSection = withForm({
         {/* Location Search */}
         <div>
           <label className="block text-sm font-medium mb-2">
-            Location <span className="text-red-500">*</span>
+            {t("newEvent.location.label")} <span className="text-red-500">*</span>
           </label>
           <form.AppField name="basicInfo.location.name">
             {(field) => (
               <field.ComboboxField
-                placeholder="Search for a venue..."
+                placeholder={t("newEvent.location.searchPlaceholder")}
                 options={locationOptions}
                 isLoading={isLoading}
                 value={field.state.value}
@@ -110,13 +112,13 @@ export const LocationSection = withForm({
         {/* Location Details - shown after selecting from search */}
         {showLocationFields && (
           <div className="space-y-4 p-4 border rounded-lg bg-muted/20">
-            <h4 className="text-sm font-medium mb-2">Location Details</h4>
+            <h4 className="text-sm font-medium mb-2">{t("newEvent.location.detailsTitle")}</h4>
             <FormGrid columns={2}>
               <form.AppField name="basicInfo.location.name">
                 {(field) => (
                   <field.TextField
-                    label="Place Name"
-                    placeholder="e.g., Pekelnej Bar"
+                    label={t("newEvent.location.placeName")}
+                    placeholder={t("newEvent.location.placeNamePlaceholder")}
                   />
                 )}
               </form.AppField>
@@ -124,8 +126,8 @@ export const LocationSection = withForm({
               <form.AppField name="basicInfo.location.street">
                 {(field) => (
                   <field.TextField
-                    label="Street"
-                    placeholder="e.g., Na Bělidle"
+                    label={t("newEvent.location.street")}
+                    placeholder={t("newEvent.location.streetPlaceholder")}
                   />
                 )}
               </form.AppField>
@@ -133,8 +135,8 @@ export const LocationSection = withForm({
               <form.AppField name="basicInfo.location.houseNumber">
                 {(field) => (
                   <field.TextField
-                    label="House Number"
-                    placeholder="e.g., 929/19"
+                    label={t("newEvent.location.houseNumber")}
+                    placeholder={t("newEvent.location.houseNumberPlaceholder")}
                   />
                 )}
               </form.AppField>
@@ -142,8 +144,8 @@ export const LocationSection = withForm({
               <form.AppField name="basicInfo.location.city">
                 {(field) => (
                   <field.ComboboxField
-                    label="City"
-                    placeholder="e.g., Praha 5"
+                    label={t("newEvent.location.city")}
+                    placeholder={t("newEvent.location.cityPlaceholder")}
                     options={cities}
                     required
                     isLoading={isLoadingCities}
@@ -172,15 +174,15 @@ export const LocationSection = withForm({
 
               <form.AppField name="basicInfo.location.county">
                 {(field) => (
-                  <field.TextField label="County" placeholder="e.g., Prague" />
+                  <field.TextField label={t("newEvent.location.county")} placeholder={t("newEvent.location.countyPlaceholder")} />
                 )}
               </form.AppField>
 
               <form.AppField name="basicInfo.location.postalCode">
                 {(field) => (
                   <field.TextField
-                    label="Postal Code"
-                    placeholder="e.g., 15000"
+                    label={t("newEvent.location.postalCode")}
+                    placeholder={t("newEvent.location.postalCodePlaceholder")}
                   />
                 )}
               </form.AppField>
@@ -188,8 +190,8 @@ export const LocationSection = withForm({
               <form.AppField name="basicInfo.location.state">
                 {(field) => (
                   <field.TextField
-                    label="State/Region"
-                    placeholder="e.g., Capital City of Prague"
+                    label={t("newEvent.location.state")}
+                    placeholder={t("newEvent.location.statePlaceholder")}
                   />
                 )}
               </form.AppField>
@@ -197,8 +199,8 @@ export const LocationSection = withForm({
               <form.AppField name="basicInfo.location.country">
                 {(field) => (
                   <field.ComboboxField
-                    label="Country"
-                    placeholder="e.g., Czechia"
+                    label={t("newEvent.location.country")}
+                    placeholder={t("newEvent.location.countryPlaceholder")}
                     options={countries}
                     isLoading={isLoadingCountries}
                     value={field.state.value}

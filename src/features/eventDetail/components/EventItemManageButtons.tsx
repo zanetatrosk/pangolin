@@ -15,6 +15,7 @@ import { useState } from "react";
 import { ConfirmActionDialog, ActionType } from "./ConfirmActionDialog";
 import { PublishPayload, RegistrationModeEnum } from "../publish-actions/PublishEventOptions";
 import { toast } from "sonner";
+import { useTranslation } from "react-i18next";
 
 interface EventItemManageButtonsProps {
   eventId: string | number;
@@ -25,6 +26,7 @@ export const EventItemManageButtons: React.FC<EventItemManageButtonsProps> = ({
   eventId,
   eventStatus,
 }) => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const [pendingAction, setPendingAction] = useState<ActionType | null>(null);
@@ -42,7 +44,7 @@ export const EventItemManageButtons: React.FC<EventItemManageButtonsProps> = ({
     },
     onError: (error: any) => {
       console.error("Failed to publish event:", error);
-      toast.error(error.response?.data?.message || "Failed to publish event");
+      toast.error(error.response?.data?.message || t("eventDetail.manageErrors.publishFailed"));
     },
   });
 
@@ -55,7 +57,7 @@ export const EventItemManageButtons: React.FC<EventItemManageButtonsProps> = ({
     },
     onError: (error: any) => {
       console.error("Failed to cancel event:", error);
-      toast.error(error.response?.data?.message || "Failed to cancel event");
+      toast.error(error.response?.data?.message || t("eventDetail.manageErrors.cancelFailed"));
     },
   });
 
@@ -67,7 +69,7 @@ export const EventItemManageButtons: React.FC<EventItemManageButtonsProps> = ({
     },
     onError: (error: any) => {
       console.error("Failed to delete event:", error);
-      toast.error(error.response?.data?.message || "Failed to delete event");
+      toast.error(error.response?.data?.message || t("eventDetail.manageErrors.deleteFailed"));
     },
   });
 
@@ -118,19 +120,19 @@ export const EventItemManageButtons: React.FC<EventItemManageButtonsProps> = ({
                 variant={isDraft ? "outline" : "default"}
                 disabled={isLoading}
               >
-                Manage Event
+                {t("eventDetail.manageButtons.manageEvent")}
                 <ChevronDown className="w-4 h-4" />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
               <DropdownMenuItem onClick={handleEditEvent}>
                 <Edit className="w-4 h-4 mr-2" />
-                Edit Event
+                {t("eventDetail.manageButtons.editEvent")}
               </DropdownMenuItem>
               {isDraft ? (
                 <DropdownMenuItem onClick={handleDeleteEvent}>
                   <X className="w-4 h-4 mr-2" />
-                  Delete Event
+                  {t("eventDetail.manageButtons.deleteEvent")}
                 </DropdownMenuItem>
               ) : (
                 <DropdownMenuItem
@@ -138,7 +140,7 @@ export const EventItemManageButtons: React.FC<EventItemManageButtonsProps> = ({
                   className="text-destructive"
                 >
                   <X className="w-4 h-4 mr-2" />
-                  Cancel Event
+                  {t("eventDetail.manageButtons.cancelEvent")}
                 </DropdownMenuItem>
               )}
             </DropdownMenuContent>
@@ -154,10 +156,10 @@ export const EventItemManageButtons: React.FC<EventItemManageButtonsProps> = ({
             {publishMutation.isPending ? (
               <>
                 <Loader2 className="w-4 h-4 animate-spin" />
-                Publishing...
+                {t("eventDetail.manageButtons.publishing")}
               </>
             ) : (
-              "Publish"
+              t("eventDetail.manageButtons.publish")
             )}
           </Button>
         )}
@@ -171,7 +173,7 @@ export const EventItemManageButtons: React.FC<EventItemManageButtonsProps> = ({
             disabled={isLoading}
           >
             <BarChart3 className="w-4 h-4" />
-            Stats
+            {t("eventDetail.manageButtons.stats")}
           </Button>
         )}
       </div>

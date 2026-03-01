@@ -75,10 +75,207 @@
             "twitter": "Share on Twitter"
         },
         "viewDetails": "View Details",
+        "cancelled": "CANCELLED",
         "difficulty": {
             "beginner": "Beginner",
             "intermediate": "Intermediate",
             "advanced": "Advanced"
+        }
+    },
+    "eventsList": {
+        "errorLoading": "Error loading events.",
+        "showMore": "Show more",
+        "search": {
+            "placeholder": "What dance event are you looking for?",
+            "location": "Location",
+            "locationPlaceholder": "Search for city or country...",
+            "noLocations": "No locations found",
+            "eventTypes": "Event Types",
+            "danceStyles": "Dance Styles",
+            "searchButton": "Search Events"
+        },
+        "filter": {
+            "selectOptions": "Select options...",
+            "selected": "selected",
+            "tapToSelect": "Tap to select or deselect options.",
+            "done": "Done",
+            "more": "more"
+        }
+    },
+    "newEvent": {
+        "steps": {
+            "basicDetails": "Event Details",
+            "description": "Description & Details",
+            "media": "Photos & Media",
+            "additionalDetails": "Additional Details"
+        },
+        "stepper": {
+            "stepProgress": "Step {{current}} of {{total}}",
+            "optional": "Optional",
+            "previous": "Previous",
+            "next": "Next",
+            "back": "Back",
+            "complete": "Complete",
+            "submit": "Submit",
+            "errorMessage": "Please fix the errors in the form before submitting."
+        },
+        "basicInfo": {
+            "title": "Basic Information",
+            "eventName": "Event Name",
+            "eventNamePlaceholder": "e.g., Salsa Night at Downtown Studio",
+            "eventNameError": "Event name must be at least 3 characters",
+            "dateTime": "Date & Time",
+            "startDate": "Start Date",
+            "endDate": "End Date",
+            "dateRequired": "Date is required",
+            "time": "Time",
+            "timeRequired": "Time is required",
+            "isRecurring": "This is a recurring event",
+            "recurrenceType": "Occurrence Type",
+            "recurrenceTypePlaceholder": "Select frequency",
+            "recurrenceTypeError": "Occurrence type is required for recurring events",
+            "pricing": "Pricing",
+            "price": "Price",
+            "pricePlaceholder": "Leave empty for free events",
+            "currency": "Currency",
+            "currencyPlaceholder": "Select currency"
+        },
+        "location": {
+            "label": "Location",
+            "searchPlaceholder": "Search for a venue...",
+            "detailsTitle": "Location Details",
+            "placeName": "Place Name",
+            "placeNamePlaceholder": "e.g., Pekelnej Bar",
+            "street": "Street",
+            "streetPlaceholder": "e.g., Na Bělidle",
+            "houseNumber": "House Number",
+            "houseNumberPlaceholder": "e.g., 929/19",
+            "city": "City",
+            "cityPlaceholder": "e.g., Praha 5",
+            "county": "County",
+            "countyPlaceholder": "e.g., Prague",
+            "postalCode": "Postal Code",
+            "postalCodePlaceholder": "e.g., 15000",
+            "state": "State/Region",
+            "statePlaceholder": "e.g., Capital City of Prague",
+            "country": "Country",
+            "countryPlaceholder": "e.g., Czechia"
+        },
+        "details": {
+            "danceInfo": "Dance Information",
+            "danceStyles": "Dance Styles",
+            "danceStylesPlaceholder": "Select dance styles...",
+            "skillLevel": "Required Skill Level",
+            "skillLevelPlaceholder": "Select skill levels...",
+            "eventType": "Type of Event",
+            "eventTypePlaceholder": "Select event types...",
+            "attendeeManagement": "Attendee Management",
+            "maxAttendees": "Maximum Number of Attendees",
+            "maxAttendeesPlaceholder": "Leave empty for unlimited"
+        },
+        "description": {
+            "title": "Description",
+            "label": "Event description",
+            "placeholder": "Describe the event, vibe, schedule, instructors..."
+        },
+        "media": {
+            "coverImage": "Cover Image",
+            "coverImageLabel": "Cover image or video",
+            "coverPreview": "Cover preview",
+            "gallery": "Gallery & Videos",
+            "galleryLabel": "Event media",
+            "dropzoneText": "Drag & drop images or videos here",
+            "dropzoneBrowse": "or click to browse"
+        }
+    },
+    "myEvents": {
+        "title": "My Events",
+        "createNewEvent": "Create New Event",
+        "tabs": {
+            "hosting": "Hosting",
+            "attending": "Attending",
+            "interested": "Interested"
+        },
+        "noEvents": {
+            "hosting": {
+                "title": "No Hosted Events Yet",
+                "description": "Create your first event and start building your dance community!",
+                "buttonText": "Create Event"
+            },
+            "attending": {
+                "title": "No Registered Events",
+                "description": "Browse events and register to join the fun!",
+                "buttonText": "Browse Events"
+            },
+            "interested": {
+                "title": "No Interested Events Yet",
+                "description": "Events you mark as interested will appear here. Explore and find events that excite you!",
+                "buttonText": "Browse Events"
+            }
+        },
+        "card": {
+            "viewDetails": "View Details",
+            "view": "View",
+            "organizedBy": "Organized by",
+            "going": "going",
+            "interested": "interested",
+            "at": "at",
+            "until": "until"
+        },
+        "recurring": {
+            "upcomingDates": "Upcoming Dates",
+            "dateAndTime": "Date and Time",
+            "location": "Location",
+            "attendees": "Attendees",
+            "status": "Status"
+        },
+        "status": {
+            "published": "Published",
+            "cancelled": "Cancelled",
+            "past": "Past",
+            "draft": "Draft",
+            "going": "Going",
+            "interested": "Interested",
+            "waitlisted": "Waitlisted"
+        }
+    },
+    "profile": {
+        "editProfile": "Edit Profile",
+        "avatar": "Avatar",
+        "firstName": "First Name",
+        "lastName": "Last Name",
+        "description": "Description",
+        "generalLevel": "General Level",
+        "mainRole": "Main Role",
+        "danceStyles": "Dance Styles",
+        "notSpecified": "Not Specified"
+    },
+    "eventStats": {
+        "registrations": "Registrations",
+        "syncData": "Sync Data",
+        "syncing": "Syncing...",
+        "table": {
+            "status": "Status",
+            "selectAll": "Select all",
+            "selectRow": "Select row",
+            "all": "All",
+            "filterPlaceholder": "Filter...",
+            "noRegistrations": "No registrations found.",
+            "showing": "Showing {{filtered}} of {{total}} registrations"
+        },
+        "actions": {
+            "copyEmails": "copy email address/s",
+            "acceptRegistration": "Accept registration",
+            "cancelRegistration": "Cancel registration",
+            "rowSelected": "{{count}} row selected",
+            "rowsSelected": "{{count}} rows selected"
+        },
+        "messages": {
+            "emailsCopied": "Email addresses copied to clipboard!",
+            "emailsCopyFailed": "Failed to copy email addresses: {{error}}",
+            "noEmails": "No email addresses found for the selected rows.",
+            "updateSuccess": "Successfully updated {{count}} registration(s)",
+            "updateFailed": "Failed to update registrations"
         }
     },
     "common": {
@@ -89,7 +286,122 @@
         "save": "Save",
         "edit": "Edit",
         "delete": "Delete",
-        "confirm": "Confirm"
+        "confirm": "Confirm",
+        "close": "Close"
+    },
+    "eventDetail": {
+        "actionButtons": {
+            "interested": "Interested",
+            "going": "Going",
+            "pendingApproval": "Pending Approval",
+            "joinEvent": "Join Event"
+        },
+        "alerts": {
+            "registrationRejected": "Your registration was rejected by the organizer. You cannot register for this event.",
+            "googleFormRegistration": "This registration was done through Google Forms. To cancel, please contact the event organizer directly."
+        },
+        "details": {
+            "title": "Details",
+            "eventType": "Event Type",
+            "styles": "Styles",
+            "level": "Level"
+        },
+        "registrationDialog": {
+            "confirmRegistration": "Confirm Registration",
+            "registerForEvent": "Register for Event",
+            "externalRegistration": "External Registration",
+            "registration": "Registration",
+            "confirmMessage": "Are you sure you want to register for this event?",
+            "confirmMessageWithRole": "Are you sure you want to register for this event? Please select your role.",
+            "googleFormMessage": "This event uses Google Forms for registration. You will be redirected to the form to complete your registration.",
+            "openRegistrationForm": "Open Registration Form",
+            "makeAnonymous": "Make my registration anonymous to other users",
+            "cancel": "Cancel",
+            "confirm": "Confirm Registration"
+        },
+        "cancelDialog": {
+            "title": "Cancel Registration",
+            "messagePending": "Are you sure you want to cancel your pending registration? Your spot will be removed from the waitlist.",
+            "messageRegistered": "Are you sure you want to cancel your registration? You will lose your spot at this event.",
+            "keepRegistration": "Keep Registration",
+            "confirmCancel": "Yes, Cancel Registration"
+        },
+        "manageButtons": {
+            "manageEvent": "Manage Event",
+            "editEvent": "Edit Event",
+            "deleteEvent": "Delete Event",
+            "cancelEvent": "Cancel Event",
+            "publish": "Publish",
+            "publishing": "Publishing...",
+            "stats": "Stats"
+        },
+        "manageErrors": {
+            "publishFailed": "Failed to publish event",
+            "cancelFailed": "Failed to cancel event",
+            "deleteFailed": "Failed to delete event"
+        },
+        "confirmActionDialog": {
+            "publishTitle": "Publish Event",
+            "publishDescription": "Configure your event settings before publishing.",
+            "publishAction": "Publish",
+            "cancelTitle": "Cancel Event",
+            "cancelDescription": "Are you sure you want to cancel this event? This action cannot be undone and attendees will be notified.",
+            "cancelAction": "Cancel Event",
+            "deleteTitle": "Delete Draft",
+            "deleteDescription": "Are you sure you want to delete this draft? This action cannot be undone.",
+            "deleteAction": "Delete",
+            "cancel": "Cancel"
+        },
+        "organizer": {
+            "organizedBy": "Organized by"
+        },
+        "attendees": {
+            "whoComing": "Who's Coming",
+            "person": "person",
+            "people": "people",
+            "going": "going",
+            "interested": "interested",
+            "leaders": "Leaders",
+            "followers": "Followers",
+            "both": "Both",
+            "capacity": "capacity",
+            "capacityLabel": "Capacity",
+            "seeWhoComing": "See who is coming"
+        },
+        "attendeeList": {
+            "guestList": "Guest List",
+            "leaders": "Leaders",
+            "followers": "Followers",
+            "both": "Both",
+            "loadingAttendees": "Loading attendees...",
+            "loadFailed": "Failed to load attendees. Please try again.",
+            "noAttendees": "No attendees found",
+            "showing": "Showing",
+            "person": "person",
+            "people": "people",
+            "close": "Close"
+        },
+        "media": {
+            "gallery": "Gallery",
+            "addMedia": "Add Media",
+            "noMediaPresented": "There are no media presented"
+        },
+        "description": {
+            "aboutEvent": "About Event",
+            "showLess": "Show Less",
+            "showMore": "Show More"
+        },
+        "publishOptions": {
+            "registrationMode": "Registration Mode",
+            "openRegistration": "Open Registration",
+            "openRegistrationDesc": "Anyone can register regarding of role",
+            "coupleRegistration": "Couple Registration",
+            "coupleRegistrationDesc": "Registrations require question for role",
+            "googleForm": "Google Form Integration",
+            "googleFormDesc": "Registration is done through Google Forms and users are connected through email",
+            "additionalFeatures": "Additional features",
+            "requireApproval": "Organizer needs to approve registrations"
+        }
     },
     "languages": {
         "en": "English",

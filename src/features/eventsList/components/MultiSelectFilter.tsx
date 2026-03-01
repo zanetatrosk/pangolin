@@ -1,6 +1,7 @@
 import { MultiSelect, MultiSelectTrigger, MultiSelectValue, MultiSelectContent, MultiSelectGroup, MultiSelectItem } from "@/components/ui/multi-select";
 import { InputIconAndTitle } from "./InputIconAndTitle";
 import { CodebookItem } from "@/services/types";
+import { useTranslation } from "react-i18next";
 
 export const MultiSelectFilter: React.FC<{
   label: string;
@@ -8,11 +9,13 @@ export const MultiSelectFilter: React.FC<{
   options: CodebookItem[];
   selectedValues: string[];
   onValuesChange: (values: string[]) => void;
-}> = ({ label, icon: Icon, options, selectedValues, onValuesChange }) => (
+}> = ({ label, icon: Icon, options, selectedValues, onValuesChange }) => {
+  const { t } = useTranslation();
+  return (
   <InputIconAndTitle icon={Icon} title={label}>
     <MultiSelect values={selectedValues} onValuesChange={onValuesChange}>
       <MultiSelectTrigger className="w-full h-12 bg-white/70 dark:bg-gray-800/70 backdrop-blur rounded-lg shadow-sm relative z-0 focus:ring-2 focus:ring-rose-600">
-        <MultiSelectValue placeholder="Select options..." />
+        <MultiSelectValue placeholder={t("eventsList.filter.selectOptions")} />
       </MultiSelectTrigger>
       <MultiSelectContent>
         <MultiSelectGroup>
@@ -26,3 +29,4 @@ export const MultiSelectFilter: React.FC<{
     </MultiSelect>
   </InputIconAndTitle>
 );
+};

@@ -4,8 +4,10 @@ import { getAllEvents } from "@/services/events-api";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { SearchProps } from "@/routes/events.index";
+import { useTranslation } from "react-i18next";
 
 export const EventList: FC<{ searchParams: SearchProps | undefined }> = ({ searchParams }) => {
+  const { t } = useTranslation();
   const { data, error, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteQuery({
     queryKey: ["events", searchParams],
     queryFn: ({ pageParam }) => getAllEvents(pageParam, searchParams),
@@ -17,11 +19,11 @@ export const EventList: FC<{ searchParams: SearchProps | undefined }> = ({ searc
   });
 
   if (error) {
-    return <div>Error loading events.</div>;
+    return <div>{t("eventsList.errorLoading")}</div>;
   }
 
   if (isLoading || !data) {
-    return <div>Loading...</div>;
+    return <div>{t("common.loading")}</div>;
   }
 
   return (
@@ -39,7 +41,7 @@ export const EventList: FC<{ searchParams: SearchProps | undefined }> = ({ searc
             onClick={() => fetchNextPage()}
             disabled={isFetchingNextPage}
           >
-            {isFetchingNextPage ? "Loading..." : "Show more"}
+            {isFetchingNextPage ? t("common.loading") : t("eventsList.showMore")}
           </Button>
         </div>
       )}

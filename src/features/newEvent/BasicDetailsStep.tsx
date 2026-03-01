@@ -6,6 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Currency, getCurrencies } from "@/services/currencies-api";
 import { LocationSection } from "./LocationSection";
 import { getOccurrenceOptions } from "./utils/getOccuranceOptions";
+import { useTranslation } from "react-i18next";
 
 interface BasicDetailsProps {
   className?: string;
@@ -16,6 +17,7 @@ export const BasicDetails = withForm({
   ...eventFormOpts,
   props: {} as BasicDetailsProps,
   render: ({ form, className, isEditing }) => {
+    const { t } = useTranslation();
     const { data: currencyOptions = [] } = useQuery<Currency[]>({
       queryKey: ["currencies"],
       queryFn: getCurrencies,
@@ -25,21 +27,21 @@ export const BasicDetails = withForm({
       <div className={`p-4 md:p-6 ${className}`}>
         <div className="space-y-6">
           {/* Basic Information */}
-          <FormSection title="Basic Information">
+          <FormSection title={t("newEvent.basicInfo.title")}>
             {/* Event Name */}
             <form.AppField
               name="basicInfo.eventName"
               validators={{
                 onChange: ({ value }) =>
                   !value || value.length < 3
-                    ? "Event name must be at least 3 characters"
+                    ? t("newEvent.basicInfo.eventNameError")
                     : undefined,
               }}
             >
               {(field) => (
                 <field.TextField
-                  label="Event Name"
-                  placeholder="e.g., Salsa Night at Downtown Studio"
+                  label={t("newEvent.basicInfo.eventName")}
+                  placeholder={t("newEvent.basicInfo.eventNamePlaceholder")}
                   required
                 />
               )}
@@ -50,18 +52,18 @@ export const BasicDetails = withForm({
           </FormSection>
 
           {/* Date & Time */}
-          <FormSection title="Date & Time">
+          <FormSection title={t("newEvent.basicInfo.dateTime")}>
             <FormGrid columns={2}>
               <form.AppField
                 name="basicInfo.date"
                 validators={{
                   onChange: ({ value }) =>
-                    !value ? "Date is required" : undefined,
+                    !value ? t("newEvent.basicInfo.dateRequired") : undefined,
                 }}
               >
                 {(field) => (
                   <field.TextField
-                    label="Start Date"
+                    label={t("newEvent.basicInfo.startDate")}
                     type="date"
                     required
                     icon={Calendar}
@@ -73,7 +75,7 @@ export const BasicDetails = withForm({
                 <form.AppField name="basicInfo.endDate">
                   {(field) => (
                     <field.TextField
-                      label="End Date"
+                      label={t("newEvent.basicInfo.endDate")}
                       type="date"
                       icon={Calendar}
                     />
@@ -85,12 +87,12 @@ export const BasicDetails = withForm({
                 name="basicInfo.time"
                 validators={{
                   onChange: ({ value }) =>
-                    !value ? "Time is required" : undefined,
+                    !value ? t("newEvent.basicInfo.timeRequired") : undefined,
                 }}
               >
                 {(field) => (
                   <field.TextField
-                    label="Time"
+                    label={t("newEvent.basicInfo.time")}
                     type="time"
                     required
                     icon={Clock}
@@ -103,7 +105,7 @@ export const BasicDetails = withForm({
             {!isEditing && (
               <form.AppField name="basicInfo.isRecurring">
                 {(field) => (
-                  <field.CheckboxField label="This is a recurring event" />
+                  <field.CheckboxField label={t("newEvent.basicInfo.isRecurring")} />
                 )}
               </form.AppField>
             )}
@@ -118,14 +120,14 @@ export const BasicDetails = withForm({
                     validators={{
                       onChange: ({ value }) =>
                         !value
-                          ? "Occurrence type is required for recurring events"
+                          ? t("newEvent.basicInfo.recurrenceTypeError")
                           : undefined,
                     }}
                   >
                     {(field) => (
                       <field.SelectField
-                        label="Occurrence Type"
-                        placeholder="Select frequency"
+                        label={t("newEvent.basicInfo.recurrenceType")}
+                        placeholder={t("newEvent.basicInfo.recurrenceTypePlaceholder")}
                         required
                         options={getOccurrenceOptions()}
                         getValue={(item) => item.value}
@@ -139,14 +141,14 @@ export const BasicDetails = withForm({
           </FormSection>
 
           {/* Pricing */}
-          <FormSection title="Pricing">
+          <FormSection title={t("newEvent.basicInfo.pricing")}>
             <FormGrid columns={2}>
               {/* Price Input */}
               <form.AppField name="basicInfo.price">
                 {(field) => (
                   <field.NumberField
-                    label="Price"
-                    placeholder="Leave empty for free events"
+                    label={t("newEvent.basicInfo.price")}
+                    placeholder={t("newEvent.basicInfo.pricePlaceholder")}
                     min="0"
                     step="0.01"
                     icon={DollarSign}
@@ -158,8 +160,8 @@ export const BasicDetails = withForm({
               <form.AppField name="basicInfo.currency">
                 {(field) => (
                   <field.SelectField
-                    label="Currency"
-                    placeholder="Select currency"
+                    label={t("newEvent.basicInfo.currency")}
+                    placeholder={t("newEvent.basicInfo.currencyPlaceholder")}
                     options={currencyOptions}
                     getValue={(item) => item.code}
                     getLabel={(item) => `${item.code} - ${item.name}`}

@@ -36,6 +36,7 @@ import {
 import { PATHS } from "@/paths";
 import { RsvpStatus } from "@/services/types";
 import { SelectionActionBar } from "./SelectionActionBar";
+import { useTranslation } from "react-i18next";
 
 interface TableRowData {
   id: string;
@@ -45,10 +46,10 @@ interface TableRowData {
 
 const columnHelper = createColumnHelper<TableRowData>();
 
-const createHeaders = (data: RegistrationFormData) => {
+const createHeaders = (data: RegistrationFormData, t: (key: string) => string) => {
   return [ ...data.headers, {
       id: "status",
-      question: "Status",
+      question: t("eventStats.table.status"),
       type: FormQuestionType.SET,
       answerSet: Object.values(RsvpStatus),
     } ];
@@ -57,6 +58,7 @@ export const RegistrationTable: FC<{ data: RegistrationFormData; eventId: string
   data,
   eventId,
 }) => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [sorting, setSorting] = useState<SortingState>([]);
@@ -97,20 +99,20 @@ export const RegistrationTable: FC<{ data: RegistrationFormData; eventId: string
             onCheckedChange={(value) =>
               table.toggleAllPageRowsSelected(!!value)
             }
-            aria-label="Select all"
+            aria-label={t("eventStats.table.selectAll")}
           />
         ),
         cell: ({ row }) => (
           <Checkbox
             checked={row.getIsSelected()}
             onCheckedChange={(value) => row.toggleSelected(!!value)}
-            aria-label="Select row"
+            aria-label={t("eventStats.table.selectRow")}
           />
         ),
         enableSorting: false,
         enableHiding: false,
       }),
-      ...createHeaders(data).map((header) =>
+      ...createHeaders(data, t).map((header) =>
         columnHelper.accessor((row) => row[`q_${header.id}`], {
           id: `q_${header.id}`,
           header: header.question,
@@ -191,10 +193,10 @@ export const RegistrationTable: FC<{ data: RegistrationFormData; eventId: string
                               }}
                             >
                               <SelectTrigger className="h-8 text-xs">
-                                <SelectValue placeholder="All" />
+                                <SelectValue placeholder={t("eventStats.table.all")} />
                               </SelectTrigger>
                               <SelectContent>
-                                <SelectItem value="all">All</SelectItem>
+                                <SelectItem value="all">{t("eventStats.table.all")}</SelectItem>
                                 {question.answerSet?.map((option) => (
                                   <SelectItem key={option} value={option}>
                                     {option}
@@ -218,7 +220,7 @@ export const RegistrationTable: FC<{ data: RegistrationFormData; eventId: string
                         ) : header.column.id !== "createdAt" &&
                           header.column.id !== "select" ? (
                           <Input
-                            placeholder="Filter..."
+                            placeholder={t("eventStats.table.filterPlaceholder")}
                             value={(currentFilter?.value as string) || ""}
                             onChange={(e) =>
                               header.column.setFilterValue(e.target.value)
@@ -260,7 +262,7 @@ export const RegistrationTable: FC<{ data: RegistrationFormData; eventId: string
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  No registrations found.
+                  {t("eventStats.table.noRegistrations")}
                 </TableCell>
               </TableRow>
             )}
@@ -268,8 +270,7 @@ export const RegistrationTable: FC<{ data: RegistrationFormData; eventId: string
         </Table>
       </div>
       <div className="text-sm text-muted-foreground">
-        Showing {table.getFilteredRowModel().rows.length} of {tableData.length}{" "}
-        registrations
+        {t("eventStats.table.showing", { filtered: table.getFilteredRowModel().rows.length, total: tableData.length })}
       </div>
     </div>
   );

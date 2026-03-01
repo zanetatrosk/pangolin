@@ -13,6 +13,7 @@ import { Label } from "@/components/ui/label";
 import { RoleSelect } from "../publish-actions/RoleSelect";
 import { RegistrationModeEnum } from "../publish-actions/PublishEventOptions";
 import { ExternalLink } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 interface RegistrationDialogProps {
   open: boolean;
@@ -29,6 +30,7 @@ export const RegistrationDialog: FC<RegistrationDialogProps> = ({
   formId,
   onConfirm,
 }) => {
+  const { t } = useTranslation();
   const [selectedRole, setSelectedRole] = useState<string>("follower");
   const [isAnonymous, setIsAnonymous] = useState<boolean>(false);
 
@@ -47,7 +49,7 @@ export const RegistrationDialog: FC<RegistrationDialogProps> = ({
         return (
           <>
             <DialogDescription>
-              Are you sure you want to register for this event?
+              {t("eventDetail.registrationDialog.confirmMessage")}
             </DialogDescription>
             <div className="flex items-center space-x-2 py-4">
               <Checkbox
@@ -59,7 +61,7 @@ export const RegistrationDialog: FC<RegistrationDialogProps> = ({
                 htmlFor="anonymous-open"
                 className="text-sm font-normal cursor-pointer"
               >
-                Make my registration anonymous to other users
+                {t("eventDetail.registrationDialog.makeAnonymous")}
               </Label>
             </div>
           </>
@@ -69,7 +71,7 @@ export const RegistrationDialog: FC<RegistrationDialogProps> = ({
         return (
           <>
             <DialogDescription>
-              Are you sure you want to register for this event? Please select your role.
+              {t("eventDetail.registrationDialog.confirmMessageWithRole")}
             </DialogDescription>
             <div className="py-4">
               <RoleSelect value={selectedRole} onChange={setSelectedRole} />
@@ -84,7 +86,7 @@ export const RegistrationDialog: FC<RegistrationDialogProps> = ({
                 htmlFor="anonymous-couple"
                 className="text-sm font-normal cursor-pointer"
               >
-                Make my registration anonymous to other users
+                {t("eventDetail.registrationDialog.makeAnonymous")}
               </Label>
             </div>
           </>
@@ -94,7 +96,7 @@ export const RegistrationDialog: FC<RegistrationDialogProps> = ({
         return (
           <>
             <DialogDescription>
-              This event uses Google Forms for registration. You will be redirected to the form to complete your registration.
+              {t("eventDetail.registrationDialog.googleFormMessage")}
             </DialogDescription>
             {formId && (
               <div className="py-4">
@@ -104,7 +106,7 @@ export const RegistrationDialog: FC<RegistrationDialogProps> = ({
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 text-primary hover:underline"
                 >
-                  Open Registration Form
+                  {t("eventDetail.registrationDialog.openRegistrationForm")}
                   <ExternalLink className="h-4 w-4" />
                 </a>
               </div>
@@ -120,13 +122,13 @@ export const RegistrationDialog: FC<RegistrationDialogProps> = ({
   const getDialogTitle = () => {
     switch (registrationMode) {
       case RegistrationModeEnum.OPEN:
-        return "Confirm Registration";
+        return t("eventDetail.registrationDialog.confirmRegistration");
       case RegistrationModeEnum.COUPLE:
-        return "Register for Event";
+        return t("eventDetail.registrationDialog.registerForEvent");
       case RegistrationModeEnum.GOOGLE_FORM:
-        return "External Registration";
+        return t("eventDetail.registrationDialog.externalRegistration");
       default:
-        return "Registration";
+        return t("eventDetail.registrationDialog.registration");
     }
   };
 
@@ -139,11 +141,11 @@ export const RegistrationDialog: FC<RegistrationDialogProps> = ({
         {renderContent()}
         <DialogFooter>
           <Button variant="outline" onClick={() => onOpenChange(false)}>
-            Cancel
+            {t("eventDetail.registrationDialog.cancel")}
           </Button>
           {registrationMode !== RegistrationModeEnum.GOOGLE_FORM && (
             <Button onClick={handleConfirm}>
-              Confirm Registration
+              {t("eventDetail.registrationDialog.confirm")}
             </Button>
           )}
         </DialogFooter>

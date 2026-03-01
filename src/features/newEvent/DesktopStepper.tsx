@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { defineStepper } from "@/components/ui/stepper";
 import { Step } from "./MobileStepper";
+import { useTranslation } from "react-i18next";
 
 export interface StepBase {
   id: string;
@@ -13,6 +14,7 @@ interface DesktopStepperProps {
 }
 
 export const DesktopStepper: React.FC<DesktopStepperProps> = ({ steps, stepper, showAlert }) => {
+  const { t } = useTranslation();
   const Stepper = stepper.Stepper;
   return (
     <Stepper.Provider className="space-y-4">
@@ -34,7 +36,7 @@ export const DesktopStepper: React.FC<DesktopStepperProps> = ({ steps, stepper, 
           </Stepper.Panel>
           {showAlert && methods.isLast && (
             <p className="text-sm text-red-600">
-              Please fix the errors in the form before submitting.
+              {t("newEvent.stepper.errorMessage")}
             </p>
           )}
           <Stepper.Controls>
@@ -44,7 +46,7 @@ export const DesktopStepper: React.FC<DesktopStepperProps> = ({ steps, stepper, 
                 variant="secondary"
                 onClick={methods.prev}
               >
-                Previous
+                {t("newEvent.stepper.previous")}
               </Button>
             )}
             {!methods.isLast && (
@@ -52,12 +54,12 @@ export const DesktopStepper: React.FC<DesktopStepperProps> = ({ steps, stepper, 
                 type="button"
                 onClick={methods.next}
               >
-                Next
+                {t("newEvent.stepper.next")}
               </Button>
             )}
             {methods.isLast && (
               <Button type="submit">
-                Submit
+                {t("newEvent.stepper.submit")}
               </Button>
             )}
           </Stepper.Controls>

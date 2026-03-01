@@ -51,7 +51,7 @@ export const EventCard: React.FC<EventItem> = (event) => {
       {isCancelled && (
         <div className="absolute top-4 right-4 z-10">
           <Badge variant="destructive" className="text-sm font-bold shadow-lg">
-            CANCELLED
+            {t("eventCard.cancelled")}
           </Badge>
         </div>
       )}
@@ -133,7 +133,7 @@ export const EventCard: React.FC<EventItem> = (event) => {
                 className="w-full md:w-auto"
                 onClick={() => navigate({ to: PATHS.EVENTS.DETAIL(event.id) })}
               >
-                View Details
+                {t("eventCard.viewDetails")}
                 <ExternalLink className="w-4 h-4 ml-1" />
               </Button>
             </div>

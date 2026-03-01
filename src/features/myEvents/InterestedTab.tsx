@@ -6,9 +6,12 @@ import { TabCard } from "./components/TabCard";
 import { useUserEvents } from "./hooks/useUserEvents";
 import { userEventFilter } from "@/services/users-events-api";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "@tanstack/react-router";
+import { PATHS } from "@/paths";
 
 export const InterestedTab: FC = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const { data: events = [], isLoading, error } = useUserEvents(userEventFilter.INTERESTED);
 
   return (
@@ -23,6 +26,7 @@ export const InterestedTab: FC = () => {
             <Heart className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
           }
           buttonIcon={<CalendarPlus className="h-4 w-4 mr-2" />}
+          onButtonClick={() => navigate({ to: PATHS.EVENTS.LIST })}
         />
       }
       numberOfItems={events.length}

@@ -22,7 +22,6 @@ export const FORMS_SCOPES = [
 export const buildGoogleOAuthUrl = (params: {
   redirectUri: string;
   scope: string;
-  prompt?: 'none' | 'consent' | 'select_account' | '';
   state?: string;
   includeGrantedScopes?: boolean;
 }) => {
@@ -37,10 +36,6 @@ export const buildGoogleOAuthUrl = (params: {
 
   if (params.includeGrantedScopes !== false) {
     urlParams.append('include_granted_scopes', 'true');
-  }
-
-  if (params.prompt) {
-    urlParams.append('prompt', params.prompt);
   }
 
   if (params.state) {

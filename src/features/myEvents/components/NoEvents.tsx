@@ -7,8 +7,9 @@ interface NoEventsProps {
     buttonVariant?: "default" | "link" | "destructive" | "outline" | "secondary" | "ghost" | null | undefined;
     icon: React.ReactNode;
     buttonIcon?: React.ReactNode;
+    onButtonClick?: () => void;
 }
-export const NoEvents: React.FC<NoEventsProps> = ({ title, description, buttonText, buttonVariant, icon, buttonIcon }) => {
+export const NoEvents: React.FC<NoEventsProps> = ({ title, description, buttonText, buttonVariant, icon, buttonIcon, onButtonClick }) => {
     return (
               <div className="text-center py-12">
                 {icon}
@@ -18,7 +19,7 @@ export const NoEvents: React.FC<NoEventsProps> = ({ title, description, buttonTe
                 <p className="text-muted-foreground mb-4">
                  {description}
                 </p>
-                <Button variant={buttonVariant}>{buttonIcon}{buttonText}</Button>
+                <Button variant={buttonVariant} onClick={onButtonClick}>{buttonIcon}{buttonText}</Button>
               </div>
             );
 }

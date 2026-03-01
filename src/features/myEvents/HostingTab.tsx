@@ -5,9 +5,12 @@ import { EventCardType, MyEventCard } from "./components/MyEventCard";
 import { useUserEvents } from "./hooks/useUserEvents";
 import { userEventFilter } from "@/services/users-events-api";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "@tanstack/react-router";
+import { PATHS } from "@/paths";
 
 export const HostingTab: React.FC = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const { data: events = [], isLoading, error } = useUserEvents(userEventFilter.HOSTING);
 
   return (
@@ -22,6 +25,7 @@ export const HostingTab: React.FC = () => {
             <Users className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
           }
           buttonIcon={<CalendarPlus className="h-4 w-4 mr-2" />}
+          onButtonClick={() => navigate({ to: PATHS.EVENTS.NEW_EVENT })}
         />
       }
       numberOfItems={events.length}

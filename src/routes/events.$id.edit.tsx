@@ -56,6 +56,7 @@ const eventDetailDataToDanceEventCreation = (
       allowWaitlist: event.additionalDetails?.allowWaitlist || false,
       allowPartnerPairing:
         event.additionalDetails?.allowPartnerPairing || false,
+        facebookEventUrl: event.facebookEventUrl || undefined,
     },
     description: event.description || "",
     coverImage: event.coverImage || undefined,

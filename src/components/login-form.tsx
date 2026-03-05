@@ -6,7 +6,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { buildGoogleOAuthUrl, GOOGLE_REDIRECT_URI } from "@/lib/google-auth";
+import { BASE_SCOPES, buildGoogleOAuthUrl, GOOGLE_REDIRECT_URI } from "@/lib/google-auth";
 import { LogIn } from "lucide-react";
 
 export function LoginForm({
@@ -14,10 +14,9 @@ export function LoginForm({
   ...props
 }: React.ComponentProps<"div">) {
   const handleGoogleLogin = () => {
+    const basicScopes = BASE_SCOPES.join(' ');
     const url = buildGoogleOAuthUrl({
-      redirectUri: GOOGLE_REDIRECT_URI,
-      scope: "openid email profile",
-      includeGrantedScopes: true,
+      scope: basicScopes,
     });
     window.location.href = url;
   };

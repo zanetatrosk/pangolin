@@ -2,6 +2,7 @@ import envConfig from '../../env.json';
 
 export const GOOGLE_CLIENT_ID = envConfig.GOOGLE_CLIENT_ID;
 export const GOOGLE_REDIRECT_URI = envConfig.GOOGLE_REDIRECT_URI;
+export const GOOGLE_OAUTH_URL = envConfig.GOOGLE_OAUTH_URL;
 
 /**
  * Base scopes required for initial login
@@ -20,23 +21,18 @@ export const FORMS_SCOPES = [
  * Build Google OAuth URL manually to have full control over parameters
  */
 export const buildGoogleOAuthUrl = (params: {
-  redirectUri: string;
   scope: string;
   state?: string;
-  includeGrantedScopes?: boolean;
 }) => {
-  const baseUrl = 'https://accounts.google.com/o/oauth2/v2/auth';
+  const baseUrl = GOOGLE_OAUTH_URL;
   const urlParams = new URLSearchParams({
     client_id: GOOGLE_CLIENT_ID,
-    redirect_uri: params.redirectUri,
+    redirect_uri: GOOGLE_REDIRECT_URI,
     response_type: 'code',
     scope: params.scope,
     access_type: 'offline',
+    include_granted_scopes: true.toString()
   });
-
-  if (params.includeGrantedScopes !== false) {
-    urlParams.append('include_granted_scopes', 'true');
-  }
 
   if (params.state) {
     urlParams.append('state', params.state);

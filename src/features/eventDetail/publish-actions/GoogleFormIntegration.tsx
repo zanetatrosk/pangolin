@@ -25,9 +25,7 @@ export const GoogleFormIntegration: FC<GoogleFormIntegrationProps> = ({ value, o
     const scope = FORMS_SCOPES.join(' ');
     
     const url = buildGoogleOAuthUrl({
-      redirectUri: GOOGLE_REDIRECT_URI,
       scope,
-      includeGrantedScopes: true,
       state: 'type=incremental', // Pass type parameter to indicate this is incremental auth
     });
     

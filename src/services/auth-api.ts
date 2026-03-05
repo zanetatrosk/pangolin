@@ -36,37 +36,6 @@ export const exchangeToken = async (
 };
 
 /**
- * Login with Google using authorization code
- * Uses the unified token endpoint with grant_type=authorization_code
- */
-export const loginWithGoogle = async (
-  code: string,
-  redirectUri: string = 'postmessage'
-): Promise<AuthenticationResponse> => {
-  return exchangeToken({
-    grantType: "authorization_code",
-    code,
-    redirectUri,
-  });
-};
-
-/**
- * Handle incremental authorization
- * Uses the unified token endpoint with grant_type=authorization_code
- * The backend will detect this is incremental auth based on the JWT token in headers
- */
-export const incrementalAuth = async (
-  code: string,
-  redirectUri: string = 'postmessage'
-): Promise<AuthenticationResponse> => {
-  return exchangeToken({
-    grantType: "authorization_code",
-    code,
-    redirectUri,
-  });
-};
-
-/**
  * Refresh access token using refresh token
  * Uses the unified token endpoint with grant_type=refresh_token
  */

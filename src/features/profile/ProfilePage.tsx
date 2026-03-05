@@ -1,9 +1,7 @@
 import { useState } from "react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Edit, Save, X, Camera } from "lucide-react";
+import { Camera } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { getInitials } from "@/components/layout/utils/getInitials";
 import { MediaGallery } from "../eventDetail/components/MediaGallery";
@@ -132,35 +130,6 @@ export function ProfilePage({
       <Card className="overflow-hidden pt-0 border-0 ">
         <div className="h-32 bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-pink-500/20" />
         <CardHeader className="relative pt-0">
-          {allowedToEdit && (
-            <div className="absolute right-4 md:right-6 z-10">
-              {isEditing ? (
-                <div className="flex gap-2">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => setIsEditing(false)}
-                  >
-                    <X className="w-4 h-4 md:mr-2" />
-                    <span className="hidden md:block">{t("common.cancel")}</span>
-                  </Button>
-                  <Button size="sm" onClick={handleSave}>
-                    <Save className="w-4 h-4 md:mr-2" />
-                    <span className="hidden md:block">{t("common.save")}</span>
-                  </Button>
-                </div>
-              ) : (
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => setIsEditing(true)}
-                >
-                  <Edit className="w-4 h-4 md:mr-2" />
-                  <span className="hidden md:block">{t("profile.editProfile")}</span>
-                </Button>
-              )}
-            </div>
-          )}
           <div className="flex flex-col md:flex-row items-center md:items-start gap-6 -mt-16">
             <div className="relative group">
               <Avatar className="w-32 h-32 border-4 border-background shadow-xl bg-background">
@@ -191,35 +160,20 @@ export function ProfilePage({
                 </label>
               )}
             </div>
-            <div className="text-center md:text-left space-y-2 flex-1 w-full md:mt-16">
-              <div className="flex items-center justify-center md:justify-start gap-3">
-                {profileData.role && <Badge
-                  variant={
-                    profileData.role?.name === "Leader"
-                      ? "default"
-                      : "secondary"
-                  }
-                  className="text-sm"
-                >
-                  {profileData.role?.name}
-                </Badge>}
-                {profileData.level && (
-                  <Badge
-                    variant="outline"
-                    className="text-sm border-primary text-primary"
-                  >
-                    {profileData.level?.name}
-                  </Badge>
-                )}
-              </div>
-
+            <div className="flex-1 w-full md:mt-16">
               {isEditing ? (
                 <ProfileEditForm
                   profileData={profileData}
                   onProfileDataChange={setProfileData}
+                  onSave={handleSave}
+                  onCancel={() => setIsEditing(false)}
                 />
               ) : (
-                <ProfileViewMode profileData={profileData} />
+                <ProfileViewMode
+                  profileData={profileData}
+                  onEdit={() => setIsEditing(true)}
+                  allowEdit={allowedToEdit}
+                />
               )}
             </div>
           </div>

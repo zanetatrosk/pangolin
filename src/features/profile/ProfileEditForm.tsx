@@ -1,5 +1,7 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
+import { Save, X } from "lucide-react";
 import {
     Select,
     SelectContent,
@@ -17,11 +19,15 @@ import { getDancerRoles } from "@/services/role-api";
 interface ProfileEditFormProps {
   profileData: ProfileData;
   onProfileDataChange: (data: ProfileData) => void;
+  onSave?: () => void;
+  onCancel?: () => void;
 }
 
 export function ProfileEditForm({
   profileData,
   onProfileDataChange,
+  onSave,
+  onCancel,
 }: ProfileEditFormProps) {
   const { t } = useTranslation();
 
@@ -46,6 +52,27 @@ export function ProfileEditForm({
   });
 
   return (
+    <div>
+      {(onSave || onCancel) && (
+        <div className="flex justify-center md:justify-end gap-2">
+          {onCancel && (
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={onCancel}
+            >
+              <X className="w-4 h-4 md:mr-2" />
+              <span className="hidden md:block">{t("common.cancel")}</span>
+            </Button>
+          )}
+          {onSave && (
+            <Button size="sm" onClick={onSave}>
+              <Save className="w-4 h-4 md:mr-2" />
+              <span className="hidden md:block">{t("common.save")}</span>
+            </Button>
+          )}
+        </div>
+      )}
     <div className="space-y-4 mt-4 max-w-lg mx-auto md:mx-0">
       <div className="grid grid-cols-2 gap-4">
         <div className="space-y-2 text-left">
@@ -159,6 +186,7 @@ export function ProfileEditForm({
           ))}
         </div>
       </div>
+    </div>
     </div>
   );
 }

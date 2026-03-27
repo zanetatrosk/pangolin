@@ -21,7 +21,7 @@ import {
 import { useTranslation } from "react-i18next";
 
 interface FeatureEventCardProps {
-  id: number;
+  id: string;
   title: string;
   description: string;
   date: string;

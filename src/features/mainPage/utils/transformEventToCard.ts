@@ -7,7 +7,7 @@ export const transformEventToCard = (event: EventItem) => {
   const priceString = getLabelFromPrice(event.price, event.currency);
 
   return {
-    id: Number(event.id),
+    id: event.id,
     title: event.eventName,
     description: event.description || '',
     date: new Date(event.date).toLocaleDateString('en-US', { 

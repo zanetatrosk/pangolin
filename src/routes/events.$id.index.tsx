@@ -1,24 +1,12 @@
-import { createFileRoute, redirect } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { EventDetail } from "@/features/eventDetail/EventDetail";
 import { EventDetailData } from "@/features/eventDetail/types";
 import { getEventById } from "@/services/events-api";
 import { useQuery } from "@tanstack/react-query";
-import { authStore, selectIsAuthenticated } from "@/stores/authStore";
-import { PATHS } from "@/paths";
+import { requireAuth } from "@/utils/requireAuth";
 
 export const Route = createFileRoute("/events/$id/")({
-  beforeLoad: async ({ location }) => {
-    const isAuthenticated = selectIsAuthenticated(authStore.state);
-    
-    if (!isAuthenticated) {
-      throw redirect({
-        to: PATHS.LOGIN,
-        search: {
-          redirect: location.href,
-        },
-      });
-    }
-  },
+  beforeLoad: requireAuth,
   component: RouteComponent,
 });
 

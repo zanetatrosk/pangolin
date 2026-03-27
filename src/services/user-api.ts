@@ -2,7 +2,10 @@ import { ProfileData } from "@/features/profile/ProfilePage";
 import { axiosInstance } from "./axios";
 
 const USER_URL = "/users";
-export const getUserById = async (userId: string): Promise<ProfileData> => {
+export const getUserById = async (userId?: string): Promise<ProfileData> => {
+    if (!userId) {
+        throw new Error("User ID is required");
+    }
     const response = await axiosInstance.get(`${USER_URL}/${userId}`);
     return response.data;
 }

@@ -1,32 +1,20 @@
-import { createFileRoute, redirect } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { ProfilePage } from "@/features/profile/ProfilePage";
-import { authStore, selectIsAuthenticated } from "@/stores/authStore";
 import { useUser } from "@/hooks/useUser";
 import { getUserById } from "@/services/user-api";
 import { useQuery } from "@tanstack/react-query";
-import { PATHS } from "@/paths";
+import { requireAuth } from "@/utils/requireAuth";
 
 export const Route = createFileRoute("/my-profile")({
-  beforeLoad: async ({ location }) => {
-    const isAuthenticated = selectIsAuthenticated(authStore.state);
-    
-    if (!isAuthenticated) {
-      throw redirect({
-        to: PATHS.LOGIN,
-        search: {
-          redirect: location.href,
-        },
-      });
-    }
-  },
+  beforeLoad: requireAuth,
   component: RouteComponent,
 });
 
 function RouteComponent() {
   const { user } = useUser();
   const { data } = useQuery({
-    queryKey: ["profile", user.userId],
-    queryFn: () => getUserById(user.userId),
+    queryKey: ["profile", user?.userId],
+    queryFn: () => getUserById(user?.userId),
   })
   
   if (!user || !data) {

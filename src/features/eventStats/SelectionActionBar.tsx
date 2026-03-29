@@ -90,7 +90,7 @@ export const SelectionActionBar: FC<SelectionActionBarProps> = ({
         )
       );
       
-      toast.success(t("eventStats.messages.updateSuccess"));
+      toast.success(t("eventStats.messages.updateSuccess", { count: selectedRows.length }));
     } catch (error) {
       toast.error(t("eventStats.messages.updateFailed"));
     }

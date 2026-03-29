@@ -33,7 +33,13 @@
     "feature3Title": "Recenze komunity",
     "feature3Text": "Čtěte upřímné recenze od ostatních tanečníků, hodnoťte akce a pomáhejte budovat důvěryhodnou komunitu tanečních nadšenců."
   },
-  "about": {},
+  "about": {
+    "title": "O projektu",
+    "thesis": "Tento projekt vznikl jako součást mé diplomové práce na FIT ČVUT a vychází z mých prvních měsíců ve světě social dance.",
+    "motivation": "S bachatu jsem začala tancovat na začátku roku 2025 a brzy jsem narazila na známý problém: informace o akcích i registrace byly roztříštěné na různých místech. Chtěla jsem jednodušší způsob, jak akce objevovat a přihlašovat se na ně na jednom místě.",
+    "focus": "Aplikace drží tok co nejjednodušší: procházení akcí, zobrazení detailu události a správa vlastních akcí a profilu.",
+    "personal": "Bachata mě do komunity přitáhla — a díky ní tenhle projekt vznikl."
+  },
   "events": {
     "title": "Taneční akce",
     "subtitle": "Najděte a připojte se k tanečním akcím ve vašem okolí",

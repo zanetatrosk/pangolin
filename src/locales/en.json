@@ -45,7 +45,13 @@
             "viewDetails": "View Event Details"
         }
     },
-    "about": {},
+    "about": {
+        "title": "About",
+        "thesis": "This project was created as part of my master's thesis at FIT ČVUT, inspired by my first months in the social dance scene.",
+        "motivation": "I started dancing bachata at the beginning of 2025 and quickly ran into a familiar problem: event info and registrations were scattered across different places. I wanted a simpler way to discover events and sign up in one spot.",
+        "focus": "The app keeps the flow straightforward: browse events, open event details, and manage your own events and profile.",
+        "personal": "Bachata is what pulled me in—and it’s the reason this project exists."
+    },
     "events": {
         "title": "Dance Events",
         "subtitle": "Find and join dance events in your area",
@@ -143,7 +149,7 @@
             "recurrenceEndDateRequired": "Recurrence end date is required",
             "pricing": "Pricing",
             "price": "Price",
-            "pricePlaceholder": "Leave empty for free events",
+            "pricePlaceholder": "Leave empty for not specified price",
             "currency": "Currency",
             "currencyPlaceholder": "Select currency"
         },

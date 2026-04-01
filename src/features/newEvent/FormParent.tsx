@@ -4,7 +4,6 @@ import { MobileStepper, Step } from "./MobileStepper";
 import { BasicDetails } from "./BasicDetailsStep";
 import { DesktopStepper } from "./DesktopStepper";
 import { Card, CardContent } from "@/components/ui/card";
-import { t } from "i18next";
 import { EventStepper } from "./EventStepper";
 import { useAppForm } from "@/lib/form";
 import { EventDescriptionStep } from "./EventDescriptionStep";

@@ -20,6 +20,7 @@ export function EventSearch({onSearch}: {onSearch: (params: SearchProps) => void
   const [locationSearchValue, setLocationSearchValue] = useState("");
   const [eventTypes, setEventTypes] = useState<string[]>([]);
   const [danceStyles, setDanceStyles] = useState<string[]>([]);
+  const { t } = useTranslation();
 
   const { data : eventTypeOptions } = useQuery({
     queryKey: ["eventTypeOptions"],
@@ -65,7 +66,6 @@ export function EventSearch({onSearch}: {onSearch: (params: SearchProps) => void
       danceStyles,
     });
   };
-  const { t } = useTranslation();
 
   if(!eventTypeOptions || !danceStyleOptions) {
     return null;

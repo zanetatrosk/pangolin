@@ -1,6 +1,7 @@
 import { Info } from "lucide-react";
 import { AdditionalDetailsData } from "../types";
 import { useTranslation } from "react-i18next";
+import { DetailsTagSection } from "./DetailsTagSection";
 
 export const Details: React.FC<{
   additionalDetails?: AdditionalDetailsData;
@@ -13,61 +14,23 @@ export const Details: React.FC<{
                 {t("eventDetail.details.title")}
               </h3>
               <div className="mt-4 space-y-4">
-                
+                <DetailsTagSection
+                  label={t("eventDetail.details.eventType")}
+                  items={additionalDetails?.typeOfEvent}
+                  itemClassName="rounded-md bg-blue-50 dark:bg-blue-400/10 text-blue-700 dark:text-blue-400 ring-blue-700/10 dark:ring-blue-400/20"
+                />
 
-                {additionalDetails?.typeOfEvent && (
-                  <div>
-                    <p className="text-xs font-medium uppercase text-muted-foreground">
-                      {t("eventDetail.details.eventType")}
-                    </p>
-                    <div className="mt-2 flex flex-wrap gap-2">
-                      {additionalDetails.typeOfEvent.map((type) => (
-                        <span
-                          key={type.id}
-                          className="inline-flex items-center rounded-md bg-blue-50 dark:bg-blue-400/10 px-2 py-1 text-xs font-medium text-blue-700 dark:text-blue-400 ring-1 ring-inset ring-blue-700/10 dark:ring-blue-400/20"
-                        >
-                          {type.name}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                )}
+                <DetailsTagSection
+                  label={t("eventDetail.details.styles")}
+                  items={additionalDetails?.danceStyles}
+                  itemClassName="rounded-full bg-rose-50 dark:bg-rose-400/10 text-rose-700 dark:text-rose-400 ring-rose-700/10 dark:ring-rose-400/20"
+                />
 
-                {additionalDetails?.danceStyles && (
-                  <div>
-                    <p className="text-xs font-medium uppercase text-muted-foreground">
-                      {t("eventDetail.details.styles")}
-                    </p>
-                    <div className="mt-2 flex flex-wrap gap-2">
-                      {additionalDetails.danceStyles.map((style) => (
-                        <span
-                          key={style.id}
-                          className="inline-flex items-center rounded-full bg-rose-50 dark:bg-rose-400/10 px-2 py-1 text-xs font-medium text-rose-700 dark:text-rose-400 ring-1 ring-inset ring-rose-700/10 dark:ring-rose-400/20"
-                        >
-                          {style.name}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {additionalDetails?.skillLevel && (
-                  <div>
-                    <p className="text-xs font-medium uppercase text-muted-foreground">
-                      {t("eventDetail.details.level")}
-                    </p>
-                    <div className="mt-2 flex flex-wrap gap-2">
-                      {additionalDetails.skillLevel.map((level) => (
-                        <span
-                          key={level.id}
-                          className="inline-flex items-center rounded-md bg-gray-50 dark:bg-gray-400/10 px-2 py-1 text-xs font-medium text-gray-600 dark:text-gray-400 ring-1 ring-inset ring-gray-500/10 dark:ring-gray-400/20"
-                        >
-                          {level.name}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                )}
+                <DetailsTagSection
+                  label={t("eventDetail.details.level")}
+                  items={additionalDetails?.skillLevel}
+                  itemClassName="rounded-md bg-gray-50 dark:bg-gray-400/10 text-gray-600 dark:text-gray-400 ring-gray-500/10 dark:ring-gray-400/20"
+                />
               </div>
             </div>
     )

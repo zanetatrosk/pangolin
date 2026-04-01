@@ -18,16 +18,24 @@ import { useNavigate } from "@tanstack/react-router";
 import { PATHS } from "@/paths";
 import { useTranslation } from "react-i18next";
 
-
-export const ReocurringEventCard: React.FC<{event: SeriesEventDTO, cardType: EventCardType}> = ({ event, cardType }) => {
+export const ReocurringEventCard: React.FC<{
+  event: SeriesEventDTO;
+  cardType: EventCardType;
+}> = ({ event, cardType }) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   // This component only handles series events
-  if (event.displayMode !== 'SERIES') {
+  if (event.displayMode !== "SERIES") {
     return null;
   }
 
-  const { eventName, occurrences, overallStartDate, overallEndDate, organizer } = event;
+  const {
+    eventName,
+    occurrences,
+    overallStartDate,
+    overallEndDate,
+    organizer,
+  } = event;
 
   const isUserOrganizer = cardType === EventCardType.HOSTING;
   return (
@@ -35,13 +43,19 @@ export const ReocurringEventCard: React.FC<{event: SeriesEventDTO, cardType: Eve
       <CardHeader className="flex flex-row items-start justify-between space-y-0 pb-2 px-2 md:px-6">
         <div className="space-y-1 pl-4 md:pl-0">
           <CardTitle className="text-xl font-bold">{eventName}</CardTitle>
-          {!isUserOrganizer && <div className="text-sm">
-            {t("myEvents.card.organizedBy")} {organizer.firstName && organizer.lastName ? `${organizer.firstName} ${organizer.lastName}` : organizer.username}
-          </div>}
+          {!isUserOrganizer && (
+            <div className="text-sm">
+              {t("myEvents.card.organizedBy")}{" "}
+              {organizer.firstName && organizer.lastName
+                ? `${organizer.firstName} ${organizer.lastName}`
+                : organizer.username}
+            </div>
+          )}
           <div className="text-sm text-muted-foreground">
-            {overallStartDate && overallEndDate && `${overallStartDate} ${t("myEvents.card.until")} ${overallEndDate}`}
+            {overallStartDate &&
+              overallEndDate &&
+              `${overallStartDate} ${t("myEvents.card.until")} ${overallEndDate}`}
           </div>
-          
         </div>
       </CardHeader>
       <CardContent>
@@ -66,7 +80,8 @@ export const ReocurringEventCard: React.FC<{event: SeriesEventDTO, cardType: Eve
                     <TableCell className="font-medium">
                       <div className="flex items-center">
                         <Calendar className="mr-2 h-4 w-4 text-primary/70" />
-                        {occurrence.date} {t("myEvents.card.at")} {occurrence.time}
+                        {occurrence.date} {t("myEvents.card.at")}{" "}
+                        {occurrence.time}
                       </div>
                     </TableCell>
                     <TableCell>
@@ -81,14 +96,20 @@ export const ReocurringEventCard: React.FC<{event: SeriesEventDTO, cardType: Eve
                     <TableCell>
                       <StatusBadges
                         status={occurrence.status}
-                        userStatus={cardType === EventCardType.GOING ? occurrence.userStatus : undefined}
+                        userStatus={
+                          cardType === EventCardType.GOING
+                            ? occurrence.userStatus
+                            : undefined
+                        }
                       />
                     </TableCell>
                     <TableCell>
-                      <Button 
-                        variant="secondary" 
+                      <Button
+                        variant="secondary"
                         size="sm"
-                        onClick={() => navigate({ to: PATHS.EVENTS.DETAIL(occurrence.id) })}
+                        onClick={() =>
+                          navigate({ to: PATHS.EVENTS.DETAIL(occurrence.id) })
+                        }
                       >
                         {t("myEvents.card.view")}
                         <Eye className="h-4 w-4 ml-2" />

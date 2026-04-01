@@ -9,7 +9,7 @@ export const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
     (config) => {
         if (typeof window !== "undefined") {
-            const token = localStorage.getItem("accessToken");
+            const token = sessionStorage.getItem("accessToken");
             if (token) {
                 config.headers.Authorization = `Bearer ${token}`;
             }
@@ -28,48 +28,17 @@ axiosInstance.interceptors.response.use(
         if (typeof window === "undefined") {
             return Promise.reject(error);
         }
-        
-        const originalRequest = error.config;
 
-        // If error is 401 and we haven't already tried to refresh
-        if (error.response?.status === 401 && !originalRequest._retry) {
-            originalRequest._retry = true;
+        if (error.response?.status === 401) {
+            sessionStorage.removeItem("accessToken");
+            sessionStorage.removeItem("tokenExpiresAt");
 
-            try {
-                const refreshToken = localStorage.getItem("refreshToken");
-                if (!refreshToken) {
-                    // No refresh token, redirect to login
-                    window.location.href = PATHS.LOGIN;
-                    return Promise.reject(error);
-                }
+            // Clear legacy persistence (in case an older build stored tokens in localStorage)
+            localStorage.removeItem("accessToken");
+            localStorage.removeItem("tokenExpiresAt");
 
-                // Try to refresh the token
-                const response = await axios.post(
-                    "http://localhost:8080/api/auth/token",
-                    { 
-                        grantType: "refresh_token",
-                        refreshToken 
-                    }
-                );
-
-                const { accessToken, refreshToken: newRefreshToken, expiresIn } = response.data;
-
-                // Store new tokens
-                localStorage.setItem("accessToken", accessToken);
-                localStorage.setItem("refreshToken", newRefreshToken);
-                const expiresAt = Date.now() + expiresIn * 1000;
-                localStorage.setItem("tokenExpiresAt", expiresAt.toString());
-
-                // Retry original request with new token
-                originalRequest.headers.Authorization = `Bearer ${accessToken}`;
-                return axiosInstance(originalRequest);
-            } catch (refreshError) {
-                // Refresh failed, clear tokens and redirect to login
-                localStorage.removeItem("accessToken");
-                localStorage.removeItem("refreshToken");
-                localStorage.removeItem("tokenExpiresAt");
+            if (window.location.pathname !== PATHS.LOGIN) {
                 window.location.href = PATHS.LOGIN;
-                return Promise.reject(refreshError);
             }
         }
 

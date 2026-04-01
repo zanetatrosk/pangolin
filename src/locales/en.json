@@ -18,6 +18,13 @@
     "header": {
         "toggleTheme": "Toggle theme"
     },
+    "auth": {
+        "login": {
+            "title": "Welcome to Connect2Dance",
+            "subtitle": "Sign in with your Google account to continue",
+            "googleButton": "Sign in with Google"
+        }
+    },
     "home": {
         "title": "Connect2Dance",
         "subtitle": "Social Dance Events",
@@ -313,13 +320,18 @@
         },
         "alerts": {
             "registrationRejected": "Your registration was rejected by the organizer. You cannot register for this event.",
-            "googleFormRegistration": "This registration was done through Google Forms. To cancel, please contact the event organizer directly."
+            "googleFormRegistration": "This registration was done through Google Forms. To cancel, please contact the event organizer directly.",
+            "eventCancelledTitle": "Event Cancelled !!!",
+            "eventCancelledDescription": "This event has been cancelled by the organizer. If you were registered, you may have been notified via email."
         },
         "details": {
             "title": "Details",
             "eventType": "Event Type",
             "styles": "Styles",
             "level": "Level"
+        },
+        "dateDisplay": {
+            "selectDate": "Select date"
         },
         "registrationDialog": {
             "confirmRegistration": "Confirm Registration",
@@ -405,6 +417,14 @@
             "aboutEvent": "About Event",
             "showLess": "Show Less",
             "showMore": "Show More"
+        },
+        "googleFormIntegration": {
+            "title": "Google Forms Integration",
+            "description": "Import registration data from a Google Form",
+            "needsAccess": "You need to grant access to Google Forms to use this feature.",
+            "grantAccess": "Grant Access",
+            "accessGranted": "Google Forms access granted",
+            "formIdPlaceholder": "Enter Google Form ID"
         },
         "publishOptions": {
             "registrationMode": "Registration Mode",

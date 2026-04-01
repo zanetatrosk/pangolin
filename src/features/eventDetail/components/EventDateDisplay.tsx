@@ -3,6 +3,7 @@ import { getLabelByDates } from "@/utils/getLabelByDates";
 import { useNavigate } from "@tanstack/react-router";
 import { ChevronDown } from "lucide-react";
 import { FC } from "react";
+import { useTranslation } from "react-i18next";
 
 interface RecurringDate {
   id: string;
@@ -25,6 +26,7 @@ export const EventDateDisplay: FC<EventDateDisplayProps> = ({
   routePattern = "detail",
 }) => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const getRoutePath = (eventId: string): string => {
     switch (routePattern) {
@@ -51,7 +53,7 @@ export const EventDateDisplay: FC<EventDateDisplayProps> = ({
           value=""
         >
           <option value="" disabled>
-            Select date
+            {t("eventDetail.dateDisplay.selectDate")}
           </option>
           {recurringDates.map((rd) => (
             <option key={rd.id} value={rd.id}>

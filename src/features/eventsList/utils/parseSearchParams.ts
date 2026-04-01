@@ -1,4 +1,4 @@
-import { SearchProps } from "@/routes/events.index";
+import type { SearchProps } from "@/routes/events.index";
 
 
 export const parseArrayParamToQuery = (key: string, values: string[] | null): string => {
@@ -27,3 +27,4 @@ export const convertSearchParamsToQuery = (searchParams?: SearchProps): string =
 
     return encodeURI(query);
 };
+

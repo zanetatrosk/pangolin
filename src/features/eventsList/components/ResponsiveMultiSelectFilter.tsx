@@ -4,8 +4,6 @@ import { MultiSelectFilter } from "./MultiSelectFilter";
 import { MobileMultiSelectFilter } from "./MobileMultiSelectFilter";
 import { CodebookItem } from "@/services/types";
 
-
-
 type ResponsiveMultiSelectFilterProps = {
   label: string;
   icon: LucideIcon;

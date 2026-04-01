@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { CalendarPlus, Calendar, Users, Heart } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { HostingTab } from "./HostingTab";

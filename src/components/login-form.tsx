@@ -6,13 +6,16 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { BASE_SCOPES, buildGoogleOAuthUrl, GOOGLE_REDIRECT_URI } from "@/lib/google-auth";
+import { BASE_SCOPES, buildGoogleOAuthUrl } from "@/lib/google-auth";
 import { LogIn } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
+  const { t } = useTranslation();
+
   const handleGoogleLogin = () => {
     const basicScopes = BASE_SCOPES.join(' ');
     const url = buildGoogleOAuthUrl({
@@ -24,9 +27,9 @@ export function LoginForm({
   return (
     <Card className={cn("flex grow max-w-md h-fit", className)} {...props}>
       <CardHeader className="text-center">
-        <CardTitle className="text-xl">Welcome to Connect2Dance</CardTitle>
+        <CardTitle className="text-xl">{t("auth.login.title")}</CardTitle>
         <CardDescription>
-          Sign in with your Google account to continue
+          {t("auth.login.subtitle")}
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -38,7 +41,7 @@ export function LoginForm({
           >
             <LogIn className="h-5 w-5" />
             <span className="text-sm font-medium text-gray-700 dark:text-gray-200">
-              Sign in with Google
+              {t("auth.login.googleButton")}
             </span>
           </button>
         </div>

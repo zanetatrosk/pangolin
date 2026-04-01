@@ -13,7 +13,7 @@ export interface BasicData {
   eventName: string;
   date: string;
   time: string;
-  endDate?: string | null;
+  endDate?: string;
   price?: number;
   currency?: string;
   location: Location;

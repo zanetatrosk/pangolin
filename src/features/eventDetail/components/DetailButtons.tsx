@@ -1,6 +1,5 @@
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Button } from "@/components/ui/button";
-import { XCircle, Share2 } from "lucide-react";
+import { XCircle } from "lucide-react";
 import { RsvpData, RsvpStatus } from "@/services/types";
 import { RegistrationModeEnum } from "../publish-actions/PublishEventOptions";
 import { ActionButtons } from "./ActionButtons";
@@ -45,9 +44,6 @@ export const DetailButtons: React.FC<{
           joinClassName="flex-1 md:flex-none"
           buttonSize="lg"
         />
-        <Button variant="ghost" size="icon">
-          <Share2 className="w-5 h-5" />
-        </Button>
       </div>
     </>
   );

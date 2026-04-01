@@ -3,7 +3,6 @@ import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { useForm } from "@tanstack/react-form";
 import { useTranslation } from "react-i18next";
 
 export interface StepComponentProps {

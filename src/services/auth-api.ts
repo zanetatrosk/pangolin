@@ -1,15 +1,13 @@
 import { axiosInstance } from "./axios";
 
 export interface TokenRequest {
-  grantType: "authorization_code" | "refresh_token";
-  code?: string;
-  redirectUri?: string;
-  refreshToken?: string;
+  grantType: "authorization_code";
+  code: string;
+  redirectUri: string;
 }
 
 export interface AuthenticationResponse {
   accessToken: string;
-  refreshToken: string;
   expiresIn: number;
   user: UserDto;
 }
@@ -26,26 +24,13 @@ const AUTH_URL = "/auth";
 
 /**
  * Unified token endpoint for all authentication operations
- * Handles login, incremental auth, and token refresh
+ * Handles login and incremental auth
  */
 export const exchangeToken = async (
   request: TokenRequest
 ): Promise<AuthenticationResponse> => {
   const response = await axiosInstance.post(`${AUTH_URL}/token`, request);
   return response.data;
-};
-
-/**
- * Refresh access token using refresh token
- * Uses the unified token endpoint with grant_type=refresh_token
- */
-export const refreshAccessToken = async (
-  refreshToken: string
-): Promise<AuthenticationResponse> => {
-  return exchangeToken({
-    grantType: "refresh_token",
-    refreshToken,
-  });
 };
 
 /**

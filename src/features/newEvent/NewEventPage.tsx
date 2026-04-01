@@ -2,8 +2,8 @@ import { useMutation } from "@tanstack/react-query";
 import { FormParent } from "./FormParent";
 import { postNewEvent } from "@/services/events-api";
 import { eventFormOpts } from "./FormOptions";
-import { useNavigate } from "node_modules/@tanstack/react-router/dist/esm/useNavigate";
 import { PATHS } from "@/paths";
+import { useNavigate } from "@tanstack/react-router";
 
 export function NewEventPage() {
   const navigate = useNavigate();

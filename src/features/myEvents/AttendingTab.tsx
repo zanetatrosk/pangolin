@@ -11,7 +11,7 @@ import { PATHS } from "@/paths";
 export const AttendingTab: React.FC = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const { data: events = [], isLoading, error } = useUserEvents(userEventFilter.GOING);
+  const { data: events = [] } = useUserEvents(userEventFilter.GOING);
 
   return (
     <TabCard

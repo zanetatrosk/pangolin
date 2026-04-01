@@ -9,8 +9,7 @@ import { AttendeeStatsCard } from "./components/AttendiesCard";
 import { EventDetailData, EventStatus } from "./types";
 import { useUser } from "@/hooks/useUser";
 import { EventItemManageButtons } from "./components/EventItemManageButtons";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { XCircle } from "lucide-react";
+import { EventCancelledAlert } from "./components/EventCancelledAlert";
 
 interface EventDetailProps {
   event: EventDetailData;
@@ -35,7 +34,7 @@ export function EventDetail({ event }: EventDetailProps) {
     <div className="min-h-screen bg-background pb-20">
       {/* Hero / Cover Image */}
       <div className="relative w-full md:h-96 flex flex-col md:block bg-muted">
-        <CoverImage coverImage={coverImage} eventName={basicInfo.eventName} isCancelled={isCancelled} />
+        <CoverImage coverImage={coverImage} eventName={basicInfo.eventName} />
         <HeroInformations
           basicInfo={basicInfo}
           facebookEventUrl={facebookEventUrl}
@@ -43,17 +42,7 @@ export function EventDetail({ event }: EventDetailProps) {
       </div>
 
       {/* Cancelled Event Banner */}
-      {isCancelled && (
-        <div className="container mx-auto max-w-6xl px-4 lg:px-0 mt-2 mb-6">
-          <Alert variant="destructive" className="border-2">
-            <XCircle className="h-5 w-5" />
-            <AlertTitle className="text-lg font-bold">Event Cancelled !!!</AlertTitle>
-            <AlertDescription className="text-base">
-              This event has been cancelled by the organizer. If you were registered, you may have been notified via email.
-            </AlertDescription>
-          </Alert>
-        </div>
-      )}
+      {isCancelled && <EventCancelledAlert />}
 
       <div className="container mx-auto max-w-6xl py-2 px-4 lg:px-0">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">

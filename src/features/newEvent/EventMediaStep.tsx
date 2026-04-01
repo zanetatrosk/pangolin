@@ -126,7 +126,7 @@ export const EventMediaStep = withForm({
               };
 
               const removeMedia = (item: EventMediaItem) => {
-                //ToDO mutate
+                //TODO mutate
                 field.handleChange(media.filter((m) => m.id !== item.id));
               };
 

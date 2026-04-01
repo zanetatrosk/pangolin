@@ -8,13 +8,16 @@ import { Loader2, AlertCircle, CheckCircle2 } from 'lucide-react';
 import {
   checkFormsAccess
 } from '@/services/google-forms-api';
-import { buildGoogleOAuthUrl, GOOGLE_REDIRECT_URI, FORMS_SCOPES } from '@/lib/google-auth';
+import { buildGoogleOAuthUrl, FORMS_SCOPES } from '@/lib/google-auth';
+import { useTranslation } from 'react-i18next';
 
 interface GoogleFormIntegrationProps {
   value?: string;
   onChange?: (value: string) => void;
 }
 export const GoogleFormIntegration: FC<GoogleFormIntegrationProps> = ({ value, onChange }) => {
+  const { t } = useTranslation();
+
   // Check if user has Google Forms access
   const { data: accessStatus, isLoading: isCheckingAccess } = useQuery({
     queryKey: ['google-forms-access'],
@@ -48,9 +51,9 @@ export const GoogleFormIntegration: FC<GoogleFormIntegrationProps> = ({ value, o
     <div className="space-y-4">
       <Card>
         <CardHeader>
-          <CardTitle>Google Forms Integration</CardTitle>
+          <CardTitle>{t('eventDetail.googleFormIntegration.title')}</CardTitle>
           <CardDescription>
-            Import registration data from a Google Form
+            {t('eventDetail.googleFormIntegration.description')}
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -58,12 +61,12 @@ export const GoogleFormIntegration: FC<GoogleFormIntegrationProps> = ({ value, o
             <Alert>
               <AlertCircle className="h-4 w-4" />
               <AlertDescription className="flex items-center justify-between">
-                <span>You need to grant access to Google Forms to use this feature.</span>
+                <span>{t('eventDetail.googleFormIntegration.needsAccess')}</span>
                 <Button 
                   onClick={handleGrantAccess} 
                   size="sm"
                 >
-                  Grant Access
+                  {t('eventDetail.googleFormIntegration.grantAccess')}
                 </Button>
               </AlertDescription>
             </Alert>
@@ -71,13 +74,13 @@ export const GoogleFormIntegration: FC<GoogleFormIntegrationProps> = ({ value, o
             <Alert>
               <CheckCircle2 className="h-4 w-4" />
               <AlertDescription>
-                Google Forms access granted
+                {t('eventDetail.googleFormIntegration.accessGranted')}
               </AlertDescription>
             </Alert>
           )}
             <Input
               type="text"
-              placeholder="Enter Google Form ID"
+              placeholder={t('eventDetail.googleFormIntegration.formIdPlaceholder')}
               value={value}
               onChange={(e) => onChange?.(e.target.value)}
               disabled={!accessStatus?.hasAccess}

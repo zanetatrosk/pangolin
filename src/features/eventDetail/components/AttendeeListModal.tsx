@@ -28,7 +28,7 @@ export function AttendeeListModal({
 }: AttendeeListModalProps) {
   const { t } = useTranslation();
   const isCoupleMode = registrationMode === RegistrationModeEnum.COUPLE;
-  
+  //TODO refactor to enum
   // In couple mode, default to first non-empty category, otherwise show all
   const getInitialTab = (): "leaders" | "followers" | "both" | "all" => {
     if (!isCoupleMode) return "all";

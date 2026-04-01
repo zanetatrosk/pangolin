@@ -11,7 +11,7 @@ import { PATHS } from "@/paths";
 export const HostingTab: React.FC = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const { data: events = [], isLoading, error } = useUserEvents(userEventFilter.HOSTING);
+  const { data: events = [] } = useUserEvents(userEventFilter.HOSTING);
 
   return (
     <TabCard

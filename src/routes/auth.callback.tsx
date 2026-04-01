@@ -76,7 +76,7 @@ function AuthCallback() {
         });
         
         // Store tokens in context and localStorage
-        setTokens(response.accessToken, response.refreshToken, response.expiresIn);
+        setTokens(response.accessToken, response.expiresIn);
         
         setStatus('success');
         

@@ -1,6 +1,4 @@
-import { PATHS } from "@/paths";
 import { renderAddress } from "@/utils/renderAdress";
-import { useNavigate } from "@tanstack/react-router";
 import {
   Calendar,
   Clock,
@@ -38,7 +36,6 @@ export const HeroInformations: FC<{
   basicInfo: BasicDetailsData;
   facebookEventUrl?: string;
 }> = ({ basicInfo, facebookEventUrl }) => {
-  const navigate = useNavigate();
   const {
     recurringDates,
     date,

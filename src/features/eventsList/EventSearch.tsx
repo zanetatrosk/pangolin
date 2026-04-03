@@ -14,12 +14,39 @@ import { getPlaces, PlaceOption } from "@/services/get-places-api";
 import { SearchProps } from "@/routes/events.index";
 import { useDebounce } from "@uidotdev/usehooks";
 
-export function EventSearch({onSearch}: {onSearch: (params: SearchProps) => void}) {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [location, setLocation] = useState<PlaceOption | undefined>();
-  const [locationSearchValue, setLocationSearchValue] = useState("");
-  const [eventTypes, setEventTypes] = useState<string[]>([]);
-  const [danceStyles, setDanceStyles] = useState<string[]>([]);
+export function EventSearch({
+  onSearch,
+  initialSearchParams,
+}: {
+  onSearch: (params: SearchProps) => void;
+  initialSearchParams?: SearchProps;
+}) {
+  const initialCity = initialSearchParams?.city?.trim() ?? "";
+  const initialCountry = initialSearchParams?.country?.trim() ?? "";
+  const initialLocationLabel = [initialCity, initialCountry]
+    .filter(Boolean)
+    .join(", ");
+  const initialLocation: PlaceOption | undefined = initialLocationLabel
+    ? {
+        value: initialLocationLabel,
+        label: initialLocationLabel,
+        locationData: {
+          name: "",
+          street: "",
+          city: initialCity,
+          state: initialSearchParams?.state ?? "",
+          country: initialCountry,
+          postalCode: "",
+          houseNumber: "",
+        },
+      }
+    : undefined;
+
+  const [searchTerm, setSearchTerm] = useState(() => initialSearchParams?.eventName ?? "");
+  const [location, setLocation] = useState<PlaceOption | undefined>(() => initialLocation);
+  const [locationSearchValue, setLocationSearchValue] = useState(() => initialLocationLabel);
+  const [eventTypes, setEventTypes] = useState<string[]>(() => initialSearchParams?.eventTypes ?? []);
+  const [danceStyles, setDanceStyles] = useState<string[]>(() => initialSearchParams?.danceStyles ?? []);
   const { t } = useTranslation();
 
   const { data : eventTypeOptions } = useQuery({
@@ -35,7 +62,7 @@ export function EventSearch({onSearch}: {onSearch: (params: SearchProps) => void
   })
 
   const debouncedQuery = useDebounce(locationSearchValue, 800);
-  const { data: locationOptions = [], isLoading: isLoadingLocations } = useQuery({
+  const { data: locationOptions = [], isLoading: isLoadingLocations, isSuccess } = useQuery({
     queryKey: ["locations", debouncedQuery],
     queryFn: () => getPlaces(debouncedQuery, ["city", "country"], (props) => [props.name, props.country]),
     enabled: debouncedQuery.length > 2,
@@ -104,6 +131,7 @@ export function EventSearch({onSearch}: {onSearch: (params: SearchProps) => void
                     options={locationOptions}
                     placeholder={t("eventsList.search.locationPlaceholder")}
                     emptyMessage={t("eventsList.search.noLocations")}
+                    isSuccess={isSuccess}
                     isLoading={isLoadingLocations}
                     searchValue={locationSearchValue}
                     className="pl-10 h-12 bg-white/70 dark:bg-gray-800/70 backdrop-blur rounded-lg shadow-sm"

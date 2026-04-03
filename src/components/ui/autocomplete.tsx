@@ -22,6 +22,7 @@ type AutoCompleteProps<T> = {
   onValueChange?: (value: T) => void;
   onSearchChange?: (value: string) => void;
   isLoading?: boolean;
+  isSuccess?: boolean;
   disabled?: boolean;
   placeholder?: string;
   className?: string;
@@ -38,6 +39,7 @@ export const AutoComplete = <T,>({
   onSearchChange,
   searchValue,
   disabled,
+  isSuccess = false,
   isLoading = false,
   className,
   getValue,
@@ -162,7 +164,7 @@ export const AutoComplete = <T,>({
                 })}
               </CommandGroup>
             ) : null}
-            {!isLoading ? (
+            {!isLoading && isSuccess ? (
               <CommandPrimitive.Empty className="select-none rounded-sm px-2 py-3 text-center text-sm">
                 {emptyMessage}
               </CommandPrimitive.Empty>

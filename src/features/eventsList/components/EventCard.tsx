@@ -47,7 +47,7 @@ export const EventCard: React.FC<EventItem> = (event) => {
   const isCancelled = event.status === EventStatus.CANCELLED;
 
   return (
-    <Card className="py-0 md:flex-row md:gap-0 rounded-l-xl overflow-hidden hover:shadow-lg transition-all duration-300 border border-violet-200/50 dark:border-violet-700/50 relative">
+    <Card className="py-0 md:flex-row md:gap-0 rounded-l-xl overflow-hidden transition-all duration-300 border border-violet-200/50 dark:border-violet-700/50 relative">
       {isCancelled && (
         <div className="absolute top-4 right-4 z-10">
           <Badge variant="destructive" className="text-sm font-bold shadow-lg">

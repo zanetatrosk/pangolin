@@ -17,12 +17,6 @@ export const LocationSection = withForm({
   render: ({ form, className }) => {
     const { t } = useTranslation();
     const [searchQuery, setSearchQuery] = useState<string>("");
-    const [city, setCity] = useState<string>(() => 
-      form.getFieldValue("basicInfo.location.city") || ""
-    );
-    const [country, setCountry] = useState<string>(() => 
-      form.getFieldValue("basicInfo.location.country") || ""
-    );
 
     // Check if any location field has a value to determine initial state
     const locationValues = form.getFieldValue("basicInfo.location");
@@ -36,7 +30,7 @@ export const LocationSection = withForm({
 
     // Debounce the search query
     const debouncedQuery = useDebounce(searchQuery, 800);
-    const { data: locationOptions = [], isLoading } = useQuery({
+    const { data: locationOptions = [], isLoading, isSuccess } = useQuery({
       queryKey: ["locations", debouncedQuery],
       queryFn: () =>
         getPlaces(debouncedQuery, ["house"], (props) => [
@@ -48,29 +42,6 @@ export const LocationSection = withForm({
         ]),
       enabled: debouncedQuery.length > 2,
       staleTime: 10 * 1000, // 10 seconds
-    });
-
-    const debouncedCityQuery = useDebounce(city, 800);
-    const { data: cities = [], isLoading: isLoadingCities } = useQuery({
-      queryKey: ["locations", debouncedCityQuery],
-      queryFn: () =>
-        getPlaces(debouncedCityQuery, ["city"], (props) => [
-          props.name,
-          props.country,
-        ]),
-      enabled: debouncedCityQuery.length > 2,
-      staleTime: 5 * 60 * 1000,
-    });
-
-    const debouncedCountryQuery = useDebounce(country, 800);
-    const { data: countries = [], isLoading: isLoadingCountries } = useQuery({
-      queryKey: ["locations", debouncedCountryQuery],
-      queryFn: () =>
-        getPlaces(debouncedCountryQuery, ["country"], (props) => [
-          props.name,
-        ]),
-      enabled: debouncedCountryQuery.length > 2,
-      staleTime: 5 * 60 * 1000,
     });
 
     return (
@@ -86,6 +57,7 @@ export const LocationSection = withForm({
                 placeholder={t("newEvent.location.searchPlaceholder")}
                 options={locationOptions}
                 isLoading={isLoading}
+                isSuccess={isSuccess}
                 value={field.state.value}
                 searchValue={searchQuery}
                 onChange={(value) => {
@@ -97,9 +69,6 @@ export const LocationSection = withForm({
                       placeOption.locationData
                     );
                     setShowLocationFields(true);
-                    // Update local state to display in city/country inputs
-                    setCity(placeOption.locationData.city || "");
-                    setCountry(placeOption.locationData.country || "");
                   }
                   setSearchQuery(placeOption?.label || "");
                 }}
@@ -143,31 +112,10 @@ export const LocationSection = withForm({
 
               <form.AppField name="basicInfo.location.city">
                 {(field) => (
-                  <field.ComboboxField
+                  <field.TextField
                     label={t("newEvent.location.city")}
                     placeholder={t("newEvent.location.cityPlaceholder")}
-                    options={cities}
                     required
-                    isLoading={isLoadingCities}
-                    value={field.state.value}
-                    searchValue={city}
-                    onChange={(value) => {
-                      const placeOption = value as PlaceOption;
-                      if (placeOption?.locationData) {
-                        form.setFieldValue(
-                          "basicInfo.location.city",
-                          placeOption.locationData.city
-                        );
-                        if (placeOption.locationData.country) {
-                          form.setFieldValue(
-                            "basicInfo.location.country",
-                            placeOption.locationData.country
-                          );
-                        }
-                      }
-                      setCity(placeOption?.label || "");
-                    }}
-                    onSearchChange={(search) => setCity(search)}
                   />
                 )}
               </form.AppField>
@@ -198,25 +146,10 @@ export const LocationSection = withForm({
 
               <form.AppField name="basicInfo.location.country">
                 {(field) => (
-                  <field.ComboboxField
+                  <field.TextField
                     label={t("newEvent.location.country")}
                     placeholder={t("newEvent.location.countryPlaceholder")}
-                    options={countries}
-                    isLoading={isLoadingCountries}
-                    value={field.state.value}
                     required
-                    searchValue={country}
-                    onChange={(value) => {
-                      const placeOption = value as PlaceOption;
-                      if (placeOption?.locationData) {
-                        form.setFieldValue(
-                          "basicInfo.location.country",
-                          placeOption.locationData.country
-                        );
-                      }
-                      setCountry(placeOption?.label || "");
-                    }}
-                    onSearchChange={(search) => setCountry(search)}
                   />
                 )}
               </form.AppField>

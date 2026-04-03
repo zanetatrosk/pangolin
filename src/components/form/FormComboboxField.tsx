@@ -19,13 +19,14 @@ interface FormComboboxFieldProps {
   error?: string;
   emptyText?: string;
   isLoading?: boolean;
+  isSuccess?: boolean;
   searchValue?: string;
 }
 
 export function FormComboboxField({
   value = "",
   onChange,
-  onBlur,
+  isSuccess = false,
   onSearchChange,
   options,
   placeholder = "Search...",
@@ -62,6 +63,7 @@ export function FormComboboxField({
         placeholder={placeholder}
         emptyMessage={emptyText}
         isLoading={isLoading}
+        isSuccess={isSuccess}
         searchValue={searchValue}
 
       />

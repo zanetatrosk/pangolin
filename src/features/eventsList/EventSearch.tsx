@@ -13,6 +13,7 @@ import { getDanceStyles } from "@/services/dance-styles-api";
 import { getPlaces, PlaceOption } from "@/services/get-places-api";
 import { SearchProps } from "@/routes/events.index";
 import { useDebounce } from "@uidotdev/usehooks";
+import { getInitialLocation } from "./utils/getInitialLocation";
 
 export function EventSearch({
   onSearch,
@@ -21,30 +22,10 @@ export function EventSearch({
   onSearch: (params: SearchProps) => void;
   initialSearchParams?: SearchProps;
 }) {
-  const initialCity = initialSearchParams?.city?.trim() ?? "";
-  const initialCountry = initialSearchParams?.country?.trim() ?? "";
-  const initialLocationLabel = [initialCity, initialCountry]
-    .filter(Boolean)
-    .join(", ");
-  const initialLocation: PlaceOption | undefined = initialLocationLabel
-    ? {
-        value: initialLocationLabel,
-        label: initialLocationLabel,
-        locationData: {
-          name: "",
-          street: "",
-          city: initialCity,
-          state: initialSearchParams?.state ?? "",
-          country: initialCountry,
-          postalCode: "",
-          houseNumber: "",
-        },
-      }
-    : undefined;
-
+  const initialLocation = getInitialLocation(initialSearchParams);
   const [searchTerm, setSearchTerm] = useState(() => initialSearchParams?.eventName ?? "");
   const [location, setLocation] = useState<PlaceOption | undefined>(() => initialLocation);
-  const [locationSearchValue, setLocationSearchValue] = useState(() => initialLocationLabel);
+  const [locationSearchValue, setLocationSearchValue] = useState(() => initialLocation?.label ?? "");
   const [eventTypes, setEventTypes] = useState<string[]>(() => initialSearchParams?.eventTypes ?? []);
   const [danceStyles, setDanceStyles] = useState<string[]>(() => initialSearchParams?.danceStyles ?? []);
   const { t } = useTranslation();

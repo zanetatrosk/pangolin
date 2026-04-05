@@ -65,7 +65,6 @@ export function FormComboboxField({
         isLoading={isLoading}
         isSuccess={isSuccess}
         searchValue={searchValue}
-
       />
       {error && <p className="text-sm text-destructive">{error}</p>}
     </div>

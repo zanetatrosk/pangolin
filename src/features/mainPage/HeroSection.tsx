@@ -65,7 +65,7 @@ export function HeroSection() {
           <Button
             size="lg"
             className="px-8 py-6 text-lg bg-linear-to-r from-rose-500 to-violet-500 dark:from-rose-600 dark:to-violet-600 text-white rounded-xl shadow-lg hover:shadow-xl transition"
-            onClick={() => navigate({ to: PATHS.EVENTS.LIST })}
+              onClick={() => navigate({ to: PATHS.EVENTS.LIST, search: {} })}
           >
             <Calendar className="mr-2" />
             {t("home.findEvents")}

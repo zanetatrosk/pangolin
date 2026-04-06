@@ -39,7 +39,7 @@ export function FeaturedEventsSection() {
             variant="outline" 
             size="lg" 
             className="px-8"
-            onClick={() => navigate({ to: PATHS.EVENTS.LIST })}
+              onClick={() => navigate({ to: PATHS.EVENTS.LIST, search: {} })}
           >
             {t('home.viewEvents')}
             <ArrowRight className="ml-2" />

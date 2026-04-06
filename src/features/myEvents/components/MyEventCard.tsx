@@ -17,7 +17,7 @@ export const MyEventCard: React.FC<MyEventCardProps> = ({
   event,
   cardType,
 }) => {
-  // Display series events as a table (except for interested tab)
+  // Display series events as a table
   if (isSeriesEvent(event)) {
     return <ReocurringEventCard event={event} cardType={cardType} />;
   }

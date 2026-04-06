@@ -218,6 +218,10 @@
             "attending": "Attending",
             "interested": "Interested"
         },
+        "timeline": {
+            "upcoming": "Upcoming",
+            "past": "Past"
+        },
         "noEvents": {
             "hosting": {
                 "title": "No Hosted Events Yet",

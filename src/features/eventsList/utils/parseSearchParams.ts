@@ -1,7 +1,10 @@
 import type { SearchProps } from "@/routes/events.index";
 
 
-export const parseArrayParamToQuery = (key: string, values: string[] | null): string => {
+export const parseArrayParamToQuery = (
+    key: string,
+    values?: string[] | null,
+): string => {
     if (!values || values.length === 0) {
         return "";
     }
@@ -22,8 +25,8 @@ export const convertSearchParamsToQuery = (searchParams?: SearchProps): string =
     if (searchParams.country) {
         query += `&country=${searchParams.country}`;
     }
-    query += parseArrayParamToQuery("eventTypes", searchParams.eventTypes);
-    query += parseArrayParamToQuery("danceStyles", searchParams.danceStyles);
+    query += parseArrayParamToQuery("eventTypes", searchParams.eventTypes ?? []);
+    query += parseArrayParamToQuery("danceStyles", searchParams.danceStyles ?? []);
 
     return encodeURI(query);
 };

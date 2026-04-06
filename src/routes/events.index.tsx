@@ -5,7 +5,7 @@ import { PATHS } from "@/paths";
 
 export const Route = createFileRoute("/events/")({
   component: RouteComponent,
-  validateSearch: (search: Record<string, unknown>) => {
+  validateSearch: (search: Record<string, unknown>): SearchProps => {
     const normalizeOptionalString = (value: unknown): string | undefined => {
       if (typeof value !== "string") return undefined;
       const trimmed = value.trim();
@@ -38,7 +38,7 @@ export const Route = createFileRoute("/events/")({
       state: normalizeOptionalString(search.state),
       eventTypes: normalizeStringArray(search.eventTypes),
       danceStyles: normalizeStringArray(search.danceStyles),
-    } satisfies SearchProps;
+    };
   },
 });
 
@@ -48,8 +48,8 @@ export interface SearchProps {
   country?: string;
   county?: string;
   state?: string;
-  eventTypes: string[];
-  danceStyles: string[];
+  eventTypes?: string[];
+  danceStyles?: string[];
 }
 
 function RouteComponent() {

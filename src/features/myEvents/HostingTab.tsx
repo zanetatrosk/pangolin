@@ -3,15 +3,25 @@ import { NoEvents } from "./components/NoEvents";
 import { TabCard } from "./components/TabCard";
 import { EventCardType, MyEventCard } from "./components/MyEventCard";
 import { useUserEvents } from "./hooks/useUserEvents";
-import { userEventFilter } from "@/services/users-events-api";
+import { EventTimeline, userEventFilter } from "@/services/users-events-api";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "@tanstack/react-router";
 import { PATHS } from "@/paths";
+import { Button } from "@/components/ui/button";
 
-export const HostingTab: React.FC = () => {
+export const HostingTab: React.FC<{ timeline?: EventTimeline }> = ({ timeline }) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const { data: events = [] } = useUserEvents(userEventFilter.HOSTING);
+  const {
+    data,
+    isLoading,
+    error,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useUserEvents(userEventFilter.HOSTING, timeline);
+
+  const events = data?.pages.flatMap((page) => page.content) ?? [];
 
   return (
     <TabCard
@@ -28,13 +38,32 @@ export const HostingTab: React.FC = () => {
           onButtonClick={() => navigate({ to: PATHS.EVENTS.NEW_EVENT })}
         />
       }
-      numberOfItems={events.length}
+      numberOfItems={isLoading ? undefined : events.length}
     >
-        <div className="grid grid-cols-1 gap-6">
-        {events.map((event) => (
-            <MyEventCard key={event.id} event={event} cardType={EventCardType.HOSTING} />
-        ))}
-        </div>
+      {error ? (
+        <div>{t("common.error")}</div>
+      ) : isLoading && events.length === 0 ? (
+        <div>{t("common.loading")}</div>
+      ) : (
+        <>
+          <div className="grid grid-cols-1 gap-6">
+            {events.map((event) => (
+              <MyEventCard
+                key={event.id}
+                event={event}
+                cardType={EventCardType.HOSTING}
+              />
+            ))}
+          </div>
+          {hasNextPage && (
+            <div className="flex justify-center mt-4">
+              <Button onClick={() => fetchNextPage()} disabled={isFetchingNextPage}>
+                {isFetchingNextPage ? t("common.loading") : t("eventsList.showMore")}
+              </Button>
+            </div>
+          )}
+        </>
+      )}
     </TabCard>
   );
 };

@@ -1,16 +1,20 @@
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { CalendarPlus, Calendar, Users, Heart } from "lucide-react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { HostingTab } from "./HostingTab";
 import { AttendingTab } from "./AttendingTab";
 import { useNavigate } from "@tanstack/react-router";
 import { PATHS } from "@/paths";
 import { InterestedTab } from "./InterestedTab";
+import { EventTimeline } from "@/services/users-events-api";
 
 export function MyEventsPage() {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const [timeline, setTimeline] = useState<EventTimeline>(EventTimeline.UPCOMING);
+
   return (
     <div className="container mx-auto max-w-6xl p-4 md:p-6 mb-12">
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between mb-6">
@@ -36,9 +40,27 @@ export function MyEventsPage() {
             {t("myEvents.tabs.interested")}
           </TabsTrigger>
         </TabsList>
-        <HostingTab />
-        <AttendingTab />
-        <InterestedTab />
+
+        <div className="mt-3">
+          <Tabs
+            value={timeline}
+            onValueChange={(value) => setTimeline(value as EventTimeline)}
+            className="w-full"
+          >
+            <TabsList className="grid w-full md:w-[260px] grid-cols-2">
+              <TabsTrigger value={EventTimeline.UPCOMING}>
+                {t("myEvents.timeline.upcoming")}
+              </TabsTrigger>
+              <TabsTrigger value={EventTimeline.PAST}>
+                {t("myEvents.timeline.past")}
+              </TabsTrigger>
+            </TabsList>
+          </Tabs>
+        </div>
+
+        <HostingTab timeline={timeline} />
+        <AttendingTab timeline={timeline} />
+        <InterestedTab timeline={timeline} />
       </Tabs>
     </div>
   );

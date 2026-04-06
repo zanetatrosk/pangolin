@@ -1,11 +1,17 @@
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { RegistrationModeEnum } from "../publish-actions/PublishEventOptions";
 import { PATHS } from "@/paths";
 import { useEventRegistrations } from "@/hooks/useEventRegistrations";
 import { useTranslation } from "react-i18next";
+
+enum AttendeeRole {
+  LEADER = "Leader",
+  FOLLOWER = "Follower",
+  BOTH = "Both",
+}
 
 interface AttendeeListModalProps {
   isOpen: boolean;
@@ -44,19 +50,14 @@ export function AttendeeListModal({
   // Fetch registrations from API - only when modal is open (data is already preprocessed)
   const { data: attendees = [], isLoading, isError } = useEventRegistrations(eventId, registrationMode, isOpen);
 
-  const filteredAttendees = useMemo(() => {
-    return isCoupleMode
-    ? attendees.filter((a) =>
-        attendeeTab === "leaders"
-          ? a.role === "Leader"
-          : attendeeTab === "followers"
-          ? a.role === "Follower"
-          : attendeeTab === "both"
-          ? a.role === "Both"
-          : true
-      )
+  const filteredAttendees = isCoupleMode
+    ? attendees.filter((a) => {
+        if (attendeeTab === "leaders") return a.role === AttendeeRole.LEADER;
+        if (attendeeTab === "followers") return a.role === AttendeeRole.FOLLOWER;
+        if (attendeeTab === "both") return a.role === AttendeeRole.BOTH;
+        return true;
+      })
     : attendees;
-  }, [attendees, attendeeTab, isCoupleMode]);
 
   if (!isOpen) return null;
 
@@ -151,9 +152,9 @@ export function AttendeeListModal({
               </div>
               {isCoupleMode && attendee.role && (
                 <>
-                  {attendee.role === "Leader" ? (
+                  {attendee.role === AttendeeRole.LEADER ? (
                     <div className="w-2 h-2 rounded-full bg-blue-500" />
-                  ) : attendee.role === "Follower" ? (
+                  ) : attendee.role === AttendeeRole.FOLLOWER ? (
                     <div className="w-2 h-2 rounded-full bg-pink-500" />
                   ) : (
                     <div className="w-2 h-2 rounded-full bg-purple-500" />

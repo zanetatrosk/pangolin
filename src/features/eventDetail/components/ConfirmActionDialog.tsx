@@ -10,10 +10,13 @@ import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 import { PublishEventOptions } from "../publish-actions/PublishEventOptions";
 import { useTranslation } from "react-i18next";
-
-export type ActionType = "publish" | "cancel" | "delete";
-
 import { PublishPayload } from "../publish-actions/PublishEventOptions";
+
+export enum ActionType {
+  PUBLISH = "publish",
+  CANCEL = "cancel",
+  DELETE = "delete",
+}
 
 interface ConfirmActionDialogProps {
   open: boolean;
@@ -42,7 +45,7 @@ export const ConfirmActionDialog: React.FC<ConfirmActionDialogProps> = ({
     const baseKey = `eventDetail.confirmActionDialog`;
     
     switch (actionType) {
-      case "publish":
+      case ActionType.PUBLISH:
         return {
           title: t(`${baseKey}.publishTitle`),
           description: t(`${baseKey}.publishDescription`),
@@ -50,14 +53,14 @@ export const ConfirmActionDialog: React.FC<ConfirmActionDialogProps> = ({
           variant: "default" as const,
           size: "lg" as const,
         };
-      case "cancel":
+      case ActionType.CANCEL:
         return {
           title: t(`${baseKey}.cancelTitle`),
           description: t(`${baseKey}.cancelDescription`),
           actionText: t(`${baseKey}.cancelAction`),
           variant: "destructive" as const,
         };
-      case "delete":
+      case ActionType.DELETE:
         return {
           title: t(`${baseKey}.deleteTitle`),
           description: t(`${baseKey}.deleteDescription`),
@@ -72,7 +75,7 @@ export const ConfirmActionDialog: React.FC<ConfirmActionDialogProps> = ({
   const dialogContent = getDialogContent();
   
   const renderComponent = () => {
-    if (actionType === "publish" && publishData && onPublishDataChange) {
+    if (actionType === ActionType.PUBLISH && publishData && onPublishDataChange) {
       return <PublishEventOptions value={publishData} onChange={onPublishDataChange} />;
     }
     return null;

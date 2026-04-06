@@ -80,7 +80,7 @@ export const EventItemManageButtons: React.FC<EventItemManageButtonsProps> = ({
   };
 
   const handleCancelEvent = () => {
-    setPendingAction("cancel");
+    setPendingAction(ActionType.CANCEL);
   };
 
   const handleViewStats = () => {
@@ -88,19 +88,19 @@ export const EventItemManageButtons: React.FC<EventItemManageButtonsProps> = ({
   };
 
   const handlePublishEvent = () => {
-    setPendingAction("publish");
+    setPendingAction(ActionType.PUBLISH);
   };
 
   const handleDeleteEvent = () => {
-    setPendingAction("delete");
+    setPendingAction(ActionType.DELETE);
   };
 
   const handleConfirm = (data?: PublishPayload) => {
-    if (pendingAction === "publish" && data) {
+    if (pendingAction === ActionType.PUBLISH && data) {
       publishMutation.mutate(data);
-    } else if (pendingAction === "cancel") {
+    } else if (pendingAction === ActionType.CANCEL) {
       cancelMutation.mutate();
-    } else if (pendingAction === "delete") {
+    } else if (pendingAction === ActionType.DELETE) {
       deleteMutation.mutate();
     }
   };

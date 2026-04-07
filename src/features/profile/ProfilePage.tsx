@@ -7,7 +7,7 @@ import { getInitials } from "@/components/layout/utils/getInitials";
 import { MediaGallery } from "../eventDetail/components/MediaGallery";
 import { EventMediaItem } from "../newEvent/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { postMedia } from "@/services/media-api";
+import { deleteMedia, postMedia } from "@/services/media-api";
 import { ProfileEditForm } from "./ProfileEditForm";
 import { ProfileViewMode } from "./ProfileViewMode";
 import { CodebookItem } from "@/services/types";
@@ -76,6 +76,13 @@ export function ProfilePage({
     },
   });
 
+  const deleteMediaMutation = useMutation({
+    mutationFn: (mediaId: string) => deleteMedia(mediaId, userId),
+    onError: (error) => {
+      console.error("Error deleting media:", error);
+    },
+  });
+
   const mutation = useMutation({
     mutationFn: () => updateProfileById(userId, profileData),
     onSuccess: (data) => {
@@ -122,6 +129,10 @@ export function ProfilePage({
       ...prev,
       media: prev.media.filter((m) => m.id !== item.id),
     }));
+
+    if (!item.id.startsWith("blob:")) {
+      deleteMediaMutation.mutate(item.id);
+    }
   };
 
   return (

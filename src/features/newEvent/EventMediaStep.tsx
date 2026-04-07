@@ -8,13 +8,17 @@ import { EventMediaItem } from "./types";
 import { FormSection } from "@/components/form/FormSection";
 import { Media } from "../eventDetail/components/Media";
 import { useMutation } from "@tanstack/react-query";
-import { postMedia } from "@/services/media-api";
+import { deleteMedia, postMedia } from "@/services/media-api";
 import { useTranslation } from "react-i18next";
+import { useUser } from "@/hooks/useUser";
+import { useRef } from "react";
 
 export const EventMediaStep = withForm({
   ...eventFormOpts,
   render: ({ form }) => {
     const { t } = useTranslation();
+    const { user } = useUser();
+    const coverInputRef = useRef<HTMLInputElement | null>(null);
     const coverImageMutation = useMutation({
         mutationFn: (file: File) => postMedia(file),
         onSuccess: (data) => {
@@ -50,6 +54,19 @@ export const EventMediaStep = withForm({
         },
       });
 
+    const deleteMediaMutation = useMutation({
+      mutationFn: (mediaId: string) => {
+        if (!user?.userId) {
+          throw new Error("User is not available for media deletion");
+        }
+
+        return deleteMedia(mediaId, user.userId);
+      },
+      onError: (error) => {
+        console.error("Error deleting media:", error);
+      },
+    });
+
     return (
       <div className="p-4 md:p-6 space-y-8">
         <FormSection title={t("newEvent.media.coverImage")}>
@@ -80,7 +97,21 @@ export const EventMediaStep = withForm({
                         size="icon"
                         variant="destructive"
                         className="absolute top-2 right-2"
-                        onClick={() => field.handleChange(undefined)}
+                        onClick={() => {
+                          const currentCover = field.state.value;
+                          field.handleChange(undefined);
+                          if (coverInputRef.current) {
+                            coverInputRef.current.value = "";
+                          }
+
+                          if (
+                            currentCover?.id &&
+                            !currentCover.id.startsWith("blob:") &&
+                            user?.userId
+                          ) {
+                            deleteMediaMutation.mutate(currentCover.id);
+                          }
+                        }}
                         type="button"
                       >
                         <X className="h-4 w-4" />
@@ -89,6 +120,7 @@ export const EventMediaStep = withForm({
                   )}
 
                   <Input
+                    ref={coverInputRef}
                     type="file"
                     accept="image/*,video/*"
                     onChange={(e) => {
@@ -126,8 +158,11 @@ export const EventMediaStep = withForm({
               };
 
               const removeMedia = (item: EventMediaItem) => {
-                //TODO mutate
                 field.handleChange(media.filter((m) => m.id !== item.id));
+
+                if (!item.id.startsWith("blob:") && user?.userId) {
+                  deleteMediaMutation.mutate(item.id);
+                }
               };
 
               const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {

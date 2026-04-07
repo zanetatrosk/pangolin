@@ -262,7 +262,10 @@
             "draft": "Draft",
             "registered": "Registered",
             "interested": "Interested",
-            "waitlisted": "Waitlisted"
+            "waitlisted": "Waitlisted",
+            "upcoming": "Upcoming",
+            "pending": "Pending Approval",
+            "rejected": "Rejected"
         }
     },
     "profile": {
@@ -326,7 +329,7 @@
             "registrationRejected": "Your registration was rejected by the organizer. You cannot register for this event.",
             "googleFormRegistration": "This registration was done through Google Forms. To cancel, please contact the event organizer directly.",
             "eventCancelledTitle": "Event Cancelled !!!",
-            "eventCancelledDescription": "This event has been cancelled by the organizer. If you were registered, you may have been notified via email."
+            "eventCancelledDescription": "This event has been cancelled by the organizer."
         },
         "details": {
             "title": "Details",

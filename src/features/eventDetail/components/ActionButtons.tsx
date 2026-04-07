@@ -29,7 +29,6 @@ export const ActionButtons: React.FC<{
   buttonSize = "lg"
 }) => {
   const { t } = useTranslation();
-  const [currentStatus, setCurrentStatus] = useState(rsvpData.status);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [cancelDialogOpen, setCancelDialogOpen] = useState(false);
   const updateMutation = useUpdateRsvp();
@@ -39,10 +38,10 @@ export const ActionButtons: React.FC<{
   const navigate = useNavigate();
   const router = useRouter();
 
-  const isGoing = currentStatus === RsvpStatus.Registered;
-  const isInterested = currentStatus === RsvpStatus.Interested;
-  const isPending = currentStatus === RsvpStatus.Pending;
-  const isRejected = currentStatus === RsvpStatus.Rejected;
+  const isGoing = rsvpData.status === RsvpStatus.Registered;
+  const isInterested = rsvpData.status === RsvpStatus.Interested;
+  const isPending = rsvpData.status === RsvpStatus.Pending;
+  const isRejected = rsvpData.status === RsvpStatus.Rejected;
   const isGoogleForm = registrationMode === RegistrationModeEnum.GOOGLE_FORM;
   const canInteract = !isRejected;
   const canCancel = !isGoogleForm; // Cannot cancel Google Form registrations
@@ -64,12 +63,7 @@ export const ActionButtons: React.FC<{
   const handleCancel = () => {
     if (rsvpData.id) {
       cancelMutation.mutate(
-        { eventId: rsvpData.eventId, registrationId: rsvpData.id },
-        {
-          onSuccess: () => {
-            setCurrentStatus(RsvpStatus.Cancelled);
-          }
-        }
+        { eventId: rsvpData.eventId, registrationId: rsvpData.id }
       );
     }
   };
@@ -91,12 +85,6 @@ export const ActionButtons: React.FC<{
         status: RsvpStatus.Registered, 
         roleId: role,
         isAnonymous: isAnonymous
-      },
-      {
-        onSuccess: (data) => {
-          // Use the actual status from the response instead of hardcoding
-          setCurrentStatus(data.status || RsvpStatus.Pending);
-        }
       }
     );
   };
@@ -109,19 +97,10 @@ export const ActionButtons: React.FC<{
         { 
           eventId: rsvpData.eventId, 
           status: RsvpStatus.Interested 
-        },
-        {
-          onSuccess: (data) => {
-            setCurrentStatus(RsvpStatus.Interested);
-          }
         }
       );
     } else if (rsvpData.id) {
-      deleteMutation.mutate(rsvpData.id, {
-        onSuccess: () => {
-          setCurrentStatus(undefined);
-        }
-      });
+      deleteMutation.mutate(rsvpData.id);
     }
   };
   

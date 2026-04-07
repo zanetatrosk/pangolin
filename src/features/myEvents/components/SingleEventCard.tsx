@@ -36,17 +36,21 @@ export const SingleEventCard: React.FC<SingleEventCardProps> = ({
                 <CardTitle className="text-xl font-bold">{eventName}</CardTitle>
               </div>
               <StatusBadges
-                status={cardType === EventCardType.HOSTING ? status : undefined}
-                userStatus={cardType === EventCardType.GOING ? userStatus : undefined}
+                cardType={cardType}
+                status={status}
+                userStatus={userStatus}
                 className="lg:hidden"
                 role={role?.name}
+                date={date}
               />
             </div>
             <div className="flex flex-row items-center ">
               <StatusBadges
-                status={cardType === EventCardType.HOSTING ? status : undefined}
-                userStatus={cardType === EventCardType.GOING ? userStatus : undefined}
+                cardType={cardType}
+                status={status}
+                userStatus={userStatus}
                 role={role?.name}
+                date={date}
                 className="hidden lg:block"
               />
 

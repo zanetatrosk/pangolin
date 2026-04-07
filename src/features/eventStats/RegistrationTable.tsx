@@ -28,7 +28,7 @@ import {
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Trash2 } from "lucide-react";
+import { Trash2, UserRound } from "lucide-react";
 import {
   Header,
   FormQuestionType, RegistrationFormData
@@ -46,6 +46,8 @@ interface TableRowData {
 }
 
 const columnHelper = createColumnHelper<TableRowData>();
+
+const isNameHeader = (header: Header) => header.id === "email"
 
 const createHeaders = (data: RegistrationFormData, t: (key: string) => string) => {
   return [ ...data.headers, {
@@ -117,14 +119,38 @@ export const RegistrationTable: FC<{ data: RegistrationFormData; eventId: string
         columnHelper.accessor((row) => row[`q_${header.id}`], {
           id: `q_${header.id}`,
           header: header.question,
-          cell: (info) => info.getValue() || "-",
+          cell: (info) => {
+            const value = info.getValue() || "-";
+
+            if (isNameHeader(header) && info.row.original.userId) {
+              return (
+                <div className="flex items-center gap-2">
+                  <span>{String(value)}</span>
+                  <Button
+                    type="button"
+                    size="icon"
+                    className="h-6 w-6"
+                    aria-label={t("eventStats.table.viewProfile")}
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      navigate({ to: PATHS.PROFILE.VIEW(info.row.original.userId!) });
+                    }}
+                  > 
+                    <UserRound className="h-4 w-4" />
+                  </Button>
+                </div>
+              );
+            }
+
+            return value;
+          },
           meta: header,
         })
       ), 
     ];
   
     return cols;
-  }, [data.headers]);
+  }, [data, navigate, t]);
 
   const table = useReactTable({
     data: tableData,
@@ -141,17 +167,6 @@ export const RegistrationTable: FC<{ data: RegistrationFormData; eventId: string
       rowSelection,
     },
   });
-
-  const handleRowClick = (row: TableRowData, event: React.MouseEvent) => {
-    // Don't navigate if clicking on checkbox or if no userId
-    if (!row.userId) return;
-    
-    const target = event.target as HTMLElement;
-    // Prevent navigation when clicking on checkbox
-    if (target.closest('[role="checkbox"]')) return;
-    
-    navigate({ to: PATHS.PROFILE.VIEW(row.userId) });
-  };
 
   return (
     <div className="space-y-4">
@@ -239,12 +254,9 @@ export const RegistrationTable: FC<{ data: RegistrationFormData; eventId: string
           <TableBody>
             {table.getRowModel().rows.length ? (
               table.getRowModel().rows.map((row) => {
-                const hasUserId = !!row.original.userId;
                 return (
                   <TableRow 
                     key={row.id}
-                    className={hasUserId ? "cursor-pointer hover:bg-muted/50 transition-colors" : ""}
-                    onClick={(e) => hasUserId && handleRowClick(row.original, e)}
                   >
                     {row.getVisibleCells().map((cell) => (
                       <TableCell key={cell.id}>

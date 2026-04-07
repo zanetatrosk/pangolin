@@ -17,7 +17,7 @@
     },
     "alerts": {
       "eventCancelledTitle": "Událost zrušena !!!",
-      "eventCancelledDescription": "Tato událost byla zrušena organizátorem. Pokud jste byli registrováni, mohli jste být informováni e-mailem."
+      "eventCancelledDescription": "Tato událost byla zrušena organizátorem. "
     },
     "googleFormIntegration": {
       "title": "Integrace Google Forms",

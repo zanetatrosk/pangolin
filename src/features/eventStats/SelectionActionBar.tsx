@@ -9,7 +9,7 @@ import { useTranslation } from "react-i18next";
 interface SelectedRow {
   id: string;
   userId?: string;
-  q_status?: RsvpStatus;
+  q_status: RsvpStatus;
   [key: string]: any;
 }
 
@@ -128,9 +128,7 @@ export const SelectionActionBar: FC<SelectionActionBarProps> = ({
             disabled={
               updateRegistration.isPending ||
               (option.value !== "copy_email" &&
-              !option.statuses.some((status) =>
-                selectedStatuses.includes(status),
-              ))
+              !selectedStatuses.every(status => option.statuses.includes(status)))
             }
             >{option.label}</Button>
         ))}

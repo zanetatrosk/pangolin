@@ -30,7 +30,6 @@ export const ActionButtons: React.FC<{
 }) => {
   const { t } = useTranslation();
   const [currentStatus, setCurrentStatus] = useState(rsvpData.status);
-  const [registrationId, setRegistrationId] = useState(rsvpData.id);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [cancelDialogOpen, setCancelDialogOpen] = useState(false);
   const updateMutation = useUpdateRsvp();
@@ -63,13 +62,12 @@ export const ActionButtons: React.FC<{
   };
 
   const handleCancel = () => {
-    if (registrationId) {
+    if (rsvpData.id) {
       cancelMutation.mutate(
-        { eventId: rsvpData.eventId, registrationId },
+        { eventId: rsvpData.eventId, registrationId: rsvpData.id },
         {
           onSuccess: () => {
             setCurrentStatus(RsvpStatus.Cancelled);
-            setRegistrationId(undefined);
           }
         }
       );
@@ -98,7 +96,6 @@ export const ActionButtons: React.FC<{
         onSuccess: (data) => {
           // Use the actual status from the response instead of hardcoding
           setCurrentStatus(data.status || RsvpStatus.Pending);
-          setRegistrationId(data.id);
         }
       }
     );
@@ -116,15 +113,13 @@ export const ActionButtons: React.FC<{
         {
           onSuccess: (data) => {
             setCurrentStatus(RsvpStatus.Interested);
-            setRegistrationId(data.id);
           }
         }
       );
-    } else if (registrationId) {
-      deleteMutation.mutate(registrationId, {
+    } else if (rsvpData.id) {
+      deleteMutation.mutate(rsvpData.id, {
         onSuccess: () => {
           setCurrentStatus(undefined);
-          setRegistrationId(undefined);
         }
       });
     }

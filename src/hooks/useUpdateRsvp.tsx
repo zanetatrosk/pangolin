@@ -8,11 +8,13 @@ export const useUpdateRsvp = () => {
     const mutation = useMutation({
         mutationFn: ({ eventId, ...request }: RegisterEventRequest & { eventId: string }) => 
             createOrUpdateRegistration(eventId, request),
-        onSuccess: () => {
+        onSuccess: async () => {
             // Invalidate relevant queries to refresh data
-            queryClient.invalidateQueries({ queryKey: ["event"] });
-            queryClient.invalidateQueries({ queryKey: ["myRegistrations"] });
-            queryClient.invalidateQueries({ queryKey: ["events"] });
+            await Promise.all([
+            queryClient.invalidateQueries({ queryKey: ["event"] }),
+            queryClient.invalidateQueries({ queryKey: ["myRegistrations"] }),
+            queryClient.invalidateQueries({ queryKey: ["events"] })
+            ])
         },
     });
 

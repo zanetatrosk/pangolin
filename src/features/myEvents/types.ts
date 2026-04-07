@@ -1,7 +1,8 @@
-import { RsvpStatus } from "@/services/types";
+import { CodebookItem, RsvpStatus } from "@/services/types";
 import { AttendeeStats, EventStatus } from "../eventDetail/types";
 import { Organizer } from "../eventsList/types";
 import { Location } from "../newEvent/types";
+import { DancerRole } from "../eventDetail/components/AttendeeListModal";
 
 export interface MyEventBase {
     displayMode: 'SINGLE' | 'SERIES';
@@ -19,6 +20,7 @@ export interface SingleEventDTO extends MyEventBase {
     time: string;
     location: Location;
     attendeeStats: AttendeeStats;
+    role?: CodebookItem;
 }
 
 // Series/recurring event (matches SeriesEventDTO from backend)

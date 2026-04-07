@@ -41,6 +41,7 @@ import { useTranslation } from "react-i18next";
 interface TableRowData {
   id: string;
   userId?: string;
+  q_status: RsvpStatus;
   [key: string]: any; // Dynamic answer fields
 }
 

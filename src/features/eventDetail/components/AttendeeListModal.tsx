@@ -7,7 +7,7 @@ import { PATHS } from "@/paths";
 import { useEventRegistrations } from "@/hooks/useEventRegistrations";
 import { useTranslation } from "react-i18next";
 
-enum AttendeeRole {
+export enum DancerRole {
   LEADER = "Leader",
   FOLLOWER = "Follower",
   BOTH = "Both",
@@ -52,9 +52,9 @@ export function AttendeeListModal({
 
   const filteredAttendees = isCoupleMode
     ? attendees.filter((a) => {
-        if (attendeeTab === "leaders") return a.role === AttendeeRole.LEADER;
-        if (attendeeTab === "followers") return a.role === AttendeeRole.FOLLOWER;
-        if (attendeeTab === "both") return a.role === AttendeeRole.BOTH;
+        if (attendeeTab === "leaders") return a.role === DancerRole.LEADER;
+        if (attendeeTab === "followers") return a.role === DancerRole.FOLLOWER;
+        if (attendeeTab === "both") return a.role === DancerRole.BOTH;
         return true;
       })
     : attendees;
@@ -152,9 +152,9 @@ export function AttendeeListModal({
               </div>
               {isCoupleMode && attendee.role && (
                 <>
-                  {attendee.role === AttendeeRole.LEADER ? (
+                  {attendee.role === DancerRole.LEADER ? (
                     <div className="w-2 h-2 rounded-full bg-blue-500" />
-                  ) : attendee.role === AttendeeRole.FOLLOWER ? (
+                  ) : attendee.role === DancerRole.FOLLOWER ? (
                     <div className="w-2 h-2 rounded-full bg-pink-500" />
                   ) : (
                     <div className="w-2 h-2 rounded-full bg-purple-500" />

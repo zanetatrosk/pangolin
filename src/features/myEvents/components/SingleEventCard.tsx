@@ -23,7 +23,7 @@ export const SingleEventCard: React.FC<SingleEventCardProps> = ({
   const navigate = useNavigate();
   const isUserOrganizer = cardType === EventCardType.HOSTING;
   
-  const { eventName, organizer, status, userStatus, date, time, location, attendeeStats } = event;
+  const { eventName, organizer, status, userStatus, date, time, location, attendeeStats, role } = event;
   const renderedLocation = renderAddress(location);
 
   return (
@@ -36,15 +36,17 @@ export const SingleEventCard: React.FC<SingleEventCardProps> = ({
                 <CardTitle className="text-xl font-bold">{eventName}</CardTitle>
               </div>
               <StatusBadges
-                status={status}
+                status={cardType === EventCardType.HOSTING ? status : undefined}
                 userStatus={cardType === EventCardType.GOING ? userStatus : undefined}
                 className="lg:hidden"
+                role={role?.name}
               />
             </div>
             <div className="flex flex-row items-center ">
               <StatusBadges
-                status={status}
+                status={cardType === EventCardType.HOSTING ? status : undefined}
                 userStatus={cardType === EventCardType.GOING ? userStatus : undefined}
+                role={role?.name}
                 className="hidden lg:block"
               />
 

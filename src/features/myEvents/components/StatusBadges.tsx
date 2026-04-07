@@ -3,6 +3,7 @@ import { FC } from "react";
 import { EventStatus } from "@/features/eventDetail/types";
 import { RsvpStatus } from "@/services/types";
 import { useTranslation } from "react-i18next";
+import { DancerRole } from "@/features/eventDetail/components/AttendeeListModal";
 
 export const getBadgeByStatus = (status: EventStatus | RsvpStatus | string) => {
   switch (status) {
@@ -23,9 +24,24 @@ export const getBadgeByStatus = (status: EventStatus | RsvpStatus | string) => {
     default:
       return "bg-gray-100 text-gray-800";
   }
-}
+};
 
-const getStatusLabel = (status: EventStatus | RsvpStatus | string, t: (key: string) => string) => {
+export const getBadgeByDancerRole = (role: string) => {
+  switch (role) {
+    case DancerRole.FOLLOWER:
+      return "bg-green-100 text-green-800";
+    case DancerRole.LEADER:
+      return "bg-blue-100 text-blue-800";
+    default:
+      return "bg-gray-100 text-gray-800";
+  }
+};
+
+
+const getStatusLabel = (
+  status: EventStatus | RsvpStatus | string,
+  t: (key: string) => string,
+) => {
   switch (status) {
     case EventStatus.PUBLISHED:
       return t("myEvents.status.published");
@@ -36,7 +52,7 @@ const getStatusLabel = (status: EventStatus | RsvpStatus | string, t: (key: stri
     case EventStatus.DRAFT:
       return t("myEvents.status.draft");
     case RsvpStatus.Registered:
-      return t("myEvents.status.going");
+      return t("myEvents.status.registered");
     case RsvpStatus.Interested:
       return t("myEvents.status.interested");
     case RsvpStatus.Waitlisted:
@@ -44,14 +60,28 @@ const getStatusLabel = (status: EventStatus | RsvpStatus | string, t: (key: stri
     default:
       return status;
   }
-}
+};
 
-export const StatusBadges: FC<{status?: EventStatus, userStatus?: RsvpStatus, className?: string}> = ({status, userStatus, className}) => {
+export const StatusBadges: FC<{
+  status?: EventStatus;
+  userStatus?: RsvpStatus;
+  role?: string;
+  className?: string;
+}> = ({ status, userStatus, role, className }) => {
   const { t } = useTranslation();
   return (
     <span className={className}>
-    {status && <Badge className={getBadgeByStatus(status)}>{getStatusLabel(status, t)}</Badge>}
-     {userStatus && <Badge className={getBadgeByStatus(userStatus) + " ml-2"}>{getStatusLabel(userStatus, t)}</Badge>}
+      {status && (
+        <Badge className={getBadgeByStatus(status)}>
+          {getStatusLabel(status, t)}
+        </Badge>
+      )}
+      {userStatus && (
+        <Badge className={getBadgeByStatus(userStatus) + " ml-2"}>
+          {getStatusLabel(userStatus, t)}
+        </Badge>
+      )}
+      {role && <Badge className={getBadgeByDancerRole(role) + " ml-2"}>{role}</Badge>}
     </span>
-  )  
+  );
 };

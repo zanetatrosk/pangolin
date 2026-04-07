@@ -30,6 +30,8 @@ export function EventDetail({ event }: EventDetailProps) {
 
   const isCancelled = basicInfo.status === EventStatus.CANCELLED;
 
+  debugger;
+
   return (
     <div className="min-h-screen bg-background pb-20">
       {/* Hero / Cover Image */}
@@ -55,7 +57,6 @@ export function EventDetail({ event }: EventDetailProps) {
                 <EventItemManageButtons eventId={event.id} eventStatus={basicInfo.status || ""}/>
               ) : (
                 <DetailButtons
-                  key={event.id + event.basicInfo.registrationStatus?.status}
                   rsvpData={{
                     id: event.basicInfo.registrationStatus?.id,
                     eventId: event.id,

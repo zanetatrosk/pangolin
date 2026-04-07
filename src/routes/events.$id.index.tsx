@@ -16,6 +16,7 @@ function RouteComponent() {
     queryKey: ["event", id],
     queryFn: () => getEventById(id),
   });
+  debugger;
   if (!event) {
     return null;
   }

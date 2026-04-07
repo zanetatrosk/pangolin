@@ -95,12 +95,13 @@ export const ReocurringEventCard: React.FC<{
                     </TableCell>
                     <TableCell>
                       <StatusBadges
-                        status={occurrence.status}
+                        status={isUserOrganizer ? occurrence.status : undefined}
                         userStatus={
                           cardType === EventCardType.GOING
                             ? occurrence.userStatus
                             : undefined
                         }
+                        role={occurrence.role?.name}
                       />
                     </TableCell>
                     <TableCell>

@@ -35,9 +35,9 @@ export const UserProfileDropdown: FC<UserProfileDropdownProps> = ({
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <button className="relative h-10 w-10 rounded-full overflow-hidden ring-offset-background transition-all hover:ring-2 hover:ring-ring hover:ring-offset-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+        <button className="relative rounded-full transition-normal hover:ring-2 hover:ring-ring hover:ring-offset-2 mx-1">
           <Avatar>
-            <AvatarImage src={data?.avatar?.url} alt={data?.avatar?.url} />
+            <AvatarImage src={data?.avatar?.url} alt={data?.avatar?.url} className="object-cover"/>
             <AvatarFallback>{getInitials(data?.firstName + " " + data?.lastName)}</AvatarFallback>
           </Avatar>
         </button>

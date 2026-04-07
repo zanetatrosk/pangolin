@@ -1,3 +1,4 @@
+import { EventMediaItem } from "@/features/newEvent/types";
 import { RegistrationModeEnum } from "../publish-actions/PublishEventOptions";
 
 export interface Registration {
@@ -5,7 +6,7 @@ export interface Registration {
   user: {
     userId: string;
     name: string;
-    avatar?: string;
+    avatar?: EventMediaItem;
   } | null;
   level?: string | null;
   role?: string | null;
@@ -16,7 +17,7 @@ export interface Attendee {
   name: string;
   userId?: string;
   role?: "Leader" | "Follower" | "Both" | undefined;
-  avatar?: string;
+  avatar?: EventMediaItem;
   level?: string | null;
 }
 

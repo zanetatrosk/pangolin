@@ -42,7 +42,7 @@ export const MobileStepper: React.FC<MobileStepperProps> = ({
 
   const moveToNextStep = () => {
     if (isLastStep) {
-      // Complete the form
+      setCurrentStep(0);
       onComplete?.({});
     } else {
       setCurrentStep((prev) => prev + 1);

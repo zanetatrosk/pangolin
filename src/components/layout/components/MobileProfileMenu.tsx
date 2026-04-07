@@ -7,6 +7,8 @@ import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import { getInitials } from "../utils/getInitials";
 import { useProfileMenu } from "../hooks/useProfileMenu";
+import { getUserById } from "@/services/user-api";
+import { useQuery } from "@tanstack/react-query";
 
 interface MobileProfileMenuProps {
   profileMenuItems: ProfileMenuItem[];
@@ -19,6 +21,11 @@ export const MobileProfileMenu: FC<MobileProfileMenuProps> = ({
 }) => {
   const { user } = useStore(authStore);
   const { handleMenuItemClick } = useProfileMenu();
+  const { data } = useQuery({
+    queryKey: ["profile", user?.id],
+    queryFn: () => getUserById(user?.id!),
+    enabled: !!user?.id,
+  })
 
   if (!user) return null;
 
@@ -31,11 +38,11 @@ export const MobileProfileMenu: FC<MobileProfileMenuProps> = ({
     <div className="flex flex-col gap-4">
       <div className="flex items-center gap-3 px-2">
         <Avatar className="h-12 w-12">
-          <AvatarImage src={user.avatar} alt={user.name} />
-          <AvatarFallback>{getInitials(user.name)}</AvatarFallback>
+          <AvatarImage src={data?.avatar?.url} alt={data?.avatar?.url} className="object-cover"/>
+          <AvatarFallback>{getInitials(data?.firstName + " " + data?.lastName)}</AvatarFallback>
         </Avatar>
         <div className="flex flex-col">
-          <p className="text-sm font-medium">{user.name}</p>
+          <p className="text-sm font-medium">{data?.firstName + " " + data?.lastName}</p>
           <p className="text-xs text-muted-foreground">{user.email}</p>
         </div>
       </div>

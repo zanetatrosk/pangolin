@@ -1,15 +1,17 @@
-import { HeadContent, Scripts, createRootRoute, Outlet } from "@tanstack/react-router";
+import {
+  HeadContent,
+  Scripts,
+  createRootRoute,
+  Outlet,
+} from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import { TanStackDevtools } from "@tanstack/react-devtools";
-import {
-  QueryClient,
-  QueryClientProvider,
-} from '@tanstack/react-query'
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import { Header } from "@/components/layout/Header";
 import appCss from "../styles.css?url";
 
-import "@/lib/i18n"; 
+import "@/lib/i18n";
 import { Footer } from "@/components/layout/Footer";
 import { AuthProvider } from "@/features/auth/AuthProvider";
 import { Toaster } from "@/components/ui/sonner";
@@ -38,26 +40,25 @@ export const Route = createRootRoute({
   shellComponent: RootComponent,
 });
 
-const queryClient = new QueryClient()
+const queryClient = new QueryClient();
 
-function RootComponent() {  
+function RootComponent() {
   return (
     <html lang="en">
-      <head>
-        <HeadContent />
-      </head>
-      <body className="flex flex-col min-h-screen">
-        <QueryClientProvider client={queryClient}>
+      <QueryClientProvider client={queryClient}>
+        <head>
+          <HeadContent />
+        </head>
+        <body className="flex flex-col min-h-screen">
           <AuthProvider>
             <Header />
             <div className="grow">
-              <Toaster position="top-center"/>
+              <Toaster position="top-center" />
               <Outlet />
             </div>
             <Footer />
           </AuthProvider>
-        </QueryClientProvider>
-        <TanStackDevtools
+          <TanStackDevtools
             config={{
               position: "bottom-right",
             }}
@@ -68,8 +69,9 @@ function RootComponent() {
               },
             ]}
           />
-        <Scripts />
-      </body>
+          <Scripts />
+        </body>
+      </QueryClientProvider>
     </html>
   );
 }

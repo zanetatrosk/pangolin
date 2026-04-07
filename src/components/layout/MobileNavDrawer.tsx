@@ -3,7 +3,6 @@ import { Logo } from "./Logo";
 import { Menu } from "lucide-react";
 import * as React from "react";
 import { Accordion } from "@/components/ui/accordion";
-import { LanguageSwitcher } from "./LanguageSwitcher";
 import {
   DrawerTrigger,
   DrawerContent,

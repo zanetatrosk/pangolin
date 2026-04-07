@@ -74,7 +74,7 @@ export function MyEventsPage() {
     <div className="container mx-auto max-w-6xl p-4 md:p-6 mb-12">
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between mb-6">
         <h1 className="text-2xl md:text-3xl font-bold">{t("nav.myEvents")}</h1>
-        <Button onClick={() => navigate({to: PATHS.EVENTS.NEW_EVENT})} className="w-full md:w-auto">
+        <Button onClick={() => navigate({to: PATHS.EVENTS.NEW_EVENT})} className="w-full md:w-auto hidden md:inline-flex">
           <CalendarPlus className="h-4 w-4 mr-2" />
           {t("myEvents.createNewEvent")}
         </Button>

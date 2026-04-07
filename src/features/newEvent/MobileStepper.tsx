@@ -28,11 +28,12 @@ export const MobileStepper: React.FC<MobileStepperProps> = ({
 }) => {
   const { t } = useTranslation();
   const [currentStep, setCurrentStep] = useState(0);
+  const safeCurrentStep = Math.min(currentStep, Math.max(steps.length - 1, 0));
 
-  const progress = ((currentStep + 1) / steps.length) * 100;
-  const currentStepConfig = steps[currentStep];
-  const isFirstStep = currentStep === 0;
-  const isLastStep = currentStep === steps.length - 1;
+  const progress = steps.length > 0 ? ((safeCurrentStep + 1) / steps.length) * 100 : 0;
+  const currentStepConfig = steps[safeCurrentStep];
+  const isFirstStep = safeCurrentStep === 0;
+  const isLastStep = safeCurrentStep === steps.length - 1;
 
   const moveToPreviousStep = () => {
     if (currentStep > 0) {
@@ -85,6 +86,7 @@ export const MobileStepper: React.FC<MobileStepperProps> = ({
       <div className="sticky bottom-0 z-10 bg-background shadow-lg">
         <div className="p-4 flex gap-3">
           <Button
+            type="button"
             variant="outline"
             onClick={moveToPreviousStep}
             disabled={isFirstStep}
@@ -95,6 +97,7 @@ export const MobileStepper: React.FC<MobileStepperProps> = ({
           </Button>
           
           <Button
+            type="button"
             onClick={moveToNextStep}
             className="flex-1"
           >

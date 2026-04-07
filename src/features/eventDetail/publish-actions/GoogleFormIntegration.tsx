@@ -51,8 +51,7 @@ export const GoogleFormIntegration: FC<GoogleFormIntegrationProps> = ({ value, o
     <div className="space-y-4">
       <Card>
         <CardHeader>
-          <CardTitle>{t('eventDetail.googleFormIntegration.title')}</CardTitle>
-          <CardDescription>
+          <CardDescription className='break-all'>
             {t('eventDetail.googleFormIntegration.description')}
           </CardDescription>
         </CardHeader>
@@ -60,11 +59,12 @@ export const GoogleFormIntegration: FC<GoogleFormIntegrationProps> = ({ value, o
           {!accessStatus?.hasAccess ? (
             <Alert>
               <AlertCircle className="h-4 w-4" />
-              <AlertDescription className="flex items-center justify-between">
+              <AlertDescription className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                 <span>{t('eventDetail.googleFormIntegration.needsAccess')}</span>
                 <Button 
                   onClick={handleGrantAccess} 
                   size="sm"
+                  className="w-full sm:w-auto"
                 >
                   {t('eventDetail.googleFormIntegration.grantAccess')}
                 </Button>
@@ -84,7 +84,7 @@ export const GoogleFormIntegration: FC<GoogleFormIntegrationProps> = ({ value, o
               value={value}
               onChange={(e) => onChange?.(e.target.value)}
               disabled={!accessStatus?.hasAccess}
-              className="flex-1"
+              className="w-full"
             />
           
         </CardContent>

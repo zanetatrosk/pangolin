@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import { EventMediaItem } from "@/features/newEvent/types";
 import { Play, X, Trash2 } from "lucide-react";
 import { FC, useState } from "react";
@@ -38,7 +39,8 @@ export const Media: FC<{
               </>
             )}
             {allowEdit && onDelete && (
-              <button
+              <Button
+                variant={"ghost"}
                 onClick={(e) => {
                   e.stopPropagation();
                   onDelete(item);
@@ -46,7 +48,7 @@ export const Media: FC<{
                 className="absolute top-2 right-2 p-2 bg-black/50 hover:bg-red-500 text-white rounded-full opacity-0 group-hover:opacity-100 transition-all duration-200 z-10"
               >
                 <Trash2 className="w-4 h-4" />
-              </button>
+              </Button>
             )}
           </div>
         ))}
@@ -57,12 +59,13 @@ export const Media: FC<{
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 p-4 backdrop-blur-sm"
           onClick={() => setSelectedMedia(null)}
         >
-          <button
+          <Button
+            variant={"ghost"}
             onClick={() => setSelectedMedia(null)}
             className="absolute top-4 right-4 p-2 text-white/70 hover:text-white transition-colors"
           >
             <X className="w-8 h-8" />
-          </button>
+          </Button>
 
           <div
             className="relative max-w-5xl max-h-[90vh] w-full h-full flex items-center justify-center"

@@ -427,7 +427,7 @@
         },
         "googleFormIntegration": {
             "title": "Google Forms Integration",
-            "description": "Import registration data from a Google Form",
+            "description": "Import registration data from a Google Form using the form ID. The ID can be found in the form's URL (e.g., for https://docs.google.com/forms/d/e/FORM_ID/viewform, the form ID is FORM_ID). After publishing, registration data will be synced automatically every hour, or you can trigger a manual sync whenever needed.",
             "needsAccess": "You need to grant access to Google Forms to use this feature.",
             "grantAccess": "Grant Access",
             "accessGranted": "Google Forms access granted",

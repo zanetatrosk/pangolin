@@ -83,19 +83,28 @@ export const ConfirmActionDialog: React.FC<ConfirmActionDialogProps> = ({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className={dialogContent?.size === "lg" ? "sm:max-w-2xl" : ""}>
+      <DialogContent
+        className={
+          dialogContent?.size === "lg"
+            ? "w-[calc(100vw-1.5rem)] max-w-[calc(100vw-1.5rem)] sm:max-w-[95vw] md:max-w-2xl max-h-[90vh] overflow-y-auto overflow-x-hidden"
+            : "w-[calc(100vw-1.5rem)] max-w-[calc(100vw-1.5rem)] sm:max-w-md max-h-[90vh] overflow-y-auto overflow-x-hidden"
+        }
+      >
         {dialogContent && (
           <>
-            <DialogHeader>
-              <DialogTitle>{dialogContent.title}</DialogTitle>
-              <DialogDescription>{dialogContent.description}</DialogDescription>
+            <DialogHeader className="space-y-2">
+              <DialogTitle className="wrap-break-word">{dialogContent.title}</DialogTitle>
+              <DialogDescription className="whitespace-normal wrap-break-word">
+                {dialogContent.description}
+              </DialogDescription>
             </DialogHeader>
-              {renderComponent()}
-            <DialogFooter>
+            {renderComponent()}
+            <DialogFooter className="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
               <Button
                 variant="outline"
                 onClick={() => onOpenChange(false)}
                 disabled={isLoading}
+                className="w-full sm:w-auto"
               >
                 {t("eventDetail.confirmActionDialog.cancel")}
               </Button>
@@ -103,6 +112,7 @@ export const ConfirmActionDialog: React.FC<ConfirmActionDialogProps> = ({
                 variant={dialogContent.variant}
                 onClick={() => onConfirm(publishData)}
                 disabled={isLoading}
+                className="w-full sm:w-auto"
               >
                 {isLoading ? (
                   <>

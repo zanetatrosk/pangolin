@@ -28,7 +28,7 @@ export const PublishEventOptions: React.FC<PublishEventOptionsProps> = ({
   onChange,
 }) => {
   const { t } = useTranslation();
-  
+
   const publishedEventOptions = [
     {
       value: RegistrationModeEnum.OPEN,
@@ -52,17 +52,21 @@ export const PublishEventOptions: React.FC<PublishEventOptionsProps> = ({
     onChange({ ...value, registrationMode: mode });
   };
 
-
   return (
     <div className="space-y-4 py-4">
       <div>
-        <h4 className="font-medium mb-3">{t("eventDetail.publishOptions.registrationMode")}</h4>
+        <h4 className="font-medium mb-3">
+          {t("eventDetail.publishOptions.registrationMode")}
+        </h4>
         <RadioGroup
           value={value.registrationMode}
           onValueChange={onRegistrationModeChange}
         >
           {publishedEventOptions.map((option) => (
-            <div key={option.value} className="flex items-start space-x-2 mb-3">
+            <div
+              key={option.value}
+              className="flex flex-col gap-2 rounded-lg border p-3 sm:flex-row sm:items-start sm:gap-3 sm:rounded-none sm:border-0 sm:p-0"
+            >
               <RadioGroupItem value={option.value} id={option.value} />
               <div className="grid gap-1.5 leading-none">
                 <Label htmlFor={option.value} className="font-medium">
@@ -76,17 +80,17 @@ export const PublishEventOptions: React.FC<PublishEventOptionsProps> = ({
           ))}
         </RadioGroup>
         <div className="my-4">
-          {
-            value.registrationMode === RegistrationModeEnum.GOOGLE_FORM && (
-              <GoogleFormIntegration
-                value={value.formId || ""}
-                onChange={(formId) => onChange({ ...value, formId })}
-              />
-            )
-          }
+          {value.registrationMode === RegistrationModeEnum.GOOGLE_FORM && (
+            <GoogleFormIntegration
+              value={value.formId || ""}
+              onChange={(formId) => onChange({ ...value, formId })}
+            />
+          )}
         </div>
         <div className="space-y-4">
-          <h4 className="font-medium mb-3">{t("eventDetail.publishOptions.additionalFeatures")}</h4>
+          <h4 className="font-medium mb-3">
+            {t("eventDetail.publishOptions.additionalFeatures")}
+          </h4>
           <FieldGroup>
             <Field orientation="horizontal">
               <Checkbox

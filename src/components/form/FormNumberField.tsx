@@ -3,6 +3,7 @@ import { FormTextFieldProps } from "./FormTextField";
 import { useFieldContext } from "@/lib/form-context";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
+import { getFirstErrorMessage } from "./getErrorMessage";
 
 interface FormNumberFieldProps extends Omit<FormTextFieldProps, "type"> {
   min?: string;
@@ -21,7 +22,8 @@ export const FormNumberField: FC<FormNumberFieldProps> = ({
 }) => {
   const field = useFieldContext<number>();
   const errors = field.state.meta.errors || [];
-  const hasError = errors.length > 0;
+  const firstErrorMessage = getFirstErrorMessage(errors);
+  const hasError = Boolean(firstErrorMessage);
   const id = field.name;
 
   return (
@@ -51,7 +53,7 @@ export const FormNumberField: FC<FormNumberFieldProps> = ({
           {...inputProps}
         />
       </div>
-      {hasError && <p className="text-sm text-destructive">{errors[0]}</p>}
+      {hasError && <p className="text-sm text-destructive">{firstErrorMessage}</p>}
     </div>
   );
 };

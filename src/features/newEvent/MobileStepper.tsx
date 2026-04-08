@@ -4,6 +4,8 @@ import { Badge } from "@/components/ui/badge";
 import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { AlertCircle } from "lucide-react";
 
 export interface StepComponentProps {
   onValidate?: (isValid: boolean) => void;
@@ -20,11 +22,17 @@ export interface Step {
 interface MobileStepperProps {
   steps: Step[];
   onComplete?: (data: any) => void;
+  showAlert?: boolean;
+  alertTitle?: string;
+  alertMessage?: string;
 }
 
 export const MobileStepper: React.FC<MobileStepperProps> = ({ 
   steps, 
-  onComplete 
+  onComplete,
+  showAlert,
+  alertTitle,
+  alertMessage,
 }) => {
   const { t } = useTranslation();
   const [currentStep, setCurrentStep] = useState(0);
@@ -81,6 +89,20 @@ export const MobileStepper: React.FC<MobileStepperProps> = ({
       <div className="flex-1 overflow-y-auto">
         {currentStepConfig.component()}
       </div>
+
+      {showAlert && isLastStep && (
+        <div className="px-4 pb-4">
+          <Alert variant="destructive">
+            <AlertCircle className="h-4 w-4" />
+            <AlertTitle>
+              {alertTitle ?? t("newEvent.stepper.errorTitle", { defaultValue: "Please review required fields" })}
+            </AlertTitle>
+            <AlertDescription>
+              {alertMessage ?? t("newEvent.stepper.errorMessage")}
+            </AlertDescription>
+          </Alert>
+        </div>
+      )}
 
       {/* Footer with Navigation */}
       <div className="sticky bottom-0 z-10 bg-background shadow-lg">

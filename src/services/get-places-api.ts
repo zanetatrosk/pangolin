@@ -30,6 +30,7 @@ export const getPlaces = async (query: string, layers: string[], showLabels:(pro
                 state: props.state || "",
                 postalCode: props.postcode || "",
                 country: props.country || "",
+                county: props.county || "",
                 [props.osm_value]: props.name || "",
             },
         };

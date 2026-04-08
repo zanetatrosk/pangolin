@@ -160,6 +160,22 @@
             "currency": "Currency",
             "currencyPlaceholder": "Select currency"
         },
+        "validation": {
+            "eventName": "Event name is required",
+            "eventNameLength": "Event name must be at least 3 characters",
+            "city": "City is required",
+            "country": "Country is required",
+            "startDateRequired": "Start date is required",
+            "timeRequired": "Time is required",
+            "startDateFuture": "Start date must be today or later",
+            "endDateFuture": "End date must be in the future",
+            "endDateAfterStartDate": "End date must be after the start date",
+            "recurrenceType": "Recurrence pattern is required for recurring events",
+            "recurrenceEndDateRequired": "Recurrence end date is required for recurring events",
+            "priceRequiredWhenCurrencyIsSet": "Price is required when currency is selected",
+            "currencyRequiredWhenPriceIsSet": "Currency is required when price is set",
+            "facebookEventUrl": "Facebook Event URL must be a valid URL"
+        },
         "location": {
             "label": "Location",
             "searchPlaceholder": "Search for a venue...",

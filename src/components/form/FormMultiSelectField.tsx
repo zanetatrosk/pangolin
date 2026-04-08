@@ -8,6 +8,7 @@ import {
   MultiSelectItem,
 } from "@/components/ui/multi-select";
 import { useFieldContext } from "@/lib/form-context";
+import { getFirstErrorMessage } from "./getErrorMessage";
 
 export interface MultiSelectOption {
   id: string;
@@ -29,7 +30,8 @@ export const FormMultiSelectField = ({
 }: FormMultiSelectFieldProps) => {
   const field = useFieldContext<string[]>();
   const errors = field.state.meta.errors || [];
-  const hasError = errors.length > 0;
+  const firstErrorMessage = getFirstErrorMessage(errors);
+  const hasError = Boolean(firstErrorMessage);
   const id = field.name;
 
   return (
@@ -58,9 +60,7 @@ export const FormMultiSelectField = ({
           </MultiSelectGroup>
         </MultiSelectContent>
       </MultiSelect>
-      {hasError && (
-        <p className="text-sm text-destructive">{errors[0]}</p>
-      )}
+      {hasError && <p className="text-sm text-destructive">{firstErrorMessage}</p>}
     </div>
   );
 };

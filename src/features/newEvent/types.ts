@@ -1,11 +1,11 @@
 export interface Location {
-  name: string;
-  street: string;
+  name?: string;
+  street?: string;
   city: string;
   county?: string;
-  state: string;
+  state?: string;
   country: string;
-  postalCode: string;
+  postalCode?: string;
   houseNumber?: string;
 }
 

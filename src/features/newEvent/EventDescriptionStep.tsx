@@ -29,6 +29,7 @@ export const EventDescriptionStep = withForm({
                     placeholder={t("newEvent.description.placeholder")}
                     value={field.state.value}
                     onChange={(e) => field.handleChange(e.target.value)}
+                    className="min-h-36"
                     rows={6}
                   />
                 </div>

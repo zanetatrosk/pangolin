@@ -1,5 +1,6 @@
 import { formOptions } from "@tanstack/react-form";
 import { DanceEventCreation } from "./types";
+import { newEventSchema } from "./validation";
 
 const eventFormDefaults: DanceEventCreation = {
   basicInfo: {
@@ -39,4 +40,9 @@ const eventFormDefaults: DanceEventCreation = {
 
 export const eventFormOpts = formOptions({
   defaultValues: eventFormDefaults,
+  validators: {
+    onChange: newEventSchema,
+  },
 });
+
+export type EventFormOptions = typeof eventFormOpts;

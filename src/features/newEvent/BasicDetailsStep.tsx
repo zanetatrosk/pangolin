@@ -31,12 +31,6 @@ export const BasicDetails = withForm({
             {/* Event Name */}
             <form.AppField
               name="basicInfo.eventName"
-              validators={{
-                onChange: ({ value }) =>
-                  !value || value.length < 3
-                    ? t("newEvent.basicInfo.eventNameError")
-                    : undefined,
-              }}
             >
               {(field) => (
                 <field.TextField
@@ -56,10 +50,6 @@ export const BasicDetails = withForm({
             <FormGrid columns={2}>
               <form.AppField
                 name="basicInfo.date"
-                validators={{
-                  onChange: ({ value }) =>
-                    !value ? t("newEvent.basicInfo.dateRequired") : undefined,
-                }}
               >
                 {(field) => (
                   <field.TextField
@@ -90,10 +80,6 @@ export const BasicDetails = withForm({
 
               <form.AppField
                 name="basicInfo.time"
-                validators={{
-                  onChange: ({ value }) =>
-                    !value ? t("newEvent.basicInfo.timeRequired") : undefined,
-                }}
               >
                 {(field) => (
                   <field.TextField
@@ -123,12 +109,6 @@ export const BasicDetails = withForm({
                   <FormGrid columns={2}>
                     <form.AppField
                       name="basicInfo.recurrenceType"
-                      validators={{
-                        onChange: ({ value }) =>
-                          !value
-                            ? t("newEvent.basicInfo.recurrenceTypeError")
-                            : undefined,
-                      }}
                     >
                       {(field) => (
                         <field.SelectField
@@ -145,12 +125,6 @@ export const BasicDetails = withForm({
                     {/* Recurrence End Date */}
                     <form.AppField
                       name="basicInfo.recurrenceEndDate"
-                      validators={{
-                        onChange: ({ value }) =>
-                          !value
-                            ? t("newEvent.basicInfo.recurrenceEndDateRequired")
-                            : undefined,
-                      }}
                     >
                       {(field) => (
                         <field.TextField

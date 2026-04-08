@@ -7,6 +7,7 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 import { useFieldContext } from "@/lib/form-context";
+import { getFirstErrorMessage } from "./getErrorMessage";
 
 export interface SelectOption {
   value: string;
@@ -38,7 +39,8 @@ export const FormSelectField = <T = SelectOption>({
 }: FormSelectFieldProps<T>) => {
   const field = useFieldContext<string | undefined>();
   const errors = field.state.meta.errors || [];
-  const hasError = errors.length > 0;
+  const firstErrorMessage = getFirstErrorMessage(errors);
+  const hasError = Boolean(firstErrorMessage);
   const id = field.name;
 
   const handleChange = (value: string) => {
@@ -80,7 +82,7 @@ export const FormSelectField = <T = SelectOption>({
           })}
         </SelectContent>
       </Select>
-      {hasError && <p className="text-sm text-destructive">{errors[0]}</p>}
+      {hasError && <p className="text-sm text-destructive">{firstErrorMessage}</p>}
     </div>
   );
 };

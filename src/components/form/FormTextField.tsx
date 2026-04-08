@@ -3,6 +3,7 @@ import { Label } from "@/components/ui/label";
 import { LucideIcon } from "lucide-react";
 import { ComponentProps } from "react";
 import { useFieldContext } from "@/lib/form-context";
+import { getFirstErrorMessage } from "./getErrorMessage";
 
 export interface FormTextFieldProps {
   label: string;
@@ -28,7 +29,8 @@ export const FormTextField = ({
 }: FormTextFieldProps) => {
   const field = useFieldContext<string>();
   const errors = field.state.meta.errors || [];
-  const hasError = errors.length > 0;
+  const firstErrorMessage = getFirstErrorMessage(errors);
+  const hasError = Boolean(firstErrorMessage);
   const id = field.name;
 
   return (
@@ -56,7 +58,7 @@ export const FormTextField = ({
           {...inputProps}
         />
       </div>
-      {hasError && <p className="text-sm text-destructive">{errors[0]}</p>}
+      {hasError && <p className="text-sm text-destructive">{firstErrorMessage}</p>}
     </div>
   );
 };

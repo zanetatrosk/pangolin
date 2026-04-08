@@ -1,5 +1,6 @@
 import { EventDetailData } from "@/features/eventDetail/types";
 import { FormParent } from "@/features/newEvent/FormParent";
+import { eventFormOpts } from "@/features/newEvent/FormOptions";
 import { DanceEventCreation } from "@/features/newEvent/types";
 import { PATHS } from "@/paths";
 import { getEventById, updateEventById } from "@/services/events-api";
@@ -18,15 +19,15 @@ const eventDetailDataToDanceEventCreation = (
   return {
     basicInfo: {
       eventName: event.basicInfo?.eventName || "",
-      location: event.basicInfo?.location || {
-        name: "",
-        street: "",
-        city: "",
-        state: "",
-        postalCode: "",
-        houseNumber: "",
-        country: "",
-        county: "",
+      location: {
+        name: event.basicInfo?.location.name || "",
+        street: event.basicInfo?.location.street || "",
+        city: event.basicInfo?.location.city || "",
+        state: event.basicInfo?.location.state || "",
+        postalCode: event.basicInfo?.location.postalCode || "",
+        houseNumber: event.basicInfo?.location.houseNumber || "",
+        country: event.basicInfo?.location.country || "",
+        county: event.basicInfo?.location.county || "",
       },
       date: event.basicInfo?.date || "",
       time: event.basicInfo?.time || "",
@@ -75,13 +76,14 @@ function RouteComponent() {
     },
   });
 
-  const eventFormOpts = {
+  const editEventFormOpts = {
+    ...eventFormOpts,
     defaultValues: eventDetailDataToDanceEventCreation(event),
   };
 
   return (
     <>
-      <FormParent eventFormOpts={eventFormOpts} eventMutation={eventMutation} isEditing={true} />
+      <FormParent eventFormOpts={editEventFormOpts} eventMutation={eventMutation} isEditing={true} />
     </>
   );
 }

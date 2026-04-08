@@ -413,7 +413,7 @@ function scrollIntoStepperPanel(
 }
 
 const useStepChildren = (children: React.ReactNode) => {
-  return React.useMemo(() => extractChildren(children), [children]);
+  return extractChildren(children);
 };
 
 const extractChildren = (children: React.ReactNode) => {

@@ -1,4 +1,4 @@
-import { FC, useMemo, useState } from "react";
+import { FC, useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import {
   useReactTable,
@@ -68,89 +68,83 @@ export const RegistrationTable: FC<{ data: RegistrationFormData; eventId: string
   const [rowSelection, setRowSelection] = useState({});
 
   // Transform registrations into table-friendly format
-  const tableData: TableRowData[] = useMemo(() => {
-    return data.registrations.map((reg) => {
-      const row: TableRowData = {
-        id: reg.id,
-        userId: reg.user.userId,
-        q_status: reg.status, // Use q_ prefix for consistency
-      };
+  const tableData: TableRowData[] = data.registrations.map((reg) => {
+    const row: TableRowData = {
+      id: reg.id,
+      userId: reg.user.userId,
+      q_status: reg.status, // Use q_ prefix for consistency
+    };
 
-      // Add answers as dynamic fields
-      reg.data.forEach((answer) => {
-        row[`q_${answer.id}`] = Array.isArray(answer.value)
-          ? answer.value.join(", ")
-          : answer.value;
-      });
-
-      return row;
+    // Add answers as dynamic fields
+    reg.data.forEach((answer) => {
+      row[`q_${answer.id}`] = Array.isArray(answer.value)
+        ? answer.value.join(", ")
+        : answer.value;
     });
-  }, [data.registrations]);
+
+    return row;
+  });
 
   // Create columns dynamically based on form questions
-  const columns = useMemo(() => {
-    const cols = [
-      // Checkbox column
-      columnHelper.display({
-        id: "select",
-        header: ({ table }) => (
-          <Checkbox
-            checked={
-              table.getIsAllPageRowsSelected() ||
-              (table.getIsSomePageRowsSelected() && "indeterminate")
-            }
-            onCheckedChange={(value) =>
-              table.toggleAllPageRowsSelected(!!value)
-            }
-            aria-label={t("eventStats.table.selectAll")}
-          />
-        ),
-        cell: ({ row }) => (
-          <Checkbox
-            checked={row.getIsSelected()}
-            onCheckedChange={(value) => row.toggleSelected(!!value)}
-            aria-label={t("eventStats.table.selectRow")}
-          />
-        ),
-        enableSorting: false,
-        enableHiding: false,
-      }),
-      ...createHeaders(data, t).map((header) =>
-        columnHelper.accessor((row) => row[`q_${header.id}`], {
-          id: `q_${header.id}`,
-          header: header.question,
-          cell: (info) => {
-            const value = info.getValue() || "-";
+  const columns = [
+    // Checkbox column
+    columnHelper.display({
+      id: "select",
+      header: ({ table }) => (
+        <Checkbox
+          checked={
+            table.getIsAllPageRowsSelected() ||
+            (table.getIsSomePageRowsSelected() && "indeterminate")
+          }
+          onCheckedChange={(value) =>
+            table.toggleAllPageRowsSelected(!!value)
+          }
+          aria-label={t("eventStats.table.selectAll")}
+        />
+      ),
+      cell: ({ row }) => (
+        <Checkbox
+          checked={row.getIsSelected()}
+          onCheckedChange={(value) => row.toggleSelected(!!value)}
+          aria-label={t("eventStats.table.selectRow")}
+        />
+      ),
+      enableSorting: false,
+      enableHiding: false,
+    }),
+    ...createHeaders(data, t).map((header) =>
+      columnHelper.accessor((row) => row[`q_${header.id}`], {
+        id: `q_${header.id}`,
+        header: header.question,
+        cell: (info) => {
+          const value = info.getValue() || "-";
 
-            if (isNameHeader(header) && info.row.original.userId) {
-              return (
-                <div className="flex items-center gap-2">
-                  <span>{String(value)}</span>
-                  <Button
-                    type="button"
-                    size="icon"
-                    className="h-6 w-6"
-                    aria-label={t("eventStats.table.viewProfile")}
-                    onClick={(event) => {
-                      event.stopPropagation();
-                      navigate({ to: PATHS.PROFILE.VIEW(info.row.original.userId!) });
-                    }}
-                  > 
-                    <UserRound className="h-4 w-4" />
-                  </Button>
-                </div>
-              );
-            }
+          if (isNameHeader(header) && info.row.original.userId) {
+            return (
+              <div className="flex items-center gap-2">
+                <span>{String(value)}</span>
+                <Button
+                  type="button"
+                  size="icon"
+                  className="h-6 w-6"
+                  aria-label={t("eventStats.table.viewProfile")}
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    navigate({ to: PATHS.PROFILE.VIEW(info.row.original.userId!) });
+                  }}
+                > 
+                  <UserRound className="h-4 w-4" />
+                </Button>
+              </div>
+            );
+          }
 
-            return value;
-          },
-          meta: header,
-        })
-      ), 
-    ];
-  
-    return cols;
-  }, [data, navigate, t]);
+          return value;
+        },
+        meta: header,
+      })
+    ), 
+  ];
 
   const table = useReactTable({
     data: tableData,

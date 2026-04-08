@@ -5,7 +5,7 @@ import {
   CommandInput,
 } from "./command";
 import { Command as CommandPrimitive } from "cmdk";
-import { useState, useRef, useCallback, type KeyboardEvent } from "react";
+import { useState, useRef, type KeyboardEvent } from "react";
 
 import { Skeleton } from "./skeleton";
 
@@ -49,63 +49,57 @@ export const AutoComplete = <T,>({
   const [selected, setSelected] = useState<T | undefined>(value);
 
   // Default getter functions for ComboboxOption compatibility
-  const getOptionValue = useCallback((option: T): string => {
+  const getOptionValue = (option: T): string => {
     if (getValue) return getValue(option);
     if (typeof option === 'object' && option !== null && 'value' in option) {
       return String((option as any).value);
     }
     return String(option);
-  }, [getValue]);
+  };
 
-  const getOptionLabel = useCallback((option: T): string => {
+  const getOptionLabel = (option: T): string => {
     if (getLabel) return getLabel(option);
     if (typeof option === 'object' && option !== null && 'label' in option) {
       return String((option as any).label);
     }
     return String(option);
-  }, [getLabel]);
+  };
 
 
-  const handleKeyDown = useCallback(
-    (event: KeyboardEvent<HTMLDivElement>) => {
-      const input = searchValue;
-      if (!input) {
-        return;
+  const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+    const input = searchValue;
+    if (!input) {
+      return;
+    }
+
+    // Keep the options displayed when the user is typing
+    if (!isOpen) {
+      setOpen(true);
+    }
+
+    // This is not a default behaviour of the <input /> field
+    if (event.key === "Enter" && input !== "") {
+      const optionToSelect = options.find(
+        (option) => getOptionLabel(option) === input
+      );
+      if (optionToSelect) {
+        setSelected(optionToSelect);
+        onValueChange?.(optionToSelect);
       }
+    }
+  };
 
-      // Keep the options displayed when the user is typing
-      if (!isOpen) {
-        setOpen(true);
-      }
-
-      // This is not a default behaviour of the <input /> field
-      if (event.key === "Enter" && input !== "") {
-        const optionToSelect = options.find(
-          (option) => getOptionLabel(option) === input
-        );
-        if (optionToSelect) {
-          setSelected(optionToSelect);
-          onValueChange?.(optionToSelect);
-        }
-      }
-    },
-    [isOpen, options, onValueChange, getOptionLabel, searchValue]
-  );
-
-  const handleBlur = useCallback(() => {
+  const handleBlur = () => {
     setOpen(false);
-  }, []);
+  };
 
-  const handleSelectOption = useCallback(
-    (selectedOption: T) => {
-      setSelected(selectedOption);
-      onValueChange?.(selectedOption);
-      onSearchChange?.(getOptionLabel(selectedOption));
-      setOpen(false);
-      console.log("Option selected:", selectedOption);
-    },
-    [onValueChange, onSearchChange, getOptionLabel]
-  );
+  const handleSelectOption = (selectedOption: T) => {
+    setSelected(selectedOption);
+    onValueChange?.(selectedOption);
+    onSearchChange?.(getOptionLabel(selectedOption));
+    setOpen(false);
+    console.log("Option selected:", selectedOption);
+  };
 
   return (
     <CommandPrimitive onKeyDown={handleKeyDown}>

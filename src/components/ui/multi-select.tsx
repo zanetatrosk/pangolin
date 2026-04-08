@@ -19,7 +19,6 @@ import {
 } from "@/components/ui/popover"
 import {
   createContext,
-  useCallback,
   useContext,
   useEffect,
   useRef,
@@ -71,12 +70,12 @@ export function MultiSelect({
     onValuesChange?.([...getNewSet(selectedValues)])
   }
 
-  const onItemAdded = useCallback((value: string, label: ReactNode) => {
+  function onItemAdded(value: string, label: ReactNode) {
     setItems(prev => {
       if (prev.get(value) === label) return prev
       return new Map(prev).set(value, label)
     })
-  }, [])
+  }
 
   return (
     <MultiSelectContext
@@ -145,7 +144,7 @@ export function MultiSelectValue({
     overflowBehavior === "wrap" ||
     (overflowBehavior === "wrap-when-open" && open)
 
-  const checkOverflow = useCallback(() => {
+  const checkOverflow = () => {
     if (valueRef.current == null) return
 
     const containerElement = valueRef.current
@@ -167,30 +166,32 @@ export function MultiSelectValue({
       overflowElement?.style.removeProperty("display")
     }
     setOverflowAmount(amount)
+  }
+
+  useEffect(() => {
+    const node = valueRef.current
+    if (!node) return
+
+    const mutationObserver = new MutationObserver(checkOverflow)
+    const observer = new ResizeObserver(debounce(checkOverflow, 100))
+
+    mutationObserver.observe(node, {
+      childList: true,
+      attributes: true,
+      attributeFilter: ["class", "style"],
+    })
+    observer.observe(node)
+    checkOverflow()
+
+    return () => {
+      observer.disconnect()
+      mutationObserver.disconnect()
+    }
   }, [])
 
-  const handleResize = useCallback(
-    (node: HTMLDivElement) => {
-      valueRef.current = node
-
-      const mutationObserver = new MutationObserver(checkOverflow)
-      const observer = new ResizeObserver(debounce(checkOverflow, 100))
-
-      mutationObserver.observe(node, {
-        childList: true,
-        attributes: true,
-        attributeFilter: ["class", "style"],
-      })
-      observer.observe(node)
-
-      return () => {
-        observer.disconnect()
-        mutationObserver.disconnect()
-        valueRef.current = null
-      }
-    },
-    [checkOverflow],
-  )
+  useEffect(() => {
+    checkOverflow()
+  }, [selectedValues, shouldWrap, items])
 
   if (selectedValues.size === 0 && placeholder) {
     return (
@@ -203,7 +204,7 @@ export function MultiSelectValue({
   return (
     <div
       {...props}
-      ref={handleResize}
+      ref={valueRef}
       className={cn(
         "flex w-full gap-1.5 overflow-hidden",
         shouldWrap && "h-full flex-wrap",

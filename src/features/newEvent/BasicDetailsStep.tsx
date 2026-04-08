@@ -192,6 +192,10 @@ export const BasicDetails = withForm({
                     options={currencyOptions}
                     getValue={(item) => item.code}
                     getLabel={(item) => `${item.code} - ${item.name}`}
+                    allowClear
+                    clearLabel={t("newEvent.basicInfo.currencyClear", {
+                      defaultValue: "No currency",
+                    })}
                   />
                 )}
               </form.AppField>

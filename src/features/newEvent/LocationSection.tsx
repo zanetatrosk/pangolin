@@ -3,6 +3,8 @@ import { useQuery } from "@tanstack/react-query";
 import { useDebounce } from "@uidotdev/usehooks";
 import { getPlaces, PlaceOption } from "@/services/get-places-api";
 import { FormGrid } from "@/components/form";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
 import { withForm } from "@/lib/form";
 import { eventFormOpts } from "./FormOptions";
 import { useTranslation } from "react-i18next";
@@ -76,6 +78,26 @@ export const LocationSection = withForm({
               />
             )}
           </form.AppField>
+        </div>
+
+        <div className="my-4 flex items-start">
+          <Checkbox
+            id="manual-location-entry"
+            checked={showLocationFields}
+            onCheckedChange={(checked) =>
+              setShowLocationFields(checked === true)
+            }
+          />
+          <div className="space-y-1 ml-2">
+            <Label
+              htmlFor="manual-location-entry"
+              className="cursor-pointer text-sm font-medium leading-none"
+            >
+              {t("newEvent.location.manualEntry", {
+                defaultValue: "Enter location manually",
+              })}
+            </Label>
+          </div>
         </div>
 
         {/* Location Details - shown after selecting from search */}

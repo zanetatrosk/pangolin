@@ -20,7 +20,9 @@ export interface FormSelectFieldProps<T = SelectOption> {
   options: T[];
   getValue?: (item: T) => string;
   getLabel?: (item: T) => string;
-  onValueChange?: (value: string) => void;
+  allowClear?: boolean;
+  clearLabel?: string;
+  onValueChange?: (value: string | undefined) => void;
 }
 
 export const FormSelectField = <T = SelectOption>({
@@ -30,14 +32,22 @@ export const FormSelectField = <T = SelectOption>({
   options,
   getValue = (item) => (item as SelectOption).value,
   getLabel = (item) => (item as SelectOption).label,
+  allowClear = false,
+  clearLabel = "Clear selection",
   onValueChange,
 }: FormSelectFieldProps<T>) => {
-  const field = useFieldContext<string>();
+  const field = useFieldContext<string | undefined>();
   const errors = field.state.meta.errors || [];
   const hasError = errors.length > 0;
   const id = field.name;
 
   const handleChange = (value: string) => {
+    if (allowClear && value === "__clear__") {
+      field.handleChange(undefined);
+      onValueChange?.(undefined);
+      return;
+    }
+
     field.handleChange(value);
     onValueChange?.(value);
   };
@@ -48,7 +58,7 @@ export const FormSelectField = <T = SelectOption>({
         {label}
         {required && <span className="text-destructive">*</span>}
       </Label>
-      <Select value={field.state.value} onValueChange={handleChange}>
+      <Select value={field.state.value ?? ""} onValueChange={handleChange}>
         <SelectTrigger
           id={id}
           className={`w-full ${hasError ? "border-destructive" : ""}`}
@@ -56,6 +66,9 @@ export const FormSelectField = <T = SelectOption>({
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>
         <SelectContent>
+          {allowClear && (
+            <SelectItem value="__clear__">{clearLabel}</SelectItem>
+          )}
           {options.map((option, index) => {
             const value = getValue(option);
             const label = getLabel(option);

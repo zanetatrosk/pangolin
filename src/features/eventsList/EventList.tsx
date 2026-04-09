@@ -3,6 +3,7 @@ import { EventCard } from "./components/EventCard";
 import { getAllEvents } from "@/services/events-api";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
+import { Loading } from "@/components/ui/loading";
 import { SearchProps } from "@/routes/events.index";
 import { useTranslation } from "react-i18next";
 
@@ -23,7 +24,7 @@ export const EventList: FC<{ searchParams: SearchProps | undefined }> = ({ searc
   }
 
   if (isLoading || !data) {
-    return <div>{t("common.loading")}</div>;
+    return <Loading/>;
   }
 
   return (

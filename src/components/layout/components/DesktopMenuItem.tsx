@@ -21,7 +21,7 @@ export const DesktopMenuItem: FC<NavItem> = ({ label, href, children }) => {
             <ul className="grid w-[300px] gap-4">
               <li>
                 {children.map((subItem) => (
-                  <NavigationMenuLink asChild>
+                  <NavigationMenuLink asChild key={subItem.href}>
                     <Link to={subItem.href}>
                       <div className="font-medium">{subItem.label}</div>
                       <div className="text-muted-foreground">

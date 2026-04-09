@@ -9,7 +9,7 @@ import { useUser } from "@/hooks/useUser";
 export const useUserEvents = (
   filter: userEventFilter,
   timeline?: EventTimeline,
-  size: number = 10,
+  size: number = 5,
 ) => {
   const { user } = useUser();
 

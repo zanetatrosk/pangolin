@@ -3,10 +3,11 @@ import { useAuth } from "@/features/auth/AuthProvider";
 import { useEffect, useState } from "react";
 import { exchangeToken } from "@/services/auth-api";
 import { GOOGLE_REDIRECT_URI } from "@/lib/google-auth";
-import { Loader2, AlertCircle, CheckCircle2 } from "lucide-react";
+import { AlertCircle, CheckCircle2 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { PATHS } from "@/paths";
+import { Loading } from "@/components/ui/loading";
 
 export const Route = createFileRoute("/auth/callback")({
   component: AuthCallback,
@@ -123,10 +124,7 @@ function AuthCallback() {
           </CardHeader>
           <CardContent>
             {status === 'loading' && (
-              <div className="flex items-center gap-3">
-                <Loader2 className="h-5 w-5 animate-spin" />
-                <p>Processing your authorization...</p>
-              </div>
+              <Loading text="Processing your authorization..." />
             )}
 
             {status === 'success' && (
@@ -164,10 +162,7 @@ function AuthCallback() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
-      <div className="text-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900 mx-auto mb-4"></div>
-        <p className="text-gray-700">Completing authentication...</p>
-      </div>
+      <Loading text="Completing authentication..." className="text-center" spinnerClassName="h-12 w-12 mx-auto mb-4" textClassName="text-gray-700" />
     </div>
   );
 }

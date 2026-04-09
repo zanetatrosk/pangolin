@@ -4,6 +4,7 @@ import { getEventStats } from "@/services/events-api";
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { requireAuth } from "@/utils/requireAuth";
+import { Loading } from "@/components/ui/loading";
 
 export const Route = createFileRoute("/events/$id/stats")({
   beforeLoad: requireAuth,
@@ -19,7 +20,7 @@ function RouteComponent() {
     enabled: !!id,
   });
   if (!data) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
 
   return <EventStats stats={data} />;

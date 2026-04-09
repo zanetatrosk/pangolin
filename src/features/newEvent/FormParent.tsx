@@ -26,7 +26,7 @@ export const FormParent: React.FC<FormParentProps> = ({ eventMutation, eventForm
   const { t } = useTranslation();
   const [hasSubmitAttempt, setHasSubmitAttempt] = React.useState(false);
 
-  const getMutationErrorMessage = React.useCallback((error: unknown) => {
+  const getMutationErrorMessage = (error: unknown) => {
     if (!error) {
       return undefined;
     }
@@ -43,7 +43,7 @@ export const FormParent: React.FC<FormParentProps> = ({ eventMutation, eventForm
     }
 
     return undefined;
-  }, []);
+  }
 
   const form = useAppForm({
     ...eventFormOpts,

@@ -138,7 +138,9 @@ export const RegistrationTable: FC<{ data: RegistrationFormData; eventId: string
               </div>
             );
           }
-
+          if(header.id === "updatedAt" || header.id === "timestamp") {
+            return new Date(String(value)).toLocaleString();
+          }
           return value;
         },
         meta: header,
@@ -149,6 +151,8 @@ export const RegistrationTable: FC<{ data: RegistrationFormData; eventId: string
   const table = useReactTable({
     data: tableData,
     columns,
+    getRowId: (row) => row.id,
+    autoResetAll: false,
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     getSortedRowModel: getSortedRowModel(),

@@ -304,6 +304,7 @@
             "status": "Status",
             "selectAll": "Select all",
             "selectRow": "Select row",
+            "viewProfile": "View profile",
             "all": "All",
             "filterPlaceholder": "Filter...",
             "noRegistrations": "No registrations found.",

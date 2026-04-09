@@ -113,13 +113,13 @@ export const SelectionActionBar: FC<SelectionActionBarProps> = ({
   };
 
   return (
-    <div className="flex items-center justify-between rounded-md border bg-muted/50 p-3">
-      <div className="flex items-center gap-2">
+    <div className="flex flex-col-reverse md:flex-row md:items-center justify-between rounded-md border bg-muted/50 p-3">
+      <div className="md:items-center md:gap-2 mt-2 md:mt-0 flex">
         <span className="text-sm font-medium">
           {selectedRows.length === 1 ? t("eventStats.actions.rowSelected", { count: selectedRows.length }) : t("eventStats.actions.rowsSelected", { count: selectedRows.length })}
         </span>
       </div>
-      <div className="flex items-center gap-2">
+      <div className="flex flex-col md:flex-row items-center gap-2">
         {generateStatusOptions(t).map((option) => (
           <Button
             key={option.value}

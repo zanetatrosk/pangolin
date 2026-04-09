@@ -35,6 +35,8 @@ const eventDetailDataToDanceEventCreation = (
       price: event.basicInfo?.price || undefined,
       currency: event.basicInfo?.currency || undefined,
       isRecurring: false,
+      recurrenceType: undefined,
+      recurrenceEndDate: null,
     },
     additionalDetails: {
       danceStyles:

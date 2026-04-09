@@ -42,6 +42,7 @@ export const eventFormOpts = formOptions({
   defaultValues: eventFormDefaults,
   validators: {
     onChange: newEventSchema,
+    onSubmit: newEventSchema,
   },
 });
 

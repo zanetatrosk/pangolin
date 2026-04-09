@@ -53,14 +53,13 @@ export const LocationSection = withForm({
           <label className="block text-sm font-medium mb-2">
             {t("newEvent.location.label")} <span className="text-red-500">*</span>
           </label>
-          <form.AppField name="basicInfo.location.name">
+          <form.AppField name="basicInfo.location">
             {(field) => (
               <field.ComboboxField
                 placeholder={t("newEvent.location.searchPlaceholder")}
                 options={locationOptions}
                 isLoading={isLoading}
                 isSuccess={isSuccess}
-                value={field.state.value}
                 searchValue={searchQuery}
                 onChange={(value) => {
                   const placeOption = value as PlaceOption;

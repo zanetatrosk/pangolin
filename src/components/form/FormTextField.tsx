@@ -53,12 +53,12 @@ export const FormTextField = ({
           disabled={disabled}
           placeholder={placeholder}
           className={`${Icon ? "pl-10" : ""} ${
-            hasError ? "border-destructive" : ""
+            (hasError && field.state.meta.isTouched) ? "border-destructive" : ""
           }`}
           {...inputProps}
         />
       </div>
-      {hasError && <p className="text-sm text-destructive">{firstErrorMessage}</p>}
+      {hasError && field.state.meta.isTouched && <p className="text-sm text-destructive">{firstErrorMessage}</p>}
     </div>
   );
 };

@@ -33,10 +33,10 @@ export const newEventSchema = z.object({
         .trim()
         .min(3, i18n.t("newEvent.validation.eventNameLength")),
       location: LocationSchema,
-      date: z.string(i18n.t("newEvent.validation.startDateRequired")),
-      time: z.string(i18n.t("newEvent.validation.timeRequired")),
+      date: z.string().trim().min(1, i18n.t("newEvent.validation.startDateRequired")),
+      time: z.string().trim().min(1, i18n.t("newEvent.validation.timeRequired")),
       endDate: z.string().trim().optional(),
-      price: z.number().finite().optional(),
+      price: z.number().positive().optional(),
       currency: z.string().trim().optional(),
       // Strict boolean to match Interface
       isRecurring: z.boolean(),
@@ -45,8 +45,9 @@ export const newEventSchema = z.object({
       recurrenceEndDate: z.string().trim().nullable(),
     })
     .superRefine((data, ctx) => {
+      console.log("Running custom validation for basicInfo with data:", data);
       const today = todayStr();
-
+      console.log("Validating basicInfo with data:", data);
       // 1. Date Logic
       if (data.date && data.date < today) {
         ctx.addIssue({

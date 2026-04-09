@@ -20,7 +20,7 @@ export const FormNumberField: FC<FormNumberFieldProps> = ({
   step,
   ...inputProps
 }) => {
-  const field = useFieldContext<number>();
+  const field = useFieldContext<number | undefined>();
   const errors = field.state.meta.errors || [];
   const firstErrorMessage = getFirstErrorMessage(errors);
   const hasError = Boolean(firstErrorMessage);
@@ -42,7 +42,13 @@ export const FormNumberField: FC<FormNumberFieldProps> = ({
           name={field.name}
           value={field.state.value}
           onBlur={field.handleBlur}
-          onChange={(e) => field.handleChange(e.target.valueAsNumber)}
+          onChange={(e) => {
+            if( e.target.value === "") {
+              field.handleChange(undefined);
+              return;
+            }
+            field.handleChange(e.target.valueAsNumber)
+          }}
           placeholder={placeholder}
           min={min}
           max={max}

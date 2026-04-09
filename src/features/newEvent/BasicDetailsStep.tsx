@@ -29,9 +29,7 @@ export const BasicDetails = withForm({
           {/* Basic Information */}
           <FormSection title={t("newEvent.basicInfo.title")}>
             {/* Event Name */}
-            <form.AppField
-              name="basicInfo.eventName"
-            >
+            <form.AppField name="basicInfo.eventName">
               {(field) => (
                 <field.TextField
                   label={t("newEvent.basicInfo.eventName")}
@@ -48,9 +46,7 @@ export const BasicDetails = withForm({
           {/* Date & Time */}
           <FormSection title={t("newEvent.basicInfo.dateTime")}>
             <FormGrid columns={2}>
-              <form.AppField
-                name="basicInfo.date"
-              >
+              <form.AppField name="basicInfo.date">
                 {(field) => (
                   <field.TextField
                     label={t("newEvent.basicInfo.startDate")}
@@ -64,7 +60,8 @@ export const BasicDetails = withForm({
               {/* Regular End Date - hide when recurring or editing */}
               <form.AppField name="basicInfo.isRecurring">
                 {(recurringField) =>
-                  !recurringField.state.value && !isEditing && (
+                  !recurringField.state.value &&
+                  !isEditing && (
                     <form.AppField name="basicInfo.endDate">
                       {(field) => (
                         <field.TextField
@@ -78,9 +75,7 @@ export const BasicDetails = withForm({
                 }
               </form.AppField>
 
-              <form.AppField
-                name="basicInfo.time"
-              >
+              <form.AppField name="basicInfo.time">
                 {(field) => (
                   <field.TextField
                     label={t("newEvent.basicInfo.time")}
@@ -94,9 +89,23 @@ export const BasicDetails = withForm({
 
             {/* Recurring Event Checkbox */}
             {!isEditing && (
-              <form.AppField name="basicInfo.isRecurring">
+              <form.AppField
+                name="basicInfo.isRecurring"
+                listeners={{
+                  onChange: ({ value }) => {
+                    if (value) {
+                      form.setFieldValue("basicInfo.endDate", undefined);
+                    } else {
+                      form.setFieldValue("basicInfo.recurrenceType", undefined);
+                      form.setFieldValue("basicInfo.recurrenceEndDate", null);
+                    }
+                  },
+                }}
+              >
                 {(field) => (
-                  <field.CheckboxField label={t("newEvent.basicInfo.isRecurring")} />
+                  <field.CheckboxField
+                    label={t("newEvent.basicInfo.isRecurring")}
+                  />
                 )}
               </form.AppField>
             )}
@@ -107,13 +116,13 @@ export const BasicDetails = withForm({
                 recurringField.state.value &&
                 !isEditing && (
                   <FormGrid columns={2}>
-                    <form.AppField
-                      name="basicInfo.recurrenceType"
-                    >
+                    <form.AppField name="basicInfo.recurrenceType">
                       {(field) => (
                         <field.SelectField
                           label={t("newEvent.basicInfo.recurrenceType")}
-                          placeholder={t("newEvent.basicInfo.recurrenceTypePlaceholder")}
+                          placeholder={t(
+                            "newEvent.basicInfo.recurrenceTypePlaceholder",
+                          )}
                           required
                           options={getOccurrenceOptions()}
                           getValue={(item) => item.value}
@@ -123,9 +132,7 @@ export const BasicDetails = withForm({
                     </form.AppField>
 
                     {/* Recurrence End Date */}
-                    <form.AppField
-                      name="basicInfo.recurrenceEndDate"
-                    >
+                    <form.AppField name="basicInfo.recurrenceEndDate">
                       {(field) => (
                         <field.TextField
                           label={t("newEvent.basicInfo.recurrenceEndDate")}
@@ -151,7 +158,7 @@ export const BasicDetails = withForm({
                     label={t("newEvent.basicInfo.price")}
                     placeholder={t("newEvent.basicInfo.pricePlaceholder")}
                     min="0"
-                    step="0.01"
+                    step="1"
                     icon={DollarSign}
                   />
                 )}

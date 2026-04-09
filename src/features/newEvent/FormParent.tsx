@@ -17,12 +17,16 @@ import { useTranslation } from "react-i18next";
 import type { EventFormOptions } from "./FormOptions";
 
 export interface FormParentProps {
-  eventMutation:  UseMutationResult<any, Error, DanceEventCreation, unknown>;
+  eventMutation: UseMutationResult<any, Error, DanceEventCreation, unknown>;
   eventFormOpts: EventFormOptions;
   isEditing?: boolean;
 }
 
-export const FormParent: React.FC<FormParentProps> = ({ eventMutation, eventFormOpts, isEditing = false }) => {
+export const FormParent: React.FC<FormParentProps> = ({
+  eventMutation,
+  eventFormOpts,
+  isEditing = false,
+}) => {
   const { t } = useTranslation();
   const [hasSubmitAttempt, setHasSubmitAttempt] = React.useState(false);
 
@@ -33,7 +37,10 @@ export const FormParent: React.FC<FormParentProps> = ({ eventMutation, eventForm
 
     if (isAxiosError(error)) {
       const responseMessage = error.response?.data?.message;
-      if (typeof responseMessage === "string" && responseMessage.trim().length > 0) {
+      if (
+        typeof responseMessage === "string" &&
+        responseMessage.trim().length > 0
+      ) {
         return responseMessage;
       }
     }
@@ -43,14 +50,13 @@ export const FormParent: React.FC<FormParentProps> = ({ eventMutation, eventForm
     }
 
     return undefined;
-  }
-
+  };
+  
   const form = useAppForm({
     ...eventFormOpts,
     onSubmit: async ({ value }) => {
-      console.log("Form submitted with values:", value);
-      console.log("Validating form before submission...", form.getAllErrors());
       const isValid = form.getAllErrors().form.errors.length === 0;
+      console.log("Form submission attempted. ", value);
       if (!isValid) {
         console.log("Form has errors, cannot submit:", form.getAllErrors());
         return;
@@ -59,21 +65,34 @@ export const FormParent: React.FC<FormParentProps> = ({ eventMutation, eventForm
     },
   });
   const isFormValid = useStore(form.store, (state) => state.isValid);
-  const validationAlertMessage = hasSubmitAttempt && !isFormValid ? t("newEvent.stepper.errorMessage") : undefined;
-  const mutationAlertMessage = hasSubmitAttempt ? getMutationErrorMessage(eventMutation.error) : undefined;
+  const valuesInForm = useStore(form.store, (state) => state.values);
+  const validationAlertMessage =
+    hasSubmitAttempt && !isFormValid
+      ? t("newEvent.stepper.errorMessage")
+      : undefined;
+  const mutationAlertMessage = hasSubmitAttempt
+    ? getMutationErrorMessage(eventMutation.error)
+    : undefined;
   const alertTitle = validationAlertMessage
-    ? t("newEvent.stepper.errorTitle", { defaultValue: "Please review required fields" })
+    ? t("newEvent.stepper.errorTitle", {
+        defaultValue: "Please review required fields",
+      })
     : mutationAlertMessage
-      ? t("newEvent.stepper.submitErrorTitle", { defaultValue: "Unable to save event" })
+      ? t("newEvent.stepper.submitErrorTitle", {
+          defaultValue: "Unable to save event",
+        })
       : undefined;
   const alertMessage = validationAlertMessage ?? mutationAlertMessage;
-  const showAlert = hasSubmitAttempt && (!isFormValid || Boolean(mutationAlertMessage));
+  const showAlert =
+    hasSubmitAttempt && (!isFormValid || Boolean(mutationAlertMessage));
 
   const handleSubmitAttempt = async () => {
     if (eventMutation.isError) {
       eventMutation.reset();
     }
     setHasSubmitAttempt(true);
+    console.log("Validating form before submission...", form.getAllErrors());
+    console.log("Current form values at submission attempt:", valuesInForm);
     await form.handleSubmit();
   };
   const isMobile = useIsMobile();

@@ -135,6 +135,7 @@
             "back": "Back",
             "complete": "Complete",
             "submit": "Submit",
+            "submitErrorTitle": "Unable to save event",
             "errorMessage": "Please fix the errors in the form before submitting."
         },
         "basicInfo": {
@@ -342,6 +343,7 @@
             "joinEvent": "Join Event"
         },
         "alerts": {
+            "registrationRejectedTitle": "Registration rejected",
             "registrationRejected": "Your registration was rejected by the organizer. You cannot register for this event.",
             "googleFormRegistration": "This registration was done through Google Forms. To cancel, please contact the event organizer directly.",
             "eventCancelledTitle": "Event Cancelled !!!",

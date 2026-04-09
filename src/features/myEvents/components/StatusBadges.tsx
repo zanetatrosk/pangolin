@@ -46,7 +46,7 @@ export const getBadgeByDancerRole = (role: string) => {
 export const isEventPast = (date: string) => {
   const eventDate = new Date(date);
   const today = new Date();
-  return eventDate < today;
+  return eventDate.getDate() < today.getDate();
 };
 
 const getStatusLabel = (

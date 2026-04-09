@@ -4,8 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { AlertCircle } from "lucide-react";
+import { ErrorAlert } from "@/components/ui/error-alert";
 
 export interface StepComponentProps {
   onValidate?: (isValid: boolean) => void;
@@ -92,15 +91,15 @@ export const MobileStepper: React.FC<MobileStepperProps> = ({
 
       {showAlert && isLastStep && (
         <div className="px-4 pb-4">
-          <Alert variant="destructive">
-            <AlertCircle className="h-4 w-4" />
-            <AlertTitle>
-              {alertTitle ?? t("newEvent.stepper.errorTitle", { defaultValue: "Please review required fields" })}
-            </AlertTitle>
-            <AlertDescription>
-              {alertMessage ?? t("newEvent.stepper.errorMessage")}
-            </AlertDescription>
-          </Alert>
+          <ErrorAlert
+            title={
+              alertTitle ??
+              t("newEvent.stepper.errorTitle", {
+                defaultValue: "Please review required fields",
+              })
+            }
+            description={alertMessage ?? t("newEvent.stepper.errorMessage")}
+          />
         </div>
       )}
 

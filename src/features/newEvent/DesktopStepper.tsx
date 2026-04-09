@@ -2,8 +2,7 @@ import { Button } from "@/components/ui/button";
 import { defineStepper } from "@/components/ui/stepper";
 import { Step } from "./MobileStepper";
 import { useTranslation } from "react-i18next";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { AlertCircle } from "lucide-react";
+import { ErrorAlert } from "@/components/ui/error-alert";
 
 export interface StepBase {
   id: string;
@@ -39,17 +38,15 @@ export const DesktopStepper: React.FC<DesktopStepperProps> = ({ steps, stepper, 
             })()}
           </Stepper.Panel>
           {showAlert && methods.isLast && (
-            <Alert variant="destructive">
-              <AlertCircle className="h-4 w-4" />
-              <AlertTitle>
-                {alertTitle ?? t("newEvent.stepper.errorTitle", {
+            <ErrorAlert
+              title={
+                alertTitle ??
+                t("newEvent.stepper.errorTitle", {
                   defaultValue: "Please review required fields",
-                })}
-              </AlertTitle>
-              <AlertDescription>
-                {alertMessage ?? t("newEvent.stepper.errorMessage")}
-              </AlertDescription>
-            </Alert>
+                })
+              }
+              description={alertMessage ?? t("newEvent.stepper.errorMessage")}
+            />
           )}
           <Stepper.Controls>
             {!methods.isFirst && (

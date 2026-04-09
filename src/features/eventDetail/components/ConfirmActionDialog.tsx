@@ -11,6 +11,7 @@ import { Loader2 } from "lucide-react";
 import { PublishEventOptions } from "../publish-actions/PublishEventOptions";
 import { useTranslation } from "react-i18next";
 import { PublishPayload } from "../publish-actions/PublishEventOptions";
+import { ErrorAlert } from "@/components/ui/error-alert";
 
 export enum ActionType {
   PUBLISH = "publish",
@@ -26,6 +27,7 @@ interface ConfirmActionDialogProps {
   isLoading: boolean;
   publishData?: PublishPayload;
   onPublishDataChange?: (data: PublishPayload) => void;
+  errorMessage?: string | null;
 }
 
 export const ConfirmActionDialog: React.FC<ConfirmActionDialogProps> = ({
@@ -36,14 +38,15 @@ export const ConfirmActionDialog: React.FC<ConfirmActionDialogProps> = ({
   isLoading,
   publishData,
   onPublishDataChange,
+  errorMessage,
 }) => {
   const { t } = useTranslation();
-  
+
   const getDialogContent = () => {
     if (!actionType) return null;
-    
+
     const baseKey = `eventDetail.confirmActionDialog`;
-    
+
     switch (actionType) {
       case ActionType.PUBLISH:
         return {
@@ -73,32 +76,42 @@ export const ConfirmActionDialog: React.FC<ConfirmActionDialogProps> = ({
   };
 
   const dialogContent = getDialogContent();
-  
+
   const renderComponent = () => {
-    if (actionType === ActionType.PUBLISH && publishData && onPublishDataChange) {
-      return <PublishEventOptions value={publishData} onChange={onPublishDataChange} />;
+    if (
+      actionType === ActionType.PUBLISH &&
+      publishData &&
+      onPublishDataChange
+    ) {
+      return (
+        <PublishEventOptions
+          value={publishData}
+          onChange={onPublishDataChange}
+        />
+      );
     }
     return null;
   };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent
-        className={
-          dialogContent?.size === "lg"
-            ? "w-[calc(100vw-1.5rem)] max-w-[calc(100vw-1.5rem)] sm:max-w-[95vw] md:max-w-2xl max-h-[90vh] overflow-y-auto overflow-x-hidden"
-            : "w-[calc(100vw-1.5rem)] max-w-[calc(100vw-1.5rem)] sm:max-w-md max-h-[90vh] overflow-y-auto overflow-x-hidden"
-        }
-      >
+      <DialogContent className="max-h-[85svh] overflow-y-auto p-4 sm:max-h-[90vh] sm:p-6">
         {dialogContent && (
           <>
             <DialogHeader className="space-y-2">
-              <DialogTitle className="wrap-break-word">{dialogContent.title}</DialogTitle>
+              <DialogTitle className="wrap-break-word">
+                {dialogContent.title}
+              </DialogTitle>
               <DialogDescription className="whitespace-normal wrap-break-word">
                 {dialogContent.description}
               </DialogDescription>
             </DialogHeader>
             {renderComponent()}
+            {errorMessage && (
+              <ErrorAlert
+                description={errorMessage}>
+              </ErrorAlert>
+            )}
             <DialogFooter className="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
               <Button
                 variant="outline"

@@ -12,10 +12,10 @@ import { EventStatus } from "../types";
 import { publishEvent, cancelEvent, deleteEvent } from "@/services/events-api";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
-import { ConfirmActionDialog, ActionType } from "./ConfirmActionDialog";
 import { PublishPayload, RegistrationModeEnum } from "../publish-actions/PublishEventOptions";
 import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
+import { ActionType, ConfirmActionDialog } from "./ConfirmActionDialog";
 
 interface EventItemManageButtonsProps {
   eventId: string | number;
@@ -30,6 +30,7 @@ export const EventItemManageButtons: React.FC<EventItemManageButtonsProps> = ({
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const [pendingAction, setPendingAction] = useState<ActionType | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [publishData, setPublishData] = useState<PublishPayload>({
     registrationMode: RegistrationModeEnum.OPEN,
     requireApproval: false,
@@ -44,7 +45,7 @@ export const EventItemManageButtons: React.FC<EventItemManageButtonsProps> = ({
     },
     onError: (error: any) => {
       console.error("Failed to publish event:", error);
-      toast.error(error.response?.data?.message || t("eventDetail.manageErrors.publishFailed"));
+      setErrorMessage(error.response?.data?.message || t("eventDetail.manageErrors.publishFailed"));
     },
   });
 
@@ -57,7 +58,7 @@ export const EventItemManageButtons: React.FC<EventItemManageButtonsProps> = ({
     },
     onError: (error: any) => {
       console.error("Failed to cancel event:", error);
-      toast.error(error.response?.data?.message || t("eventDetail.manageErrors.cancelFailed"));
+      setErrorMessage(error.response?.data?.message || t("eventDetail.manageErrors.cancelFailed"));
     },
   });
 
@@ -69,7 +70,7 @@ export const EventItemManageButtons: React.FC<EventItemManageButtonsProps> = ({
     },
     onError: (error: any) => {
       console.error("Failed to delete event:", error);
-      toast.error(error.response?.data?.message || t("eventDetail.manageErrors.deleteFailed"));
+      setErrorMessage(error.response?.data?.message || t("eventDetail.manageErrors.deleteFailed"));
     },
   });
 
@@ -186,6 +187,7 @@ export const EventItemManageButtons: React.FC<EventItemManageButtonsProps> = ({
         isLoading={isLoading}
         publishData={publishData}
         onPublishDataChange={setPublishData}
+        errorMessage={errorMessage}
       />
     </>
   );

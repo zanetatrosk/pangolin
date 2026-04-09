@@ -6,6 +6,7 @@ import { GOOGLE_REDIRECT_URI } from "@/lib/google-auth";
 import { AlertCircle, CheckCircle2 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { ErrorAlert } from "@/components/ui/error-alert";
 import { PATHS } from "@/paths";
 import { Loading } from "@/components/ui/loading";
 
@@ -137,10 +138,15 @@ function AuthCallback() {
             )}
 
             {status === 'error' && (
-              <Alert variant="destructive">
-                <AlertCircle className="h-4 w-4" />
-                <AlertDescription>{errorMessage}</AlertDescription>
-              </Alert>
+              <ErrorAlert
+                title={
+                  isIncrementalAuth
+                    ? "Permission update failed"
+                    : "Authentication failed"
+                }
+                description={errorMessage}
+                icon={<AlertCircle className="h-4 w-4" />}
+              />
             )}
           </CardContent>
         </Card>

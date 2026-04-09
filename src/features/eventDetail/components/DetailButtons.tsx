@@ -4,6 +4,7 @@ import { RsvpData, RsvpStatus } from "@/services/types";
 import { RegistrationModeEnum } from "../publish-actions/PublishEventOptions";
 import { ActionButtons } from "./ActionButtons";
 import { useTranslation } from "react-i18next";
+import { ErrorAlert } from "@/components/ui/error-alert";
 
 export const DetailButtons: React.FC<{
   rsvpData: RsvpData;
@@ -19,12 +20,14 @@ export const DetailButtons: React.FC<{
   return (
     <>
       {isRejected && (
-        <Alert variant="destructive" className="mb-4">
-          <XCircle className="h-4 w-4" />
-          <AlertDescription>
-            {t("eventDetail.alerts.registrationRejected")}
-          </AlertDescription>
-        </Alert>
+        <ErrorAlert
+          className="mb-4"
+          icon={<XCircle className="h-4 w-4" />}
+          title={t("eventDetail.alerts.registrationRejectedTitle", {
+            defaultValue: "Registration rejected",
+          })}
+          description={t("eventDetail.alerts.registrationRejected")}
+        />
       )}
 
       {isGoogleForm && (isRegistered || isPending) && (

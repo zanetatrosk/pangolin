@@ -10,7 +10,6 @@ export const mockEventStats: EventStatsData = {
             total: 42,
             leaders: 22,
             followers: 20,
-            both: 5,
         },
         interested: 15,
     },
@@ -20,7 +19,7 @@ export const mockEventStats: EventStatsData = {
                 id: "1",
                 question: "Dance Role",
                 type: FormQuestionType.SET,
-                answerSet: ["Leader", "Follower", "Both"],
+                answerSet: ["Leader", "Follower"],
                 required: true,
             },
             {
@@ -88,7 +87,7 @@ export const mockEventStats: EventStatsData = {
                     email: "maria.garcia@example.com",
                 },
                 data: [
-                    { id: "1", value: "Both" },
+                    { id: "1", value: "Follower" },
                     { id: "2", value: "Intermediate" },
                     { id: "3", value: "Maria Garcia" },
                     { id: "4", value: "Gluten-free" },

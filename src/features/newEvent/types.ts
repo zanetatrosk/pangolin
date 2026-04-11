@@ -52,5 +52,4 @@ export type EventMediaItem = {
 export enum RecurrenceType {
   Daily = "DAILY",
   Weekly = "WEEKLY",
-  Monthly = "MONTHLY",
 }

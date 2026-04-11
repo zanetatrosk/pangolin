@@ -41,9 +41,11 @@ export const ActionButtons: React.FC<{
   const isGoing = rsvpData.status === RsvpStatus.Registered;
   const isInterested = rsvpData.status === RsvpStatus.Interested;
   const isPending = rsvpData.status === RsvpStatus.Pending;
+  const isWaitlisted = rsvpData.status === RsvpStatus.Waitlisted;
   const isRejected = rsvpData.status === RsvpStatus.Rejected;
+  const isCancelled = rsvpData.status === RsvpStatus.Cancelled;
   const isGoogleForm = registrationMode === RegistrationModeEnum.GOOGLE_FORM;
-  const canInteract = !isRejected;
+  const canMarkInterested = !isRejected && !isCancelled;
   const canCancel = !isGoogleForm; // Cannot cancel Google Form registrations
 
   const redirectToLogin = () => {
@@ -71,9 +73,9 @@ export const ActionButtons: React.FC<{
   const handleJoin = () => {
     handleNotAuthenticated();
 
-    if ((isGoing || isPending) && canCancel) {
+    if ((isGoing || isPending || isWaitlisted) && canCancel) {
       setCancelDialogOpen(true);
-    } else if (!isGoing && !isPending) {
+    } else if (!isGoing && !isPending && !isWaitlisted) {
       setDialogOpen(true);
     }
   };
@@ -91,6 +93,10 @@ export const ActionButtons: React.FC<{
 
   const handleInterested = () => {
     handleNotAuthenticated();
+
+    if (isCancelled) {
+      return;
+    }
 
     if (!isInterested) {
       updateMutation.mutate(
@@ -111,7 +117,7 @@ export const ActionButtons: React.FC<{
         size={buttonSize}
         className={`gap-2 ${isInterested ? "text-primary" : ""} ${interestedClassName}`}
         onClick={handleInterested}
-        disabled={!canInteract || isPending || isGoing}
+        disabled={!canMarkInterested || isPending || isGoing || isWaitlisted}
       >
         <Heart className={`w-4 h-4 ${isInterested ? "fill-current" : ""}`} />
         {t("eventDetail.actionButtons.interested")}
@@ -123,16 +129,26 @@ export const ActionButtons: React.FC<{
           isGoing ? "bg-green-600 hover:bg-green-700" : ""
         } ${
           isPending ? "bg-yellow-600 hover:bg-yellow-700" : ""
+        } ${
+          isWaitlisted ? "bg-gray-600 hover:bg-gray-700" : ""
         } ${joinClassName}`}
         onClick={handleJoin}
-        disabled={!canInteract || (isGoogleForm && (isGoing || isPending))}
+        disabled={isRejected || (isGoogleForm && (isGoing || isPending || isWaitlisted))}
       >
         {isGoing && <Check className="w-4 h-4" />}
-        {isPending && <Clock className="w-4 h-4" />}
-        {!isGoing && !isPending && <UserPlus className="w-4 h-4" />}
-        {isGoing ? t("eventDetail.actionButtons.going") : isPending ? t("eventDetail.actionButtons.pendingApproval") : t("eventDetail.actionButtons.joinEvent")}
+        {(isPending || isWaitlisted) && <Clock className="w-4 h-4" />}
+        {!isGoing && !isPending && !isWaitlisted && <UserPlus className="w-4 h-4" />}
+        {isGoing
+          ? t("eventDetail.actionButtons.going")
+          : isPending
+            ? t("eventDetail.actionButtons.pendingApproval")
+            : isWaitlisted
+              ? t("eventDetail.actionButtons.waitlisted")
+              : isCancelled
+                ? t("eventDetail.actionButtons.rejoinEvent")
+                : t("eventDetail.actionButtons.joinEvent")}
       </Button>
-      
+
       <RegistrationDialog
         open={dialogOpen}
         onOpenChange={setDialogOpen}
@@ -145,7 +161,7 @@ export const ActionButtons: React.FC<{
         open={cancelDialogOpen}
         onOpenChange={setCancelDialogOpen}
         onConfirm={handleCancel}
-        isPending={isPending}
+        isPending={isPending || isWaitlisted}
       />
     </>
   );

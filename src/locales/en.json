@@ -313,7 +313,7 @@
         "actions": {
             "copyEmails": "copy email address/s",
             "acceptRegistration": "Accept registration",
-            "cancelRegistration": "Cancel registration",
+            "cancelRegistration": "Reject registration",
             "rowSelected": "{{count}} row selected",
             "rowsSelected": "{{count}} rows selected"
         },
@@ -341,7 +341,9 @@
             "interested": "Interested",
             "going": "Going",
             "pendingApproval": "Pending Approval",
-            "joinEvent": "Join Event"
+            "waitlisted": "Waitlisted",
+            "joinEvent": "Join Event",
+            "rejoinEvent": "Rejoin Event"
         },
         "alerts": {
             "registrationRejectedTitle": "Registration rejected",
@@ -416,7 +418,6 @@
             "interested": "interested",
             "leaders": "Leaders",
             "followers": "Followers",
-            "both": "Both",
             "capacity": "capacity",
             "capacityLabel": "Capacity",
             "seeWhoComing": "See who is coming"
@@ -425,7 +426,6 @@
             "guestList": "Guest List",
             "leaders": "Leaders",
             "followers": "Followers",
-            "both": "Both",
             "loadingAttendees": "Loading attendees...",
             "loadFailed": "Failed to load attendees. Please try again.",
             "noAttendees": "No attendees found",

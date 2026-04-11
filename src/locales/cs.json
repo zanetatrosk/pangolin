@@ -15,6 +15,14 @@
     "dateDisplay": {
       "selectDate": "Vyberte datum"
     },
+    "actionButtons": {
+      "interested": "Mám zájem",
+      "going": "Účastním se",
+      "pendingApproval": "Čeká na schválení",
+      "waitlisted": "Náhradník",
+      "joinEvent": "Připojit se k akci",
+      "rejoinEvent": "Znovu se připojit k akci"
+    },
     "alerts": {
       "eventCancelledTitle": "Událost zrušena !!!",
       "eventCancelledDescription": "Tato událost byla zrušena organizátorem. "

@@ -1,8 +1,9 @@
 import axios from "axios";
 import { PATHS } from "@/paths";
+import envConfig from "../../env.json";
 
 export const axiosInstance = axios.create({
-    baseURL: "http://localhost:8080/api",
+    baseURL: envConfig.BE_API_BASE_URL,
 });
 
 // Add request interceptor to attach JWT token

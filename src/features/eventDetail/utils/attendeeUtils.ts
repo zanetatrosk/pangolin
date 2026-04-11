@@ -16,7 +16,7 @@ export interface Attendee {
   id: string;
   name: string;
   userId?: string;
-  role?: "Leader" | "Follower" | "Both" | undefined;
+  role?: "Leader" | "Follower" | undefined;
   avatar?: EventMediaItem;
   level?: string | null;
 }
@@ -40,7 +40,7 @@ export function preprocessAttendees(
       : `Anonymous Guest ${index + 1}`;
     const avatar = user?.avatar;
     
-    let attendeeRole: "Leader" | "Follower" | "Both" | undefined = undefined;
+    let attendeeRole: "Leader" | "Follower" | undefined = undefined;
     
     if (isCoupleMode && reg.role) {
       const roleLower = reg.role.toLowerCase();
@@ -48,8 +48,6 @@ export function preprocessAttendees(
         attendeeRole = "Leader";
       } else if (roleLower === "follower") {
         attendeeRole = "Follower";
-      } else if (roleLower === "both") {
-        attendeeRole = "Both";
       }
     }
 

@@ -10,7 +10,6 @@ import { useTranslation } from "react-i18next";
 export enum DancerRole {
   LEADER = "Leader",
   FOLLOWER = "Follower",
-  BOTH = "Both",
 }
 
 interface AttendeeListModalProps {
@@ -20,7 +19,6 @@ interface AttendeeListModalProps {
   registrationMode: RegistrationModeEnum;
   leadersCount?: number;
   followersCount?: number;
-  bothCount?: number;
 }
 
 export function AttendeeListModal({
@@ -30,22 +28,20 @@ export function AttendeeListModal({
   registrationMode,
   leadersCount = 0,
   followersCount = 0,
-  bothCount = 0,
 }: AttendeeListModalProps) {
   const { t } = useTranslation();
   const isCoupleMode = registrationMode === RegistrationModeEnum.COUPLE;
   //TODO refactor to enum
   // In couple mode, default to first non-empty category, otherwise show all
-  const getInitialTab = (): "leaders" | "followers" | "both" | "all" => {
+  const getInitialTab = (): "leaders" | "followers" | "all" => {
     if (!isCoupleMode) return "all";
     if (leadersCount > 0) return "leaders";
     if (followersCount > 0) return "followers";
-    if (bothCount > 0) return "both";
     return "all"; // Fallback, shouldn't happen in couple mode with attendees
   };
 
   const [attendeeTab, setAttendeeTab] = useState<
-    "leaders" | "followers" | "both" | "all"
+    "leaders" | "followers" | "all"
   >(getInitialTab());
   const navigate = useNavigate();
 
@@ -60,7 +56,6 @@ export function AttendeeListModal({
     ? attendees.filter((a) => {
         if (attendeeTab === "leaders") return a.role === DancerRole.LEADER;
         if (attendeeTab === "followers") return a.role === DancerRole.FOLLOWER;
-        if (attendeeTab === "both") return a.role === DancerRole.BOTH;
         return true;
       })
     : attendees;
@@ -80,11 +75,11 @@ export function AttendeeListModal({
         </div>
 
         {isCoupleMode &&
-          (leadersCount > 0 || followersCount > 0 || bothCount > 0) && (
+          (leadersCount > 0 || followersCount > 0) && (
             <div
               className="p-2 grid gap-2 border-b bg-muted/30"
               style={{
-                gridTemplateColumns: `repeat(${[leadersCount > 0, followersCount > 0, bothCount > 0].filter(Boolean).length}, 1fr)`,
+                gridTemplateColumns: `repeat(${[leadersCount > 0, followersCount > 0].filter(Boolean).length}, 1fr)`,
               }}
             >
               {leadersCount > 0 && (
@@ -109,18 +104,6 @@ export function AttendeeListModal({
                   }`}
                 >
                   {t("eventDetail.attendeeList.followers")} ({followersCount})
-                </button>
-              )}
-              {bothCount > 0 && (
-                <button
-                  onClick={() => setAttendeeTab("both")}
-                  className={`py-2 text-sm font-medium rounded-md transition-colors ${
-                    attendeeTab === "both"
-                      ? "bg-white shadow text-purple-600"
-                      : "text-muted-foreground hover:bg-white/50"
-                  }`}
-                >
-                  {t("eventDetail.attendeeList.both")} ({bothCount})
                 </button>
               )}
             </div>
@@ -176,7 +159,7 @@ export function AttendeeListModal({
                     ) : attendee.role === DancerRole.FOLLOWER ? (
                       <div className="w-2 h-2 rounded-full bg-pink-500" />
                     ) : (
-                      <div className="w-2 h-2 rounded-full bg-purple-500" />
+                      <div className="w-2 h-2 rounded-full bg-gray-400" />
                     )}
                   </>
                 )}

@@ -34,7 +34,7 @@ describe("preprocessAttendees", () => {
         {
           registrationId: "r3",
           user: null,
-          role: "Both",
+          role: "something-else",
           level: "Advanced",
         },
         {
@@ -68,7 +68,7 @@ describe("preprocessAttendees", () => {
         id: "r3",
         name: "Anonymous Guest 3",
         userId: undefined,
-        role: "Both",
+        role: undefined,
         avatar: undefined,
         level: "Advanced",
       },

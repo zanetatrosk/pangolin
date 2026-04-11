@@ -52,10 +52,6 @@ export function AttendeeStatsCard({
                     <span className="text-pink-600">{t("eventDetail.attendees.followers")}</span>
                     <span className="text-pink-600">{attendeeStats.going.followers}</span>
                   </div>
-                    <div className="flex items-center justify-between text-sm font-medium">
-                      <span className="text-purple-600">{t("eventDetail.attendees.both")}</span>
-                      <span className="text-purple-600">{attendeeStats.going.both}</span>
-                    </div>
                 </div>
                 {maxCapacity && (
                   <div className="text-xs text-muted-foreground text-right">
@@ -70,10 +66,6 @@ export function AttendeeStatsCard({
                   <div 
                     className="h-full bg-pink-500" 
                     style={{ width: `${maxCapacity ? (attendeeStats.going.followers / maxCapacity) * 100 : (totalGoing > 0 ? (attendeeStats.going.followers / totalGoing) * 100 : 0)}%` }}
-                  />
-                  <div 
-                    className="h-full bg-purple-500" 
-                    style={{ width: `${maxCapacity ? (attendeeStats.going.both / maxCapacity) * 100 : (totalGoing > 0 ? (attendeeStats.going.both / totalGoing) * 100 : 0)}%` }}
                   />
                 </div>
               </div>
@@ -115,7 +107,6 @@ export function AttendeeStatsCard({
         registrationMode={registrationMode}
         leadersCount={attendeeStats.going.leaders}
         followersCount={attendeeStats.going.followers}
-        bothCount={attendeeStats.going.both}
       />
     </>
   );

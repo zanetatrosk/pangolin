@@ -22,7 +22,7 @@ axiosInstance.interceptors.request.use(
     }
 );
 
-// Add response interceptor to handle 401 errors
+// Add response interceptor to handle unauthorized/forbidden responses globally
 axiosInstance.interceptors.response.use(
     (response) => response,
     async (error) => {
@@ -30,7 +30,8 @@ axiosInstance.interceptors.response.use(
             return Promise.reject(error);
         }
 
-        if (error.response?.status === 401) {
+        const status = error.response?.status;
+        if (status === 401 || status === 403) {
             sessionStorage.removeItem("accessToken");
             sessionStorage.removeItem("tokenExpiresAt");
 

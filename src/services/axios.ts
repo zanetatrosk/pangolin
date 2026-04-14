@@ -35,10 +35,6 @@ axiosInstance.interceptors.response.use(
             sessionStorage.removeItem("accessToken");
             sessionStorage.removeItem("tokenExpiresAt");
 
-            // Clear legacy persistence (in case an older build stored tokens in localStorage)
-            localStorage.removeItem("accessToken");
-            localStorage.removeItem("tokenExpiresAt");
-
             if (window.location.pathname !== PATHS.LOGIN) {
                 window.location.href = PATHS.LOGIN;
             }

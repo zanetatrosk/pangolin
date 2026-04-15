@@ -46,7 +46,7 @@ export function EventDetail({ event }: EventDetailProps) {
       {/* Cancelled Event Banner */}
       {isCancelled && <EventCancelledAlert />}
 
-      <div className="container mx-auto max-w-6xl py-2 px-4 lg:px-0">
+      <div className="container mx-auto max-w-6xl py-2 px-4 md:px-10 xl:px-0">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Left Column: Main Content */}
           <div className="contents lg:block lg:col-span-2 lg:space-y-8">

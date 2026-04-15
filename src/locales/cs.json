@@ -1,8 +1,14 @@
 {
   "nav": {
     "events": "Události",
-    "about": "O nás",
-    "signup": "Zaregistrovat/Přihlásit se",
+    "about": "O aplikaci",
+    "signup": "Přihlášení / Registrace",
+    "addEvent": "Přidat akci",
+    "addEventDesc": "Vytvořte a uspořádejte novou taneční akci",
+    "myEvents": "Moje akce",
+    "myEventsDesc": "Zobrazte a spravujte své akce",
+    "allEvents": "Všechny akce",
+    "allEventsDesc": "Procházejte všechny nadcházející taneční akce",
     "profile": "Profil",
     "editProfile": "Upravit profil",
     "settings": "Nastavení",
@@ -11,35 +17,10 @@
   "header": {
     "toggleTheme": "Přepnout motiv"
   },
-  "eventDetail": {
-    "dateDisplay": {
-      "selectDate": "Vyberte datum"
-    },
-    "actionButtons": {
-      "interested": "Mám zájem",
-      "going": "Účastním se",
-      "pendingApproval": "Čeká na schválení",
-      "waitlisted": "Náhradník",
-      "joinEvent": "Připojit se k akci",
-      "rejoinEvent": "Znovu se připojit k akci"
-    },
-    "alerts": {
-      "eventCancelledTitle": "Událost zrušena !!!",
-      "eventCancelledDescription": "Tato událost byla zrušena organizátorem. "
-    },
-    "googleFormIntegration": {
-      "title": "Integrace Google Forms",
-      "description": "Importujte registrační data z Google formuláře",
-      "needsAccess": "Pro použití této funkce je potřeba udělit přístup ke Google Forms.",
-      "grantAccess": "Udělit přístup",
-      "accessGranted": "Přístup ke Google Forms udělen",
-      "formIdPlaceholder": "Zadejte ID Google formuláře"
-    }
-  },
   "auth": {
     "login": {
       "title": "Vítejte v Connect2Dance",
-      "subtitle": "Přihlaste se pomocí Google účtu pro pokračování",
+      "subtitle": "Pro pokračování se přihlaste pomocí Google účtu",
       "googleButton": "Přihlásit se přes Google"
     }
   },
@@ -47,29 +28,34 @@
     "title": "Connect2Dance",
     "subtitle": "Společenské taneční akce",
     "heroTitle": "Spojte se prostřednictvím tance",
-    "heroSubtitle": "Objevte úžasné společenské taneční akce, najděte si dokonalého tanečního partnera a připojte se k živé komunitě tanečníků",
+    "heroSubtitle": "Vytvářejte akce, spravujte registrace a sledujte svou taneční cestu — vše na jednom místě.",
     "featuredEvents": "Doporučené akce",
-    "featuredEventsText": "Nezmeškejte tyto úžasné nadcházející taneční akce ve vašem okolí",
+    "featuredEventsText": "Nenechte si ujít tyto skvělé nadcházející taneční akce ve vašem okolí",
     "findEvents": "Najít akce",
     "hostEvent": "Uspořádat akci",
     "whyConnect2Dance": "Proč zvolit Connect2Dance?",
-    "whyConnect2DanceText": "Vše, co potřebujete k objevování, účasti a organizování neuvěřitelných tanečních akcí",
+    "whyConnect2DanceText": "Vše, co potřebujete k objevování, účasti a organizování skvělých tanečních akcí",
     "viewEvents": "Zobrazit všechny akce",
-    "activeDancers": "{{count}} Aktivních tanečníků",
-    "eventsHosted": "{{count}} Uspořádaných akcí",
-    "totalRegistrations": "{{count}} Celkem registrací",
-    "feature1Title": "Chytré párování partnerů",
-    "feature1Text": "Náš inteligentní systém párování vás spojuje s kompatibilními tanečními partnery na základě úrovně dovedností, preferencí stylu a dostupnosti.",
-    "feature2Title": "Správa akcí",
-    "feature2Text": "Snadno použitelné nástroje pro vytváření, správu a propagaci vašich tanečních akcí. Integrované formuláře, platby a správa účastníků.",
-    "feature3Title": "Recenze komunity",
-    "feature3Text": "Čtěte upřímné recenze od ostatních tanečníků, hodnoťte akce a pomáhejte budovat důvěryhodnou komunitu tanečních nadšenců."
+    "activeDancers": "{{count}} aktivních tanečníků",
+    "eventsHosted": "{{count}} uspořádaných akcí",
+    "totalRegistrations": "{{count}} registrací celkem",
+    "feature1Title": "Váš taneční profil",
+    "feature1Text": "Vytvořte si kompletní taneční profil s videi, úrovní a tanečními styly. Sledujte všechny akce, které pořádáte, kterých se účastníte nebo o které máte zájem — vaše taneční cesta na jednom místě.",
+    "feature2Title": "Vytvořte akci snadno",
+    "feature2Text": "Spusťte taneční akci během pár minut pomocí intuitivního průvodce krok za krokem. Přidejte popis, nahrajte média, nastavte místo konání a vyberte způsob registrace.",
+    "feature3Title": "Chytrý registrační systém",
+    "feature3Text": "Spravujte registrace pomocí vestavěných formulářů nebo integrace Google Forms. Schvalujte účastníky, sledujte, kdo přijde, a synchronizujte data automaticky každou hodinu nebo kdykoli na vyžádání.",
+    "eventCard": {
+      "at": "v",
+      "attending": "účastní se",
+      "viewDetails": "Zobrazit detail akce"
+    }
   },
   "about": {
-    "title": "O projektu",
-    "thesis": "Tento projekt vznikl jako součást mé diplomové práce na FIT ČVUT a vychází z mých prvních měsíců ve světě social dance.",
-    "motivation": "S bachatu jsem začala tancovat na začátku roku 2025 a brzy jsem narazila na známý problém: informace o akcích i registrace byly roztříštěné na různých místech. Chtěla jsem jednodušší způsob, jak akce objevovat a přihlašovat se na ně na jednom místě.",
-    "focus": "Aplikace drží tok co nejjednodušší: procházení akcí, zobrazení detailu události a správa vlastních akcí a profilu.",
+    "title": "O aplikaci",
+    "thesis": "Tento projekt vznikl jako součást mé diplomové práce na FIT ČVUT a byl inspirován mými prvními měsíci ve světě social dance.",
+    "motivation": "S bachatou jsem začala na začátku roku 2025 a brzy jsem narazila na známý problém: informace o akcích i registrace byly roztříštěné na různých místech. Chtěla jsem jednodušší způsob, jak akce objevovat a přihlašovat se na ně na jednom místě.",
+    "focus": "Aplikace drží tok co nejjednodušší: procházet akce, otevřít detail události a spravovat vlastní akce a profil.",
     "personal": "Bachata mě do komunity přitáhla — a díky ní tenhle projekt vznikl."
   },
   "events": {
@@ -79,7 +65,7 @@
       "placeholder": "Hledat akce...",
       "advanced": "Pokročilé vyhledávání",
       "filters": "Filtry",
-      "location": "Umístění",
+      "location": "Lokalita",
       "dateRange": "Časové období",
       "danceStyle": "Taneční styl",
       "difficulty": "Obtížnost",
@@ -106,10 +92,236 @@
       "twitter": "Sdílet na Twitteru"
     },
     "viewDetails": "Zobrazit podrobnosti",
+    "cancelled": "ZRUŠENO",
     "difficulty": {
       "beginner": "Začátečník",
-      "intermediate": "Pokročilý",
-      "advanced": "Expert"
+      "intermediate": "Středně pokročilý",
+      "advanced": "Pokročilý"
+    }
+  },
+  "eventsList": {
+    "errorLoading": "Nepodařilo se načíst akce.",
+    "showMore": "Zobrazit více",
+    "search": {
+      "placeholder": "Jakou taneční akci hledáte?",
+      "location": "Lokalita",
+      "locationPlaceholder": "Hledejte město nebo zemi...",
+      "noLocations": "Nebyly nalezeny žádné lokality",
+      "eventTypes": "Typy akcí",
+      "danceStyles": "Taneční styly",
+      "searchButton": "Hledat akce"
+    },
+    "filter": {
+      "selectOptions": "Vyberte možnosti...",
+      "selected": "vybráno",
+      "tapToSelect": "Klepnutím vyberte nebo zrušte výběr možností.",
+      "done": "Hotovo",
+      "more": "další"
+    }
+  },
+  "newEvent": {
+    "steps": {
+      "basicDetails": "Detaily akce",
+      "description": "Popis a detaily",
+      "media": "Fotky a média",
+      "additionalDetails": "Další detaily"
+    },
+    "stepper": {
+      "stepProgress": "Krok {{current}} z {{total}}",
+      "optional": "Volitelné",
+      "previous": "Předchozí",
+      "next": "Další",
+      "back": "Zpět",
+      "complete": "Dokončit",
+      "submit": "Odeslat",
+      "submitErrorTitle": "Akci se nepodařilo uložit",
+      "errorMessage": "Před odesláním prosím opravte chyby ve formuláři."
+    },
+    "basicInfo": {
+      "title": "Základní informace",
+      "eventName": "Název akce",
+      "eventNamePlaceholder": "např. Salsa Night v Downtown Studiu",
+      "eventNameError": "Název akce musí mít alespoň 3 znaky",
+      "dateTime": "Datum a čas",
+      "startDate": "Datum začátku",
+      "endDate": "Datum konce",
+      "dateRequired": "Datum je povinné",
+      "time": "Čas",
+      "timeRequired": "Čas je povinný",
+      "isRecurring": "Toto je opakující se akce",
+      "recurrenceType": "Vzor opakování",
+      "recurrenceTypePlaceholder": "Vyberte frekvenci",
+      "recurrenceTypeError": "Pro opakující se akce je vzor opakování povinný",
+      "recurrenceEndDate": "Datum ukončení opakování",
+      "recurrenceEndDateRequired": "Datum ukončení opakování je povinné",
+      "pricing": "Cena",
+      "price": "Cena",
+      "pricePlaceholder": "Ponechte prázdné, pokud cena není uvedena",
+      "currency": "Měna",
+      "currencyPlaceholder": "Vyberte měnu"
+    },
+    "validation": {
+      "eventName": "Název akce je povinný",
+      "eventNameLength": "Název akce musí mít alespoň 3 znaky",
+      "city": "Město je povinné",
+      "country": "Země je povinná",
+      "startDateRequired": "Datum začátku je povinné",
+      "timeRequired": "Čas je povinný",
+      "startDateFuture": "Datum začátku musí být dnes nebo později",
+      "endDateFuture": "Datum konce musí být v budoucnu",
+      "endDateAfterStartDate": "Datum konce musí být po datu začátku",
+      "recurrenceType": "Pro opakující se akce je vzor opakování povinný",
+      "recurrenceEndDateRequired": "Pro opakující se akce je datum ukončení opakování povinné",
+      "priceRequiredWhenCurrencyIsSet": "Pokud je vybrána měna, cena je povinná",
+      "currencyRequiredWhenPriceIsSet": "Pokud je zadána cena, měna je povinná",
+      "facebookEventUrl": "URL události na Facebooku musí být platná"
+    },
+    "location": {
+      "label": "Místo",
+      "searchPlaceholder": "Hledejte místo konání...",
+      "detailsTitle": "Detaily místa",
+      "placeName": "Název místa",
+      "placeNamePlaceholder": "např. Pekelnej Bar",
+      "street": "Ulice",
+      "streetPlaceholder": "např. Na Bělidle",
+      "houseNumber": "Číslo popisné",
+      "houseNumberPlaceholder": "např. 929/19",
+      "city": "Město",
+      "cityPlaceholder": "např. Praha 5",
+      "county": "Okres",
+      "countyPlaceholder": "např. Praha",
+      "postalCode": "PSČ",
+      "postalCodePlaceholder": "např. 15000",
+      "state": "Stát/region",
+      "statePlaceholder": "např. Hlavní město Praha",
+      "country": "Země",
+      "countryPlaceholder": "např. Česko"
+    },
+    "details": {
+      "danceInfo": "Taneční informace",
+      "danceStyles": "Taneční styly",
+      "danceStylesPlaceholder": "Vyberte taneční styly...",
+      "skillLevel": "Požadovaná úroveň",
+      "skillLevelPlaceholder": "Vyberte úrovně...",
+      "eventType": "Typ akce",
+      "eventTypePlaceholder": "Vyberte typy akcí...",
+      "facebookEventUrl": "URL události na Facebooku",
+      "facebookEventUrlPlaceholder": "https://facebook.com/events/...",
+      "attendeeManagement": "Správa účastníků",
+      "maxAttendees": "Maximální počet účastníků",
+      "maxAttendeesPlaceholder": "Ponechte prázdné pro neomezený počet"
+    },
+    "description": {
+      "title": "Popis",
+      "label": "Popis akce",
+      "placeholder": "Popište akci, atmosféru, program, lektory..."
+    },
+    "media": {
+      "coverImage": "Úvodní obrázek",
+      "coverImageLabel": "Úvodní obrázek nebo video",
+      "coverPreview": "Náhled úvodního obrázku",
+      "gallery": "Galerie a videa",
+      "galleryLabel": "Média akce",
+      "dropzoneText": "Přetáhněte sem obrázky nebo videa",
+      "dropzoneBrowse": "nebo klikněte pro výběr"
+    }
+  },
+  "myEvents": {
+    "title": "Moje akce",
+    "createNewEvent": "Vytvořit novou akci",
+    "tabs": {
+      "hosting": "Pořádám",
+      "attending": "Účastním se",
+      "interested": "Mám zájem"
+    },
+    "timeline": {
+      "upcoming": "Nadcházející",
+      "past": "Minulé"
+    },
+    "noEvents": {
+      "hosting": {
+        "title": "Zatím žádné pořádané akce",
+        "description": "Vytvořte svou první akci a začněte budovat taneční komunitu!",
+        "buttonText": "Vytvořit akci"
+      },
+      "attending": {
+        "title": "Žádné zaregistrované akce",
+        "description": "Procházejte akce a zaregistrujte se, ať se můžete přidat!",
+        "buttonText": "Procházet akce"
+      },
+      "interested": {
+        "title": "Zatím žádné akce se zájmem",
+        "description": "Akce, které si označíte jako zajímavé, se zobrazí zde. Objevujte a najděte akce, které vás nadchnou!",
+        "buttonText": "Procházet akce"
+      }
+    },
+    "card": {
+      "viewDetails": "Zobrazit podrobnosti",
+      "view": "Zobrazit",
+      "organizedBy": "Pořádá",
+      "going": "účastní se",
+      "interested": "má zájem",
+      "at": "v",
+      "until": "do"
+    },
+    "recurring": {
+      "upcomingDates": "Nadcházející termíny",
+      "dateAndTime": "Datum a čas",
+      "location": "Místo",
+      "attendees": "Účastníci",
+      "status": "Stav"
+    },
+    "status": {
+      "published": "Publikováno",
+      "cancelled": "Zrušeno",
+      "past": "Proběhlo",
+      "draft": "Koncept",
+      "registered": "Zaregistrováno",
+      "interested": "Mám zájem",
+      "waitlisted": "Náhradník",
+      "upcoming": "Nadcházející",
+      "pending": "Čeká na schválení",
+      "rejected": "Zamítnuto"
+    }
+  },
+  "profile": {
+    "editProfile": "Upravit profil",
+    "avatar": "Avatar",
+    "firstName": "Jméno",
+    "lastName": "Příjmení",
+    "description": "Popis",
+    "generalLevel": "Obecná úroveň",
+    "mainRole": "Hlavní role",
+    "danceStyles": "Taneční styly",
+    "notSpecified": "Neuvedeno"
+  },
+  "eventStats": {
+    "registrations": "Registrace",
+    "syncData": "Synchronizovat data",
+    "syncing": "Synchronizuji...",
+    "table": {
+      "status": "Stav",
+      "selectAll": "Vybrat vše",
+      "selectRow": "Vybrat řádek",
+      "viewProfile": "Zobrazit profil",
+      "all": "Vše",
+      "filterPlaceholder": "Filtrovat...",
+      "noRegistrations": "Nebyly nalezeny žádné registrace.",
+      "showing": "Zobrazeno {{filtered}} z {{total}} registrací"
+    },
+    "actions": {
+      "copyEmails": "kopírovat e-mailové adresy",
+      "acceptRegistration": "Schválit registraci",
+      "cancelRegistration": "Zamítnout registraci",
+      "rowSelected": "{{count}} vybraný řádek",
+      "rowsSelected": "{{count}} vybraných řádků"
+    },
+    "messages": {
+      "emailsCopied": "E-mailové adresy byly zkopírovány do schránky!",
+      "emailsCopyFailed": "Nepodařilo se zkopírovat e-mailové adresy: {{error}}",
+      "noEmails": "Pro vybrané řádky nebyly nalezeny žádné e-mailové adresy.",
+      "updateSuccess": "Úspěšně aktualizováno: {{count}} registrací",
+      "updateFailed": "Nepodařilo se aktualizovat registrace"
     }
   },
   "common": {
@@ -120,7 +332,136 @@
     "save": "Uložit",
     "edit": "Upravit",
     "delete": "Smazat",
-    "confirm": "Potvrdit"
+    "confirm": "Potvrdit",
+    "close": "Zavřít"
+  },
+  "eventDetail": {
+    "actionButtons": {
+      "interested": "Mám zájem",
+      "going": "Jdu",
+      "pendingApproval": "Čeká na schválení",
+      "waitlisted": "Náhradník",
+      "joinEvent": "Připojit se k akci",
+      "rejoinEvent": "Znovu se připojit"
+    },
+    "alerts": {
+      "registrationRejectedTitle": "Registrace zamítnuta",
+      "registrationRejected": "Organizátor zamítl vaši registraci. Na tuto akci se nemůžete zaregistrovat.",
+      "googleFormRegistration": "Tato registrace proběhla přes Google Forms. Pro zrušení prosím kontaktujte organizátora akce přímo.",
+      "eventCancelledTitle": "Akce zrušena !!!",
+      "eventCancelledDescription": "Tato akce byla zrušena organizátorem."
+    },
+    "details": {
+      "title": "Detaily",
+      "eventType": "Typ akce",
+      "styles": "Styly",
+      "level": "Úroveň"
+    },
+    "dateDisplay": {
+      "selectDate": "Vyberte datum"
+    },
+    "registrationDialog": {
+      "confirmRegistration": "Potvrdit registraci",
+      "registerForEvent": "Zaregistrovat se na akci",
+      "externalRegistration": "Externí registrace",
+      "registration": "Registrace",
+      "confirmMessage": "Opravdu se chcete na tuto akci zaregistrovat?",
+      "confirmMessageWithRole": "Opravdu se chcete na tuto akci zaregistrovat? Prosím vyberte svou roli.",
+      "googleFormMessage": "Tato akce používá Google Forms pro registraci. Budete přesměrováni na formulář, kde registraci dokončíte.",
+      "openRegistrationForm": "Otevřít registrační formulář",
+      "makeAnonymous": "Zpřístupnit moji registraci ostatním uživatelům anonymně",
+      "cancel": "Zrušit",
+      "confirm": "Potvrdit registraci"
+    },
+    "cancelDialog": {
+      "title": "Zrušit registraci",
+      "messagePending": "Opravdu chcete zrušit čekající registraci? Vaše místo bude odebráno z čekací listiny.",
+      "messageRegistered": "Opravdu chcete zrušit registraci? Přijdete o své místo na této akci.",
+      "keepRegistration": "Ponechat registraci",
+      "confirmCancel": "Ano, zrušit registraci"
+    },
+    "manageButtons": {
+      "manageEvent": "Spravovat akci",
+      "editEvent": "Upravit akci",
+      "deleteEvent": "Smazat akci",
+      "cancelEvent": "Zrušit akci",
+      "publish": "Publikovat",
+      "publishing": "Publikuji...",
+      "stats": "Statistiky"
+    },
+    "manageErrors": {
+      "publishFailed": "Nepodařilo se publikovat akci",
+      "cancelFailed": "Nepodařilo se zrušit akci",
+      "deleteFailed": "Nepodařilo se smazat akci"
+    },
+    "confirmActionDialog": {
+      "publishTitle": "Publikovat akci",
+      "publishDescription": "Před publikováním nastavte možnosti akce.",
+      "publishAction": "Publikovat",
+      "cancelTitle": "Zrušit akci",
+      "cancelDescription": "Opravdu chcete tuto akci zrušit? Tuto akci nelze vrátit zpět a účastníci budou informováni.",
+      "cancelAction": "Zrušit akci",
+      "deleteTitle": "Smazat koncept",
+      "deleteDescription": "Opravdu chcete tento koncept smazat? Tuto akci nelze vrátit zpět.",
+      "deleteAction": "Smazat",
+      "cancel": "Zrušit"
+    },
+    "organizer": {
+      "organizedBy": "Pořádá"
+    },
+    "attendees": {
+      "whoComing": "Kdo přijde",
+      "person": "osoba",
+      "people": "osob",
+      "going": "jde",
+      "interested": "má zájem",
+      "leaders": "Vedoucí",
+      "followers": "Následující",
+      "capacity": "kapacita",
+      "capacityLabel": "Kapacita",
+      "seeWhoComing": "Zobrazit, kdo přijde"
+    },
+    "attendeeList": {
+      "guestList": "Seznam hostů",
+      "leaders": "Vedoucí",
+      "followers": "Následující",
+      "loadingAttendees": "Načítám účastníky...",
+      "loadFailed": "Nepodařilo se načíst účastníky. Zkuste to prosím znovu.",
+      "noAttendees": "Nebyli nalezeni žádní účastníci",
+      "showing": "Zobrazuji",
+      "person": "osoba",
+      "people": "osob",
+      "close": "Zavřít"
+    },
+    "media": {
+      "gallery": "Galerie",
+      "addMedia": "Přidat média",
+      "noMediaPresented": "Nejsou zde žádná média"
+    },
+    "description": {
+      "aboutEvent": "O akci",
+      "showLess": "Zobrazit méně",
+      "showMore": "Zobrazit více"
+    },
+    "googleFormIntegration": {
+      "title": "Integrace Google Forms",
+      "description": "Importujte registrační data z Google formuláře pomocí jeho ID. ID najdete v URL formuláře (např. pro https://docs.google.com/forms/d/e/FORM_ID/viewform je ID formuláře FORM_ID). Po publikování se data registrací budou automaticky synchronizovat každou hodinu, nebo můžete kdykoli spustit ruční synchronizaci.",
+      "needsAccess": "Pro použití této funkce je potřeba udělit přístup ke Google Forms.",
+      "grantAccess": "Udělit přístup",
+      "accessGranted": "Přístup ke Google Forms udělen",
+      "formIdPlaceholder": "Zadejte ID Google formuláře"
+    },
+    "publishOptions": {
+      "registrationMode": "Režim registrace",
+      "openRegistration": "Otevřená registrace",
+      "openRegistrationDesc": "Kdokoli se může registrovat bez ohledu na roli",
+      "coupleRegistration": "Párová registrace",
+      "coupleRegistrationDesc": "Registrace vyžaduje výběr role",
+      "googleForm": "Integrace Google Forms",
+      "googleFormDesc": "Registrace probíhá přes Google Forms a uživatelé jsou propojeni pomocí e-mailu",
+      "additionalFeatures": "Další funkce",
+      "requireApproval": "Organizátor musí registrace schvalovat"
+    }
   },
   "languages": {
     "en": "English",

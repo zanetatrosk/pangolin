@@ -9,6 +9,7 @@ import { Loading } from "@/components/ui/loading";
 export const Route = createFileRoute("/events/$id/")({
   beforeLoad: requireAuth,
   component: RouteComponent,
+  ssr: false,
 });
 
 function RouteComponent() {

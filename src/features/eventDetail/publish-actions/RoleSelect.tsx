@@ -34,7 +34,7 @@ export const RoleSelect: FC<RoleSelectProps> = ({ value, onChange }) => {
     <div className="flex items-center gap-4">
       <h4 className="font-medium whitespace-nowrap">Select Your Role</h4>
         <Select value={selectedRole} onValueChange={handleChange}>
-          <SelectTrigger className="w-[180px]">
+          <SelectTrigger className="w-full md:w-[180px]">
             <SelectValue />
           </SelectTrigger>
           <SelectContent>

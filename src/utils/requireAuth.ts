@@ -10,7 +10,7 @@ import { PATHS } from "@/paths";
  * @throws Redirect to login page with return URL if not authenticated
  */
 export const requireAuth = async ({ location }: { location: { href: string } }) => {
-  const isAuthenticated = selectIsAuthenticated(authStore.state);
+  const isAuthenticated = selectIsAuthenticated(authStore.state) || sessionStorage.getItem("accessToken") !== null;
   
   if (!isAuthenticated) {
     throw redirect({

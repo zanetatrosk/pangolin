@@ -5,4 +5,5 @@ import { requireAuth } from "@/utils/requireAuth";
 export const Route = createFileRoute("/my-events")({
   beforeLoad: requireAuth,
   component: MyEventsPage,
+  ssr: false,
 });

@@ -12,6 +12,8 @@ import { deleteMedia, postMedia } from "@/services/media-api";
 import { useTranslation } from "react-i18next";
 import { useUser } from "@/hooks/useUser";
 import { useRef } from "react";
+import { toast } from "sonner";
+import { getRequestErrorMessage } from "@/utils/getRequestErrorMessage";
 
 export const EventMediaStep = withForm({
   ...eventFormOpts,
@@ -19,6 +21,11 @@ export const EventMediaStep = withForm({
     const { t } = useTranslation();
     const { user } = useUser();
     const coverInputRef = useRef<HTMLInputElement | null>(null);
+
+    const toastRequestError = (error: unknown, fallbackMessage: string) => {
+      toast.error(getRequestErrorMessage(error) ?? fallbackMessage);
+    };
+
     const coverImageMutation = useMutation({
         mutationFn: (file: File) => postMedia(file),
         onSuccess: (data) => {
@@ -31,6 +38,12 @@ export const EventMediaStep = withForm({
         },
         onError: (error) => {
           console.error("Error uploading cover image:", error);
+          toastRequestError(
+            error,
+            t("newEvent.media.coverUploadFailed", {
+              defaultValue: "Failed to upload cover media",
+            }),
+          );
         },
       });
 
@@ -51,6 +64,12 @@ export const EventMediaStep = withForm({
         },
         onError: (error) => {
           console.error("Error uploading gallery media:", error);
+          toastRequestError(
+            error,
+            t("newEvent.media.galleryUploadFailed", {
+              defaultValue: "Failed to upload gallery media",
+            }),
+          );
         },
       });
 
@@ -64,6 +83,12 @@ export const EventMediaStep = withForm({
       },
       onError: (error) => {
         console.error("Error deleting media:", error);
+        toastRequestError(
+          error,
+          t("newEvent.media.deleteFailed", {
+            defaultValue: "Failed to delete media",
+          }),
+        );
       },
     });
 

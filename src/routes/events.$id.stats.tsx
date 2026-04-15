@@ -1,5 +1,4 @@
 import { EventStats } from "@/features/eventStats/EventStats";
-import { mockEventStats } from "@/mocks/eventStats";
 import { getEventStats } from "@/services/events-api";
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
@@ -9,6 +8,7 @@ import { Loading } from "@/components/ui/loading";
 export const Route = createFileRoute("/events/$id/stats")({
   beforeLoad: requireAuth,
   component: RouteComponent,
+  ssr: false,
 });
 
 function RouteComponent() {

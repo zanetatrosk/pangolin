@@ -11,6 +11,7 @@ import { requireAuth } from "@/utils/requireAuth";
 export const Route = createFileRoute("/events/$id/edit")({
   beforeLoad: requireAuth,
   component: RouteComponent,
+  ssr: false,
 });
 
 const eventDetailDataToDanceEventCreation = (
@@ -32,7 +33,7 @@ const eventDetailDataToDanceEventCreation = (
       date: event.basicInfo?.date || "",
       time: event.basicInfo?.time || "",
       endDate: event.basicInfo?.endDate || "",
-      price: event.basicInfo?.price || undefined,
+      price: event.basicInfo?.price ?? undefined,
       currency: event.basicInfo?.currency || undefined,
       isRecurring: false,
       recurrenceType: undefined,

@@ -11,10 +11,10 @@ import { EventMediaStep } from "./EventMediaStep";
 import { EventDetailsStep } from "./EventDetailsStep";
 import { UseMutationResult } from "@tanstack/react-query";
 import { useStore } from "@tanstack/react-store";
-import { isAxiosError } from "axios";
 import { DanceEventCreation } from "./types";
 import { useTranslation } from "react-i18next";
 import type { EventFormOptions } from "./FormOptions";
+import { getRequestErrorMessage } from "@/utils/getRequestErrorMessage";
 
 export interface FormParentProps {
   eventMutation: UseMutationResult<any, Error, DanceEventCreation, unknown>;
@@ -29,28 +29,6 @@ export const FormParent: React.FC<FormParentProps> = ({
 }) => {
   const { t } = useTranslation();
   const [hasSubmitAttempt, setHasSubmitAttempt] = React.useState(false);
-
-  const getMutationErrorMessage = (error: unknown) => {
-    if (!error) {
-      return undefined;
-    }
-
-    if (isAxiosError(error)) {
-      const responseMessage = error.response?.data?.message;
-      if (
-        typeof responseMessage === "string" &&
-        responseMessage.trim().length > 0
-      ) {
-        return responseMessage;
-      }
-    }
-
-    if (error instanceof Error && error.message.trim().length > 0) {
-      return error.message;
-    }
-
-    return undefined;
-  };
   
   const form = useAppForm({
     ...eventFormOpts,
@@ -71,7 +49,7 @@ export const FormParent: React.FC<FormParentProps> = ({
       ? t("newEvent.stepper.errorMessage")
       : undefined;
   const mutationAlertMessage = hasSubmitAttempt
-    ? getMutationErrorMessage(eventMutation.error)
+    ? getRequestErrorMessage(eventMutation.error)
     : undefined;
   const alertTitle = validationAlertMessage
     ? t("newEvent.stepper.errorTitle", {

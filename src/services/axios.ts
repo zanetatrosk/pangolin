@@ -31,7 +31,7 @@ axiosInstance.interceptors.response.use(
         }
 
         const status = error.response?.status;
-        if (status === 401 || status === 403) {
+        if (status === 401) {
             sessionStorage.removeItem("accessToken");
             sessionStorage.removeItem("tokenExpiresAt");
 

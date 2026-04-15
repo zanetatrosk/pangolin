@@ -36,7 +36,7 @@ export const newEventSchema = z.object({
       date: z.string().trim().min(1, i18n.t("newEvent.validation.startDateRequired")),
       time: z.string().trim().min(1, i18n.t("newEvent.validation.timeRequired")),
       endDate: z.string().trim().optional(),
-      price: z.number().positive().optional(),
+      price: z.number().min(0).optional(),
       currency: z.string().trim().optional(),
       // Strict boolean to match Interface
       isRecurring: z.boolean(),

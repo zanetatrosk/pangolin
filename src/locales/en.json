@@ -275,6 +275,7 @@
         "status": {
             "published": "Published",
             "cancelled": "Cancelled",
+            "cancelledEvent": "Cancelled Event",
             "past": "Past",
             "draft": "Draft",
             "registered": "Registered",

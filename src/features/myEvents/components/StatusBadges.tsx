@@ -23,7 +23,7 @@ export const getBadgeByStatus = (status: EventStatus | RsvpStatus | string) => {
     case RsvpStatus.Waitlisted:
       return "bg-gray-100 text-gray-800";
     case RsvpStatus.Pending:
-      return "bg-blue-100 text-blue-800";
+      return "bg-blue-100 text-yellow-800";
     case RsvpStatus.Rejected:
     case RsvpStatus.Cancelled:
       return "bg-red-100 text-red-800";
@@ -51,8 +51,8 @@ export const isEventPast = (date: string) => {
   return eventDate.getTime() < today.getTime();
 };
 
-const getStatusLabel = (
-  status: EventStatus | RsvpStatus | string,
+const getEventStatusLabel = (
+  status: EventStatus | string,
   cardType: EventCardType,
   t: (key: string) => string,
 ) => {
@@ -60,15 +60,22 @@ const getStatusLabel = (
     return t("myEvents.status.published");
   }
 
-  switch (status) {      
+  switch (status) {
     case EventStatus.PAST:
       return t("myEvents.status.past");
     case EventStatus.PUBLISHED:
-      return t("myEvents.status.upcoming");  
-    case EventStatus.CANCELLED: 
-      return t("myEvents.status.cancelled");
+      return t("myEvents.status.upcoming");
+    case EventStatus.CANCELLED:
+      return t("myEvents.status.cancelledEvent");
     case EventStatus.DRAFT:
       return t("myEvents.status.draft");
+    default:
+      return null;
+  }
+};
+
+const getUserStatusLabel = (status: RsvpStatus | string, t: (key: string) => string) => {
+  switch (status) {
     case RsvpStatus.Registered:
       return t("myEvents.status.registered");
     case RsvpStatus.Interested:
@@ -80,7 +87,7 @@ const getStatusLabel = (
     case RsvpStatus.Rejected:
       return t("myEvents.status.rejected");
     case RsvpStatus.Cancelled:
-      return t("myEvents.status.cancelled");  
+      return t("myEvents.status.cancelled");
     default:
       return null;
   }
@@ -100,12 +107,12 @@ export const StatusBadges: FC<{
     <span className={className}>
       {eventStatus && (
         <Badge className={getBadgeByStatus(eventStatus)}>
-          {getStatusLabel(eventStatus, cardType, t)}
+          {getEventStatusLabel(eventStatus, cardType, t)}
         </Badge>
       )}
       {userStatus && cardType === EventCardType.GOING && (
         <Badge className={getBadgeByStatus(userStatus) + " ml-2"}>
-          {getStatusLabel(userStatus, cardType, t)}
+          {getUserStatusLabel(userStatus, t)}
         </Badge>
       )}
       {role && <Badge className={getBadgeByDancerRole(role) + " ml-2"}>{role}</Badge>}

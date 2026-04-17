@@ -56,16 +56,17 @@ export function EventDetail({ event }: EventDetailProps) {
                 // Organizer view
                 <EventItemManageButtons eventId={event.id} eventStatus={basicInfo.status || ""}/>
               ) : (
-                <DetailButtons
-                  rsvpData={{
-                    id: event.basicInfo.registrationStatus?.id,
-                    eventId: event.id,
-                    userId: "", // Replace with actual user ID
-                    status: event.basicInfo.registrationStatus?.status,
+                event.basicInfo.status !== EventStatus.CANCELLED && (
+                  <DetailButtons
+                    rsvpData={{
+                      id: event.basicInfo.registrationStatus?.id,
+                      eventId: event.id,
+                      userId: user?.userId || "",
+                      status: event.basicInfo.registrationStatus?.status,
                   }}
                   registrationMode={event.basicInfo.registrationType}
                   formId={event.basicInfo.formId}
-                />
+                />)
               )}
             </div>
 

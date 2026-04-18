@@ -32,7 +32,7 @@ export const EventMediaStep = withForm({
           console.log("Cover media uploaded successfully:", data);
           form.setFieldValue("coverImage", {
             id: data.id.toString(),
-            type: data.type.startsWith("video") ? "video" : "image",
+            type: "image",
             url: data.url,
           });
         },
@@ -147,16 +147,26 @@ export const EventMediaStep = withForm({
                   <Input
                     ref={coverInputRef}
                     type="file"
-                    accept="image/*,video/*"
+                    accept="image/*"
                     onChange={(e) => {
                       const file = e.target.files?.[0];
                       if (file) {
-                        const fileType = file.type.startsWith("video") ? "video" : "image";
+                        if (!file.type.startsWith("image/")) {
+                          toast.error(
+                            t("newEvent.media.coverOnlyImage", {
+                              defaultValue: "Cover must be an image",
+                            }),
+                          );
+                          if (coverInputRef.current) {
+                            coverInputRef.current.value = "";
+                          }
+                          return;
+                        }
                         const blobUrl = URL.createObjectURL(file);
                         // Show preview immediately with blob URL
                         field.handleChange({
                           id: blobUrl,
-                          type: fileType,
+                          type: "image",
                           url: blobUrl,
                         });
                         // Upload to server (will update field in onSuccess)

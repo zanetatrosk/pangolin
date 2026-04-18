@@ -64,10 +64,6 @@ function RouteComponent() {
     queryKey: ["event", id],
     queryFn: () => getEventById(id),
   });
-  if (!event) {
-    return null;
-  }
-
   const eventMutation = useMutation({
     mutationFn: (data: DanceEventCreation) => updateEventById(id, data),
     onSuccess: (data) => {
@@ -78,6 +74,10 @@ function RouteComponent() {
       console.error("Error updating event:", error);
     },
   });
+
+  if (!event) {
+    return null;
+  }
 
   const editEventFormOpts = {
     ...eventFormOpts,

@@ -61,9 +61,9 @@ export const BasicDetails = withForm({
               <form.AppField name="basicInfo.isRecurring">
                 {(recurringField) =>
                   !recurringField.state.value &&
-                  !isEditing && (
+                   (
                     <form.AppField name="basicInfo.endDate">
-                      {(field) => (
+                      {(field) => (!isEditing || field.state.value !== "") && (
                         <field.TextField
                           label={t("newEvent.basicInfo.endDate")}
                           type="date"

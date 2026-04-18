@@ -23,7 +23,7 @@ export const SingleEventCard: React.FC<SingleEventCardProps> = ({
   const navigate = useNavigate();
   const isUserOrganizer = cardType === EventCardType.HOSTING;
   
-  const { eventName, organizer, status, userStatus, date, time, location, attendeeStats, role } = event;
+  const { eventName, organizer, status, userStatus, date, time, location, attendeeStats, role, endDate } = event;
   const renderedLocation = renderAddress(location);
 
   return (
@@ -42,6 +42,7 @@ export const SingleEventCard: React.FC<SingleEventCardProps> = ({
                 className="lg:hidden"
                 role={role?.name}
                 date={date}
+                endDate={event?.endDate}
               />
             </div>
             <div className="flex flex-row items-center ">
@@ -52,6 +53,7 @@ export const SingleEventCard: React.FC<SingleEventCardProps> = ({
                 role={role?.name}
                 date={date}
                 className="hidden lg:block"
+                endDate={event?.endDate}
               />
 
               <Button 
@@ -71,7 +73,7 @@ export const SingleEventCard: React.FC<SingleEventCardProps> = ({
         </div>
         <div className="flex flex-col lg:flex-row gap-2 lg:gap-10">
           
-          <DataWithIcon icon={Calendar} value={`${date} ${t("myEvents.card.at")} ${time}`} />
+          <DataWithIcon icon={Calendar} value={`${date} ${endDate ? `until ${endDate}` : `${t("myEvents.card.at")} ${time}`}`} />
           <DataWithIcon icon={MapPin} value={renderedLocation} />
           <DataWithIcon
             icon={Building}

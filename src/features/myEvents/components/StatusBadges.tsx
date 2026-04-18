@@ -43,11 +43,16 @@ export const getBadgeByDancerRole = (role: string) => {
   }
 };
 
-export const isEventPast = (date: string) => {
+export const isEventPast = (date: string, endDate?: string) => {
   const eventDate = new Date(date);
   const today = new Date();
   eventDate.setHours(0, 0, 0, 0);
   today.setHours(0, 0, 0, 0);
+  if (endDate) {
+    const endDateTime = new Date(endDate);
+    endDateTime.setHours(0, 0, 0, 0);
+    return endDateTime.getTime() < today.getTime();
+  }
   return eventDate.getTime() < today.getTime();
 };
 
@@ -99,10 +104,11 @@ export const StatusBadges: FC<{
   userStatus?: RsvpStatus;
   role?: string;
   date: string;
+  endDate?: string;
   className?: string;
-}> = ({ cardType, status, userStatus, role, date, className }) => {
+}> = ({ cardType, status, userStatus, role, date, endDate, className }) => {
   const { t } = useTranslation();
-  const eventStatus = isEventPast(date) ? EventStatus.PAST : status;
+  const eventStatus = isEventPast(date, endDate) ? EventStatus.PAST : status;
   return (
     <span className={className}>
       {eventStatus && (

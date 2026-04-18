@@ -49,7 +49,7 @@ export const newEventSchema = z.object({
       const today = todayStr();
       console.log("Validating basicInfo with data:", data);
       // 1. Date Logic
-      if (data.date && data.date < today) {
+      if (data.date && data.date < today && data.endDate === undefined) {
         ctx.addIssue({
           code: "custom",
           path: ["date"],

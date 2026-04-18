@@ -16,6 +16,7 @@ export interface MyEventBase {
 export interface SingleEventDTO extends MyEventBase {
     displayMode: 'SINGLE';
     date: string;
+    endDate?: string;
     time: string;
     location: Location;
     attendeeStats: AttendeeStats;

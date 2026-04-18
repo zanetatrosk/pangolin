@@ -15,8 +15,9 @@ export const useCancelRegistration = () => {
     
     const mutation = useMutation({
         mutationFn: ({ eventId, registrationId }: CancelRegistrationParams) => 
-            updateRegistrationStatus(eventId, registrationId, { 
-                action: RegistrationAction.CANCEL 
+            updateRegistrationStatus(eventId, { 
+                action: RegistrationAction.CANCEL,
+                registrations: [registrationId],
             }),
         onSuccess: (data, variables) => {
             // Invalidate queries to refresh data

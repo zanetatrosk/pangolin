@@ -63,6 +63,7 @@ export enum RegistrationAction {
  */
 export interface RegistrationActionRequest {
     action: RegistrationAction;
+    registrations: string[];
 }
 
 export interface EventStatusResponse {

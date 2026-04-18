@@ -46,16 +46,15 @@ export const syncRegistrations = async (eventId: string): Promise<{ message: str
 };
 
 /**
- * Update registration status (approve/reject/cancel)
- * PATCH /api/events/{eventId}/registrations/{registrationId}
+ * Update registration statuses (approve/reject/cancel)
+ * PATCH /api/events/{eventId}/registrations
  */
 export const updateRegistrationStatus = async (
     eventId: string,
-    registrationId: string,
     request: RegistrationActionRequest
-): Promise<EventRegistration> => {
+): Promise<EventRegistration[]> => {
     const response = await axiosInstance.patch(
-        `${EVENTS_URL}/${eventId}/registrations/${registrationId}`,
+        `${EVENTS_URL}/${eventId}/registrations`,
         request
     );
     return response.data;

@@ -80,15 +80,13 @@ export const SelectionActionBar: FC<SelectionActionBarProps> = ({
       : RegistrationAction.REJECT;
     
     try {
-      await Promise.all(
-        selectedRows.map((row) =>
-          updateRegistration.mutateAsync({
-            eventId,
-            registrationId: row.id,
-            request: { action: registrationAction },
-          })
-        )
-      );
+      await updateRegistration.mutateAsync({
+        eventId,
+        request: {
+          action: registrationAction,
+          registrations: selectedRows.map((row) => row.id),
+        },
+      });
       
       toast.success(t("eventStats.messages.updateSuccess", { count: selectedRows.length }));
     } catch (error) {

@@ -51,12 +51,6 @@ export function EventSearch({
   })
 
   const handleSearch = () => {
-    console.log("Search initiated with:", {
-      searchTerm,
-      location: location?.label,
-      eventTypes,
-      danceStyles,
-    });
     if( locationSearchValue !== location?.label ) {
       setLocation(undefined);
       onSearch({

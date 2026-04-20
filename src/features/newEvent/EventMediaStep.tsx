@@ -29,7 +29,6 @@ export const EventMediaStep = withForm({
     const coverImageMutation = useMutation({
         mutationFn: (file: File) => postMedia(file),
         onSuccess: (data) => {
-          console.log("Cover media uploaded successfully:", data);
           form.setFieldValue("coverImage", {
             id: data.id.toString(),
             type: "image",
@@ -53,7 +52,6 @@ export const EventMediaStep = withForm({
           return Promise.all(uploadPromises);
         },
         onSuccess: (uploadedMedia) => {
-          console.log("Gallery media uploaded successfully:", uploadedMedia);
           const currentMedia = form.getFieldValue("media") ?? [];
           const newItems: EventMediaItem[] = uploadedMedia.map((media) => ({
             id: media.id.toString(),

@@ -98,7 +98,6 @@ export const AutoComplete = <T,>({
     onValueChange?.(selectedOption);
     onSearchChange?.(getOptionLabel(selectedOption));
     setOpen(false);
-    console.log("Option selected:", selectedOption);
   };
 
   return (

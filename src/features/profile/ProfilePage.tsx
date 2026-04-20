@@ -40,7 +40,6 @@ export function ProfilePage({
   const avatarMutation = useMutation({
     mutationFn: (file: File) => postMedia(file),
     onSuccess: (data) => {
-      console.log("Avatar image uploaded successfully:", data);
       setProfileData((prev) => ({
         ...prev,
         avatar: {
@@ -58,7 +57,6 @@ export function ProfilePage({
   const imageMutation = useMutation({
     mutationFn: (file: File) => postMedia(file),
     onSuccess: (data) => {
-      console.log("Avatar image uploaded successfully:", data);
       setProfileData((prev) => ({
         ...prev,
         media: [
@@ -86,7 +84,6 @@ export function ProfilePage({
   const mutation = useMutation({
     mutationFn: () => updateProfileById(userId, profileData),
     onSuccess: (data) => {
-      console.log("Profile updated successfully:", data);
       queryClient.setQueryData(["profile", userId], data);
     },
     onError: (error) => {
@@ -100,10 +97,8 @@ export function ProfilePage({
   const [profileData, setProfileData] =
     useState<ProfileData>(profileDataDefault);
 
-  console.log("Profile data:", profileData);
   const handleSave = () => {
     mutation.mutate();
-    console.log("Profile data saved:", profileData);
     setIsEditing(false);
   };
 

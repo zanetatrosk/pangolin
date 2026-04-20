@@ -34,7 +34,6 @@ export const FormParent: React.FC<FormParentProps> = ({
     ...eventFormOpts,
     onSubmit: async ({ value }) => {
       const isValid = form.getAllErrors().form.errors.length === 0;
-      console.log("Form submission attempted. ", value);
       if (!isValid) {
         console.log("Form has errors, cannot submit:", form.getAllErrors());
         return;
@@ -43,7 +42,6 @@ export const FormParent: React.FC<FormParentProps> = ({
     },
   });
   const isFormValid = useStore(form.store, (state) => state.isValid);
-  const valuesInForm = useStore(form.store, (state) => state.values);
   const validationAlertMessage =
     hasSubmitAttempt && !isFormValid
       ? t("newEvent.stepper.errorMessage")
@@ -69,8 +67,6 @@ export const FormParent: React.FC<FormParentProps> = ({
       eventMutation.reset();
     }
     setHasSubmitAttempt(true);
-    console.log("Validating form before submission...", form.getAllErrors());
-    console.log("Current form values at submission attempt:", valuesInForm);
     await form.handleSubmit();
   };
   const isMobile = useIsMobile();

@@ -45,9 +45,7 @@ export const newEventSchema = z.object({
       recurrenceEndDate: z.string().trim().nullable(),
     })
     .superRefine((data, ctx) => {
-      console.log("Running custom validation for basicInfo with data:", data);
       const today = todayStr();
-      console.log("Validating basicInfo with data:", data);
       // 1. Date Logic
       if (data.date && data.date < today && data.endDate === undefined) {
         ctx.addIssue({

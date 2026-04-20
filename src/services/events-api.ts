@@ -12,7 +12,6 @@ import { EventStatsData } from "@/features/eventStats/EventStats";
 const EVENT_URL = "/events";
 
 export const getAllEvents = async (page: number, searchParams?: SearchProps, size: number = 10): Promise<Pageable<EventItem>>  => {
-    console.log(searchParams);
     const response = await axiosInstance.get(`${EVENT_URL}?page=${page}&size=${size}` + convertSearchParamsToQuery(searchParams));
     return response.data;
 }

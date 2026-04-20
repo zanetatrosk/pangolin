@@ -72,14 +72,6 @@ export interface EventStatusResponse {
     message: string;
 }
 
-/**
- * @deprecated Use RegistrationActionRequest instead
- * Kept for backward compatibility
- */
-export interface OrganizerRegistrationActionRequest {
-    action: OrganizerAction;
-}
-
 export interface EventRegistration {
     id: string;
     eventId: string;

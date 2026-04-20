@@ -295,7 +295,10 @@
         "generalLevel": "General Level",
         "mainRole": "Main Role",
         "danceStyles": "Dance Styles",
-        "notSpecified": "Not Specified"
+        "notSpecified": "Not Specified",
+        "messages": {
+            "updateFailed": "Failed to save profile"
+        }
     },
     "eventStats": {
         "registrations": "Registrations",

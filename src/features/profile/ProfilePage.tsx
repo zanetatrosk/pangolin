@@ -13,6 +13,8 @@ import { ProfileViewMode } from "./ProfileViewMode";
 import { CodebookItem } from "@/services/types";
 import { updateProfileById } from "@/services/user-api";
 import { useUser } from "@/hooks/useUser";
+import { toast } from "sonner";
+import { getRequestErrorMessage } from "@/utils/getRequestErrorMessage";
 
 export interface ProfileData {
   firstName?: string;
@@ -36,6 +38,10 @@ export function ProfilePage({
   const [isEditing, setIsEditing] = useState(false);
   const { user } = useUser();
   const queryClient = useQueryClient();
+
+  const toastRequestError = (error: unknown, fallbackMessage: string) => {
+    toast.error(getRequestErrorMessage(error) ?? fallbackMessage);
+  };
 
   const avatarMutation = useMutation({
     mutationFn: (file: File) => postMedia(file),
@@ -82,24 +88,29 @@ export function ProfilePage({
   });
 
   const mutation = useMutation({
-    mutationFn: () => updateProfileById(userId, profileData),
+    mutationFn: (profile: ProfileData) => updateProfileById(userId, profile),
     onSuccess: (data) => {
       queryClient.setQueryData(["profile", userId], data);
+      setProfileData(data);
+      setIsEditing(false);
     },
     onError: (error) => {
       console.error("Error updating profile:", error);
+      toastRequestError(
+        error,
+        t("profile.messages.updateFailed", {
+          defaultValue: "Failed to save profile",
+        }),
+      );
     },
   });
 
   const allowedToEdit = userId === user?.userId;
-
-  // Mock data initialization - in a real app, this would come from the backend/store
   const [profileData, setProfileData] =
     useState<ProfileData>(profileDataDefault);
 
-  const handleSave = () => {
-    mutation.mutate();
-    setIsEditing(false);
+  const handleSave = (profile: ProfileData) => {
+    mutation.mutate(profile);
   };
 
   const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {

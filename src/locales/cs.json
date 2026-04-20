@@ -293,7 +293,10 @@
     "generalLevel": "Obecná úroveň",
     "mainRole": "Hlavní role",
     "danceStyles": "Taneční styly",
-    "notSpecified": "Neuvedeno"
+    "notSpecified": "Neuvedeno",
+    "messages": {
+      "updateFailed": "Nepodařilo se uložit profil"
+    }
   },
   "eventStats": {
     "registrations": "Registrace",

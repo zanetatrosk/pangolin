@@ -19,8 +19,7 @@ export function LoginForm({
   const handleGoogleLogin = () => {
     const basicScopes = BASE_SCOPES.join(' ');
     const url = buildGoogleOAuthUrl({
-      scope: basicScopes,
-      state: 'type=basic', // Pass type parameter to indicate this is basic auth
+      scope: basicScopes
     });
     window.location.href = url;
   };

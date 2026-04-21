@@ -13,10 +13,36 @@ vi.mock("@/paths", () => ({
   PATHS: { LOGIN: "/login" },
 }));
 
+const createSessionStorageMock = (): Storage => {
+  let store: Record<string, string> = {};
+
+  return {
+    getItem: vi.fn((key: string) => (key in store ? store[key] : null)),
+    setItem: vi.fn((key: string, value: string) => {
+      store[key] = String(value);
+    }),
+    removeItem: vi.fn((key: string) => {
+      delete store[key];
+    }),
+    clear: vi.fn(() => {
+      store = {};
+    }),
+    key: vi.fn((index: number) => Object.keys(store)[index] ?? null),
+    get length() {
+      return Object.keys(store).length;
+    },
+  } as unknown as Storage;
+};
+
 describe("requireAuth", () => {
   beforeEach(() => {
     vi.resetModules();
     vi.clearAllMocks();
+
+    Object.defineProperty(globalThis, "sessionStorage", {
+      value: createSessionStorageMock(),
+      configurable: true,
+    });
   });
 
   it("throws a redirect to login when not authenticated", async () => {
